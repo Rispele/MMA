@@ -11,10 +11,14 @@
 //
 // builder.Build().Run();
 
-Console.WriteLine("Main");
+var builder = DistributedApplication.CreateBuilder(args);
+
+builder.AddProject<Projects.WebApi>("webapi").WithExternalHttpEndpoints();
+
+builder.Build().Run();
 
 /* Template 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebAzpplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
