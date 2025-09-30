@@ -1,3 +1,5 @@
+using WebApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +13,9 @@ serviceCollection.AddOpenApi();
 serviceCollection.AddEndpointsApiExplorer();
 
 serviceCollection.AddControllers();
+
+serviceCollection.AddSingleton<IRoomService, RoomService>();
+serviceCollection.AddSingleton<IFileService, FileService>();
 
 var app = builder.Build();
 

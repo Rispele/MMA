@@ -10,7 +10,7 @@ using WebApi.Services;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Route("webapi/[controller]")]
+[Route("webapi/rooms")]
 public class RoomsController : ControllerBase
 {
     private readonly IRoomService roomService;
@@ -24,10 +24,6 @@ public class RoomsController : ControllerBase
         this.logger = logger;
     }
 
-    /// <summary>
-    /// GET webapi/rooms
-    /// Query example: ?page=1&pageSize=20&afterRoomId=0&filter={...Json...}
-    /// </summary>
     [HttpGet]
     public async Task<ActionResult<RoomsResponse>> GetRooms(
         [ModelBinder(BinderType = typeof(GetRoomsRequestModelBinder))]
@@ -42,9 +38,6 @@ public class RoomsController : ControllerBase
         return Ok(result);
     }
 
-    /// <summary>
-    /// GET webapi/rooms/{roomId}
-    /// </summary>
     [HttpGet("{roomId:int}")]
     public async Task<ActionResult<RoomModel>> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
@@ -53,10 +46,6 @@ public class RoomsController : ControllerBase
         return Ok(room);
     }
 
-    /// <summary>
-    /// POST webapi/rooms
-    /// Idempotency by name as per spec.
-    /// </summary>
     [HttpPost]
     public async Task<IActionResult> CreateRoom([FromBody] PostRoomRequest request, CancellationToken cancellationToken)
     {
@@ -77,10 +66,6 @@ public class RoomsController : ControllerBase
         return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);
     }
 
-    /// <summary>
-    /// PATCH webapi/rooms/{roomId}
-    /// Accepts JSON Patch (RFC 6902)
-    /// </summary>
     [HttpPatch("{roomId:int}")]
     public async Task<IActionResult> PatchRoom(
         int roomId,
@@ -111,10 +96,6 @@ public class RoomsController : ControllerBase
         return Ok(updated);
     }
 
-    /// <summary>
-    /// GET webpai/attachments?id={Guid}&bucket={string}
-    /// Note: route name in spec had typo webpai -> I'll keep controller route /webapi/rooms and map action route to attachments
-    /// </summary>
     [HttpGet("/webapi/attachments")]
     public async Task<IActionResult> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket, CancellationToken cancellationToken)
     {
