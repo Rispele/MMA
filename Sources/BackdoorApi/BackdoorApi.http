@@ -1,0 +1,6 @@
+@BackdoorApi_HostAddress = http://localhost:5217
+
+GET {{BackdoorApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
