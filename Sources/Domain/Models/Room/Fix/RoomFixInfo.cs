@@ -1,4 +1,5 @@
-﻿namespace Domain.Models.Room.Fix;
+﻿// ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
+namespace Domain.Models.Room.Fix;
 
 public class RoomFixInfo
 {
@@ -6,6 +7,8 @@ public class RoomFixInfo
     public DateTime? FixDeadline { get; private set; }
     public string? Comment { get; private set; }
 
+    // (d.smirnov): крч оно как-то говённо иногда работает, решил пока что вырубить
+    // ReSharper disable once ConvertToPrimaryConstructor
     public RoomFixInfo(RoomStatus status, DateTime? fixDeadline, string? comment)
     {
         Status = status;

@@ -9,6 +9,8 @@ public class RoomParameters
     public int? ComputerSeats { get; private set; }
     public bool? HasConditioning { get; private set; }
 
+    // (d.smirnov): крч оно как-то говённо иногда работает, решил пока что вырубить
+    // ReSharper disable once ConvertToPrimaryConstructor
     public RoomParameters(
         RoomType type,
         RoomLayout layout,

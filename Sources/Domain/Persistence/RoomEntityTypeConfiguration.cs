@@ -18,8 +18,8 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
             t => t.ScheduleAddress,
             b =>
             {
-                b.Property(x => x.Address).IsRequired().HasMaxLength(64);
-                b.Property(x => x.RoomNumber).IsRequired().HasMaxLength(32);
+                b.Property(x => x.Address).HasMaxLength(64);
+                b.Property(x => x.RoomNumber).HasMaxLength(32);
             });
 
         builder.OwnsOne(
