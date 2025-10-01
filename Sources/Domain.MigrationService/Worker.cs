@@ -8,7 +8,7 @@ public class Worker(
     IServiceProvider serviceProvider,
     IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
 {
-    private const string ActivitySourceName = "Migrations";
+    public const string ActivitySourceName = "Migrations";
     private static readonly ActivitySource ActivitySource = new(ActivitySourceName);
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -21,7 +21,6 @@ public class Worker(
             var dbContext = scope.ServiceProvider.GetRequiredService<DomainDbContext>();
 
             await RunMigrationAsync(dbContext, cancellationToken);
-            // await SeedDataAsync(dbContext, cancellationToken);
         }
         catch (Exception ex)
         {
