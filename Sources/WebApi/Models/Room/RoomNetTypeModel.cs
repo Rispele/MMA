@@ -1,4 +1,4 @@
-﻿namespace WebApi.Dto.Room;
+﻿namespace WebApi.Models.Room;
 
 public enum RoomNetTypeModel
 {

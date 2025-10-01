@@ -1,6 +1,6 @@
-﻿namespace WebApi.Services;
+﻿namespace WebApi.Models.Dtos;
 
-public class FileResultModel
+public class FileResultDto
 {
     public Stream Stream { get; set; } = default!;
     public string FileName { get; set; } = default!;

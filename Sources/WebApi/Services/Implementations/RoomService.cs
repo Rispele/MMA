@@ -1,9 +1,9 @@
-﻿using WebApi.Dto.Requests;
-using WebApi.Dto.Responses;
-using WebApi.Dto.Room;
-using WebApi.Models.Requests;
+﻿using WebApi.Models.Requests;
+using WebApi.Models.Responses;
+using WebApi.Models.Room;
+using WebApi.Services.Interfaces;
 
-namespace WebApi.Services;
+namespace WebApi.Services.Implementations;
 
 public class RoomService : IRoomService
 {

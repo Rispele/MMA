@@ -1,4 +1,4 @@
-﻿namespace WebApi.Dto.Requests;
+﻿namespace WebApi.Models.Requests;
 
 public record RoomsRequest
 {

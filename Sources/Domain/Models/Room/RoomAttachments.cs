@@ -1,13 +1,7 @@
 ﻿namespace Domain.Models.Room;
 
-public class RoomAttachments
+public class RoomAttachments(File pdfRoomScheme, File photo)
 {
-    public File PdfRoomScheme { get; private set; }
-    public File Photo { get; private set; }
-    
-    public RoomAttachments(File pdfRoomScheme, File photo)
-    {
-        PdfRoomScheme = pdfRoomScheme;
-        Photo = photo;
-    }
+    public File PdfRoomScheme { get; private set; } = pdfRoomScheme;
+    public File Photo { get; private set; } = photo;
 }

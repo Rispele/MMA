@@ -1,4 +1,4 @@
-﻿using WebApi.Dto.Room;
+﻿using WebApi.Models.Room;
 
 namespace WebApi.Models.Requests;
 

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using WebApi.Dto.Requests;
+using WebApi.Models.Requests;
 
 namespace WebApi.ModelBinders;
 

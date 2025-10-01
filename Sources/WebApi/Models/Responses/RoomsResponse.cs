@@ -1,6 +1,6 @@
-﻿using WebApi.Dto.Room;
+﻿using WebApi.Models.Room;
 
-namespace WebApi.Dto.Responses;
+namespace WebApi.Models.Responses;
 
 public record RoomsResponse
 {

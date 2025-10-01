@@ -1,28 +1,21 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Dto.Requests;
-using WebApi.Dto.Responses;
-using WebApi.Dto.Room;
 using WebApi.ModelBinders;
 using WebApi.Models.Requests;
-using WebApi.Services;
+using WebApi.Models.Responses;
+using WebApi.Models.Room;
+using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/rooms")]
-public class RoomsController : ControllerBase
+public class RoomsController(IRoomService roomService,
+    IFileService fileService,
+    ILogger<RoomsController> logger)
+    : ControllerBase
 {
-    private readonly IRoomService roomService;
-    private readonly IFileService fileService;
-    private readonly ILogger<RoomsController> logger;
-
-    public RoomsController(IRoomService roomService, IFileService fileService, ILogger<RoomsController> logger)
-    {
-        this.roomService = roomService;
-        this.fileService = fileService;
-        this.logger = logger;
-    }
+    private readonly ILogger<RoomsController> _logger = logger;
 
     [HttpGet]
     public async Task<ActionResult<RoomsResponse>> GetRooms(

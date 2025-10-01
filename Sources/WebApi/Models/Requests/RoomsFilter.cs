@@ -1,8 +1,7 @@
-﻿using WebApi.Controllers;
-using WebApi.Dto.Room;
-using WebApi.Models.Requests.Filtering;
+﻿using WebApi.Models.Requests.Filtering;
+using WebApi.Models.Room;
 
-namespace WebApi.Dto.Requests;
+namespace WebApi.Models.Requests;
 
 public record RoomsFilter
 {

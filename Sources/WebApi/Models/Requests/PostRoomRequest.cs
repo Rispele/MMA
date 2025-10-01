@@ -1,6 +1,6 @@
-﻿using WebApi.Dto.Room;
+﻿using WebApi.Models.Room;
 
-namespace WebApi.Dto.Requests;
+namespace WebApi.Models.Requests;
 
 public record PostRoomRequest
 {
