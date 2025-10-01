@@ -1,6 +1,7 @@
 ﻿using Domain.Models.Room.Fix;
 using Domain.Models.Room.Parameters;
 using Domain.Persistence;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Models.Room;
@@ -18,6 +19,11 @@ public class Room
     public RoomFixInfo FixInfo { get; private set; }
     public bool AllowBooking { get; private set; }
 
+    [UsedImplicitly]
+    protected Room()
+    {
+    }
+    
     public Room(
         int id,
         string name,

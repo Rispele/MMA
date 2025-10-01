@@ -1,0 +1,43 @@
+using System.Diagnostics;
+using Domain.Persistence;
+using Microsoft.EntityFrameworkCore;
+
+namespace Domain.MigrationService;
+
+public class Worker(
+    IServiceProvider serviceProvider,
+    IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
+{
+    private const string ActivitySourceName = "Migrations";
+    private static readonly ActivitySource ActivitySource = new(ActivitySourceName);
+
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    {
+        using var activity = ActivitySource.StartActivity("Migrating database", ActivityKind.Client);
+
+        try
+        {
+            using var scope = serviceProvider.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<DomainDbContext>();
+
+            await RunMigrationAsync(dbContext, cancellationToken);
+            // await SeedDataAsync(dbContext, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            activity?.AddException(ex);
+            throw;
+        }
+
+        hostApplicationLifetime.StopApplication();
+    }
+
+    private static async Task RunMigrationAsync(DomainDbContext dbContext, CancellationToken cancellationToken)
+    {
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.MigrateAsync(cancellationToken);
+        });
+    }
+}

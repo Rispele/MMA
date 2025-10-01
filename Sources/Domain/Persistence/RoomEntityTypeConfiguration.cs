@@ -34,7 +34,12 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
                 b.Property(t => t.HasConditioning);
             });
 
-        builder.OwnsOne(t => t.Attachments, b => b.ToJson());
+        builder.OwnsOne(t => t.Attachments, b =>
+        {
+            b.ToJson().HasColumnType("jsonb");
+            b.OwnsOne(t => t.PdfRoomScheme, bb => bb.OwnsOne(t => t.Location));
+            b.OwnsOne(t => t.Photo, bb => bb.OwnsOne(t => t.Location));
+        });
         builder.Property(t => t.Owner).HasMaxLength(64);
         builder.OwnsOne(
             t => t.FixInfo,
@@ -42,9 +47,8 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
             {
                 b.Property(t => t.Status).IsRequired();
                 b.Property(t => t.Comment).HasMaxLength(256);
-                b.Property(t => t.FixDeadline).HasColumnType("timestampz");
+                b.Property(t => t.FixDeadline).HasColumnType("timestamptz");
             });
         builder.Property(t => t.AllowBooking).IsRequired();
-
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
@@ -18,6 +19,17 @@ public static class Extensions
     private const string HealthEndpointPath = "/health";
     private const string AlivenessEndpointPath = "/alive";
 
+    public static TBuilder AddPostgresDbContext<TBuilder, TDbContext>(this TBuilder builder, string connectionName)
+        where TBuilder : IHostApplicationBuilder
+        where TDbContext: DbContext
+    {
+        builder.AddNpgsqlDbContext<TDbContext>(
+            connectionName, 
+            configureDbContextOptions: b => b.UseSnakeCaseNamingConvention());
+        
+        return builder;
+    }
+    
     public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry();

@@ -1,7 +1,20 @@
-﻿namespace Domain.Models.Room;
+﻿using JetBrains.Annotations;
 
-public class RoomAttachments(File? pdfRoomScheme, File? photo)
+namespace Domain.Models.Room;
+
+public class RoomAttachments
 {
-    public File? PdfRoomScheme { get; private set; } = pdfRoomScheme;
-    public File? Photo { get; private set; } = photo;
+    public File? PdfRoomScheme { get; private set; }
+    public File? Photo { get; private set; }
+
+    [UsedImplicitly]
+    protected RoomAttachments()
+    {
+    }
+
+    public RoomAttachments(File? pdfRoomScheme, File? photo)
+    {
+        PdfRoomScheme = pdfRoomScheme;
+        Photo = photo;
+    }
 }

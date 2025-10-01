@@ -11,13 +11,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.4.2"/>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.0" />
         <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\BackdoorApi\BackdoorApi.csproj" />
+      <ProjectReference Include="..\Domain.MigrationService\Domain.MigrationService.csproj" />
       <ProjectReference Include="..\WebApi\WebApi.csproj" />
     </ItemGroup>
 
