@@ -13,11 +13,22 @@
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.WebApi>("webapi").WithExternalHttpEndpoints();
+var postgresUserName = builder.AddParameter("PostgresUserName");
+var postgresPassword = builder.AddParameter("PostgresUserPassword");
+var postgresPort = builder.AddParameter("PostgresPort");
+
+var port = await postgresPort.Resource.GetValueAsync(CancellationToken.None) ?? throw new InvalidOperationException("Port not specified");
+var postgres = builder.AddPostgres("mmr", postgresUserName, postgresPassword, port: int.Parse(port));
+
+builder
+    .AddProject<Projects.WebApi>("webapi")
+    .WithReference(postgres)
+    .WaitFor(postgres)
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();
 
-/* Template 
+/* Template
 var builder = WebAzpplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
