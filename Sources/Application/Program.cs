@@ -1,3 +1,4 @@
+using Application.Configuration;
 using Domain.Persistence;
 using Sources.ServiceDefaults;
 
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder
     .AddServiceDefaults()
-    .AddPostgresDbContext<WebApplicationBuilder, DomainDbContext>("mmr");
+    .AddDomainContext();
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();

@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Npgsql;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -19,17 +22,47 @@ public static class Extensions
     private const string HealthEndpointPath = "/health";
     private const string AlivenessEndpointPath = "/alive";
 
-    public static TBuilder AddPostgresDbContext<TBuilder, TDbContext>(this TBuilder builder, string connectionName)
+    public static TBuilder AddPostgresDbContext<TBuilder, TDbContext>(
+        this TBuilder builder,
+        string connectionName,
+        Action<NpgsqlDbContextOptionsBuilder>? npgsqlOptionsAction = null)
         where TBuilder : IHostApplicationBuilder
-        where TDbContext: DbContext
+        where TDbContext : DbContext
     {
-        builder.AddNpgsqlDbContext<TDbContext>(
-            connectionName, 
-            configureDbContextOptions: b => b.UseSnakeCaseNamingConvention());
-        
+        var connectionString = builder.Configuration.GetConnectionString(connectionName)
+                               ?? throw new InvalidOperationException($"Could not get connection string for connection: [{connectionName}]");
+
+        builder.ConfigureInstrumentation<TDbContext>();
+        builder.Services.AddDbContextFactory<TDbContext>(optionsBuilder => optionsBuilder
+            .UseSnakeCaseNamingConvention()
+            .UseNpgsql(connectionString, npgsqlOptionsAction));
+
+        // (d.smirnov): не подходит - не умеет мапить енумы
+        // builder.AddNpgsqlDbContext<TDbContext>(
+            // connectionName,
+            // configureDbContextOptions: b => b.UseSnakeCaseNamingConvention());
+
         return builder;
     }
-    
+
+    private static void ConfigureInstrumentation<TContext>(this IHostApplicationBuilder builder) where TContext : DbContext
+    {
+        var healthCheckKey = $"Aspire.HealthChecks.{typeof(TContext).Name}";
+        if (!builder.Properties.ContainsKey(healthCheckKey))
+        {
+            builder.Properties[healthCheckKey] = true;
+            builder.Services.AddHealthChecks().AddDbContextCheck<TContext>();
+        }
+
+        builder.Services.AddOpenTelemetry().WithTracing(tracerProviderBuilder => { tracerProviderBuilder.AddNpgsql(); });
+
+        double[] secondsBuckets = [0, 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10];
+        builder.Services.AddOpenTelemetry().WithMetrics(meterProviderBuilder => meterProviderBuilder
+            .AddMeter("Npgsql")
+            .AddView("db.client.commands.duration", new ExplicitBucketHistogramConfiguration { Boundaries = secondsBuckets })
+            .AddView("db.client.connections.create_time", new ExplicitBucketHistogramConfiguration { Boundaries = secondsBuckets }));
+    }
+
     public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry();
