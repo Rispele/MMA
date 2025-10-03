@@ -1,0 +1,12 @@
+﻿using Application.Implementations.Dtos.Dtos;
+
+namespace Application.Implementations.Services.Attachments;
+
+public interface IFileService
+{
+    /// <summary>
+    /// Returns file stream, file name and content type (or null if not found)
+    /// Implement via MinIO / S3 client.
+    /// </summary>
+    Task<FileResultDto?> GetFileAsync(Guid id, string bucket, CancellationToken cancellationToken);
+}

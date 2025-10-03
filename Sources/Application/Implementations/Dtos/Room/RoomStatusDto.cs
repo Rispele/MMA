@@ -1,6 +1,6 @@
-﻿namespace Domain.Models.Room.Fix;
+﻿namespace Application.Implementations.Dtos.Room;
 
-public enum RoomStatus
+public enum RoomStatusDto
 {
     Unspecified = 0,
     Ready = 1,
