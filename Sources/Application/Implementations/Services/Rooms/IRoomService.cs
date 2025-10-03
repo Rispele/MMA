@@ -9,7 +9,7 @@ namespace Application.Implementations.Services.Rooms;
 public interface IRoomService
 {
     Task<RoomDto> GetRoomById(int id, CancellationToken cancellationToken);
-    Task<RoomsResponseDto> GetRooms(RoomsRequestDto request, CancellationToken cancellationToken);
+    Task<RoomsResponseDto> FilterRooms(RoomsRequestDto request, CancellationToken cancellationToken);
     Task<RoomDto> CreateRoom(PostRoomRequest request, CancellationToken cancellationToken);
     Task<RoomDto> PatchRoom(int roomId, PatchRoomRequestDto patchedDto, CancellationToken cancellationToken);
 }

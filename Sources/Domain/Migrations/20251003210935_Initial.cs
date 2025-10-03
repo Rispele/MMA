@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Models.Room;
 using Domain.Models.Room.Fix;
 using Domain.Models.Room.Parameters;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -17,7 +18,7 @@ namespace Domain.Migrations
             migrationBuilder.AlterDatabase()
                 .Annotation("Npgsql:Enum:room_layout", "amphitheater,flat,unspecified")
                 .Annotation("Npgsql:Enum:room_net_type", "none,unspecified,wired,wired_and_wireless,wireless")
-                .Annotation("Npgsql:Enum:room_status", "not_ready,partially_ready,ready,unknown")
+                .Annotation("Npgsql:Enum:room_status", "not_ready,partially_ready,ready,unspecified")
                 .Annotation("Npgsql:Enum:room_type", "computer,mixed,multimedia,special,unspecified");
 
             migrationBuilder.CreateTable(
@@ -36,12 +37,12 @@ namespace Domain.Migrations
                     parameters_seats = table.Column<int>(type: "integer", nullable: true),
                     parameters_computer_seats = table.Column<int>(type: "integer", nullable: true),
                     parameters_has_conditioning = table.Column<bool>(type: "boolean", nullable: true),
+                    attachments = table.Column<RoomAttachments>(type: "jsonb", nullable: false),
                     owner = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     fix_info_status = table.Column<RoomStatus>(type: "room_status", nullable: false),
                     fix_info_fix_deadline = table.Column<DateTime>(type: "timestamptz", nullable: true),
                     fix_info_comment = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    allow_booking = table.Column<bool>(type: "boolean", nullable: false),
-                    attachments = table.Column<string>(type: "jsonb", nullable: false)
+                    allow_booking = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

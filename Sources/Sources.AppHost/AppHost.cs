@@ -17,6 +17,7 @@ var postgresMigrations = builder
 
 var application = builder
     .AddProject<Projects.Application>("application")
+    .WithReference(postgres)
     .WithReference(postgresMigrations)
     .WaitFor(postgresMigrations);
 

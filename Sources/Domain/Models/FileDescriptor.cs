@@ -2,17 +2,17 @@
 
 namespace Domain.Models;
 
-public class File
+public class FileDescriptor
 {
     public string Filename { get; init; } = null!;
     public Location Location { get; init; } = null!;
 
     [UsedImplicitly]
-    protected File()
+    protected FileDescriptor()
     {
     }
     
-    public File(string filename, Location location)
+    public FileDescriptor(string filename, Location location)
     {
         Filename = filename;
         Location = location;

@@ -4,15 +4,15 @@ namespace Domain.Models.Room;
 
 public class RoomAttachments
 {
-    public File? PdfRoomScheme { get; private set; }
-    public File? Photo { get; private set; }
+    public FileDescriptor? PdfRoomScheme { get; private set; }
+    public FileDescriptor? Photo { get; private set; }
 
     [UsedImplicitly]
     protected RoomAttachments()
     {
     }
 
-    public RoomAttachments(File? pdfRoomScheme, File? photo)
+    public RoomAttachments(FileDescriptor? pdfRoomScheme, FileDescriptor? photo)
     {
         PdfRoomScheme = pdfRoomScheme;
         Photo = photo;

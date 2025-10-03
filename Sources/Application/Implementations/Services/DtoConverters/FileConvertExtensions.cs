@@ -5,11 +5,11 @@ namespace Application.Implementations.Services.DtoConverters;
 
 public static class FileConvertExtensions
 {
-    public static FileDto ToDto(this Domain.Models.File file)
+    public static FileDto ToDto(this Domain.Models.FileDescriptor fileDescriptor)
     {
         return new FileDto(
-            file.Filename,
-            file.Location.ToDto());
+            fileDescriptor.Filename,
+            fileDescriptor.Location.ToDto());
     }
 
     public static LocationDto ToDto(this Location location)
