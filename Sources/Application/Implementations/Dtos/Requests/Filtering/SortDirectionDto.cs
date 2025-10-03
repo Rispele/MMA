@@ -1,6 +1,6 @@
 ﻿namespace Application.Implementations.Dtos.Requests.Filtering;
 
-public enum SortDirection
+public enum SortDirectionDto
 {
     None = 0,
     Ascending = 1,

@@ -3,11 +3,12 @@ using Application.Implementations.Dtos.Requests.RoomPatching;
 using Application.Implementations.Dtos.Requests.RoomsQuerying;
 using Application.Implementations.Dtos.Responses;
 using Application.Implementations.Dtos.Room;
+using Application.Implementations.Persistence;
 using Application.Implementations.Services.DtoConverters;
 using Commons;
+using Commons.Queries;
 using Domain.Exceptions;
 using Domain.Persistence;
-using Domain.Persistence.Queries;
 
 namespace Application.Implementations.Services.Rooms;
 
@@ -24,15 +25,22 @@ public class RoomService : IRoomService
 
     public async Task<RoomDto> GetRoomById(int id, CancellationToken cancellationToken)
     {
-        var room = await dbContext.ApplyQuery(new FindRoomByIdQuery(id))
+        var room = await dbContext.ApplyQuery(new FindRoomByIdQuery(id), cancellationToken)
             ?? throw new RoomNotFoundException($"Room [{id}] not found");
 
         return room.Map(roomDtoConverter.Convert);
     }
 
-    public Task<RoomsResponseDto> GetRooms(RoomsRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<RoomsResponseDto> GetRooms(RoomsRequestDto request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var rooms = await dbContext
+            .ApplyQuery(new FilterRoomsQuery(request.BatchSize, request.BatchNumber, request.AfterRoomId, request.Filter))
+            .ToArrayAsync(cancellationToken: cancellationToken);
+
+        var convertedRooms = rooms.Select(roomDtoConverter.Convert).ToArray();
+        int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
+
+        return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
     }
 
     public Task<RoomDto> CreateRoom(PostRoomRequest request, CancellationToken cancellationToken)

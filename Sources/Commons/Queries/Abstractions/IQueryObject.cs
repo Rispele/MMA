@@ -1,4 +1,4 @@
-﻿namespace Domain.Persistence.Queries.Abstractions;
+﻿namespace Commons.Queries.Abstractions;
 
 public interface IQueryObject<out TEntity, in TDbContext>
 {

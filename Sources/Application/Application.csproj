@@ -16,8 +16,4 @@
       <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Implementations\" />
-    </ItemGroup>
-
 </Project>

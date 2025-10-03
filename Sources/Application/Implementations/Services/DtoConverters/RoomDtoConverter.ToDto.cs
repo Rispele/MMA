@@ -6,7 +6,7 @@ using Domain.Models.Room.Parameters;
 
 namespace Application.Implementations.Services.DtoConverters;
 
-public class RoomDtoConverter
+public partial class RoomDtoConverter
 {
     public RoomDto Convert(Room room)
     {

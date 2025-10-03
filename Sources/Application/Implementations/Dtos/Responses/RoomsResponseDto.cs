@@ -2,8 +2,7 @@
 
 namespace Application.Implementations.Dtos.Responses;
 
-public record RoomsResponseDto
-{
-    public RoomDto[] Rooms { get; init; } = [];
-    public int Count { get; init; }
-}
+public record RoomsResponseDto(
+    RoomDto[] Rooms,
+    int Count,
+    int? LastRoomId);

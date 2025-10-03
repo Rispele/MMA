@@ -2,8 +2,8 @@
 
 public record RoomsRequestDto
 {
-    public int Page { get; init; }
-    public int PageSize { get; init; }
+    public int BatchSize { get; init; }
+    public int BatchNumber { get; init; }
     public int AfterRoomId { get; init; }
-    public RoomsFilter? Filter { get; init; }
+    public RoomsFilterDto? Filter { get; init; }
 }
