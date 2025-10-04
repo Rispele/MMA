@@ -3,6 +3,7 @@ using Application.Implementations.Dtos.Requests.Filtering;
 using Application.Implementations.Dtos.Requests.RoomsQuerying;
 using Application.Implementations.Services.DtoConverters;
 using Commons;
+using Commons.Optional;
 using Commons.Queries.Abstractions;
 using Domain.Models.Room;
 using Domain.Persistence;

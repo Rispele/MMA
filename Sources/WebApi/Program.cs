@@ -1,3 +1,4 @@
+using Application.Clients;
 using Sources.ServiceDefaults;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
@@ -16,8 +17,15 @@ serviceCollection.AddEndpointsApiExplorer();
 
 serviceCollection.AddControllers();
 
-serviceCollection.AddSingleton<IRoomService, RoomService>();
-serviceCollection.AddSingleton<IFileService, FileService>();
+serviceCollection
+    .AddHttpClient<IRoomsClient, RoomsClient>(client =>
+    {
+        client.BaseAddress = new Uri("https+http://application");
+    });
+
+serviceCollection
+    .AddSingleton<IRoomService, RoomService>()
+    .AddSingleton<IFileService, FileService>();
 
 var app = builder.Build();
 
@@ -25,10 +33,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(b =>
-    {
-        b.SwaggerEndpoint("/openapi/v1.json", "My API V1");
-    });
+    app.UseSwaggerUI(b => { b.SwaggerEndpoint("/openapi/v1.json", "My API V1"); });
 }
 
 app.MapControllers();

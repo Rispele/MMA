@@ -1,5 +1,6 @@
 ﻿using Application.Implementations.Dtos.Room;
 using Commons;
+using Commons.Optional;
 using Domain.Models.Room;
 using Domain.Models.Room.Fix;
 using Domain.Models.Room.Parameters;

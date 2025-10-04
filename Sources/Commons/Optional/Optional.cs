@@ -1,4 +1,4 @@
-﻿namespace Commons;
+﻿namespace Commons.Optional;
 
 public record Optional<TValue>(TValue? Value)
 {

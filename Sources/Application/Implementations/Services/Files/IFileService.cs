@@ -1,6 +1,6 @@
-﻿using Application.Implementations.Dtos.Dtos;
+﻿using Application.Implementations.Dtos.Files;
 
-namespace Application.Implementations.Services.Attachments;
+namespace Application.Implementations.Services.Files;
 
 public interface IFileService
 {

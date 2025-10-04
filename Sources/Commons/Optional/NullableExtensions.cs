@@ -1,4 +1,4 @@
-﻿namespace Commons;
+﻿namespace Commons.Optional;
 
 public static class NullableExtensions
 {

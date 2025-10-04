@@ -1,7 +1,7 @@
 using Application;
 using Application.Configuration;
-using Application.Implementations.Services.Attachments;
 using Application.Implementations.Services.DtoConverters;
+using Application.Implementations.Services.Files;
 using Application.Implementations.Services.Rooms;
 using Sources.ServiceDefaults;
 

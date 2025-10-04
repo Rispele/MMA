@@ -24,6 +24,7 @@ var application = builder
 builder
     .AddProject<Projects.WebApi>("webapi")
     .WithExternalHttpEndpoints()
-    .WithReference(application);
+    .WithReference(application)
+    .WaitFor(application);
 
 builder.Build().Run();

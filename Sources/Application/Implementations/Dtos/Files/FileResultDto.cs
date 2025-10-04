@@ -1,4 +1,4 @@
-﻿namespace Application.Implementations.Dtos.Dtos;
+﻿namespace Application.Implementations.Dtos.Files;
 
 public class FileResultDto
 {
