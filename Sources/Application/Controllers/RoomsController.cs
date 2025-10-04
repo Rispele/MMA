@@ -23,7 +23,7 @@ public class RoomsController(ILogger<RoomsController> logger, IRoomService roomS
     }
 
     [HttpPost("filter")]
-    public async Task<ActionResult<RoomsResponseDto>> GetRooms([FromBody] RoomsRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<ActionResult<RoomsResponseDto>> GetRooms([FromBody] GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
     {
         var response = await roomService.FilterRooms(requestDto, cancellationToken);
         
@@ -31,7 +31,7 @@ public class RoomsController(ILogger<RoomsController> logger, IRoomService roomS
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRoom([FromBody] PostRoomRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateRoom([FromBody] CreateRoomRequest request, CancellationToken cancellationToken)
     {
         return Ok();
     }

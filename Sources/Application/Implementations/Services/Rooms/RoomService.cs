@@ -31,7 +31,7 @@ public class RoomService : IRoomService
         return room.Map(roomDtoConverter.Convert);
     }
 
-    public async Task<RoomsResponseDto> FilterRooms(RoomsRequestDto request, CancellationToken cancellationToken)
+    public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto request, CancellationToken cancellationToken)
     {
         var rooms = await dbContext
             .ApplyQuery(new FilterRoomsQuery(request.BatchSize, request.BatchNumber, request.AfterRoomId, request.Filter))
@@ -43,7 +43,7 @@ public class RoomService : IRoomService
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
     }
 
-    public Task<RoomDto> CreateRoom(PostRoomRequest request, CancellationToken cancellationToken)
+    public Task<RoomDto> CreateRoom(CreateRoomRequest request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

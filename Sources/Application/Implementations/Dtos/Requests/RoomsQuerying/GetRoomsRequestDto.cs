@@ -1,6 +1,6 @@
 ﻿namespace Application.Implementations.Dtos.Requests.RoomsQuerying;
 
-public record RoomsRequestDto
+public record GetRoomsRequestDto
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

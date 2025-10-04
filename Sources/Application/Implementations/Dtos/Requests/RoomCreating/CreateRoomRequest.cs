@@ -2,7 +2,7 @@
 
 namespace Application.Implementations.Dtos.Requests.RoomCreating;
 
-public record PostRoomRequest
+public record CreateRoomRequest
 {
     public string Name { get; init; } = string.Empty;
     public string? Description { get; init; }
