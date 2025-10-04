@@ -11,5 +11,5 @@ public interface IRoomService
     Task<RoomDto> GetRoomById(int id, CancellationToken cancellationToken);
     Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto request, CancellationToken cancellationToken);
     Task<RoomDto> CreateRoom(CreateRoomRequest request, CancellationToken cancellationToken);
-    Task<RoomDto> PatchRoom(int roomId, PatchRoomRequestDto patchedDto, CancellationToken cancellationToken);
+    Task<RoomDto> PatchRoom(int roomId, PatchRoomRequest request, CancellationToken cancellationToken);
 }

@@ -13,7 +13,7 @@ namespace Application.Implementations.Persistence;
 /// 
 /// </summary>
 /// <param name="batchNumber">from 0 to +inf</param>
-public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, RoomsFilterDto? filter) : IQueryObject<Room, DomainDbContext>
+public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, RoomsFilterDto? filter, RoomDtoConverter roomDtoConverter) : IQueryObject<Room, DomainDbContext>
 {
     public IAsyncEnumerable<Room> Apply(DomainDbContext dbContext)
     {
@@ -45,7 +45,7 @@ public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, R
             .AsOptional()
             .Apply(rooms, (queryable, parameter) =>
             {
-                var types = parameter.Values.Select(RoomDtoConverter.Convert).ToArray();
+                var types = parameter.Values.Select(roomDtoConverter.Convert).ToArray();
                 return queryable.Where(t => Enumerable.Contains(types, t.Parameters.Type));
             });
 
@@ -53,7 +53,7 @@ public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, R
             .AsOptional()
             .Apply(rooms, (queryable, parameter) =>
             {
-                var types = parameter.Values.Select(RoomDtoConverter.Convert).ToArray();
+                var types = parameter.Values.Select(roomDtoConverter.Convert).ToArray();
                 return queryable.Where(t => Enumerable.Contains(types, t.Parameters.Layout));
             });
 
@@ -69,7 +69,7 @@ public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, R
             .AsOptional()
             .Apply(rooms, (queryable, parameter) =>
             {
-                var types = parameter.Values.Select(RoomDtoConverter.Convert).ToArray();
+                var types = parameter.Values.Select(roomDtoConverter.Convert).ToArray();
                 return queryable.Where(t => Enumerable.Contains(types, t.Parameters.NetType));
             });
 
@@ -85,7 +85,7 @@ public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, R
             .AsOptional()
             .Apply(rooms, (queryable, parameter) =>
             {
-                var values = parameter.Values.Select(RoomDtoConverter.Convert).ToArray();
+                var values = parameter.Values.Select(roomDtoConverter.Convert).ToArray();
                 return queryable.Where(t => Enumerable.Contains(values, t.FixInfo.Status));
             });
 

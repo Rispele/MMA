@@ -8,7 +8,7 @@ namespace Application.Implementations.Services.DtoConverters;
 
 public partial class RoomDtoConverter
 {
-    public static RoomType Convert(RoomTypeDto roomType)
+    public RoomType Convert(RoomTypeDto roomType)
     {
         return roomType switch
         {
@@ -21,7 +21,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    public static RoomLayout Convert(RoomLayoutDto roomLayout)
+    public RoomLayout Convert(RoomLayoutDto roomLayout)
     {
         return roomLayout switch
         {
@@ -32,7 +32,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    public static RoomNetType Convert(RoomNetTypeDto roomNetType)
+    public RoomNetType Convert(RoomNetTypeDto roomNetType)
     {
         return roomNetType switch
         {
@@ -45,7 +45,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    public static RoomStatus Convert(RoomStatusDto roomStatus)
+    public RoomStatus Convert(RoomStatusDto roomStatus)
     {
         return roomStatus switch
         {

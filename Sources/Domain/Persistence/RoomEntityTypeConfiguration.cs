@@ -34,12 +34,6 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
                 b.Property(t => t.HasConditioning);
             });
 
-        // builder.OwnsOne(t => t.Attachments, b =>
-        // {
-            // b.ToJson().HasColumnType("jsonb");
-            // b.OwnsOne(t => t.PdfRoomScheme, bb => bb.OwnsOne(t => t.Location));
-            // b.OwnsOne(t => t.Photo, bb => bb.OwnsOne(t => t.Location));
-        // });
         builder.Property(t => t.Attachments).HasColumnType("jsonb");
         builder.Property(t => t.Owner).HasMaxLength(64);
         builder.OwnsOne(

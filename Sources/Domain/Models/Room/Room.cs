@@ -10,7 +10,7 @@ namespace Domain.Models.Room;
 [EntityTypeConfiguration<RoomEntityTypeConfiguration, Room>]
 public class Room
 {
-    public int Id { get; private set; }
+    public int Id { get; [UsedImplicitly] private set; }
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
     public RoomScheduleAddress? ScheduleAddress { get; private set; }
@@ -25,8 +25,7 @@ public class Room
     {
     }
 
-    public Room(
-        int id,
+    private Room(
         string name,
         string? description,
         RoomScheduleAddress? scheduleAddress,
@@ -36,7 +35,6 @@ public class Room
         RoomFixInfo fixInfo,
         bool allowBooking)
     {
-        Id = id;
         Name = name;
         Description = description;
         ScheduleAddress = scheduleAddress;
@@ -44,6 +42,36 @@ public class Room
         Attachments = attachments;
         FixInfo = fixInfo;
         Owner = owner;
+        AllowBooking = allowBooking;
+    }
+
+    public static Room New(
+        string name,
+        string? description,
+        RoomParameters parameters,
+        RoomAttachments attachments,
+        string? owner,
+        RoomFixInfo fixInfo,
+        bool allowBooking)
+    {
+        return new Room(name, description, scheduleAddress: null, parameters, attachments, owner, fixInfo, allowBooking);
+    }
+
+    public void Update(
+        string name,
+        string? description,
+        RoomParameters parameters,
+        RoomAttachments attachments,
+        string? owner,
+        RoomFixInfo fixInfo,
+        bool allowBooking)
+    {
+        Name = name;
+        Description = description;
+        Parameters = parameters;
+        Attachments = attachments;
+        Owner = owner;
+        FixInfo = fixInfo;
         AllowBooking = allowBooking;
     }
 }

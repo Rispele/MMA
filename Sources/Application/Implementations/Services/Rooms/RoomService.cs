@@ -8,33 +8,43 @@ using Application.Implementations.Services.DtoConverters;
 using Commons;
 using Commons.Queries;
 using Domain.Exceptions;
+using Domain.Models.Room;
+using Domain.Models.Room.Fix;
+using Domain.Models.Room.Parameters;
 using Domain.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Application.Implementations.Services.Rooms;
 
 public class RoomService : IRoomService
 {
-    private readonly DomainDbContext dbContext;
+    private readonly IDbContextFactory<DomainDbContext> domainDbContextProvider;
     private readonly RoomDtoConverter roomDtoConverter;
 
-    public RoomService(DomainDbContext dbContext, RoomDtoConverter roomDtoConverter)
+    public RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvider, RoomDtoConverter roomDtoConverter)
     {
-        this.dbContext = dbContext;
+        this.domainDbContextProvider = domainDbContextProvider;
         this.roomDtoConverter = roomDtoConverter;
     }
 
     public async Task<RoomDto> GetRoomById(int id, CancellationToken cancellationToken)
     {
-        var room = await dbContext.ApplyQuery(new FindRoomByIdQuery(id), cancellationToken)
-            ?? throw new RoomNotFoundException($"Room [{id}] not found");
+        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+
+        var room = await context.ApplyQuery(new FindRoomByIdQuery(id), cancellationToken)
+                   ?? throw new RoomNotFoundException($"Room [{id}] not found");
 
         return room.Map(roomDtoConverter.Convert);
     }
 
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto request, CancellationToken cancellationToken)
     {
-        var rooms = await dbContext
-            .ApplyQuery(new FilterRoomsQuery(request.BatchSize, request.BatchNumber, request.AfterRoomId, request.Filter))
+        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+
+        var rooms = await context
+            .ApplyQuery(new FilterRoomsQuery(request.BatchSize, request.BatchNumber, request.AfterRoomId, request.Filter, roomDtoConverter))
             .ToArrayAsync(cancellationToken: cancellationToken);
 
         var convertedRooms = rooms.Select(roomDtoConverter.Convert).ToArray();
@@ -43,13 +53,66 @@ public class RoomService : IRoomService
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
     }
 
-    public Task<RoomDto> CreateRoom(CreateRoomRequest request, CancellationToken cancellationToken)
+    public async Task<RoomDto> CreateRoom(CreateRoomRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var roomToCreate = Room.New(
+            request.Name,
+            request.Description,
+            new RoomParameters(
+                roomDtoConverter.Convert(request.Type),
+                roomDtoConverter.Convert(request.Layout),
+                roomDtoConverter.Convert(request.NetType),
+                request.Seats,
+                request.ComputerSeats,
+                request.HasConditioning),
+            new RoomAttachments(pdfRoomScheme: null, photo: null), //todo (d.smirnov): нужно сохранять файлы всё-таки
+            request.Owner,
+            new RoomFixInfo(
+                roomDtoConverter.Convert(request.RoomStatus),
+                request.FixDeadline,
+                request.Comment),
+            request.AllowBooking);
+
+        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+
+        var roomEntity = context.Rooms.Add(roomToCreate);
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        return roomDtoConverter.Convert(roomEntity.Entity);
     }
 
-    public Task<RoomDto> PatchRoom(int roomId, PatchRoomRequestDto patchedDto, CancellationToken cancellationToken)
+    public async Task<RoomDto> PatchRoom(int roomId, PatchRoomRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+       
+        var roomToPatch = await context.Rooms.FindAsync([roomId], cancellationToken: cancellationToken);
+
+        if (roomToPatch is null)
+        {
+            throw new RoomNotFoundException($"Room [{roomId}] not found");
+        }
+        
+        roomToPatch.Update(
+            request.Name,
+            request.Description,
+            new RoomParameters(
+                roomDtoConverter.Convert(request.Type),
+                roomDtoConverter.Convert(request.Layout),
+                roomDtoConverter.Convert(request.NetType),
+                request.Seats,
+                request.ComputerSeats,
+                request.HasConditioning),
+            new RoomAttachments(pdfRoomScheme: null, photo: null), //todo (d.smirnov): нужно сохранять файлы всё-таки
+            request.Owner,
+            new RoomFixInfo(
+                roomDtoConverter.Convert(request.RoomStatus),
+                request.FixDeadline,
+                request.Comment),
+            request.AllowBooking);
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        return roomDtoConverter.Convert(roomToPatch);
     }
 }

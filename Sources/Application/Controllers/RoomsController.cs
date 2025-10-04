@@ -31,14 +31,18 @@ public class RoomsController(ILogger<RoomsController> logger, IRoomService roomS
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRoom([FromBody] CreateRoomRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<RoomDto>> CreateRoom([FromBody] CreateRoomRequest request, CancellationToken cancellationToken)
     {
-        return Ok();
+        var createdRoom = await roomService.CreateRoom(request, cancellationToken);
+        
+        return Ok(createdRoom);
     }
 
-    [HttpPatch("{roomId:int}")]
-    public async Task<IActionResult> PatchRoom(int roomId, [FromBody] PatchRoomRequestDto patch, CancellationToken cancellationToken)
+    [HttpPatch]
+    public async Task<IActionResult> PatchRoom(int roomId, [FromBody] PatchRoomRequest patch, CancellationToken cancellationToken)
     {
+        await roomService.PatchRoom(roomId, patch, cancellationToken);
+        
         return Ok();
     }
 }
