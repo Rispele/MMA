@@ -7,7 +7,7 @@ public record PatchRoomRequest
 {
     [Required]
     [Length(1, 64, ErrorMessage = "Длина имени должна быть от 1 до 64 символов включительно")]
-    [RegularExpression("[a-zA-Zа-яА-Я,\\.-#№\\(\\)]{0,64}")]
+    [RegularExpression("[a-zA-Zа-яА-Я,\\.\\-#№\\(\\)]{0,64}")]
     public string Name { get; init; } = null!;
 
     [Length(1, 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]

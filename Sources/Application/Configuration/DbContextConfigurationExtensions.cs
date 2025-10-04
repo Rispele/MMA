@@ -16,6 +16,7 @@ public static class DbContextConfigurationExtensions
                     .MapEnum<RoomStatus>()
                     .MapEnum<RoomLayout>()
                     .MapEnum<RoomNetType>()
-                    .MapEnum<RoomType>());
+                    .MapEnum<RoomType>()
+                    .ConfigureDataSource(b => b.EnableDynamicJson()));
     }
 }
