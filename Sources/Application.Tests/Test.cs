@@ -1,5 +1,5 @@
-﻿using Application.Clients;
-using Application.Clients.Dtos.Requests.RoomCreating;
+﻿using Application.Clients.Dtos.Requests.RoomCreating;
+using Application.Clients.Implementations;
 using FluentAssertions;
 
 namespace Application.Tests;
@@ -12,7 +12,7 @@ public class Tests
     public async Task OneTimeSetUp()
     {
         factory = new ApplicationTestingHostFactory();
-        
+
         await factory.StartAsync();
     }
 

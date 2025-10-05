@@ -1,3 +1,5 @@
-﻿namespace Application.Clients.Dtos.Room;
+﻿using Application.Clients.Dtos.Files;
 
-public record RoomAttachmentsDto(FileDto? PdfRoomScheme, FileDto? Photo);
+namespace Application.Clients.Dtos.Room;
+
+public record RoomAttachmentsDto(FileMetadataDto? PdfRoomScheme, FileMetadataDto? Photo);

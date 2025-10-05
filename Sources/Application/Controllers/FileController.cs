@@ -9,7 +9,7 @@ namespace Application.Controllers;
 public class FileController(ILogger<RoomsController> logger, IFileService fileService) : ControllerBase
 {
     [HttpGet("{fileId:guid}")]
-    public async Task<ActionResult<FileResultDto>> GetFileById(Guid fileId, CancellationToken cancellationToken)
+    public async Task<ActionResult<FileDto>> GetFileById(Guid fileId, CancellationToken cancellationToken)
     {
         // todo: валидация доступа
         var file = await fileService.GetFileAsync(fileId, cancellationToken);

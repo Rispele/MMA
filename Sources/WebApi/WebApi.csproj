@@ -10,13 +10,16 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
-        <PackageReference Include="Minio" Version="6.0.5" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.6" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Application.Clients\Application.Clients.csproj" />
       <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Config\minioOptions.json" />
     </ItemGroup>
 
 </Project>

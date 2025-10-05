@@ -1,27 +1,22 @@
-﻿using WebApi.Models.Dtos;
+﻿using WebApi.Models.Files;
 using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class FileService(IMinioStorageService minioStorageService) : IFileService
+public class FileService : IFileService
 {
-    public async Task<FileResultDto?> GetFileAsync(Guid id, CancellationToken cancellationToken)
+    public Task<FileModel?> GetFileAsync(Guid id, CancellationToken cancellationToken)
     {
-        var data = await minioStorageService.GetDataAsync(id);
-
-        return new FileResultDto
-        {
-            Stream = new MemoryStream(data),
-        };
+        throw new NotImplementedException();
     }
 
-    public async Task<StorageFileDto> StoreFileAsync(Stream content, CancellationToken cancellationToken)
+    public Task<FileLocationModel> StoreFileAsync(Stream content, CancellationToken cancellationToken)
     {
-        return await minioStorageService.StoreDataAsync(content, cancellationToken);
+        throw new NotImplementedException();
     }
 
-    public async Task RemoveFileAsync(Guid fileId)
+    public Task RemoveFileAsync(Guid fileId)
     {
-        await minioStorageService.RemoveAsync(fileId);
+        throw new NotImplementedException();
     }
 }

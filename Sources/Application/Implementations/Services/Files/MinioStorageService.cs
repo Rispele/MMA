@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Application.Implementations.Dtos.Files;
+using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel.Args;
-using WebApi.Models.Dtos;
 using WebApi.Options;
-using WebApi.Services.Interfaces;
 
-namespace WebApi.Services.Implementations;
+namespace Application.Implementations.Services.Files;
 
 public class MinioStorageService : IMinioStorageService
 {
@@ -38,7 +37,7 @@ public class MinioStorageService : IMinioStorageService
         return memoryStream.ToArray();
     }
 
-    public async Task<StorageFileDto> StoreDataAsync(Stream content, CancellationToken cancellationToken)
+    public async Task<FileLocationDto> StoreDataAsync(Stream content, CancellationToken cancellationToken)
     {
         var id = Guid.NewGuid();
         var putObjectArgs = new PutObjectArgs()
@@ -46,11 +45,7 @@ public class MinioStorageService : IMinioStorageService
             .WithObject(id.ToString())
             .WithStreamData(content);
         await _minioClient.PutObjectAsync(putObjectArgs, cancellationToken);
-        return new StorageFileDto
-        {
-            Id = id,
-            BucketName = _minioOptions.BucketName,
-        };
+        return new FileLocationDto(id, _minioOptions.BucketName);
     }
 
     public async Task RemoveAsync(Guid fileId)

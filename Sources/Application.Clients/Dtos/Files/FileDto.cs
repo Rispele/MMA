@@ -1,6 +1,6 @@
 ﻿namespace Application.Clients.Dtos.Files;
 
-public class FileResultDto
+public class FileDto
 {
     public Stream Stream { get; set; } = default!;
     public string FileName { get; set; } = default!;

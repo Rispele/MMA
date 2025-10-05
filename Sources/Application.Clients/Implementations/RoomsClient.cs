@@ -4,9 +4,10 @@ using Application.Clients.Dtos.Requests.RoomPatching;
 using Application.Clients.Dtos.Requests.RoomsQuerying;
 using Application.Clients.Dtos.Responses;
 using Application.Clients.Dtos.Room;
+using Application.Clients.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Clients;
+namespace Application.Clients.Implementations;
 
 public class RoomsClient(HttpClient httpClient) : IRoomsClient
 {
