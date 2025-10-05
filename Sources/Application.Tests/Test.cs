@@ -1,11 +1,6 @@
-﻿using System.Net;
-using Application.Clients;
+﻿using Application.Clients;
 using Application.Clients.Dtos.Requests.RoomCreating;
-using Aspire.Hosting;
-using Aspire.Hosting.Testing;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Tests;
 
