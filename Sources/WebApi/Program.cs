@@ -1,5 +1,6 @@
 using Application.Clients;
 using Sources.ServiceDefaults;
+using WebApi.Options;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
 
@@ -25,7 +26,18 @@ serviceCollection
 
 serviceCollection
     .AddSingleton<IRoomService, RoomService>()
-    .AddSingleton<IFileService, FileService>();
+    .AddSingleton<IFileService, FileService>()
+    .AddSingleton<IMinioStorageService, MinioStorageService>()
+    ;
+
+serviceCollection.AddOptions();
+
+var configBuilder = new ConfigurationBuilder()
+    .AddJsonFile("Config/minioOptions.json", optional: false, reloadOnChange: true);
+
+var configuration = configBuilder.Build();
+
+serviceCollection.Configure<MinioOptions>(configuration.GetSection("MinioOptions"));
 
 var app = builder.Build();
 

@@ -13,22 +13,12 @@ using Domain.Models.Room.Fix;
 using Domain.Models.Room.Parameters;
 using Domain.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Application.Implementations.Services.Rooms;
 
-public class RoomService : IRoomService
+public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvider, RoomDtoConverter roomDtoConverter)
+    : IRoomService
 {
-    private readonly IDbContextFactory<DomainDbContext> domainDbContextProvider;
-    private readonly RoomDtoConverter roomDtoConverter;
-
-    public RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvider, RoomDtoConverter roomDtoConverter)
-    {
-        this.domainDbContextProvider = domainDbContextProvider;
-        this.roomDtoConverter = roomDtoConverter;
-    }
-
     public async Task<RoomDto> GetRoomById(int id, CancellationToken cancellationToken)
     {
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
@@ -85,14 +75,14 @@ public class RoomService : IRoomService
     public async Task<RoomDto> PatchRoom(int roomId, PatchRoomRequest request, CancellationToken cancellationToken)
     {
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
-       
+
         var roomToPatch = await context.Rooms.FindAsync([roomId], cancellationToken: cancellationToken);
 
         if (roomToPatch is null)
         {
             throw new RoomNotFoundException($"Room [{roomId}] not found");
         }
-        
+
         roomToPatch.Update(
             request.Name,
             request.Description,

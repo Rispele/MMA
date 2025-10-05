@@ -11,7 +11,7 @@ public class Location
     protected Location()
     {
     }
-    
+
     public Location(Guid id, string bucket)
     {
         Id = id;

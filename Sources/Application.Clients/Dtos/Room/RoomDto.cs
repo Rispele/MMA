@@ -12,17 +12,17 @@ public record RoomDto
     public RoomOperatorDepartmentDto? OperatorDepartment { get; }
     public RoomFixInfoDto FixInfo { get; }
     public bool AllowBooking { get; }
-    
+
     public RoomDto(
         int id,
         string name,
         string? description,
-        ScheduleAddressDto? scheduleAddress, 
-        RoomParametersDto parameters, 
-        RoomAttachmentsDto attachments, 
-        string? owner, 
-        RoomOperatorDepartmentDto? operatorDepartment, 
-        RoomFixInfoDto fixInfo, 
+        ScheduleAddressDto? scheduleAddress,
+        RoomParametersDto parameters,
+        RoomAttachmentsDto attachments,
+        string? owner,
+        RoomOperatorDepartmentDto? operatorDepartment,
+        RoomFixInfoDto fixInfo,
         bool allowBooking)
     {
         Id = id;

@@ -78,14 +78,14 @@ public partial class RoomDtoConverter
             _ => throw new ArgumentOutOfRangeException(nameof(roomNetType), roomNetType, null)
         };
     }
-    
+
     private RoomAttachmentsDto Convert(RoomAttachments attachments)
     {
         return new RoomAttachmentsDto(
             attachments.PdfRoomScheme.AsOptional().Map(FileConvertExtensions.ToDto),
             attachments.Photo.AsOptional().Map(FileConvertExtensions.ToDto));
     }
-    
+
     private RoomFixInfoDto Convert(RoomFixInfo fixInfo)
     {
         return new RoomFixInfoDto(

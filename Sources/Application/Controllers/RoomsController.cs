@@ -26,7 +26,7 @@ public class RoomsController(ILogger<RoomsController> logger, IRoomService roomS
     public async Task<ActionResult<RoomsResponseDto>> GetRooms([FromBody] GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
     {
         var response = await roomService.FilterRooms(requestDto, cancellationToken);
-        
+
         return Ok(response);
     }
 
@@ -34,7 +34,7 @@ public class RoomsController(ILogger<RoomsController> logger, IRoomService roomS
     public async Task<ActionResult<RoomDto>> CreateRoom([FromBody] CreateRoomRequest request, CancellationToken cancellationToken)
     {
         var createdRoom = await roomService.CreateRoom(request, cancellationToken);
-        
+
         return Ok(createdRoom);
     }
 
@@ -42,7 +42,7 @@ public class RoomsController(ILogger<RoomsController> logger, IRoomService roomS
     public async Task<IActionResult> PatchRoom(int roomId, [FromBody] PatchRoomRequest patch, CancellationToken cancellationToken)
     {
         await roomService.PatchRoom(roomId, patch, cancellationToken);
-        
+
         return Ok();
     }
 }

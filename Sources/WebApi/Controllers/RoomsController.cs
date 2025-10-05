@@ -94,8 +94,10 @@ public class RoomsController(IRoomService roomService,
     {
         if (id == Guid.Empty || string.IsNullOrWhiteSpace(bucket)) return BadRequest();
 
-        var file = await fileService.GetFileAsync(id, bucket, cancellationToken);
+        var file = await fileService.GetFileAsync(id, cancellationToken);
         if (file is null) return NotFound();
+
+        file.FileName = id.ToString();
 
         // file.Stream, file.FileName, file.ContentType
         // set filename from header if provided? Spec says fileName from header — but here we return with filename from metadata.

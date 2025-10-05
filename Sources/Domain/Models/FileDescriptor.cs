@@ -11,7 +11,7 @@ public class FileDescriptor
     protected FileDescriptor()
     {
     }
-    
+
     public FileDescriptor(string filename, Location location)
     {
         Filename = filename;

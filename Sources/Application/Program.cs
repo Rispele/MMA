@@ -1,4 +1,3 @@
-using Application;
 using Application.Configuration;
 using Application.Implementations.Services.DtoConverters;
 using Application.Implementations.Services.Files;
@@ -16,7 +15,9 @@ builder
 builder.Services
     .AddScoped<IRoomService, RoomService>()
     .AddScoped<IFileService, FileService>()
-    .AddSingleton<RoomDtoConverter>();
+    .AddSingleton<RoomDtoConverter>()
+    .AddSingleton<FileDtoConverter>()
+    ;
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();

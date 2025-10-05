@@ -10,8 +10,10 @@ public record PostRoomRequest
     public RoomLayoutModel? Layout { get; init; }
     public int? Seats { get; init; }
     public int? ComputerSeats { get; init; }
-    public byte[]? PdfRoomScheme { get; init; }
-    public byte[]? Photo { get; init; }
+    public byte[]? PdfRoomSchemeFileContent { get; init; }
+    public string? PdfRoomSchemeFileName { get; init; }
+    public byte[]? PhotoFileContent { get; init; }
+    public string? PhotoFileName { get; init; }
     public RoomNetTypeModel? NetType { get; init; }
     public bool HasConditioning { get; init; }
     public string? Owner { get; init; }

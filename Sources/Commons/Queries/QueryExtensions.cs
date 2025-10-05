@@ -10,7 +10,7 @@ public static class QueryExtensions
     {
         return queryObject.Apply(dbContext);
     }
-    
+
     public static Task<TEntity> ApplyQuery<TEntity, TDbContext>(
         this TDbContext dbContext,
         ISingleQueryObject<TEntity, TDbContext> queryObject,
