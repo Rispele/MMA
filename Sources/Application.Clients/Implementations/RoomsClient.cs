@@ -13,28 +13,46 @@ public class RoomsClient(HttpClient httpClient) : IRoomsClient
 {
     public async Task<RoomDto> GetRoomByIdAsync(int roomId, CancellationToken cancellationToken = default)
     {
-        var room = await httpClient.GetFromJsonAsync<RoomDto>($"rooms/{roomId}", cancellationToken);
+        var response = await httpClient.GetAsync($"rooms/{roomId}", cancellationToken);
 
-        return room!;
+        return await ProcessNonNullableResult<RoomDto>(response, cancellationToken);
     }
 
     public async Task<RoomsResponseDto> GetRoomsAsync(GetRoomsRequestDto request, CancellationToken cancellationToken = default)
     {
         var response = await httpClient.PostAsJsonAsync("rooms/filter", request, cancellationToken);
-        response.EnsureSuccessStatusCode();
 
-        var roomsResponse = await response.Content.ReadFromJsonAsync<RoomsResponseDto>(cancellationToken: cancellationToken);
-
-        return roomsResponse!;
+        return await ProcessNonNullableResult<RoomsResponseDto>(response, cancellationToken);
     }
 
     public async Task<RoomDto> CreateRoomAsync(CreateRoomRequest request, CancellationToken cancellationToken = default)
     {
         var response = await httpClient.PostAsJsonAsync("rooms", request, cancellationToken);
 
+        return await ProcessNonNullableResult<RoomDto>(response, cancellationToken);
+    }
+
+    public async Task PatchRoomAsync(int roomId, PatchRoomRequest patch, CancellationToken cancellationToken = default)
+    {
+        var response = await httpClient.PatchAsJsonAsync($"rooms?roomId={roomId}", patch, cancellationToken);
+
+        await ProcessResult(response, cancellationToken);
+    }
+
+    private async Task<TResult> ProcessNonNullableResult<TResult>(
+        HttpResponseMessage response,
+        CancellationToken cancellationToken)
+    {
+        return await ProcessResult<TResult>(response, cancellationToken) ?? throw new InvalidOperationException("Response was found to be null");
+    }
+
+    private async Task<TResult?> ProcessResult<TResult>(
+        HttpResponseMessage response,
+        CancellationToken cancellationToken)
+    {
         if (response.IsSuccessStatusCode)
         {
-            return (await response.Content.ReadFromJsonAsync<RoomDto>(cancellationToken: cancellationToken))!;
+            return await response.Content.ReadFromJsonAsync<TResult>(cancellationToken: cancellationToken);
         }
 
         var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>(cancellationToken);
@@ -42,10 +60,17 @@ public class RoomsClient(HttpClient httpClient) : IRoomsClient
         throw new ApiException(problemDetails);
     }
 
-    public async Task PatchRoomAsync(int roomId, PatchRoomRequest patch, CancellationToken cancellationToken = default)
+    private async Task ProcessResult(
+        HttpResponseMessage response,
+        CancellationToken cancellationToken)
     {
-        var response = await httpClient.PatchAsJsonAsync($"rooms?roomId={roomId}", patch, cancellationToken);
+        if (response.IsSuccessStatusCode)
+        {
+            return;
+        }
 
-        response.EnsureSuccessStatusCode();
+        var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>(cancellationToken);
+
+        throw new ApiException(problemDetails);
     }
 }

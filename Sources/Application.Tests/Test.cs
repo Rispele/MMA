@@ -30,8 +30,8 @@ public class Tests
 
         await factory.Application.ResourceNotifications.WaitForResourceHealthyAsync("application", cts.Token);
 
-        var roomName = Guid.NewGuid().ToString() + "@";
-        var created = await roomsClient.CreateRoomAsync(new CreateRoomRequest { Name = roomName });
+        var roomName = Guid.NewGuid().ToString();
+        var created = await roomsClient.CreateRoomAsync(new CreateRoomRequest { Name = roomName }, cts.Token);
 
         // Assert
         created.Name.Should().Be(roomName);
