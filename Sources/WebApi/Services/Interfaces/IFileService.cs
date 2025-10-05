@@ -1,4 +1,4 @@
-﻿using WebApi.Models.Dtos;
+﻿using WebApi.Models.Files;
 
 namespace WebApi.Services.Interfaces;
 
@@ -8,9 +8,9 @@ public interface IFileService
     /// Returns file stream, file name and content type (or null if not found)
     /// Implement via MinIO / S3 client.
     /// </summary>
-    Task<FileResultDto?> GetFileAsync(Guid id, CancellationToken cancellationToken);
+    Task<FileModel?> GetFileAsync(Guid id, CancellationToken cancellationToken);
 
-    Task<StorageFileDto> StoreFileAsync(Stream content, CancellationToken cancellationToken);
+    Task<FileLocationModel> StoreFileAsync(Stream content, CancellationToken cancellationToken);
 
     Task RemoveFileAsync(Guid fileId);
 }

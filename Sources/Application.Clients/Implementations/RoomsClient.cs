@@ -4,15 +4,16 @@ using Application.Clients.Dtos.Requests.RoomPatching;
 using Application.Clients.Dtos.Requests.RoomsQuerying;
 using Application.Clients.Dtos.Responses;
 using Application.Clients.Dtos.Room;
+using Application.Clients.Interfaces;
 
-namespace Application.Clients;
+namespace Application.Clients.Implementations;
 
 public class RoomsClient(HttpClient httpClient) : IRoomsClient
 {
     public async Task<RoomDto> GetRoomByIdAsync(int roomId, CancellationToken cancellationToken = default)
     {
         var room = await httpClient.GetFromJsonAsync<RoomDto>($"rooms/{roomId}", cancellationToken);
-        
+
         return room!;
     }
 
@@ -30,7 +31,7 @@ public class RoomsClient(HttpClient httpClient) : IRoomsClient
     {
         var response = await httpClient.PostAsJsonAsync("rooms", request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        
+
         var room = await response.Content.ReadFromJsonAsync<RoomDto>(cancellationToken: cancellationToken);
 
         return room!;

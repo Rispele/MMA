@@ -3,6 +3,7 @@ using Application.Implementations.Services.DtoConverters;
 using Application.Implementations.Services.Files;
 using Application.Implementations.Services.Rooms;
 using Sources.ServiceDefaults;
+using WebApi.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +16,22 @@ builder
 builder.Services
     .AddScoped<IRoomService, RoomService>()
     .AddScoped<IFileService, FileService>()
+    .AddScoped<IMinioStorageService, MinioStorageService>()
     .AddSingleton<RoomDtoConverter>()
     .AddSingleton<FileDtoConverter>()
     ;
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+
+builder.Services.AddOptions();
+
+var configBuilder = new ConfigurationBuilder()
+    .AddJsonFile("Config/minioOptions.json", optional: false, reloadOnChange: true);
+
+var configuration = configBuilder.Build();
+
+builder.Services.Configure<MinioOptions>(configuration.GetSection("MinioOptions"));
 
 var app = builder.Build();
 

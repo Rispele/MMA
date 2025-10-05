@@ -1,3 +1,5 @@
-﻿namespace WebApi.Models.Room;
+﻿using WebApi.Models.Files;
 
-public record RoomAttachmentsModel(FileModel? PdfRoomScheme, FileModel? Photo);
+namespace WebApi.Models.Room;
+
+public record RoomAttachmentsModel(FileMetadataModel? PdfRoomScheme, FileMetadataModel? Photo);

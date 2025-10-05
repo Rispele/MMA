@@ -1,24 +1,26 @@
 ﻿using Application.Implementations.Dtos.Files;
-using Application.Implementations.Services.DtoConverters;
-using Domain.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Implementations.Services.Files;
 
-public class FileService(IDbContextFactory<DomainDbContext> domainDbContextProvider, FileDtoConverter fileDtoConverter) : IFileService
+public class FileService(IMinioStorageService minioStorageService) : IFileService
 {
-    public async Task<FileResultDto?> GetFileAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<FileDto?> GetFileAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var data = await minioStorageService.GetDataAsync(id);
+
+        return new FileDto
+        {
+            Stream = new MemoryStream(data),
+        };
     }
 
-    public async Task<Guid> StoreFileAsync(Stream content, CancellationToken cancellationToken)
+    public async Task<FileLocationDto> StoreFileAsync(Stream content, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await minioStorageService.StoreDataAsync(content, cancellationToken);
     }
 
     public async Task RemoveFileAsync(Guid fileId)
     {
-        throw new NotImplementedException();
+        await minioStorageService.RemoveAsync(fileId);
     }
 }

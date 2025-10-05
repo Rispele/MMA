@@ -2,17 +2,17 @@
 
 namespace Domain.Models;
 
-public class Location
+public class FileLocation
 {
     public Guid Id { get; private set; }
     public string Bucket { get; private set; } = null!;
 
     [UsedImplicitly]
-    protected Location()
+    protected FileLocation()
     {
     }
 
-    public Location(Guid id, string bucket)
+    public FileLocation(Guid id, string bucket)
     {
         Id = id;
         Bucket = bucket;

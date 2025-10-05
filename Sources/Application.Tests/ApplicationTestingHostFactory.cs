@@ -10,7 +10,7 @@ namespace Application.Tests;
 public class ApplicationTestingHostFactory() : DistributedApplicationFactory(typeof(Projects.Sources_AppHost))
 {
     public DistributedApplication Application { get; private set; } = null!;
-    
+
     protected override void OnBuilderCreating(DistributedApplicationOptions applicationOptions, HostApplicationBuilderSettings hostOptions)
     {
         hostOptions.Configuration ??= new ConfigurationManager();
@@ -35,7 +35,7 @@ public class ApplicationTestingHostFactory() : DistributedApplicationFactory(typ
     protected override void OnBuilt(DistributedApplication application)
     {
         Application = application;
-        
+
         base.OnBuilt(application);
     }
 }

@@ -1,19 +1,19 @@
-﻿using Application.Implementations.Dtos;
+﻿using Application.Implementations.Dtos.Files;
 using Domain.Models;
 
 namespace Application.Implementations.Services.DtoConverters;
 
 public static class FileConvertExtensions
 {
-    public static FileDto ToDto(this Domain.Models.FileDescriptor fileDescriptor)
+    public static FileMetadataDto ToDto(this FileDescriptor fileDescriptor)
     {
-        return new FileDto(
+        return new FileMetadataDto(
             fileDescriptor.Filename,
-            fileDescriptor.Location.ToDto());
+            fileDescriptor.FileLocation.ToDto());
     }
 
-    public static LocationDto ToDto(this Location location)
+    public static FileLocationDto ToDto(this FileLocation fileLocation)
     {
-        return new LocationDto(location.Id, location.Bucket);
+        return new FileLocationDto(fileLocation.Id, fileLocation.Bucket);
     }
 }

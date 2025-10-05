@@ -4,7 +4,7 @@ using Application.Clients.Dtos.Requests.RoomsQuerying;
 using Application.Clients.Dtos.Responses;
 using Application.Clients.Dtos.Room;
 
-namespace Application.Clients;
+namespace Application.Clients.Interfaces;
 
 public interface IRoomsClient
 {
