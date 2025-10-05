@@ -4,7 +4,7 @@ namespace Application.Clients.Dtos.Requests.RoomCreating;
 
 public record CreateRoomRequest
 {
-    public string Name { get; init; } = string.Empty;
+    public required string Name { get; init; }
     public string? Description { get; init; }
     public RoomTypeDto Type { get; init; }
     public RoomLayoutDto Layout { get; init; }
