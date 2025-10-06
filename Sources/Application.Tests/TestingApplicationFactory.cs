@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Tests;
 
-public class ApplicationTestingHostFactory() : DistributedApplicationFactory(typeof(Projects.Sources_AppHost))
+public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(Projects.Sources_AppHost))
 {
     public DistributedApplication Application { get; private set; } = null!;
 
