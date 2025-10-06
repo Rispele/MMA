@@ -1,4 +1,5 @@
-﻿using WebApi.Models.Room;
+﻿using WebApi.Models.Files;
+using WebApi.Models.Room;
 
 namespace WebApi.Models.Requests;
 
@@ -10,10 +11,8 @@ public record PostRoomRequest
     public RoomLayoutModel? Layout { get; init; }
     public int? Seats { get; init; }
     public int? ComputerSeats { get; init; }
-    public byte[]? PdfRoomSchemeFileContent { get; init; }
-    public string? PdfRoomSchemeFileName { get; init; }
-    public byte[]? PhotoFileContent { get; init; }
-    public string? PhotoFileName { get; init; }
+    public FileMetadataModel? PdfRoomSchemeFileMetadata { get; init; }
+    public FileMetadataModel? PhotoFileMetadata { get; init; }
     public RoomNetTypeModel? NetType { get; init; }
     public bool HasConditioning { get; init; }
     public string? Owner { get; init; }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Application.Implementations.Dtos.Files;
 using Application.Implementations.Dtos.Room;
 
 namespace Application.Implementations.Dtos.Requests.RoomPatching;
@@ -22,8 +23,10 @@ public record PatchRoomRequest
     [Range(0, double.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? ComputerSeats { get; init; }
 
-    // public byte[]? PdfRoomScheme { get; init; }
-    // public byte[]? Photo { get; init; }
+    public FileMetadataDto? PdfRoomSchemeFileMetadata { get; init; }
+
+    public FileMetadataDto? PhotoFileMetadata { get; init; }
+
     public RoomNetTypeDto NetType { get; init; }
     public bool HasConditioning { get; init; }
 

@@ -1,4 +1,5 @@
-﻿using Application.Clients.Dtos.Room;
+﻿using Application.Clients.Dtos.Files;
+using Application.Clients.Dtos.Room;
 
 namespace Application.Clients.Dtos.Requests.RoomCreating;
 
@@ -10,9 +11,8 @@ public record CreateRoomRequest
     public RoomLayoutDto Layout { get; init; }
     public int? Seats { get; init; }
     public int? ComputerSeats { get; init; }
-
-    // public byte[]? PdfRoomScheme { get; init; }
-    // public byte[]? Photo { get; init; }
+    public FileMetadataDto? PdfRoomSchemeFileMetadata { get; init; }
+    public FileMetadataDto? PhotoFileMetadata { get; init; }
     public RoomNetTypeDto NetType { get; init; }
     public bool HasConditioning { get; init; }
     public string? Owner { get; init; }

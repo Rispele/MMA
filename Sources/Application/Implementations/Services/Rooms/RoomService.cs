@@ -5,11 +5,9 @@ using Application.Implementations.Dtos.Responses;
 using Application.Implementations.Dtos.Room;
 using Application.Implementations.Persistence;
 using Application.Implementations.Services.DtoConverters;
-using Application.Implementations.Services.Files;
 using Commons;
 using Commons.Queries;
 using Domain.Exceptions;
-using Domain.Models;
 using Domain.Models.Room;
 using Domain.Models.Room.Fix;
 using Domain.Models.Room.Parameters;
@@ -20,7 +18,7 @@ namespace Application.Implementations.Services.Rooms;
 
 public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvider,
     RoomDtoConverter roomDtoConverter,
-    IFileService fileService)
+    FileDtoConverter fileDtoConverter)
     : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int id, CancellationToken cancellationToken)
@@ -49,8 +47,6 @@ public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvi
 
     public async Task<RoomDto> CreateRoom(CreateRoomRequest request, CancellationToken cancellationToken)
     {
-        var attachments = await StoreAttachments(request, cancellationToken);
-
         var roomToCreate = Room.New(
             request.Name,
             request.Description,
@@ -61,7 +57,9 @@ public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvi
                 request.Seats,
                 request.ComputerSeats,
                 request.HasConditioning),
-            attachments: attachments,
+            new RoomAttachments(
+                fileDtoConverter.Convert(request.PdfRoomSchemeFileMetadata),
+                fileDtoConverter.Convert(request.PhotoFileMetadata)),
             request.Owner,
             new RoomFixInfo(
                 roomDtoConverter.Convert(request.RoomStatus),
@@ -99,7 +97,9 @@ public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvi
                 request.Seats,
                 request.ComputerSeats,
                 request.HasConditioning),
-            new RoomAttachments(pdfRoomScheme: null, photo: null), //todo (d.smirnov): нужно сохранять файлы всё-таки
+            new RoomAttachments(
+                fileDtoConverter.Convert(request.PdfRoomSchemeFileMetadata),
+                fileDtoConverter.Convert(request.PhotoFileMetadata)),
             request.Owner,
             new RoomFixInfo(
                 roomDtoConverter.Convert(request.RoomStatus),
@@ -110,25 +110,5 @@ public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvi
         await context.SaveChangesAsync(cancellationToken);
 
         return roomDtoConverter.Convert(roomToPatch);
-    }
-
-    private async Task<RoomAttachments> StoreAttachments(CreateRoomRequest request, CancellationToken cancellationToken)
-    {
-        var pdfRoomSchemeFile = request is { PdfRoomSchemeFileContent: not null, PdfRoomSchemeFileName: not null }
-            ? await fileService.StoreFileAsync(new MemoryStream(request.PdfRoomSchemeFileContent!), cancellationToken)
-            : null;
-        var pdfRoomSchemeFileModel = pdfRoomSchemeFile != null
-            ? new FileDescriptor(request.PdfRoomSchemeFileName!,
-                new FileLocation(pdfRoomSchemeFile.Id, pdfRoomSchemeFile.Bucket))
-            : null;
-        var photoFile = request is { PhotoFileContent: not null, PhotoFileName: not null }
-            ? await fileService.StoreFileAsync(new MemoryStream(request.PhotoFileContent!), cancellationToken)
-            : null;
-        var photoFileModel = photoFile != null
-            ? new FileDescriptor(request.PhotoFileName!,
-                new FileLocation(photoFile.Id, photoFile.Bucket))
-            : null;
-
-        return new RoomAttachments(pdfRoomScheme: pdfRoomSchemeFileModel, photo: photoFileModel);
     }
 }

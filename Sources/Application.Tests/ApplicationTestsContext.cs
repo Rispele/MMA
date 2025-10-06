@@ -6,7 +6,7 @@ namespace Application.Tests;
 public class ApplicationTestsContext
 {
     public static TestingApplicationFactory TestingApplicationFactory { get; private set; } = null!;
-    
+
     public static DistributedApplication Application => TestingApplicationFactory.Application;
 
     [OneTimeSetUp]
