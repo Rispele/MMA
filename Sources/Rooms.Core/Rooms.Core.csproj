@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Commons\Commons.csproj" />
+      <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj" />
+      <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.3.0" />
+      <PackageReference Include="Minio" Version="6.0.5" />
+    </ItemGroup>
+
+</Project>

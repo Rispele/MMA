@@ -1,5 +1,5 @@
-﻿using Application.Clients.Implementations;
-using Application.Clients.Interfaces;
+﻿// using Application.Clients.Implementations;
+// using Application.Clients.Interfaces;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
 
@@ -28,17 +28,17 @@ public class ServiceConfigurator
 
     private IServiceCollection WithClients(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddHttpClient<IRoomsClient, RoomsClient>(client =>
-            {
-                client.BaseAddress = new Uri("https+http://application");
-            });
-        serviceCollection
-            .AddHttpClient<IFileClient, FileClient>(client =>
-            {
-                client.BaseAddress = new Uri("https+http://application");
-            })
-            ;
+        // serviceCollection
+            // .AddHttpClient<IRoomsClient, RoomsClient>(client =>
+            // {
+                // client.BaseAddress = new Uri("https+http://application");
+            // });
+        // serviceCollection
+            // .AddHttpClient<IFileClient, FileClient>(client =>
+            // {
+                // client.BaseAddress = new Uri("https+http://application");
+            // })
+            // ;
 
         return serviceCollection;
     }

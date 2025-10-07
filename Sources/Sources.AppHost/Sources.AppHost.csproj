@@ -17,9 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\BackdoorApi\BackdoorApi.csproj" />
-      <ProjectReference Include="..\Domain.MigrationService\Domain.MigrationService.csproj" />
+      <ProjectReference Include="..\Rooms.MigrationService\Rooms.MigrationService.csproj" />
       <ProjectReference Include="..\WebApi\WebApi.csproj" />
     </ItemGroup>
 

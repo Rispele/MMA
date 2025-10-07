@@ -13,20 +13,14 @@ var postgres = builder
     .AddDatabase("mmr");
 
 var postgresMigrations = builder
-    .AddProject<Projects.Domain_MigrationService>(KnownResourceNames.DomainMigrationService)
+    .AddProject<Projects.Rooms_MigrationService>(KnownResourceNames.RoomsMigrationService)
     .WithReference(postgres)
     .WaitFor(postgres);
-
-var application = builder
-    .AddProject<Projects.Application>(KnownResourceNames.ApplicationService)
-    .WithReference(postgres)
-    .WithReference(postgresMigrations)
-    .WaitFor(postgresMigrations);
 
 builder
     .AddProject<Projects.WebApi>(KnownResourceNames.WebApiService)
     .WithExternalHttpEndpoints()
-    .WithReference(application)
-    .WaitFor(application);
+    .WithReference(postgres)
+    .WaitFor(postgresMigrations);
 
 builder.Build().Run();
