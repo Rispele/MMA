@@ -44,12 +44,6 @@ public class RoomsController(
             return BadRequest("Name is required for idempotency and creation.");
         }
 
-        var existing = await roomService.GetByNameAsync(request.Name, cancellationToken);
-        if (existing is not null)
-        {
-            return Ok(existing);
-        }
-
         var created = await roomService.CreateRoomAsync(request, cancellationToken);
 
         return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);

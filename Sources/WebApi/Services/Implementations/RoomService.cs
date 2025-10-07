@@ -1,37 +1,31 @@
-﻿using Rooms.Core.Implementations.Dtos.Requests.RoomsQuerying;
-using WebApi.Models.Requests;
+﻿using WebApi.Models.Requests;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
+using ICoreRoomService = Rooms.Core.Implementations.Services.Rooms.IRoomService;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomService : IRoomService
+public class RoomService(ICoreRoomService roomService, RoomsModelsConverter modelsConverter) : IRoomService
 {
-    public Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, CancellationToken cancellationToken)
+    public async Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, CancellationToken cancellationToken)
     {
-        var getRoomsRequest = new GetRoomsRequestDto()
-        {
-            BatchNumber = request.Page - 1,
-            BatchSize = request.PageSize,
-            AfterRoomId = request.AfterRoomId,
-            Filter = new RoomsFilterDto
-            {
-
-            }
-        };
+        var getRoomsRequest = modelsConverter.Convert(request);
         
-        throw new NotImplementedException();
+        var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
+
+        return new RoomsResponse
+        {
+            Rooms = batch.Rooms.Select(modelsConverter.Convert).ToArray(),
+            Count = batch.Count
+        };
     }
 
-    public Task<RoomModel?> GetRoomByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<RoomModel> GetRoomByIdAsync(int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
+        var room = await roomService.GetRoomById(id, cancellationToken);
 
-    public Task<RoomModel?> GetByNameAsync(string name, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
+        return modelsConverter.Convert(room);
     }
 
     public Task<RoomModel> CreateRoomAsync(PostRoomRequest request, CancellationToken cancellationToken)

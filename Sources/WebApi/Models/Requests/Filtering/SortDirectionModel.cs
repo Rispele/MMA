@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Models.Requests.Filtering;
 
-public enum SortDirection
+public enum SortDirectionModel
 {
     None = 0,
     Ascending = 1,

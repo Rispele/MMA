@@ -31,7 +31,7 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
         return room.Map(roomDtoConverter.Convert);
     }
 
-    public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto request, CancellationToken cancellationToken)
+    public async Task<RoomsBatchDto> FilterRooms(GetRoomsRequestDto request, CancellationToken cancellationToken)
     {
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
 
@@ -42,7 +42,7 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
         var convertedRooms = rooms.Select(roomDtoConverter.Convert).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
 
-        return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
+        return new RoomsBatchDto(convertedRooms, convertedRooms.Length, lastRoomId);
     }
 
     public async Task<RoomDto> CreateRoom(CreateRoomRequest request, CancellationToken cancellationToken)

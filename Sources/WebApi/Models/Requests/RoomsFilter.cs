@@ -17,6 +17,8 @@ public record RoomsFilter
     public FilterParameterModel<string>? Operator { get; init; }
     public FilterParameterModel<string>? Owner { get; init; }
     public FilterMultiParameterModel<RoomStatusModel>? RoomStatuses { get; init; }
-    // description already present above
+    public FilterParameterModel<DateTime>? FixDeadline { get; init; }
+    public FilterParameterModel<string>? Comment { get; init; }
+    public FilterParameterModel<bool>? AllowBooking { get; init; }
 }
 

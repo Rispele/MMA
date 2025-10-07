@@ -2,7 +2,7 @@
 
 namespace Rooms.Core.Implementations.Dtos.Responses;
 
-public record RoomsResponseDto(
+public record RoomsBatchDto(
     RoomDto[] Rooms,
     int Count,
     int? LastRoomId);
