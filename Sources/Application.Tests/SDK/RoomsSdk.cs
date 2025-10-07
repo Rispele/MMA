@@ -18,10 +18,10 @@ public class RoomsSdk(IRoomsClient roomsClient)
         return roomsClient.CreateRoomAsync(request, cancellationToken);
     }
 
-    public Task PatchRoom(int roomId, Action<>)
-    {
-        return roomsClient.PatchRoomAsync()
-    }
+    // public Task PatchRoom(int roomId, Action<>)
+    // {
+    //     return roomsClient.PatchRoomAsync()
+    // }
 
     public Task<RoomDto> GetRoom(int roomId, CancellationToken cancellationToken = default)
     {
