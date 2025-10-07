@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Application.Implementations.Dtos.Files;
 using Application.Implementations.Dtos.Room;
 
 namespace Application.Implementations.Dtos.Requests.RoomCreating;
@@ -22,13 +23,9 @@ public record CreateRoomRequest
     [Range(0, double.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? ComputerSeats { get; init; }
 
-    public byte[]? PdfRoomSchemeFileContent { get; init; }
+    public FileMetadataDto? PdfRoomSchemeFileMetadata { get; init; }
 
-    public string? PdfRoomSchemeFileName { get; init; }
-
-    public byte[]? PhotoFileContent { get; init; }
-
-    public string? PhotoFileName { get; init; }
+    public FileMetadataDto? PhotoFileMetadata { get; init; }
 
     public RoomNetTypeDto NetType { get; init; }
     public bool HasConditioning { get; init; }
