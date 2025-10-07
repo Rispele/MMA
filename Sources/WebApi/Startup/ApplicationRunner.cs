@@ -12,9 +12,8 @@ public static class ApplicationRunner
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.AddServiceDefaults();
 
-        var serviceCollection = builder.Services;
         var serviceConfigurator = new ServiceConfigurator();
-        serviceConfigurator.ConfigureServices(serviceCollection);
+        serviceConfigurator.ConfigureServices(builder);
 
         var app = builder.Build();
 

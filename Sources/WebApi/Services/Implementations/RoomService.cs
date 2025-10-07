@@ -1,4 +1,5 @@
-﻿using WebApi.Models.Requests;
+﻿using Rooms.Core.Implementations.Dtos.Requests.RoomsQuerying;
+using WebApi.Models.Requests;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
@@ -9,6 +10,17 @@ public class RoomService : IRoomService
 {
     public Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, CancellationToken cancellationToken)
     {
+        var getRoomsRequest = new GetRoomsRequestDto()
+        {
+            BatchNumber = request.Page - 1,
+            BatchSize = request.PageSize,
+            AfterRoomId = request.AfterRoomId,
+            Filter = new RoomsFilterDto
+            {
+
+            }
+        };
+        
         throw new NotImplementedException();
     }
 

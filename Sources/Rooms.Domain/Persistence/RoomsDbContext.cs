@@ -4,7 +4,7 @@ using Rooms.Domain.Models.Room;
 
 namespace Rooms.Domain.Persistence;
 
-public class DomainDbContext(DbContextOptions<DomainDbContext> options) : DbContext(options)
+public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContext(options)
 {
     public DbSet<Room> Rooms { get; [UsedImplicitly] private set; }
 }

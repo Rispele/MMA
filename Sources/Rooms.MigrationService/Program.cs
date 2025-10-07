@@ -7,7 +7,7 @@ var builder = Host.CreateApplicationBuilder(args);
 
 builder
     .AddServiceDefaults()
-    .AddDomainContext();
+    .AddRoomsDbContext();
 
 builder.Services.AddHostedService<Worker>();
 

@@ -14,7 +14,7 @@ using Rooms.Domain.Persistence;
 
 namespace Domain.Migrations
 {
-    [DbContext(typeof(DomainDbContext))]
+    [DbContext(typeof(RoomsDbContext))]
     [Migration("20251003210935_Initial")]
     partial class Initial
     {

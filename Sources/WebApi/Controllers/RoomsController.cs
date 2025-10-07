@@ -10,7 +10,8 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/rooms")]
-public class RoomsController(IRoomService roomService,
+public class RoomsController(
+    IRoomService roomService,
     IFileService fileService,
     ILogger<RoomsController> logger)
     : ControllerBase
@@ -23,11 +24,8 @@ public class RoomsController(IRoomService roomService,
         RoomsRequest request,
         CancellationToken cancellationToken)
     {
-        // Basic validation (could be done with FluentValidation / attributes)
-        if (request.Page < 1) return BadRequest("Page must be >= 1");
-        if (request.PageSize < 10) return BadRequest("PageSize must be >= 10");
-
         var result = await roomService.GetRoomsAsync(request, cancellationToken);
+
         return Ok(result);
     }
 
@@ -35,7 +33,6 @@ public class RoomsController(IRoomService roomService,
     public async Task<ActionResult<RoomModel>> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
         var room = await roomService.GetRoomByIdAsync(roomId, cancellationToken);
-        if (room is null) return NotFound();
         return Ok(room);
     }
 
@@ -43,19 +40,18 @@ public class RoomsController(IRoomService roomService,
     public async Task<IActionResult> CreateRoom([FromBody] PostRoomRequest request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
+        {
             return BadRequest("Name is required for idempotency and creation.");
+        }
 
-        // Check idempotency: if room with same name exists, return it (or return 409 if desired)
         var existing = await roomService.GetByNameAsync(request.Name, cancellationToken);
         if (existing is not null)
         {
-            // Return 200 with existing Room or 409 depending on contract. I'll return 200 with existing DTO.
             return Ok(existing);
         }
 
         var created = await roomService.CreateRoomAsync(request, cancellationToken);
 
-        // CreatedAtAction to GET by id
         return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);
     }
 
@@ -77,14 +73,12 @@ public class RoomsController(IRoomService roomService,
             return NotFound();
         }
 
-        // Apply patch to model
         patch.ApplyTo(current);
         if (!TryValidateModel(current))
         {
             return ValidationProblem(ModelState);
         }
 
-        // Convert patched model to domain and save
         var updated = await roomService.ApplyPatchAndSaveAsync(roomId, current, cancellationToken);
         return Ok(updated);
     }
@@ -99,8 +93,6 @@ public class RoomsController(IRoomService roomService,
 
         file.FileName = id.ToString();
 
-        // file.Stream, file.FileName, file.ContentType
-        // set filename from header if provided? Spec says fileName from header — but here we return with filename from metadata.
         return File(file.Stream, file.ContentType ?? "application/octet-stream", file.FileName);
     }
 }

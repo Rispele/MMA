@@ -14,11 +14,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj" />
       <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Config\minioOptions.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Config\minioOptions.json" />
     </ItemGroup>
 
 </Project>

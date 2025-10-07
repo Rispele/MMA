@@ -8,10 +8,10 @@ namespace Rooms.Core.Configuration;
 
 public static class DbContextConfigurationExtensions
 {
-    public static void AddDomainContext(this IHostApplicationBuilder builder)
+    public static void AddRoomsDbContext(this IHostApplicationBuilder builder)
     {
         builder
-            .AddPostgresDbContext<IHostApplicationBuilder, DomainDbContext>(
+            .AddPostgresDbContext<IHostApplicationBuilder, RoomsDbContext>(
                 connectionName: "mmr",
                 options => options
                     .MapEnum<RoomStatus>()

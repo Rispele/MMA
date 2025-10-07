@@ -13,7 +13,7 @@ using Rooms.Domain.Persistence;
 
 namespace Domain.Migrations
 {
-    [DbContext(typeof(DomainDbContext))]
+    [DbContext(typeof(RoomsDbContext))]
     partial class DomainDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

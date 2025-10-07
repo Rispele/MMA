@@ -13,9 +13,9 @@ namespace Rooms.Core.Implementations.Persistence;
 /// 
 /// </summary>
 /// <param name="batchNumber">from 0 to +inf</param>
-public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, RoomsFilterDto? filter, RoomDtoConverter roomDtoConverter) : IQueryObject<Room, DomainDbContext>
+public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, RoomsFilterDto? filter, RoomDtoConverter roomDtoConverter) : IQueryObject<Room, RoomsDbContext>
 {
-    public IAsyncEnumerable<Room> Apply(DomainDbContext dbContext)
+    public IAsyncEnumerable<Room> Apply(RoomsDbContext dbContext)
     {
         IQueryable<Room> rooms = dbContext.Rooms;
 

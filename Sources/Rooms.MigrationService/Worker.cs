@@ -18,7 +18,7 @@ public class Worker(
         try
         {
             using var scope = serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<DomainDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<RoomsDbContext>();
 
             await RunMigrationAsync(dbContext, cancellationToken);
         }
@@ -31,7 +31,7 @@ public class Worker(
         hostApplicationLifetime.StopApplication();
     }
 
-    private static async Task RunMigrationAsync(DomainDbContext dbContext, CancellationToken cancellationToken)
+    private static async Task RunMigrationAsync(RoomsDbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>

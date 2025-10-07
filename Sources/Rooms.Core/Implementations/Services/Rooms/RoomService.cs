@@ -16,7 +16,7 @@ using Rooms.Domain.Persistence;
 
 namespace Rooms.Core.Implementations.Services.Rooms;
 
-public class RoomService(IDbContextFactory<DomainDbContext> domainDbContextProvider,
+public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvider,
     RoomDtoConverter roomDtoConverter,
     FileDtoConverter fileDtoConverter)
     : IRoomService

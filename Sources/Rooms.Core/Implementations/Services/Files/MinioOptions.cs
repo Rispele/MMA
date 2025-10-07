@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Options;
+﻿namespace Rooms.Core.Implementations.Services.Files;
 
 public class MinioOptions
 {

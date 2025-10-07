@@ -2,7 +2,6 @@
 using Minio;
 using Minio.DataModel.Args;
 using Rooms.Core.Implementations.Dtos.Files;
-using Rooms.Core.Options;
 
 namespace Rooms.Core.Implementations.Services.Files;
 

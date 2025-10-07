@@ -5,9 +5,9 @@ using Rooms.Domain.Persistence;
 
 namespace Rooms.Core.Implementations.Persistence;
 
-public readonly struct FindRoomByIdQuery(int roomId) : ISingleQueryObject<Room?, DomainDbContext>
+public readonly struct FindRoomByIdQuery(int roomId) : ISingleQueryObject<Room?, RoomsDbContext>
 {
-    public Task<Room?> Apply(DomainDbContext dbContext, CancellationToken cancellationToken)
+    public Task<Room?> Apply(RoomsDbContext dbContext, CancellationToken cancellationToken)
     {
         var id = roomId;
 

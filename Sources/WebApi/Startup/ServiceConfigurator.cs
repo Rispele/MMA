@@ -1,26 +1,25 @@
-﻿// using Application.Clients.Implementations;
-// using Application.Clients.Interfaces;
-using WebApi.Services.Implementations;
-using WebApi.Services.Interfaces;
+﻿using Rooms.Core.Configuration;
+using Rooms.Core.Implementations.Services.Files;
+using Rooms.Core.Implementations.Services.Rooms;
 
 namespace WebApi.Startup;
 
 public class ServiceConfigurator
 {
-    public ServiceConfigurator()
+    public IServiceCollection ConfigureServices(IHostApplicationBuilder applicationBuilder)
     {
-        // ...
-    }
-
-    public IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
-    {
+        applicationBuilder.AddRoomsDbContext();
+        
+        var serviceCollection = applicationBuilder.Services;
+        
         //OpenApi
         serviceCollection.AddOpenApi();
         serviceCollection.AddEndpointsApiExplorer();
 
         serviceCollection.AddControllers();
-
+        
         WithClients(serviceCollection);
+        WithOptions(serviceCollection);
         WithServices(serviceCollection);
 
         return serviceCollection;
@@ -28,17 +27,22 @@ public class ServiceConfigurator
 
     private IServiceCollection WithClients(IServiceCollection serviceCollection)
     {
-        // serviceCollection
-            // .AddHttpClient<IRoomsClient, RoomsClient>(client =>
-            // {
-                // client.BaseAddress = new Uri("https+http://application");
-            // });
-        // serviceCollection
-            // .AddHttpClient<IFileClient, FileClient>(client =>
-            // {
-                // client.BaseAddress = new Uri("https+http://application");
-            // })
-            // ;
+        //todo: minio
+        return serviceCollection;
+    }
+
+    private IServiceCollection WithOptions(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddOptions();
+
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile(
+                path: "Config/minioOptions.json",
+                optional: false,
+                reloadOnChange: true)
+            .Build();
+
+        serviceCollection.Configure<MinioOptions>(configuration.GetSection("MinioOptions"));
 
         return serviceCollection;
     }
@@ -46,9 +50,9 @@ public class ServiceConfigurator
     private IServiceCollection WithServices(IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddSingleton<IRoomService, RoomService>()
-            .AddSingleton<IFileService, FileService>()
-            ;
+            .AddScoped<IMinioStorageService, MinioStorageService>()
+            .AddScoped<IRoomService, RoomService>()
+            .AddScoped<IFileService, FileService>();
 
         return serviceCollection;
     }
