@@ -43,25 +43,25 @@ public partial class RoomsModelsConverter
         };
     }
 
-    public CreateRoomRequest Convert(PostRoomRequest request)
+    public CreateRoomRequest Convert(CreateRoomModel model)
     {
         return new CreateRoomRequest
         {
-            Name = request.Name,
-            Description = request.Description,
-            Type = Convert(request.Type),
-            Layout = Convert(request.Layout),
-            Seats = request.Seats,
-            ComputerSeats = request.ComputerSeats,
-            PdfRoomSchemeFileMetadata = Convert(request.PdfRoomSchemeFileMetadata),
-            PhotoFileMetadata = Convert(request.PhotoFileMetadata),
-            NetType = Convert(request.NetType),
-            HasConditioning = request.HasConditioning,
-            Owner = request.Owner,
-            RoomStatus = Convert(request.RoomStatus),
-            Comment = request.Comment,
-            FixDeadline = request.FixDeadline,
-            AllowBooking = request.AllowBooking
+            Name = model.Name,
+            Description = model.Description,
+            Type = Convert(model.Type),
+            Layout = Convert(model.Layout),
+            Seats = model.Seats,
+            ComputerSeats = model.ComputerSeats,
+            PdfRoomSchemeFileMetadata = Convert(model.PdfRoomSchemeFileMetadata),
+            PhotoFileMetadata = Convert(model.PhotoFileMetadata),
+            NetType = Convert(model.NetType),
+            HasConditioning = model.HasConditioning,
+            Owner = model.Owner,
+            RoomStatus = Convert(model.RoomStatus),
+            Comment = model.Comment,
+            FixDeadline = model.FixDeadline,
+            AllowBooking = model.AllowBooking
         };
     }
 

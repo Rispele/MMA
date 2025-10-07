@@ -37,19 +37,20 @@ public class RoomsController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRoom([FromBody] PostRoomRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
+        if (string.IsNullOrWhiteSpace(model.Name))
         {
             return BadRequest("Name is required for idempotency and creation.");
         }
 
-        var created = await roomService.CreateRoomAsync(request, cancellationToken);
+        var created = await roomService.CreateRoomAsync(model, cancellationToken);
 
         return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);
     }
 
     [HttpPatch("{roomId:int}")]
+    [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchRoom(
         int roomId,
         [FromBody] JsonPatchDocument<PatchRoomModel> patch,
@@ -61,9 +62,18 @@ public class RoomsController(
                 .SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
             throw new BadHttpRequestException(string.Join("; ", errorMessage));
         }
-
-        var updated = await roomService.PatchRoomAsync(roomId, patch, cancellationToken);
         
+        var patchModel = await roomService.GetPatchModel(roomId, cancellationToken);
+
+        patch.ApplyTo(patchModel);
+
+        if (!TryValidateModel(patchModel))
+        {
+            return ValidationProblem(ModelState);
+        }
+        
+        var updated = await roomService.PatchRoomAsync(roomId, patchModel, cancellationToken);
+
         return Ok(updated);
         
     }

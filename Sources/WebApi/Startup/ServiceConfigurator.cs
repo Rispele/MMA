@@ -1,4 +1,5 @@
 ﻿using Rooms.Core.Configuration;
+using Rooms.Core.Implementations.Services.DtoConverters;
 using Rooms.Core.Implementations.Services.Files;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
@@ -26,7 +27,10 @@ public class ServiceConfigurator
         serviceCollection.AddOpenApi();
         serviceCollection.AddEndpointsApiExplorer();
 
-        serviceCollection.AddControllers();
+        serviceCollection.AddControllers(options =>
+        {
+            options.InputFormatters.Insert(index: 0, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
+        });
         
         WithClients(serviceCollection);
         WithOptions(serviceCollection);
@@ -62,6 +66,9 @@ public class ServiceConfigurator
         serviceCollection
             .AddScoped<IMinioStorageService, MinioStorageService>()
             .AddScoped<ICoreRoomService, CoreRoomService>()
+            .AddScoped<RoomsModelsConverter>()
+            .AddScoped<RoomDtoConverter>()
+            .AddScoped<FileDtoConverter>()
             .AddScoped<ICoreFileService, CoreFileService>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IFileService, FileService>();
