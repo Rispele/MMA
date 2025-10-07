@@ -18,7 +18,7 @@ public class RoomsClient(HttpClient httpClient) : IRoomsClient
         return await ProcessNonNullableResult<RoomDto>(response, cancellationToken);
     }
 
-    public async Task<RoomsResponseDto> GetRoomsAsync(GetRoomsRequestDto request, CancellationToken cancellationToken = default)
+    public async Task<RoomsResponseDto> GetRoomsAsync(GetRoomsRequest request, CancellationToken cancellationToken = default)
     {
         var response = await httpClient.PostAsJsonAsync("rooms/filter", request, cancellationToken);
 

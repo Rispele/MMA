@@ -1,4 +1,6 @@
-﻿using Aspire.Hosting;
+﻿using Application.Clients.Implementations;
+using Application.Tests.SDK;
+using Sources.AppHost;
 
 namespace Application.Tests;
 
@@ -6,8 +8,10 @@ namespace Application.Tests;
 public class ApplicationTestsContext
 {
     public static TestingApplicationFactory TestingApplicationFactory { get; private set; } = null!;
-    
-    public static DistributedApplication Application => TestingApplicationFactory.Application;
+
+    public static RoomsClient RoomsClient => new(TestingApplicationFactory.CreateHttpClient(KnownResourceNames.ApplicationService));
+
+    public static RoomsSdk RoomsSdk => new(RoomsClient);
 
     [OneTimeSetUp]
     public async Task SetUp()

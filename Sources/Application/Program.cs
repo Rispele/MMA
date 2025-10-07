@@ -9,17 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder
-    .AddServiceDefaults()
-    .AddDomainContext();
+builder.AddServiceDefaults();
 
+builder.AddDomainContext();
 builder.Services
     .AddScoped<IRoomService, RoomService>()
     .AddScoped<IFileService, FileService>()
     .AddScoped<IMinioStorageService, MinioStorageService>()
     .AddSingleton<RoomDtoConverter>()
-    .AddSingleton<FileDtoConverter>()
-    ;
+    .AddSingleton<FileDtoConverter>();
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
@@ -39,10 +37,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(b =>
-    {
-        b.SwaggerEndpoint("/openapi/v1.json", "My API V1");
-    });
+    app.UseSwaggerUI(b => { b.SwaggerEndpoint("/openapi/v1.json", "My API V1"); });
 }
 
 // app.UseHttpsRedirection();

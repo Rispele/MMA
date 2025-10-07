@@ -19,5 +19,6 @@ public record RoomsFilterDto
     public FilterMultiParameterDto<RoomStatusDto>? RoomStatuses { get; init; }
     public FilterParameterDto<DateTime>? FixDeadline { get; init; }
     public FilterParameterDto<string>? Comment { get; init; }
+    public FilterParameterDto<bool>? AllowBooking { get; init; }
 }
 
