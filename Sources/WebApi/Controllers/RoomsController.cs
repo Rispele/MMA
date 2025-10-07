@@ -57,24 +57,15 @@ public class RoomsController(
     {
         if (!ModelState.IsValid)
         {
-            var errorMessage = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+            var errorMessage = ModelState.Values
+                .SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
             throw new BadHttpRequestException(string.Join("; ", errorMessage));
         }
 
-        var current = await roomService.GetPatchModelAsync(roomId, cancellationToken);
-        if (current is null)
-        {
-            return NotFound();
-        }
-
-        patch.ApplyTo(current);
-        if (!TryValidateModel(current))
-        {
-            return ValidationProblem(ModelState);
-        }
-
-        var updated = await roomService.ApplyPatchAndSaveAsync(roomId, current, cancellationToken);
+        var updated = await roomService.PatchRoomAsync(roomId, patch, cancellationToken);
+        
         return Ok(updated);
+        
     }
 
     [HttpGet("/webapi/attachments")]

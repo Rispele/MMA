@@ -1,4 +1,5 @@
-﻿using WebApi.Models.Requests;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using WebApi.Models.Requests;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
@@ -28,18 +29,27 @@ public class RoomService(ICoreRoomService roomService, RoomsModelsConverter mode
         return modelsConverter.Convert(room);
     }
 
-    public Task<RoomModel> CreateRoomAsync(PostRoomRequest request, CancellationToken cancellationToken)
+    public async Task<RoomModel> CreateRoomAsync(PostRoomRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var innerRequest = modelsConverter.Convert(request);
+
+        var room = await roomService.CreateRoom(innerRequest, cancellationToken);
+
+        return modelsConverter.Convert(room);
     }
 
-    public Task<PatchRoomModel?> GetPatchModelAsync(int roomId, CancellationToken cancellationToken)
+    public async Task<RoomModel> PatchRoomAsync(int roomId, JsonPatchDocument<PatchRoomModel> request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
+        var room = await roomService.GetRoomById(roomId, cancellationToken);
+        
+        var patchModel = modelsConverter.ConvertToPatchModel(room);
+        
+        request.ApplyTo(patchModel);
+        
+        var patchRequest = modelsConverter.Convert(patchModel);
+        
+        var patched = await roomService.PatchRoom(roomId, patchRequest, cancellationToken);
 
-    public Task<RoomModel> ApplyPatchAndSaveAsync(int roomId, PatchRoomModel patchedModel, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
+        return modelsConverter.Convert(patched);
     }
 }

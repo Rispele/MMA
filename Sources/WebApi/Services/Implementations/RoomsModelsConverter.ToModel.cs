@@ -1,6 +1,7 @@
 ﻿using Rooms.Core.Implementations.Dtos.Files;
 using Rooms.Core.Implementations.Dtos.Room;
 using WebApi.Models.Files;
+using WebApi.Models.Requests;
 using WebApi.Models.Room;
 
 namespace WebApi.Services.Implementations;
@@ -24,6 +25,26 @@ public partial class RoomsModelsConverter
         };
     }
 
+    public PatchRoomModel ConvertToPatchModel(RoomDto dto)
+    {
+        return new PatchRoomModel
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            Type = Convert(dto.Parameters.Type),
+            Layout = Convert(dto.Parameters.Layout),
+            NetType = Convert(dto.Parameters.NetType),
+            Seats = dto.Parameters.Seats,
+            ComputerSeats = dto.Parameters.ComputerSeats,
+            HasConditioning = dto.Parameters.HasConditioning,
+            Owner = dto.Owner,
+            RoomStatus = Convert(dto.FixInfo.Status),
+            FixDeadline = dto.FixInfo.FixDeadline,
+            Comment = dto.FixInfo.Comment,
+            AllowBooking = dto.AllowBooking
+        };
+    }
+    
     private static ScheduleAddressModel? Convert(ScheduleAddressDto? dto)
     {
         return dto == null ? null : new ScheduleAddressModel(dto.RoomNumber, dto.Address);

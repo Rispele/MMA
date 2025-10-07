@@ -2,9 +2,13 @@
 using Rooms.Core.Implementations.Dtos.Requests.Filtering;
 using Rooms.Core.Implementations.Dtos.Requests.RoomsQuerying;
 using Rooms.Core.Implementations.Dtos.Room;
+using Rooms.Core.Implementations.Dtos.Requests.RoomCreating;
+using Rooms.Core.Implementations.Dtos.Files;
+using Rooms.Core.Implementations.Dtos.Requests.RoomPatching;
 using WebApi.Models.Requests;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Room;
+using WebApi.Models.Files;
 
 namespace WebApi.Services.Implementations;
 
@@ -38,6 +42,51 @@ public partial class RoomsModelsConverter
                 })
         };
     }
+
+    public CreateRoomRequest Convert(PostRoomRequest request)
+    {
+        return new CreateRoomRequest
+        {
+            Name = request.Name,
+            Description = request.Description,
+            Type = Convert(request.Type),
+            Layout = Convert(request.Layout),
+            Seats = request.Seats,
+            ComputerSeats = request.ComputerSeats,
+            PdfRoomSchemeFileMetadata = Convert(request.PdfRoomSchemeFileMetadata),
+            PhotoFileMetadata = Convert(request.PhotoFileMetadata),
+            NetType = Convert(request.NetType),
+            HasConditioning = request.HasConditioning,
+            Owner = request.Owner,
+            RoomStatus = Convert(request.RoomStatus),
+            Comment = request.Comment,
+            FixDeadline = request.FixDeadline,
+            AllowBooking = request.AllowBooking
+        };
+    }
+
+    public PatchRoomRequest Convert(PatchRoomModel patchModel)
+    {
+        return new PatchRoomRequest
+        {
+            Name = patchModel.Name,
+            Description = patchModel.Description,
+            Type = Convert(patchModel.Type),
+            Layout = Convert(patchModel.Layout),
+            Seats = patchModel.Seats,
+            ComputerSeats = patchModel.ComputerSeats,
+            PdfRoomSchemeFileMetadata = null,
+            PhotoFileMetadata = null,
+            NetType = Convert(patchModel.NetType),
+            HasConditioning = patchModel.HasConditioning,
+            Owner = patchModel.Owner,
+            RoomStatus = Convert(patchModel.RoomStatus),
+            Comment = patchModel.Comment,
+            FixDeadline = patchModel.FixDeadline,
+            AllowBooking = patchModel.AllowBooking
+        };
+    }
+
 
     private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src, Func<TIn, TOut> map)
     {
@@ -117,5 +166,15 @@ public partial class RoomsModelsConverter
             RoomStatusModel.NotReady => RoomStatusDto.NotReady,
             _ => RoomStatusDto.Unspecified
         };
+    }
+
+    private static FileMetadataDto? Convert(FileMetadataModel? model)
+    {
+        return model.AsOptional().Map(t => new FileMetadataDto(t.FileName, Convert(t.Location)));
+    }
+
+    private static FileLocationDto Convert(FileLocationModel model)
+    {
+        return new FileLocationDto(model.Id, model.Bucket);
     }
 }

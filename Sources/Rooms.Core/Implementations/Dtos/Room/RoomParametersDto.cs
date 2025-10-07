@@ -6,4 +6,4 @@ public record RoomParametersDto(
     RoomNetTypeDto NetType,
     int? Seats,
     int? ComputerSeats,
-    bool? HasConditioning);
+    bool HasConditioning);
