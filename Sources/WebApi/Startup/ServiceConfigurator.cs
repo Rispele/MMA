@@ -1,6 +1,16 @@
 ﻿using Rooms.Core.Configuration;
 using Rooms.Core.Implementations.Services.Files;
-using Rooms.Core.Implementations.Services.Rooms;
+using WebApi.Services.Implementations;
+using WebApi.Services.Interfaces;
+
+using ICoreRoomService = Rooms.Core.Implementations.Services.Rooms.IRoomService;
+using CoreRoomService = Rooms.Core.Implementations.Services.Rooms.RoomService;
+using ICoreFileService = Rooms.Core.Implementations.Services.Files.IFileService;
+using CoreFileService = Rooms.Core.Implementations.Services.Files.FileService;
+
+using FileService = WebApi.Services.Implementations.FileService;
+using IFileService = WebApi.Services.Interfaces.IFileService;
+
 
 namespace WebApi.Startup;
 
@@ -51,6 +61,8 @@ public class ServiceConfigurator
     {
         serviceCollection
             .AddScoped<IMinioStorageService, MinioStorageService>()
+            .AddScoped<ICoreRoomService, CoreRoomService>()
+            .AddScoped<ICoreFileService, CoreFileService>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IFileService, FileService>();
 

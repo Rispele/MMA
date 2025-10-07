@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rooms.Domain.Models.Room;
@@ -14,9 +15,11 @@ using Rooms.Domain.Persistence;
 namespace Domain.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    partial class DomainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251007143713_MakeHasConditioningNonNullable")]
+    partial class MakeHasConditioningNonNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
