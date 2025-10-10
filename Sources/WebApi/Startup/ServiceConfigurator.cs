@@ -20,9 +20,9 @@ public class ServiceConfigurator
     public IServiceCollection ConfigureServices(IHostApplicationBuilder applicationBuilder)
     {
         applicationBuilder.AddRoomsDbContext();
-        
+
         var serviceCollection = applicationBuilder.Services;
-        
+
         //OpenApi
         serviceCollection.AddOpenApi();
         serviceCollection.AddEndpointsApiExplorer();
@@ -31,7 +31,7 @@ public class ServiceConfigurator
         {
             options.InputFormatters.Insert(index: 0, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
         });
-        
+
         WithClients(serviceCollection);
         WithOptions(serviceCollection);
         WithServices(serviceCollection);

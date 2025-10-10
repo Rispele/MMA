@@ -44,7 +44,7 @@ public partial class RoomsModelsConverter
             AllowBooking = dto.AllowBooking
         };
     }
-    
+
     private static ScheduleAddressModel? Convert(ScheduleAddressDto? dto)
     {
         return dto == null ? null : new ScheduleAddressModel(dto.RoomNumber, dto.Address);

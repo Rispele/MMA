@@ -11,7 +11,7 @@ public class RoomService(ICoreRoomService roomService, RoomsModelsConverter mode
     public async Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, CancellationToken cancellationToken)
     {
         var getRoomsRequest = modelsConverter.Convert(request);
-        
+
         var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
 
         return new RoomsResponse
@@ -47,7 +47,7 @@ public class RoomService(ICoreRoomService roomService, RoomsModelsConverter mode
     public async Task<RoomModel> PatchRoomAsync(int roomId, PatchRoomModel patchModel, CancellationToken cancellationToken)
     {
         var patchRequest = modelsConverter.Convert(patchModel);
-        
+
         var patched = await roomService.PatchRoom(roomId, patchRequest, cancellationToken);
 
         return modelsConverter.Convert(patched);

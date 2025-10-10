@@ -12,7 +12,7 @@ public class FileController(IFileService fileService) : ControllerBase
     public async Task<FileLocationModel> StoreFile([FromBody] byte[] content, CancellationToken cancellationToken)
     {
         var location = await fileService.StoreFileAsync(new MemoryStream(content), cancellationToken);
-        
+
         return new FileLocationModel(location.Id, location.Bucket);
     }
 }

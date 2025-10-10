@@ -62,7 +62,7 @@ public class RoomsController(
                 .SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
             throw new BadHttpRequestException(string.Join("; ", errorMessage));
         }
-        
+
         var patchModel = await roomService.GetPatchModel(roomId, cancellationToken);
 
         patch.ApplyTo(patchModel);
@@ -71,11 +71,10 @@ public class RoomsController(
         {
             return ValidationProblem(ModelState);
         }
-        
+
         var updated = await roomService.PatchRoomAsync(roomId, patchModel, cancellationToken);
 
         return Ok(updated);
-        
     }
 
     [HttpGet("/webapi/attachments")]

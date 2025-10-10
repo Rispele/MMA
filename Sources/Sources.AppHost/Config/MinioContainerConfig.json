@@ -1,0 +1,7 @@
+﻿{
+  "MinioContainerConfiguration": {
+    "Registry" : "docker.io",
+    "Image" : "quay.io/minio/minio",
+    "Tag" : "latest"
+  }
+}
