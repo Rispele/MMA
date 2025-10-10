@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Implementations.Services.Rooms;
 using Sources.AppHost;
 using WebApi.Tests.SDK;
 using WebApi.Tests.TestingInfrastructure.Configuration;
@@ -13,16 +12,12 @@ public class WebApiTestsContext
 
     public static IServiceProvider ServiceProvider { get; private set; } = null!;
 
-    public static RoomsSdk RoomsSdk { get; private set; } = null!;
-
 
     [OneTimeSetUp]
     public async Task SetUp()
     {
         await BuildApplication();
         await BuildServiceProvider();
-
-        RoomsSdk = new RoomsSdk((IRoomService)ServiceProvider.GetRequiredService(typeof(IRoomService)));
     }
 
     [OneTimeTearDown]
