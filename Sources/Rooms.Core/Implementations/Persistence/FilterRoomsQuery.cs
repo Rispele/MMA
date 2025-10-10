@@ -110,18 +110,18 @@ public class FilterRoomsQuery(int batchSize, int batchNumber, int afterRoomId, R
 
         (SortDirectionDto? direction, Expression<Func<Room, object>> parameter)[] sorts =
         [
-            BuildSort(filter.Name?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.Description?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.RoomTypes?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.RoomLayout?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.Seats?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.ComputerSeats?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.NetTypes?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.Conditioning?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.Owner?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.RoomStatuses?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.FixDeadline?.SortDirectionDto, t => t.Name),
-            BuildSort(filter.Comment?.SortDirectionDto, t => t.Name),
+            BuildSort(filter.Name?.SortDirection, t => t.Name),
+            BuildSort(filter.Description?.SortDirection, t => t.Name),
+            BuildSort(filter.RoomTypes?.SortDirection, t => t.Name),
+            BuildSort(filter.RoomLayout?.SortDirection, t => t.Name),
+            BuildSort(filter.Seats?.SortDirection, t => t.Name),
+            BuildSort(filter.ComputerSeats?.SortDirection, t => t.Name),
+            BuildSort(filter.NetTypes?.SortDirection, t => t.Name),
+            BuildSort(filter.Conditioning?.SortDirection, t => t.Name),
+            BuildSort(filter.Owner?.SortDirection, t => t.Name),
+            BuildSort(filter.RoomStatuses?.SortDirection, t => t.Name),
+            BuildSort(filter.FixDeadline?.SortDirection, t => t.Name),
+            BuildSort(filter.Comment?.SortDirection, t => t.Name),
         ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();

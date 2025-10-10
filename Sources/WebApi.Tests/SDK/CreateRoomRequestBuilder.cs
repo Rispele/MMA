@@ -1,7 +1,7 @@
-﻿using Application.Clients.Dtos.Requests.RoomCreating;
-using Application.Clients.Dtos.Room;
+﻿using Rooms.Core.Implementations.Dtos.Requests.RoomCreating;
+using Rooms.Core.Implementations.Dtos.Room;
 
-namespace Application.Tests.SDK;
+namespace WebApi.Tests.SDK;
 
 public struct CreateRoomRequestBuilder
 {

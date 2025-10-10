@@ -22,7 +22,7 @@ public static class Extensions
     private const string HealthEndpointPath = "/health";
     private const string AlivenessEndpointPath = "/alive";
 
-    public static TBuilder AddPostgresDbContext<TBuilder, TDbContext>(
+    public static TBuilder ConfigurePostgresDbContextWithInstrumentation<TBuilder, TDbContext>(
         this TBuilder builder,
         string connectionName,
         Action<NpgsqlDbContextOptionsBuilder>? npgsqlOptionsAction = null)
@@ -33,16 +33,20 @@ public static class Extensions
                                ?? throw new InvalidOperationException($"Could not get connection string for connection: [{connectionName}]");
 
         builder.ConfigureInstrumentation<TDbContext>();
-        builder.Services.AddDbContextFactory<TDbContext>(optionsBuilder => optionsBuilder
-            .UseSnakeCaseNamingConvention()
-            .UseNpgsql(connectionString, npgsqlOptionsAction));
-
-        // (d.smirnov): не подходит - не умеет мапить енумы
-        // builder.AddNpgsqlDbContext<TDbContext>(
-            // connectionName,
-            // configureDbContextOptions: b => b.UseSnakeCaseNamingConvention());
+        builder.Services.ConfigurePostgresDbContext<TDbContext>(connectionString, npgsqlOptionsAction);
 
         return builder;
+    }
+
+    public static void ConfigurePostgresDbContext<TDbContext>(
+        this IServiceCollection serviceCollection,
+        string connectionString,
+        Action<NpgsqlDbContextOptionsBuilder>? npgsqlOptionsAction = null)
+        where TDbContext : DbContext
+    {
+        serviceCollection.AddDbContextFactory<TDbContext>(optionsBuilder => optionsBuilder
+            .UseSnakeCaseNamingConvention()
+            .UseNpgsql(connectionString, npgsqlOptionsAction));
     }
 
     private static void ConfigureInstrumentation<TContext>(this IHostApplicationBuilder builder) where TContext : DbContext
@@ -145,9 +149,8 @@ public static class Extensions
 
     public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        builder.Services.AddHealthChecks()
-            // Add a default liveness check to ensure app is responsive
-            .AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
+        // Add a default liveness check to ensure app is responsive
+        builder.Services.AddHealthChecks().AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
 
         return builder;
     }

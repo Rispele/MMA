@@ -31,7 +31,7 @@ public class RoomService(
         return room.Map(roomDtoConverter.Convert);
     }
 
-    public async Task<RoomsBatchDto> FilterRooms(GetRoomsRequestDto request, CancellationToken cancellationToken)
+    public async Task<RoomsBatchDto> FilterRooms(GetRoomsRequest request, CancellationToken cancellationToken)
     {
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
 

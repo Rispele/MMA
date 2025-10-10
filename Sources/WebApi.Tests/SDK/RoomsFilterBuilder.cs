@@ -1,8 +1,8 @@
-﻿using Application.Clients.Dtos.Requests.Filtering;
-using Application.Clients.Dtos.Requests.RoomsQuerying;
-using Application.Clients.Dtos.Room;
+﻿using Rooms.Core.Implementations.Dtos.Requests.Filtering;
+using Rooms.Core.Implementations.Dtos.Requests.RoomsQuerying;
+using Rooms.Core.Implementations.Dtos.Room;
 
-namespace Application.Tests.SDK;
+namespace WebApi.Tests.SDK;
 
 public class RoomsFilterBuilder
 {
@@ -114,7 +114,6 @@ public class RoomsFilterBuilder
             RoomStatuses = status,
             FixDeadline = fixDeadline,
             Comment = comment,
-            AllowBooking = allowBooking
         };
     }
 

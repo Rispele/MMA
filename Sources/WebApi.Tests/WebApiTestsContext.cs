@@ -1,0 +1,56 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Rooms.Core.Implementations.Services.Rooms;
+using Sources.AppHost;
+using WebApi.Tests.SDK;
+using WebApi.Tests.TestingInfrastructure.Configuration;
+
+namespace WebApi.Tests;
+
+[SetUpFixture]
+public class WebApiTestsContext
+{
+    public static TestingApplicationFactory TestingApplicationFactory { get; private set; } = null!;
+
+    public static IServiceProvider ServiceProvider { get; private set; } = null!;
+
+    public static RoomsSdk RoomsSdk { get; private set; } = null!;
+
+
+    [OneTimeSetUp]
+    public async Task SetUp()
+    {
+        await BuildApplication();
+        await BuildServiceProvider();
+
+        RoomsSdk = new RoomsSdk((IRoomService)ServiceProvider.GetRequiredService(typeof(IRoomService)));
+    }
+
+    [OneTimeTearDown]
+    public async Task TearDown()
+    {
+        await TestingApplicationFactory.DisposeAsync();
+    }
+
+    private static async Task BuildApplication()
+    {
+        TestingApplicationFactory = new TestingApplicationFactory();
+
+        await TestingApplicationFactory.StartAsync();
+
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+        await TestingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResourceNames.WebApiService, cts.Token);
+    }
+
+    private static async Task BuildServiceProvider()
+    {
+        var roomsDbContextConnectionString = await TestingApplicationFactory
+            .GetConnectionString(KnownResourceNames.MmrDb) ?? throw new InvalidOperationException("Database connection string is not set");
+
+        ServiceProvider = new TestingContainerFactory()
+            .ConfigureRoomsDbContext(roomsDbContextConnectionString)
+            .ConfigureWebApiServices()
+            .ConfigureServices(t => t.AddScoped<RoomsSdk>())
+            .BuildServiceProvider();
+    }
+}

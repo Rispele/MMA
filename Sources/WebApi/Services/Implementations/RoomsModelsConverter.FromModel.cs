@@ -14,16 +14,15 @@ namespace WebApi.Services.Implementations;
 
 public partial class RoomsModelsConverter
 {
-    public GetRoomsRequestDto Convert(RoomsRequest request)
+    public GetRoomsRequest Convert(RoomsRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        return new GetRoomsRequestDto
-        {
-            BatchNumber = Math.Max(0, request.Page - 1),
-            BatchSize = request.PageSize,
-            AfterRoomId = request.AfterRoomId,
-            Filter = request.Filter
+        return new GetRoomsRequest(
+            Math.Max(0, request.Page - 1),
+            request.PageSize,
+            request.AfterRoomId,
+            request.Filter
                 .AsOptional()
                 .Map(filter => new RoomsFilterDto
                 {
@@ -39,8 +38,7 @@ public partial class RoomsModelsConverter
                     RoomStatuses = MapFilterMultiParameter(filter.RoomStatuses, Convert),
                     FixDeadline = MapFilterParameter(filter.FixDeadline, v => v),
                     Comment = MapFilterParameter(filter.Comment, v => v),
-                })
-        };
+                }));
     }
 
     public CreateRoomRequest Convert(CreateRoomModel model)
@@ -91,21 +89,13 @@ public partial class RoomsModelsConverter
     private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src, Func<TIn, TOut> map)
     {
         if (src == null || src.Value == null) return null;
-        return new FilterParameterDto<TOut>
-        {
-            Value = map(src.Value),
-            SortDirectionDto = Convert(src.SortDirection)
-        };
+        return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
     private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(FilterMultiParameterModel<TIn>? src, Func<TIn, TOut> map)
     {
         if (src?.Values == null || src.Values.Length == 0) return null;
-        return new FilterMultiParameterDto<TOut>
-        {
-            Values = src.Values.Select(map).ToArray(),
-            SortDirectionDto = Convert(src.SortDirection)
-        };
+        return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
     }
 
     private static SortDirectionDto Convert(SortDirectionModel direction)

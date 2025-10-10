@@ -23,20 +23,20 @@ var postgresPort = builder.AddParameter("PostgresPort", secret: true);
 
 var port = await postgresPort.Resource.GetValueAsync(CancellationToken.None) ?? throw new InvalidOperationException("Port not specified");
 
-var postgres = builder
-    .AddPostgres(KnownResourceNames.PostgresDb, postgresUserName, postgresPassword, port: int.Parse(port))
+var postgresService = builder
+    .AddPostgres(KnownResourceNames.PostgresService, postgresUserName, postgresPassword, port: int.Parse(port))
     .AddDatabase("mmr");
 
-var postgresMigrations = builder
+var roomsMigrationService = builder
     .AddProject<Projects.Rooms_MigrationService>(KnownResourceNames.RoomsMigrationService)
-    .WithReference(postgres)
-    .WaitFor(postgres);
+    .WithReference(postgresService)
+    .WaitFor(postgresService);
 
 builder
     .AddProject<Projects.WebApi>(KnownResourceNames.WebApiService)
     .WithExternalHttpEndpoints()
-    .WithReference(postgres)
-    .WaitFor(postgresMigrations);
+    .WithReference(postgresService)
+    .WaitForCompletion(roomsMigrationService);
 
 var minioConfigSection = configuration.GetSection("MinioContainerConfiguration");
 var minioConfig = new MinioContainerConfiguration

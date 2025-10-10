@@ -1,5 +1,4 @@
-﻿using Rooms.Core.Configuration;
-using Rooms.Core.Implementations.Services.DtoConverters;
+﻿using Rooms.Core.Implementations.Services.DtoConverters;
 using Rooms.Core.Implementations.Services.Files;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
@@ -15,14 +14,10 @@ using IFileService = WebApi.Services.Interfaces.IFileService;
 
 namespace WebApi.Startup;
 
-public class ServiceConfigurator
+public class WebApiServiceConfigurator
 {
-    public IServiceCollection ConfigureServices(IHostApplicationBuilder applicationBuilder)
+    public IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-        applicationBuilder.AddRoomsDbContext();
-
-        var serviceCollection = applicationBuilder.Services;
-
         //OpenApi
         serviceCollection.AddOpenApi();
         serviceCollection.AddEndpointsApiExplorer();

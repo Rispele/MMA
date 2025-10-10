@@ -1,6 +1,6 @@
-﻿using Application.Clients.Dtos.Requests.RoomsQuerying;
+﻿using Rooms.Core.Implementations.Dtos.Requests.RoomsQuerying;
 
-namespace Application.Tests.SDK;
+namespace WebApi.Tests.SDK;
 
 public struct GetRoomsRequestBuilder
 {

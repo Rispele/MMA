@@ -1,4 +1,5 @@
-﻿using Sources.ServiceDefaults;
+﻿using Rooms.Core.Configuration;
+using Sources.ServiceDefaults;
 
 namespace WebApi.Startup;
 
@@ -10,10 +11,12 @@ public static class ApplicationRunner
 
         // Add services to the container.
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.AddServiceDefaults();
+        builder
+            .AddServiceDefaults()
+            .AddRoomsDbContext();
 
-        var serviceConfigurator = new ServiceConfigurator();
-        serviceConfigurator.ConfigureServices(builder);
+        var serviceConfigurator = new WebApiServiceConfigurator();
+        serviceConfigurator.ConfigureServices(builder.Services);
 
         var app = builder.Build();
 

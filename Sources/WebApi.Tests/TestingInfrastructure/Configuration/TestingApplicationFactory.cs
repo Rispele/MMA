@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Tests;
+namespace WebApi.Tests.TestingInfrastructure.Configuration;
 
 public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(Projects.Sources_AppHost))
 {
@@ -15,7 +15,6 @@ public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(
     {
         hostOptions.Configuration ??= new ConfigurationManager();
         hostOptions.Configuration["environment"] = "Development";
-        hostOptions.Configuration["ASPIRE_ALLOW_UNSECURED_TRANSPORT"] = "true";
 
         applicationOptions.AllowUnsecuredTransport = true;
         applicationOptions.DisableDashboard = false;
