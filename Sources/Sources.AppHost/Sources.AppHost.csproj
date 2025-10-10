@@ -21,4 +21,10 @@
       <ProjectReference Include="..\WebApi\WebApi.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Config\MinioContainerConfig.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
