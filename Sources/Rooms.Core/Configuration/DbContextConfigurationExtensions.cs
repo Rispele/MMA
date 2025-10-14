@@ -9,11 +9,18 @@ namespace Rooms.Core.Configuration;
 
 public static class DbContextConfigurationExtensions
 {
-    public static void AddRoomsDbContext(this IHostApplicationBuilder builder)
+    public static IHostApplicationBuilder AddRoomsDbContext(this IHostApplicationBuilder builder)
     {
-        builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, RoomsDbContext>(
+        return builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, RoomsDbContext>(
             connectionName: KnownResourceNames.MmrDb,
             ConfigureNpgsqlRoomsDbContextOptions);
+    }
+
+    public static IHostApplicationBuilder AddEquipmentsDbContext(this IHostApplicationBuilder builder)
+    {
+        return builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, EquipmentsDbContext>(
+            connectionName: KnownResourceNames.MmrDb,
+            ConfigureNpgsqlEquipmentsDbContextOptions);
     }
 
     public static void ConfigureNpgsqlRoomsDbContextOptions(this NpgsqlDbContextOptionsBuilder optionsBuilder)
@@ -23,6 +30,12 @@ public static class DbContextConfigurationExtensions
             .MapEnum<RoomLayout>()
             .MapEnum<RoomNetType>()
             .MapEnum<RoomType>()
+            .ConfigureDataSource(b => b.EnableDynamicJson());
+    }
+
+    public static void ConfigureNpgsqlEquipmentsDbContextOptions(this NpgsqlDbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
             .ConfigureDataSource(b => b.EnableDynamicJson());
     }
 }

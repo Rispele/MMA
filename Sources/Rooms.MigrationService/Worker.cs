@@ -18,9 +18,12 @@ public class Worker(
         try
         {
             using var scope = serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<RoomsDbContext>();
 
-            await RunMigrationAsync(dbContext, cancellationToken);
+            var roomsDbContext = scope.ServiceProvider.GetRequiredService<RoomsDbContext>();
+            await RunMigrationAsync(roomsDbContext, cancellationToken);
+
+            var equipmentsDbContext = scope.ServiceProvider.GetRequiredService<EquipmentsDbContext>();
+            await RunMigrationAsync(equipmentsDbContext, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -31,7 +34,7 @@ public class Worker(
         hostApplicationLifetime.StopApplication();
     }
 
-    private static async Task RunMigrationAsync(RoomsDbContext dbContext, CancellationToken cancellationToken)
+    private static async Task RunMigrationAsync(DbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>

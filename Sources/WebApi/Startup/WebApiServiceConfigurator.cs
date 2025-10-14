@@ -66,7 +66,9 @@ public class WebApiServiceConfigurator
             .AddScoped<FileDtoConverter>()
             .AddScoped<ICoreFileService, CoreFileService>()
             .AddScoped<IRoomService, RoomService>()
-            .AddScoped<IFileService, FileService>();
+            .AddScoped<IFileService, FileService>()
+            .AddScoped<IEquipmentService, EquipmentService>()
+            ;
 
         return serviceCollection;
     }
