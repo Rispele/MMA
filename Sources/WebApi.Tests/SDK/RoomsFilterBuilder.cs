@@ -1,5 +1,5 @@
 ﻿using Rooms.Core.Implementations.Dtos.Requests.Filtering;
-using Rooms.Core.Implementations.Dtos.Requests.RoomsQuerying;
+using Rooms.Core.Implementations.Dtos.Requests.Rooms;
 using Rooms.Core.Implementations.Dtos.Room;
 
 namespace WebApi.Tests.SDK;

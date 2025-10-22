@@ -1,4 +1,4 @@
-﻿using Rooms.Core.Implementations.Dtos.Requests.RoomPatching;
+﻿using Rooms.Core.Implementations.Dtos.Requests.Rooms;
 using Rooms.Core.Implementations.Dtos.Room;
 
 namespace WebApi.Tests.SDK;

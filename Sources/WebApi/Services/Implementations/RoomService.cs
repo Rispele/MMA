@@ -1,20 +1,21 @@
-﻿using WebApi.Models.Requests;
+﻿using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
-using ICoreRoomService = Rooms.Core.Implementations.Services.Rooms.IRoomService;
+using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
+using RoomsModelsConverter = WebApi.ModelConverters.RoomsModelsConverter;
 
 namespace WebApi.Services.Implementations;
 
 public class RoomService(ICoreRoomService roomService) : IRoomService
 {
-    public async Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, CancellationToken cancellationToken)
+    public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {
-        var getRoomsRequest = RoomsModelsConverter.Convert(request);
+        var getRoomsRequest = RoomsModelsConverter.Convert(model);
 
         var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
 
-        return new RoomsResponse
+        return new RoomsResponseModel
         {
             Rooms = batch.Rooms.Select(RoomsModelsConverter.Convert).ToArray(),
             Count = batch.Count

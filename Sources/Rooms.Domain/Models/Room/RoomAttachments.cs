@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Rooms.Domain.Models.File;
 
 namespace Rooms.Domain.Models.Room;
 

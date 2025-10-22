@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Rooms.Domain.Models.Equipment;
 using WebApi.ModelBinders;
-using WebApi.Models.Requests;
+using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
 
@@ -18,12 +18,12 @@ public class EquipmentsController(
     private readonly ILogger<EquipmentsController> _logger = logger;
 
     [HttpGet]
-    public async Task<ActionResult<EquipmentsResponse>> GetEquipments(
+    public async Task<ActionResult<EquipmentsResponseModel>> GetEquipments(
         [ModelBinder(BinderType = typeof(GetEquipmentsRequestModelBinder))]
-        EquipmentsRequest request,
+        GetEquipmentsModel model,
         CancellationToken cancellationToken)
     {
-        var result = await equipmentService.GetEquipmentsAsync(request, cancellationToken);
+        var result = await equipmentService.GetEquipmentsAsync(model, cancellationToken);
         return Ok(result);
     }
 

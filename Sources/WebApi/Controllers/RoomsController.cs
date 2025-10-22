@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.ModelBinders;
-using WebApi.Models.Requests;
+using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
@@ -19,12 +19,12 @@ public class RoomsController(
     private readonly ILogger<RoomsController> _logger = logger;
 
     [HttpGet]
-    public async Task<ActionResult<RoomsResponse>> GetRooms(
+    public async Task<ActionResult<RoomsResponseModel>> GetRooms(
         [ModelBinder(BinderType = typeof(GetRoomsRequestModelBinder))]
-        RoomsRequest request,
+        GetRoomsModel model,
         CancellationToken cancellationToken)
     {
-        var result = await roomService.GetRoomsAsync(request, cancellationToken);
+        var result = await roomService.GetRoomsAsync(model, cancellationToken);
 
         return Ok(result);
     }

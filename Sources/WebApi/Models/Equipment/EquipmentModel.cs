@@ -6,7 +6,7 @@ namespace WebApi.Models.Equipment;
 public class EquipmentModel
 {
     public int Id { get; init; }
-    public RoomModel Room { get; init; } = default!;
+    public RoomModel RoomModel { get; init; } = default!;
     public required EquipmentSchemaModel SchemaModel { get; init; }
     public string? InventoryNumber { get; init; }
     public string? SerialNumber { get; init; }

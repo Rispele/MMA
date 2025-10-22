@@ -1,14 +1,20 @@
-﻿using Rooms.Core.Implementations.Services.Files;
-using WebApi.Services.Implementations;
-using WebApi.Services.Interfaces;
+﻿using Rooms.Core.Configuration;
+using Rooms.Core.Services.Implementations;
+using Rooms.Core.Services.Interfaces;
 
-using ICoreRoomService = Rooms.Core.Implementations.Services.Rooms.IRoomService;
-using CoreRoomService = Rooms.Core.Implementations.Services.Rooms.RoomService;
-using ICoreFileService = Rooms.Core.Implementations.Services.Files.IFileService;
-using CoreFileService = Rooms.Core.Implementations.Services.Files.FileService;
+using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
+using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
+using ICoreFileService = Rooms.Core.Services.Interfaces.IFileService;
+using CoreFileService = Rooms.Core.Services.Implementations.FileService;
+using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
+using CoreEquipmentService = Rooms.Core.Services.Implementations.EquipmentService;
 
 using FileService = WebApi.Services.Implementations.FileService;
 using IFileService = WebApi.Services.Interfaces.IFileService;
+using IRoomService = WebApi.Services.Interfaces.IRoomService;
+using RoomService = WebApi.Services.Implementations.RoomService;
+using IEquipmentService = WebApi.Services.Interfaces.IEquipmentService;
+using EquipmentService = WebApi.Services.Implementations.EquipmentService;
 
 
 namespace WebApi.Startup;
@@ -61,6 +67,7 @@ public class WebApiServiceConfigurator
             .AddScoped<IMinioStorageService, MinioStorageService>()
             .AddScoped<ICoreRoomService, CoreRoomService>()
             .AddScoped<ICoreFileService, CoreFileService>()
+            .AddScoped<ICoreEquipmentService, CoreEquipmentService>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IFileService, FileService>()
             .AddScoped<IEquipmentService, EquipmentService>()

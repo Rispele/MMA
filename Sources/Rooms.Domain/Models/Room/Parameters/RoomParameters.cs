@@ -7,7 +7,7 @@ public class RoomParameters
     public RoomNetType NetType { get; private set; }
     public int? Seats { get; private set; }
     public int? ComputerSeats { get; private set; }
-    public bool HasConditioning { get; private set; }
+    public bool? HasConditioning { get; private set; }
 
     // (d.smirnov): крч оно как-то говённо иногда работает, решил пока что вырубить
     // ReSharper disable once ConvertToPrimaryConstructor
@@ -17,7 +17,7 @@ public class RoomParameters
         RoomNetType netType,
         int? seats,
         int? computerSeats,
-        bool hasConditioning)
+        bool? hasConditioning)
     {
         Type = type;
         Layout = layout;

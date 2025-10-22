@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Rooms.Core.Implementations.Services.Files;
+using Rooms.Core.Services.Interfaces;
 using WebApi.Models.Files;
 
 namespace WebApi.Controllers;

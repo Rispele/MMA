@@ -1,12 +1,12 @@
 ﻿using WebApi.Models.Equipment;
-using WebApi.Models.Requests;
+using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 
 namespace WebApi.Services.Interfaces;
 
 public interface IEquipmentService
 {
-    Task<EquipmentsResponse> GetEquipmentsAsync(EquipmentsRequest request, CancellationToken cancellationToken);
+    Task<EquipmentsResponseModel> GetEquipmentsAsync(GetEquipmentsModel model, CancellationToken cancellationToken);
     Task<EquipmentModel> GetEquipmentByIdAsync(int id, CancellationToken cancellationToken);
     Task<EquipmentModel> CreateEquipmentAsync(CreateEquipmentModel model, CancellationToken cancellationToken);
     Task<PatchEquipmentModel> GetPatchModel(int equipmentId, CancellationToken cancellationToken);

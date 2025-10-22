@@ -1,20 +1,21 @@
 ﻿using WebApi.Models.Equipment;
-using WebApi.Models.Requests;
+using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
-using ICoreEquipmentService = Rooms.Core.Implementations.Services.Equipments.IEquipmentService;
+using EquipmentsModelsConverter = WebApi.ModelConverters.EquipmentsModelsConverter;
+using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
 
 namespace WebApi.Services.Implementations;
 
 public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipmentService
 {
-    public async Task<EquipmentsResponse> GetEquipmentsAsync(EquipmentsRequest request, CancellationToken cancellationToken)
+    public async Task<EquipmentsResponseModel> GetEquipmentsAsync(GetEquipmentsModel model, CancellationToken cancellationToken)
     {
-        var getEquipmentsRequest = EquipmentsModelsConverter.Convert(request);
+        var getEquipmentsRequest = EquipmentsModelsConverter.Convert(model);
 
         var batch = await equipmentService.FilterEquipments(getEquipmentsRequest, cancellationToken);
 
-        return new EquipmentsResponse
+        return new EquipmentsResponseModel
         {
             Equipments = batch.Equipments.Select(EquipmentsModelsConverter.Convert).ToArray(),
             Count = batch.Count
