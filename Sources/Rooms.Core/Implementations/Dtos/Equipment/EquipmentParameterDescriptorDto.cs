@@ -1,8 +1,7 @@
-﻿namespace Rooms.Domain.Models.Equipment;
+﻿namespace Rooms.Core.Implementations.Dtos.Equipment;
 
 public class EquipmentParameterDescriptorDto
 {
-    public int Order { get; set; }
     public string Name { get; set; } = default!;
     public bool Required { get; set; }
 }

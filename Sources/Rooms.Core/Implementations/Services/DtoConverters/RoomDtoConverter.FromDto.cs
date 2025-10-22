@@ -1,12 +1,28 @@
-﻿using Rooms.Core.Implementations.Dtos.Room;
+﻿using Commons;
+using Commons.Optional;
+using Rooms.Core.Implementations.Dtos.Room;
+using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
 
 namespace Rooms.Core.Implementations.Services.DtoConverters;
 
-public partial class RoomDtoConverter
+public static partial class RoomDtoConverter
 {
-    public RoomType Convert(RoomTypeDto roomType)
+    public static Room Convert(RoomDto room)
+    {
+        return new Room(
+            room.Name,
+            room.Description,
+            room.ScheduleAddress.Map(Convert),
+            room.Parameters.Map(Convert),
+            room.Attachments.Map(Convert),
+            room.Owner,
+            room.FixInfo.Map(Convert),
+            room.AllowBooking);
+    }
+
+    public static RoomType Convert(RoomTypeDto roomType)
     {
         return roomType switch
         {
@@ -19,7 +35,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    public RoomLayout Convert(RoomLayoutDto roomLayout)
+    public static RoomLayout Convert(RoomLayoutDto roomLayout)
     {
         return roomLayout switch
         {
@@ -30,7 +46,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    public RoomNetType Convert(RoomNetTypeDto roomNetType)
+    public static RoomNetType Convert(RoomNetTypeDto roomNetType)
     {
         return roomNetType switch
         {
@@ -43,7 +59,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    public RoomStatus Convert(RoomStatusDto roomStatus)
+    public static RoomStatus Convert(RoomStatusDto roomStatus)
     {
         return roomStatus switch
         {
@@ -53,5 +69,38 @@ public partial class RoomDtoConverter
             RoomStatusDto.NotReady => RoomStatus.NotReady,
             _ => throw new ArgumentOutOfRangeException(nameof(roomStatus), roomStatus, null)
         };
+    }
+
+    private static RoomScheduleAddress? Convert(ScheduleAddressDto? entity)
+    {
+        return entity
+            .AsOptional()
+            .Map(scheduleAddress => new RoomScheduleAddress(scheduleAddress.RoomNumber, scheduleAddress.Address));
+    }
+
+    private static RoomParameters Convert(RoomParametersDto parameters)
+    {
+        return new RoomParameters(
+            parameters.Type.Map(Convert),
+            parameters.Layout.Map(Convert),
+            parameters.NetType.Map(Convert),
+            parameters.Seats,
+            parameters.ComputerSeats,
+            parameters.HasConditioning);
+    }
+
+    private static RoomAttachments Convert(RoomAttachmentsDto attachments)
+    {
+        return new RoomAttachments(
+            attachments.PdfRoomScheme.AsOptional().Map(FileConvertExtensions.FromDto),
+            attachments.Photo.AsOptional().Map(FileConvertExtensions.FromDto));
+    }
+
+    private static RoomFixInfo Convert(RoomFixInfoDto fixInfo)
+    {
+        return new RoomFixInfo(
+            fixInfo.Status.Map(Convert),
+            fixInfo.FixDeadline,
+            fixInfo.Comment);
     }
 }

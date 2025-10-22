@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Rooms.Core.Implementations.Dtos.Equipment;
 using Rooms.Core.Implementations.Dtos.Room;
 using Rooms.Domain.Models.Equipment;
 
@@ -15,5 +16,5 @@ public record PatchEquipmentModel
     public string? SerialNumber { get; init; }
     public string? NetworkEquipmentIp { get; init; }
     public string? Comment { get; init; }
-    public EquipmentStatusDto? Status { get; init; }
+    public EquipmentStatus? Status { get; init; }
 }

@@ -7,9 +7,9 @@ using Rooms.Domain.Models.Room.Parameters;
 
 namespace Rooms.Core.Implementations.Services.DtoConverters;
 
-public partial class RoomDtoConverter
+public static partial class RoomDtoConverter
 {
-    public RoomDto Convert(Room room)
+    public static RoomDto Convert(Room room)
     {
         return new RoomDto(
             room.Id,
@@ -31,7 +31,7 @@ public partial class RoomDtoConverter
             .Map(scheduleAddress => new ScheduleAddressDto(scheduleAddress.RoomNumber, scheduleAddress.Address));
     }
 
-    private RoomParametersDto Convert(RoomParameters parameters)
+    private static RoomParametersDto Convert(RoomParameters parameters)
     {
         return new RoomParametersDto(
             parameters.Type.Map(Convert),
@@ -42,7 +42,7 @@ public partial class RoomDtoConverter
             parameters.HasConditioning);
     }
 
-    private RoomTypeDto Convert(RoomType roomType)
+    private static RoomTypeDto Convert(RoomType roomType)
     {
         return roomType switch
         {
@@ -55,7 +55,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    private RoomLayoutDto Convert(RoomLayout roomLayout)
+    private static RoomLayoutDto Convert(RoomLayout roomLayout)
     {
         return roomLayout switch
         {
@@ -66,7 +66,7 @@ public partial class RoomDtoConverter
         };
     }
 
-    private RoomNetTypeDto Convert(RoomNetType roomNetType)
+    private static RoomNetTypeDto Convert(RoomNetType roomNetType)
     {
         return roomNetType switch
         {
@@ -79,14 +79,14 @@ public partial class RoomDtoConverter
         };
     }
 
-    private RoomAttachmentsDto Convert(RoomAttachments attachments)
+    private static RoomAttachmentsDto Convert(RoomAttachments attachments)
     {
         return new RoomAttachmentsDto(
             attachments.PdfRoomScheme.AsOptional().Map(FileConvertExtensions.ToDto),
             attachments.Photo.AsOptional().Map(FileConvertExtensions.ToDto));
     }
 
-    private RoomFixInfoDto Convert(RoomFixInfo fixInfo)
+    private static RoomFixInfoDto Convert(RoomFixInfo fixInfo)
     {
         return new RoomFixInfoDto(
             fixInfo.Status.Map(Convert),
@@ -94,7 +94,7 @@ public partial class RoomDtoConverter
             fixInfo.Comment);
     }
 
-    private RoomStatusDto Convert(RoomStatus roomStatus)
+    private static RoomStatusDto Convert(RoomStatus roomStatus)
     {
         return roomStatus switch
         {

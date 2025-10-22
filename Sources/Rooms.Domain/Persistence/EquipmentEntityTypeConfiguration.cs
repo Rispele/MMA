@@ -11,27 +11,16 @@ public class EquipmentEntityTypeConfiguration : IEntityTypeConfiguration<Equipme
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
-        builder.Property(x => x.Type).IsRequired();
+        builder.Property(x => x.Room).IsRequired();
         builder.Property(x => x.Schema).IsRequired();
 
-        builder.OwnsOne(
-            t => t.Room,
-            b =>
-            {
-            });
+        builder.HasOne(x => x.Room).WithMany(x => x.Equipments).HasForeignKey(x => x.Id);
 
-        builder.OwnsOne(
-            t => t.Type,
-            _ =>
-            {
-            });
+        builder.HasOne(x => x.Schema).WithMany(x => x.Equipments).HasForeignKey(x => x.Id);
 
-        builder.OwnsOne(
-            t => t.Schema,
-            _ =>
-            {
-            });
-
+        builder.Property(t => t.InventoryNumber).HasMaxLength(256);
+        builder.Property(t => t.SerialNumber).HasMaxLength(256);
+        builder.Property(t => t.NetworkEquipmentIp).HasMaxLength(256);
         builder.Property(t => t.Comment).HasMaxLength(256);
     }
 }

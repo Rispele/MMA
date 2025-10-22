@@ -9,7 +9,7 @@ namespace Rooms.Core.Implementations.Services.Equipments;
 public interface IEquipmentService
 {
     Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken);
-    Task<EquipmentsBatchDto> FilterEquipments(GetEquipmentRequestDto request, CancellationToken cancellationToken);
-    Task<EquipmentDto> CreateRoom(CreateEquipmentRequest request, CancellationToken cancellationToken);
+    Task<EquipmentsBatchDto> FilterEquipments(GetEquipmentsRequestDto request, CancellationToken cancellationToken);
+    Task<EquipmentDto> CreateEquipment(CreateEquipmentRequest request, CancellationToken cancellationToken);
     Task<EquipmentDto> PatchEquipment(int equipmentId, PatchEquipmentRequest request, CancellationToken cancellationToken);
 }

@@ -1,5 +1,4 @@
-﻿using Rooms.Core.Implementations.Services.DtoConverters;
-using Rooms.Core.Implementations.Services.Files;
+﻿using Rooms.Core.Implementations.Services.Files;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
 
@@ -61,9 +60,6 @@ public class WebApiServiceConfigurator
         serviceCollection
             .AddScoped<IMinioStorageService, MinioStorageService>()
             .AddScoped<ICoreRoomService, CoreRoomService>()
-            .AddScoped<RoomsModelsConverter>()
-            .AddScoped<RoomDtoConverter>()
-            .AddScoped<FileDtoConverter>()
             .AddScoped<ICoreFileService, CoreFileService>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IFileService, FileService>()

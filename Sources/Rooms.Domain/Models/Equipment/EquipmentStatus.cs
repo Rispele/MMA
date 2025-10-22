@@ -1,7 +1,19 @@
 ﻿namespace Rooms.Domain.Models.Equipment;
 
-public class EquipmentStatus
+public enum EquipmentStatus
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    /// <summary>
+    /// Исправно
+    /// </summary>
+    Ok = 1,
+
+    /// <summary>
+    /// Неисправно
+    /// </summary>
+    Malfunction = 2,
+
+    /// <summary>
+    /// Сообщение об ошибке
+    /// </summary>
+    Error = 3,
 }

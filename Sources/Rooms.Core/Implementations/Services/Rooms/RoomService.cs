@@ -16,11 +16,7 @@ using Rooms.Domain.Persistence;
 
 namespace Rooms.Core.Implementations.Services.Rooms;
 
-public class RoomService(
-    IDbContextFactory<RoomsDbContext> domainDbContextProvider,
-    RoomDtoConverter roomDtoConverter,
-    FileDtoConverter fileDtoConverter)
-    : IRoomService
+public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvider) : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
@@ -28,7 +24,7 @@ public class RoomService(
 
         var room = await GetRoomByIdInner(roomId, cancellationToken, context);
 
-        return room.Map(roomDtoConverter.Convert);
+        return room.Map(RoomDtoConverter.Convert);
     }
 
     public async Task<RoomsBatchDto> FilterRooms(GetRoomsRequest request, CancellationToken cancellationToken)
@@ -36,10 +32,10 @@ public class RoomService(
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
 
         var rooms = await context
-            .ApplyQuery(new FilterRoomsQuery(request.BatchSize, request.BatchNumber, request.AfterRoomId, request.Filter, roomDtoConverter))
+            .ApplyQuery(new FilterRoomsQuery(request.BatchSize, request.BatchNumber, request.AfterRoomId, request.Filter))
             .ToArrayAsync(cancellationToken: cancellationToken);
 
-        var convertedRooms = rooms.Select(roomDtoConverter.Convert).ToArray();
+        var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
 
         return new RoomsBatchDto(convertedRooms, convertedRooms.Length, lastRoomId);
@@ -55,18 +51,18 @@ public class RoomService(
             request.Name,
             request.Description,
             new RoomParameters(
-                roomDtoConverter.Convert(request.Type),
-                roomDtoConverter.Convert(request.Layout),
-                roomDtoConverter.Convert(request.NetType),
+                RoomDtoConverter.Convert(request.Type),
+                RoomDtoConverter.Convert(request.Layout),
+                RoomDtoConverter.Convert(request.NetType),
                 request.Seats,
                 request.ComputerSeats,
                 request.HasConditioning),
             new RoomAttachments(
-                fileDtoConverter.Convert(request.PdfRoomSchemeFileMetadata),
-                fileDtoConverter.Convert(request.PhotoFileMetadata)),
+                FileDtoConverter.Convert(request.PdfRoomSchemeFileMetadata),
+                FileDtoConverter.Convert(request.PhotoFileMetadata)),
             request.Owner,
             new RoomFixInfo(
-                roomDtoConverter.Convert(request.RoomStatus),
+                RoomDtoConverter.Convert(request.RoomStatus),
                 request.FixDeadline,
                 request.Comment),
             request.AllowBooking);
@@ -75,7 +71,7 @@ public class RoomService(
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return roomDtoConverter.Convert(roomEntity.Entity);
+        return RoomDtoConverter.Convert(roomEntity.Entity);
     }
 
     public async Task<RoomDto> PatchRoom(int roomId, PatchRoomRequest request, CancellationToken cancellationToken)
@@ -88,25 +84,25 @@ public class RoomService(
             request.Name,
             request.Description,
             new RoomParameters(
-                roomDtoConverter.Convert(request.Type),
-                roomDtoConverter.Convert(request.Layout),
-                roomDtoConverter.Convert(request.NetType),
+                RoomDtoConverter.Convert(request.Type),
+                RoomDtoConverter.Convert(request.Layout),
+                RoomDtoConverter.Convert(request.NetType),
                 request.Seats,
                 request.ComputerSeats,
                 request.HasConditioning),
             new RoomAttachments(
-                fileDtoConverter.Convert(request.PdfRoomSchemeFileMetadata),
-                fileDtoConverter.Convert(request.PhotoFileMetadata)),
+                FileDtoConverter.Convert(request.PdfRoomSchemeFileMetadata),
+                FileDtoConverter.Convert(request.PhotoFileMetadata)),
             request.Owner,
             new RoomFixInfo(
-                roomDtoConverter.Convert(request.RoomStatus),
+                RoomDtoConverter.Convert(request.RoomStatus),
                 request.FixDeadline,
                 request.Comment),
             request.AllowBooking);
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return roomDtoConverter.Convert(roomToPatch);
+        return RoomDtoConverter.Convert(roomToPatch);
     }
 
     private static async Task<Room> GetRoomByIdInner(int roomId, CancellationToken cancellationToken, RoomsDbContext context)

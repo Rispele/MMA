@@ -1,6 +1,6 @@
 ﻿namespace Rooms.Core.Implementations.Dtos.Requests.EquipmentQuerying;
 
-public record GetEquipmentRequestDto
+public record GetEquipmentsRequestDto
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

@@ -20,13 +20,14 @@ public class Room
     public string? Owner { get; private set; }
     public RoomFixInfo FixInfo { get; private set; } = null!;
     public bool AllowBooking { get; private set; }
+    public ICollection<Equipment.Equipment> Equipments { get; set; } = new List<Equipment.Equipment>();
 
     [UsedImplicitly]
     protected Room()
     {
     }
 
-    private Room(
+    public Room(
         string name,
         string? description,
         RoomScheduleAddress? scheduleAddress,

@@ -21,9 +21,6 @@ public class Worker(
 
             var roomsDbContext = scope.ServiceProvider.GetRequiredService<RoomsDbContext>();
             await RunMigrationAsync(roomsDbContext, cancellationToken);
-
-            var equipmentsDbContext = scope.ServiceProvider.GetRequiredService<EquipmentsDbContext>();
-            await RunMigrationAsync(equipmentsDbContext, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -16,13 +16,6 @@ public static class DbContextConfigurationExtensions
             ConfigureNpgsqlRoomsDbContextOptions);
     }
 
-    public static IHostApplicationBuilder AddEquipmentsDbContext(this IHostApplicationBuilder builder)
-    {
-        return builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, EquipmentsDbContext>(
-            connectionName: KnownResourceNames.MmrDb,
-            ConfigureNpgsqlEquipmentsDbContextOptions);
-    }
-
     public static void ConfigureNpgsqlRoomsDbContextOptions(this NpgsqlDbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
@@ -30,12 +23,6 @@ public static class DbContextConfigurationExtensions
             .MapEnum<RoomLayout>()
             .MapEnum<RoomNetType>()
             .MapEnum<RoomType>()
-            .ConfigureDataSource(b => b.EnableDynamicJson());
-    }
-
-    public static void ConfigureNpgsqlEquipmentsDbContextOptions(this NpgsqlDbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
             .ConfigureDataSource(b => b.EnableDynamicJson());
     }
 }

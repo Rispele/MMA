@@ -3,9 +3,9 @@ using Rooms.Domain.Models;
 
 namespace Rooms.Core.Implementations.Services.DtoConverters;
 
-public partial class FileDtoConverter
+public static partial class FileDtoConverter
 {
-    public FileDescriptor? Convert(FileMetadataDto? fileMetadata)
+    public static FileDescriptor? Convert(FileMetadataDto? fileMetadata)
     {
         return fileMetadata == null ? null : new FileDescriptor(
             fileMetadata.FileName,

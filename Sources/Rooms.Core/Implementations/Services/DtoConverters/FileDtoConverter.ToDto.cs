@@ -1,5 +1,5 @@
 ﻿namespace Rooms.Core.Implementations.Services.DtoConverters;
 
-public partial class FileDtoConverter
+public static partial class FileDtoConverter
 {
 }

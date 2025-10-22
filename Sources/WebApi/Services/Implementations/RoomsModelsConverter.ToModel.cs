@@ -6,9 +6,9 @@ using WebApi.Models.Room;
 
 namespace WebApi.Services.Implementations;
 
-public partial class RoomsModelsConverter
+public static partial class RoomsModelsConverter
 {
-    public RoomModel Convert(RoomDto dto)
+    public static RoomModel Convert(RoomDto dto)
     {
         return new RoomModel
         {
@@ -25,7 +25,7 @@ public partial class RoomsModelsConverter
         };
     }
 
-    public PatchRoomModel ConvertToPatchModel(RoomDto dto)
+    public static PatchRoomModel ConvertToPatchModel(RoomDto dto)
     {
         return new PatchRoomModel
         {

@@ -45,5 +45,7 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
                 b.Property(t => t.FixDeadline).HasColumnType("timestamptz");
             });
         builder.Property(t => t.AllowBooking).IsRequired();
+
+        builder.HasMany(t => t.Equipments).WithOne(t => t.Room).HasForeignKey(t => t.Id);
     }
 }

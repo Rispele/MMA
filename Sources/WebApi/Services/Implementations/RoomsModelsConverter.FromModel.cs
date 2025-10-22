@@ -12,9 +12,9 @@ using WebApi.Models.Files;
 
 namespace WebApi.Services.Implementations;
 
-public partial class RoomsModelsConverter
+public static partial class RoomsModelsConverter
 {
-    public GetRoomsRequest Convert(RoomsRequest request)
+    public static GetRoomsRequest Convert(RoomsRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -41,7 +41,7 @@ public partial class RoomsModelsConverter
                 }));
     }
 
-    public CreateRoomRequest Convert(CreateRoomModel model)
+    public static CreateRoomRequest Convert(CreateRoomModel model)
     {
         return new CreateRoomRequest
         {
@@ -63,7 +63,7 @@ public partial class RoomsModelsConverter
         };
     }
 
-    public PatchRoomRequest Convert(PatchRoomModel patchModel)
+    public static PatchRoomRequest Convert(PatchRoomModel patchModel)
     {
         return new PatchRoomRequest
         {

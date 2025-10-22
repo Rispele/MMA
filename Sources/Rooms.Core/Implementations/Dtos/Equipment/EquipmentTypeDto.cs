@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.Equipment;
+﻿namespace Rooms.Core.Implementations.Dtos.Equipment;
 
 public class EquipmentTypeDto
 {

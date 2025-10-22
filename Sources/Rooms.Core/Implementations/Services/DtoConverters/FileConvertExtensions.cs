@@ -16,4 +16,16 @@ public static class FileConvertExtensions
     {
         return new FileLocationDto(fileLocation.Id, fileLocation.Bucket);
     }
+
+    public static FileDescriptor FromDto(this FileMetadataDto fileDescriptor)
+    {
+        return new FileDescriptor(
+            fileDescriptor.FileName,
+            fileDescriptor.FileLocation.FromDto());
+    }
+
+    public static FileLocation FromDto(this FileLocationDto fileLocation)
+    {
+        return new FileLocation(fileLocation.Id, fileLocation.Bucket);
+    }
 }
