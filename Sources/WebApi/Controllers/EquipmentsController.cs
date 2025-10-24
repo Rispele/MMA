@@ -10,13 +10,8 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/equipments")]
-public class EquipmentsController(
-    IEquipmentService equipmentService,
-    ILogger<EquipmentsController> logger)
-    : ControllerBase
+public class EquipmentsController(IEquipmentService equipmentService) : ControllerBase
 {
-    private readonly ILogger<EquipmentsController> _logger = logger;
-
     [HttpGet]
     public async Task<ActionResult<EquipmentsResponseModel>> GetEquipments(
         [ModelBinder(BinderType = typeof(GetEquipmentsRequestModelBinder))]
@@ -28,14 +23,18 @@ public class EquipmentsController(
     }
 
     [HttpGet("{equipmentId:int}")]
-    public async Task<ActionResult<EquipmentSchema>> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
+    public async Task<ActionResult<EquipmentSchema>> GetEquipmentById(
+        int equipmentId,
+        CancellationToken cancellationToken)
     {
         var equipment = await equipmentService.GetEquipmentByIdAsync(equipmentId, cancellationToken);
         return Ok(equipment);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateEquipment([FromBody] CreateEquipmentModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateEquipment(
+        [FromBody] CreateEquipmentModel model,
+        CancellationToken cancellationToken)
     {
         var created = await equipmentService.CreateEquipmentAsync(model, cancellationToken);
         return CreatedAtAction(nameof(GetEquipmentById), new { equipmentId = created.Id }, created);

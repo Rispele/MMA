@@ -1,5 +1,4 @@
-﻿using Minio;
-using Rooms.Core.Configuration;
+﻿using Rooms.Core.Configuration;
 using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Queries.Factories;
@@ -12,8 +11,6 @@ using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
 using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
 using CoreEquipmentService = Rooms.Core.Services.Implementations.EquipmentService;
 
-using FileService = WebApi.Services.Implementations.FileService;
-using IFileService = WebApi.Services.Interfaces.IFileService;
 using IRoomService = WebApi.Services.Interfaces.IRoomService;
 using RoomService = WebApi.Services.Implementations.RoomService;
 using IEquipmentService = WebApi.Services.Interfaces.IEquipmentService;
@@ -80,7 +77,6 @@ public class WebApiServiceConfigurator
             
             // WebApi
             .AddScoped<IRoomService, RoomService>()
-            .AddScoped<IFileService, FileService>()
             .AddScoped<IEquipmentService, EquipmentService>();
 
         return serviceCollection;

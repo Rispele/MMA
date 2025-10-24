@@ -10,14 +10,8 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/rooms")]
-public class RoomsController(
-    IRoomService roomService,
-    IFileService fileService,
-    ILogger<RoomsController> logger)
-    : ControllerBase
+public class RoomsController(IRoomService roomService) : ControllerBase
 {
-    private readonly ILogger<RoomsController> _logger = logger;
-
     [HttpGet]
     public async Task<ActionResult<RoomsResponseModel>> GetRooms(
         [ModelBinder(BinderType = typeof(GetRoomsRequestModelBinder))]
@@ -75,18 +69,5 @@ public class RoomsController(
         var updated = await roomService.PatchRoomAsync(roomId, patchModel, cancellationToken);
 
         return Ok(updated);
-    }
-
-    [HttpGet("/webapi/attachments")]
-    public async Task<IActionResult> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket, CancellationToken cancellationToken)
-    {
-        if (id == Guid.Empty || string.IsNullOrWhiteSpace(bucket)) return BadRequest();
-
-        var file = await fileService.GetFileAsync(id, cancellationToken);
-        if (file is null) return NotFound();
-
-        file.FileName = id.ToString();
-
-        return File(file.Stream, file.ContentType ?? "application/octet-stream", file.FileName);
     }
 }

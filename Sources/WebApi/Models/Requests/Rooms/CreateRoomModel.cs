@@ -23,8 +23,8 @@ public record CreateRoomModel
     [Range(0, int.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? ComputerSeats { get; init; }
 
-    public FileMetadataModel? PdfRoomSchemeFileMetadata { get; init; }
-    public FileMetadataModel? PhotoFileMetadata { get; init; }
+    public FileDescriptorModel? PdfRoomSchemeFileMetadata { get; init; }
+    public FileDescriptorModel? PhotoFileMetadata { get; init; }
     public RoomNetTypeModel NetType { get; init; }
     public bool HasConditioning { get; init; }
 

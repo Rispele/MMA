@@ -228,7 +228,7 @@ public static partial class RoomsModelsConverter
         );
     }
 
-    private static FileDescriptorDto? Convert(FileMetadataModel? model)
+    private static FileDescriptorDto? Convert(FileDescriptorModel? model)
     {
         return model.AsOptional().Map(t => new FileDescriptorDto(t.FileName, Convert(t.Location)));
     }
