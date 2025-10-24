@@ -1,4 +1,4 @@
-﻿using Rooms.Domain.Models.EquipmentModels;
+﻿using Rooms.Domain.Models.Equipment;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Filtering;
 

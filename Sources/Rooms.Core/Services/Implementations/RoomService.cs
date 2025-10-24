@@ -7,40 +7,38 @@ using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.RoomModels;
-using Rooms.Domain.Models.RoomModels.Fix;
-using Rooms.Domain.Models.RoomModels.Parameters;
-using Rooms.Domain.Queries;
-using Rooms.Persistence;
-using Rooms.Persistence.Queries.Room;
+using Rooms.Domain.Models.Room;
+using Rooms.Domain.Models.Room.Fix;
+using Rooms.Domain.Models.Room.Parameters;
+using Rooms.Domain.Queries.Abstractions;
+using Rooms.Domain.Queries.Factories;
 using FileDtoConverter = Rooms.Core.DtoConverters.FileDtoConverter;
 using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
-public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvider) : IRoomService
+public class RoomService(
+    IUnitOfWorkFactory unitOfWorkFactory,
+    IRoomQueriesFactory queriesFactory) : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
-        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var room = await GetRoomByIdInner(roomId, cancellationToken, context);
+        var room = await GetRoomByIdInner(unitOfWork, roomId, cancellationToken);
 
         return room.Map(RoomDtoConverter.Convert);
     }
 
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsDto dto, CancellationToken cancellationToken)
     {
-        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var rooms = await context
-            .ApplyQuery(new FilterRoomsQuery
-            {
-                BatchSize = dto.BatchSize,
-                BatchNumber = dto.BatchNumber,
-                AfterRoomId = dto.AfterRoomId,
-                Filter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert),
-            })
+        var domainFilter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert);
+        var query = queriesFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterRoomId, domainFilter);
+        
+        var rooms = await unitOfWork
+            .ApplyQuery(query)
             .ToArrayAsync(cancellationToken: cancellationToken);
 
         var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
@@ -51,11 +49,11 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
 
     public async Task<RoomDto> CreateRoom(CreateRoomDto dto, CancellationToken cancellationToken)
     {
-        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        await Validate(context, dto, cancellationToken);
+        await Validate(unitOfWork, dto, cancellationToken);
 
-        var roomToCreate = Room.New(
+        var room = Room.New(
             dto.Name,
             dto.Description,
             new RoomParameters(
@@ -75,18 +73,18 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
                 dto.Comment),
             dto.AllowBooking);
 
-        var roomEntity = context.Rooms.Add(roomToCreate);
+        unitOfWork.Add(room);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
 
-        return RoomDtoConverter.Convert(roomEntity.Entity);
+        return RoomDtoConverter.Convert(room);
     }
 
     public async Task<RoomDto> PatchRoom(int roomId, PatchRoomDto dto, CancellationToken cancellationToken)
     {
-        await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var roomToPatch = await GetRoomByIdInner(roomId, cancellationToken, context);
+        var roomToPatch = await GetRoomByIdInner(unitOfWork, roomId, cancellationToken);
 
         roomToPatch.Update(
             dto.Name,
@@ -108,20 +106,23 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
                 dto.Comment),
             dto.AllowBooking);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
 
         return RoomDtoConverter.Convert(roomToPatch);
     }
 
-    private static async Task<Room> GetRoomByIdInner(int roomId, CancellationToken cancellationToken, RoomsDbContext context)
+    private async Task<Room> GetRoomByIdInner(IUnitOfWork unitOfWork, int roomId, CancellationToken cancellationToken)
     {
-        return await context.ApplyQuery(new FindRoomByIdQuery {RoomId = roomId}, cancellationToken)
+        var query = queriesFactory.FindById(roomId);
+        
+        return await unitOfWork.ApplyQuery(query, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
     }
 
-    private async Task Validate(RoomsDbContext dbContext, CreateRoomDto dto, CancellationToken cancellationToken)
+    private async Task Validate(IUnitOfWork unitOfWork, CreateRoomDto dto, CancellationToken cancellationToken)
     {
-        var room = await dbContext.ApplyQuery(new FindRoomByNameQuery {Name = dto.Name}, cancellationToken);
+        var query = queriesFactory.FindByName(dto.Name);
+        var room = await unitOfWork.ApplyQuery(query, cancellationToken);
 
         if (room is not null)
         {

@@ -1,10 +1,8 @@
-﻿using Rooms.Domain.Models.RoomModels;
-using Rooms.Domain.Queries.Abstractions;
+﻿using Rooms.Domain.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Rooms;
+namespace Rooms.Domain.Queries.Implementations.Room;
 
-public interface IFilterRoomsQuery<in TSource> : IQueryObject<Room, TSource>
-    where TSource : IModelsSource
+public interface IFilterRoomsQuery: IQuerySpecification<Models.Room.Room>
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
-using Rooms.Domain.Models.FileModels;
+using Rooms.Domain.Models.File;
 
-namespace Rooms.Domain.Models.RoomModels;
+namespace Rooms.Domain.Models.Room;
 
 public class RoomAttachments
 {

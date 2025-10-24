@@ -1,11 +1,10 @@
 ﻿using JetBrains.Annotations;
-using Rooms.Domain.Models.EquipmentModels;
-using Rooms.Domain.Models.RoomModels.Fix;
-using Rooms.Domain.Models.RoomModels.Parameters;
+using Rooms.Domain.Models.Room.Fix;
+using Rooms.Domain.Models.Room.Parameters;
 
 // ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
 
-namespace Rooms.Domain.Models.RoomModels;
+namespace Rooms.Domain.Models.Room;
 
 public class Room
 {
@@ -18,7 +17,7 @@ public class Room
     public string? Owner { get; private set; }
     public RoomFixInfo FixInfo { get; private set; } = null!;
     public bool AllowBooking { get; private set; }
-    public ICollection<Equipment> Equipments { get; set; } = new List<Equipment>();
+    public ICollection<Equipment.Equipment> Equipments { get; set; } = new List<Equipment.Equipment>();
 
     [UsedImplicitly]
     protected Room()

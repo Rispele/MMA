@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
-using Rooms.Persistence;
+﻿using Rooms.Persistence;
 using Sources.ServiceDefaults;
 
-namespace Rooms.Core.Configuration;
+namespace WebApi.Startup;
 
 public static class DbContextConfigurationExtensions
 {

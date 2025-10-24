@@ -1,10 +1,8 @@
-﻿using Rooms.Domain.Models.RoomModels;
-using Rooms.Domain.Queries.Abstractions;
+﻿using Rooms.Domain.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Rooms;
+namespace Rooms.Domain.Queries.Implementations.Room;
 
-public interface IFindRoomByNameQuery<in TSource> : ISingleQueryObject<Room?, TSource>
-    where TSource : IModelsSource
+public interface IFindRoomByNameQuery : ISingleQuerySpecification<Models.Room.Room>
 {
     public string Name { get; init; }
 }

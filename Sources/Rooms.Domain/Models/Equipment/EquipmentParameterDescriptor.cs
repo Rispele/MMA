@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.EquipmentModels;
+﻿namespace Rooms.Domain.Models.Equipment;
 
 public class EquipmentParameterDescriptor
 {

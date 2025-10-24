@@ -1,10 +1,8 @@
-﻿using Rooms.Domain.Models.EquipmentModels;
-using Rooms.Domain.Queries.Abstractions;
+﻿using Rooms.Domain.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Equipments;
+namespace Rooms.Domain.Queries.Implementations.Equipment;
 
-public interface IFindEquipmentByIdQuery<in TSource> : ISingleQueryObject<Equipment?, TSource>
-    where TSource : IModelsSource
+public interface IFindEquipmentByIdQuery : ISingleQuerySpecification<Models.Equipment.Equipment>
 {
     public int EquipmentId { get; init; }
 }

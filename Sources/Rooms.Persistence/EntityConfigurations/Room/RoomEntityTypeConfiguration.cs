@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Rooms.Persistence.EntityConfigurations.Room;
 
-public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.RoomModels.Room>
+public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.Room.Room>
 {
-    public void Configure(EntityTypeBuilder<Domain.Models.RoomModels.Room> builder)
+    public void Configure(EntityTypeBuilder<Domain.Models.Room.Room> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();

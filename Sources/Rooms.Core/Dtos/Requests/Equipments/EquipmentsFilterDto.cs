@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.Filtering;
-using Rooms.Domain.Models.EquipmentModels;
+using Rooms.Domain.Models.Equipment;
 
 namespace Rooms.Core.Dtos.Requests.Equipments;
 

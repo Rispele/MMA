@@ -1,10 +1,8 @@
-﻿using Rooms.Domain.Models.EquipmentModels;
-using Rooms.Domain.Queries.Abstractions;
+﻿using Rooms.Domain.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Equipments;
+namespace Rooms.Domain.Queries.Implementations.Equipment;
 
-public interface IFilterEquipmentsQuery<in TSource> : IQueryObject<Equipment, TSource> 
-    where TSource : IModelsSource
+public interface IFilterEquipmentsQuery : IQuerySpecification<Models.Equipment.Equipment> 
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

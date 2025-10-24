@@ -1,20 +1,23 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
 using Rooms.Domain.Queries.Implementations.Filtering;
-using Rooms.Domain.Queries.Implementations.Rooms;
+using Rooms.Domain.Queries.Implementations.Room;
+using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Room;
 
-public class FilterRoomsQuery : IFilterRoomsQuery<RoomsDbContext>
+public class FilterRoomsQuery : 
+    IFilterRoomsQuery,
+    IQueryImplementer<Domain.Models.Room.Room?, RoomsDbContext>
 {
     public required int BatchSize { get; init; }
     public required int BatchNumber { get; init; }
     public int AfterRoomId { get; init; } = 0;
     public RoomsFilter? Filter { get; init; } = null;
 
-    public IAsyncEnumerable<Domain.Models.RoomModels.Room> Apply(RoomsDbContext source)
+    public IAsyncEnumerable<Domain.Models.Room.Room> Apply(RoomsDbContext source)
     {
-        IQueryable<Domain.Models.RoomModels.Room> rooms = source.Rooms;
+        IQueryable<Domain.Models.Room.Room> rooms = source.Rooms;
 
         rooms = Filters(rooms);
         rooms = Sort(rooms);
@@ -23,7 +26,7 @@ public class FilterRoomsQuery : IFilterRoomsQuery<RoomsDbContext>
         return rooms.ToAsyncEnumerable();
     }
 
-    private IQueryable<Domain.Models.RoomModels.Room> Filters(IQueryable<Domain.Models.RoomModels.Room> rooms)
+    private IQueryable<Domain.Models.Room.Room> Filters(IQueryable<Domain.Models.Room.Room> rooms)
     {
         if (Filter is null)
         {
@@ -105,14 +108,14 @@ public class FilterRoomsQuery : IFilterRoomsQuery<RoomsDbContext>
         return rooms;
     }
 
-    private IQueryable<Domain.Models.RoomModels.Room> Sort(IQueryable<Domain.Models.RoomModels.Room> rooms)
+    private IQueryable<Domain.Models.Room.Room> Sort(IQueryable<Domain.Models.Room.Room> rooms)
     {
         if (Filter is null)
         {
             return rooms;
         }
 
-        (SortDirection? direction, Expression<Func<Domain.Models.RoomModels.Room, object>> parameter)[] sorts =
+        (SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)[] sorts =
         [
             BuildSort(Filter.Name?.SortDirection, t => t.Name),
             BuildSort(Filter.Description?.SortDirection, t => t.Name),
@@ -154,14 +157,14 @@ public class FilterRoomsQuery : IFilterRoomsQuery<RoomsDbContext>
 
         return orderedQueryable;
 
-        (SortDirection? direction, Expression<Func<Domain.Models.RoomModels.Room, object>>) BuildSort(
-            SortDirection? direction, Expression<Func<Domain.Models.RoomModels.Room, object>> parameter)
+        (SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>>) BuildSort(
+            SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)
         {
             return (direction, parameter);
         }
     }
 
-    private IQueryable<Domain.Models.RoomModels.Room> Paginate(IQueryable<Domain.Models.RoomModels.Room> rooms)
+    private IQueryable<Domain.Models.Room.Room> Paginate(IQueryable<Domain.Models.Room.Room> rooms)
     {
         return rooms.Where(t => t.Id > AfterRoomId).Skip(BatchSize * BatchNumber).Take(BatchSize);
     }

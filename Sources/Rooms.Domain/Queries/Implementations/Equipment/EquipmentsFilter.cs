@@ -1,7 +1,7 @@
-﻿using Rooms.Domain.Models.EquipmentModels;
+﻿using Rooms.Domain.Models.Equipment;
 using Rooms.Domain.Queries.Implementations.Filtering;
 
-namespace Rooms.Domain.Queries.Implementations.Equipments;
+namespace Rooms.Domain.Queries.Implementations.Equipment;
 
 public record EquipmentsFilter
 {

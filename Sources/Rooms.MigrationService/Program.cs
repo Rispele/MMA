@@ -1,5 +1,5 @@
-using Rooms.Core.Configuration;
 using Rooms.MigrationService;
+using Rooms.Persistence;
 using Sources.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -7,7 +7,9 @@ var builder = Host.CreateApplicationBuilder(args);
 
 builder
     .AddServiceDefaults()
-    .AddRoomsDbContext();
+    .ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, RoomsDbContext>(
+        connectionName: KnownResourceNames.MmrDb,
+        NpgsqlDbContextOptionsExtensions.ConfigureNpgsqlRoomsDbContextOptions);
 
 builder.Services.AddHostedService<Worker>();
 

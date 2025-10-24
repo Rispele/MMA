@@ -1,8 +1,8 @@
-﻿using Rooms.Domain.Models.RoomModels.Fix;
-using Rooms.Domain.Models.RoomModels.Parameters;
+﻿using Rooms.Domain.Models.Room.Fix;
+using Rooms.Domain.Models.Room.Parameters;
 using Rooms.Domain.Queries.Implementations.Filtering;
 
-namespace Rooms.Domain.Queries.Implementations.Rooms;
+namespace Rooms.Domain.Queries.Implementations.Room;
 
 public record RoomsFilter
 {

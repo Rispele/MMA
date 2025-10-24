@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Rooms.Domain.Models.EquipmentModels;
+using Rooms.Domain.Models.Equipment;
 using WebApi.Models.Equipment;
 using WebApi.Models.Room;
 

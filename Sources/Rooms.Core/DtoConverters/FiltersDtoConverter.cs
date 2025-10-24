@@ -1,9 +1,9 @@
 ﻿using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Domain.Queries.Implementations.Equipments;
+using Rooms.Domain.Queries.Implementations.Equipment;
 using Rooms.Domain.Queries.Implementations.Filtering;
-using Rooms.Domain.Queries.Implementations.Rooms;
+using Rooms.Domain.Queries.Implementations.Room;
 
 namespace Rooms.Core.DtoConverters;
 

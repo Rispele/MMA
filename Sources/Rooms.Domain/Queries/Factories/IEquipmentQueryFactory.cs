@@ -1,13 +1,14 @@
-﻿using Rooms.Domain.Queries.Abstractions;
+﻿using Rooms.Domain.Queries.Implementations.Equipment;
 
-namespace Rooms.Domain.Queries.Implementations.Equipments;
+namespace Rooms.Domain.Queries.Factories;
 
-public interface IEquipmentQueryFactory<in TSource> 
-    where TSource : IModelsSource
+public interface IEquipmentQueryFactory
 {
-    public IFilterEquipmentsQuery<TSource> Filter(
+    public IFilterEquipmentsQuery Filter(
         int batchSize, 
         int batchNumber,
         int afterEquipmentId = -1,
         EquipmentsFilter? filter = null);
+    
+    public IFindEquipmentByIdQuery FindById(int equipmentId);
 }
