@@ -1,4 +1,5 @@
 ﻿using Rooms.Persistence;
+using Rooms.Persistence.Configuration;
 using Sources.ServiceDefaults;
 
 namespace WebApi.Startup;

@@ -4,7 +4,7 @@ using Rooms.Domain.Queries.Factories;
 using Rooms.Domain.Services;
 using Rooms.Persistence;
 using Rooms.Persistence.Factories;
-using Rooms.Persistence.Services;
+using Rooms.Persistence.ObjectStorageService;
 using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
 using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;

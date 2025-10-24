@@ -2,7 +2,7 @@
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
 
-namespace Rooms.Persistence;
+namespace Rooms.Persistence.Configuration;
 
 public static class NpgsqlDbContextOptionsExtensions
 {

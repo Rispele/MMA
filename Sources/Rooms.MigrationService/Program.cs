@@ -1,5 +1,6 @@
 using Rooms.MigrationService;
 using Rooms.Persistence;
+using Rooms.Persistence.Configuration;
 using Sources.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);
