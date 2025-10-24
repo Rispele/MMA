@@ -10,6 +10,7 @@ public interface IRoomAttachmentsService
         Guid id,
         string fileName,
         Stream content,
+        long length,
         CancellationToken cancellationToken);
 
     public Task Remove(FileLocationDto fileLocation, CancellationToken cancellationToken);

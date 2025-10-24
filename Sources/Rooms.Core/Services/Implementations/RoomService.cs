@@ -63,8 +63,8 @@ public class RoomService(
                 dto.ComputerSeats,
                 dto.HasConditioning),
             new RoomAttachments(
-                FileDtoConverter.Convert(dto.PdfRoomSchemeFileMetadata),
-                FileDtoConverter.Convert(dto.PhotoFileMetadata)),
+                FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
+                FileDtoConverter.Convert(dto.PhotoFile)),
             dto.Owner,
             new RoomFixInfo(
                 RoomDtoConverter.Convert(dto.RoomStatus),
@@ -96,8 +96,8 @@ public class RoomService(
                 dto.ComputerSeats,
                 dto.HasConditioning),
             new RoomAttachments(
-                FileDtoConverter.Convert(dto.PdfRoomSchemeFileMetadata),
-                FileDtoConverter.Convert(dto.PhotoFileMetadata)),
+                FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
+                FileDtoConverter.Convert(dto.PhotoFile)),
             dto.Owner,
             new RoomFixInfo(
                 RoomDtoConverter.Convert(dto.RoomStatus),

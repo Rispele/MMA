@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Files;
 using WebApi.Models.Room;
 
 namespace WebApi.Models.Requests.Rooms;
@@ -23,6 +24,8 @@ public class PatchRoomModel
     [Range(0, int.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? ComputerSeats { get; set; }
 
+    public FileDescriptorModel? PdfRoomSchemeFile { get; init; }
+    public FileDescriptorModel? PhotoFile { get; init; }
     public bool? HasConditioning { get; set; }
 
     [Length(1, 64, ErrorMessage = "Длина владельца должна быть от 1 до 64 символов включительно")]

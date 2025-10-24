@@ -49,8 +49,8 @@ public static partial class RoomsModelsConverter
             Layout = Convert(model.Layout),
             Seats = model.Seats,
             ComputerSeats = model.ComputerSeats,
-            PdfRoomSchemeFileMetadata = Convert(model.PdfRoomSchemeFileMetadata),
-            PhotoFileMetadata = Convert(model.PhotoFileMetadata),
+            PdfRoomSchemeFile = Convert(model.PdfRoomSchemeFile),
+            PhotoFile = Convert(model.PhotoFile),
             NetType = Convert(model.NetType),
             HasConditioning = model.HasConditioning,
             Owner = model.Owner,
@@ -71,8 +71,8 @@ public static partial class RoomsModelsConverter
             Layout = Convert(patchModel.Layout),
             Seats = patchModel.Seats,
             ComputerSeats = patchModel.ComputerSeats,
-            PdfRoomSchemeFileMetadata = null,
-            PhotoFileMetadata = null,
+            PdfRoomSchemeFile = Convert(patchModel.PdfRoomSchemeFile),
+            PhotoFile = Convert(patchModel.PhotoFile),
             NetType = Convert(patchModel.NetType),
             HasConditioning = patchModel.HasConditioning,
             Owner = patchModel.Owner,
@@ -180,9 +180,9 @@ public static partial class RoomsModelsConverter
             model.RoomNumber
         );
     }
-    private static RoomParametersDto? Convert(RoomParametersModel? model)
+    private static RoomParametersDto Convert(RoomParametersModel model)
     {
-        return model == null ? null : new RoomParametersDto(
+        return  new RoomParametersDto(
             Convert(model.Type),
             Convert(model.Layout),
             Convert(model.NetType),
@@ -202,17 +202,17 @@ public static partial class RoomsModelsConverter
         );
     }
 
-    private static RoomAttachmentsDto? Convert(RoomAttachmentsModel? model)
+    private static RoomAttachmentsDto Convert(RoomAttachmentsModel model)
     {
-        return model == null ? null : new RoomAttachmentsDto(
+        return new RoomAttachmentsDto(
             Convert(model.PdfRoomScheme),
             Convert(model.Photo)
         );
     }
 
-    private static RoomFixStatusDto? Convert(RoomFixStatusModel? model)
+    private static RoomFixStatusDto Convert(RoomFixStatusModel model)
     {
-        return model == null ? null : new RoomFixStatusDto(
+        return new RoomFixStatusDto(
             Convert(model.Status),
             model.FixDeadline,
             model.Comment

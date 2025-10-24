@@ -1,5 +1,4 @@
 ﻿using Minio;
-using Rooms.Core.Configuration;
 using Sources.ServiceDefaults;
 
 namespace WebApi.Startup;
@@ -13,14 +12,10 @@ public static class ApplicationRunner
         builder
             .AddServiceDefaults()
             .AddRoomsDbContext()
-            .Services.AddMinio(configureClient => configureClient
-                .WithHttpClient(new HttpClient { BaseAddress = new Uri("https+http://minio") })
-                .WithCredentials(
-                    accessKey: builder.Configuration.GetValue<string>("MINIO_ACCESS_KEY"),
-                    secretKey: builder.Configuration.GetValue<string>("MINIO_SECRET_KEY")));
+            .AddMinio();
 
-        var serviceConfigurator = new WebApiServiceConfigurator();
-        serviceConfigurator.ConfigureServices(builder.Services);
+        builder.Services
+            .ConfigureServices();
 
         var app = builder.Build();
 

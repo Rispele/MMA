@@ -23,9 +23,9 @@ public record PatchRoomDto
     [Range(0, double.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? ComputerSeats { get; init; }
 
-    public FileDescriptorDto? PdfRoomSchemeFileMetadata { get; init; }
+    public FileDescriptorDto? PdfRoomSchemeFile { get; init; }
 
-    public FileDescriptorDto? PhotoFileMetadata { get; init; }
+    public FileDescriptorDto? PhotoFile { get; init; }
 
     public RoomNetTypeDto NetType { get; init; }
     public bool? HasConditioning { get; init; }

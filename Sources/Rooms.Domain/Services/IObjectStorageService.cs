@@ -9,6 +9,7 @@ public interface IObjectStorageService
         string bucket,
         string filename,
         Stream content,
+        long length,
         CancellationToken cancellationToken = default);
 
     Task<TempFileUrl> FindObject(FileLocation location, int expiresIn);

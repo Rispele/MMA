@@ -13,13 +13,14 @@ public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorag
         string bucket,
         string filename,
         Stream content,
+        long length,
         CancellationToken cancellationToken = default)
     {
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(bucket)
             .WithObject(id.ToString())
-            .WithFileName(filename)
-            .WithStreamData(content);
+            .WithStreamData(content)
+            .WithObjectSize(length);
         
         await minioClient.PutObjectAsync(putObjectArgs, cancellationToken);
         

@@ -10,26 +10,33 @@ namespace WebApi.Controllers;
 public class AttachmentsController(IRoomAttachmentsService roomAttachmentsService) : ControllerBase
 {
     [HttpPost]
-    public async Task<FileDescriptorModel> StoreFile(
+    [Consumes("application/octet-stream")]
+    [Produces("application/json")]
+    public async Task<ActionResult> StoreFile(
         [FromQuery] Guid id,
         [FromQuery] string fileName,
-        [FromBody] byte[] content,
+        [FromHeader(Name = "Content-Length")] long contentLength,
+        [FromBody] Stream content,
         CancellationToken cancellationToken)
     {
         var descriptor = await roomAttachmentsService.Store(
             id,
             fileName,
-            new MemoryStream(content),
+            content,
+            contentLength,
             cancellationToken);
 
-        return new FileDescriptorModel(
+        var response = new FileDescriptorModel(
             fileName,
             new FileLocationModel(
                 descriptor.FileLocation.Id,
                 descriptor.FileLocation.Bucket));
+        
+        return Ok(response);
     }
     
     [HttpGet]
+    [Produces("application/json")]
     public async Task<IActionResult> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket)
     {
         if (id == Guid.Empty || string.IsNullOrWhiteSpace(bucket))

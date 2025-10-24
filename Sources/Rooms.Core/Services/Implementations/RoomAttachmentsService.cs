@@ -23,6 +23,7 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
         Guid id,
         string fileName, 
         Stream content, 
+        long length,
         CancellationToken cancellationToken)
     {
         var fileDescriptor = await objectStorageService.StoreObject(
@@ -30,6 +31,7 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
             AttachmentsBucket,
             fileName,
             content,
+            length,
             cancellationToken);
         
         return FileDtoConverter.Convert(fileDescriptor);

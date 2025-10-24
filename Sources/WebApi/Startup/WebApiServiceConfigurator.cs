@@ -1,5 +1,4 @@
-﻿using Rooms.Core.Configuration;
-using Rooms.Core.Services.Implementations;
+﻿using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Queries.Factories;
 using Rooms.Domain.Services;
@@ -19,9 +18,9 @@ using EquipmentService = WebApi.Services.Implementations.EquipmentService;
 
 namespace WebApi.Startup;
 
-public class WebApiServiceConfigurator
+public static class WebApiServiceConfigurator
 {
-    public IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
+    public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
     {
         //OpenApi
         serviceCollection.AddOpenApi();
@@ -29,39 +28,16 @@ public class WebApiServiceConfigurator
 
         serviceCollection.AddControllers(options =>
         {
-            options.InputFormatters.Insert(index: 0, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
+            options.InputFormatters.Insert(index: 0, new StreamInputFormatter());
+            options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
         });
 
-        WithClients(serviceCollection);
-        WithOptions(serviceCollection);
-        WithServices(serviceCollection);
-
+        serviceCollection.WithServices();
+        
         return serviceCollection;
     }
 
-    private IServiceCollection WithClients(IServiceCollection serviceCollection)
-    {
-        //todo: minio
-        return serviceCollection;
-    }
-
-    private IServiceCollection WithOptions(IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddOptions();
-
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile(
-                path: "Config/minioOptions.json",
-                optional: false,
-                reloadOnChange: true)
-            .Build();
-
-        serviceCollection.Configure<MinioOptions>(configuration.GetSection("MinioOptions"));
-
-        return serviceCollection;
-    }
-
-    private IServiceCollection WithServices(IServiceCollection serviceCollection)
+    private static IServiceCollection WithServices(this IServiceCollection serviceCollection)
     {
         serviceCollection
             // Infrastructure
