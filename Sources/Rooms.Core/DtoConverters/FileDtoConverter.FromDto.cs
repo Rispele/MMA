@@ -7,10 +7,12 @@ public static partial class FileDtoConverter
 {
     public static FileDescriptor? Convert(FileDescriptorDto? fileMetadata)
     {
-        return fileMetadata == null ? null : new FileDescriptor(
-            fileMetadata.FileName,
-            Convert(fileMetadata.FileLocation)
-        );
+        return fileMetadata == null
+            ? null
+            : new FileDescriptor(
+                fileMetadata.FileName,
+                Convert(fileMetadata.FileLocation)
+            );
     }
 
     public static FileLocation Convert(FileLocationDto fileLocation)

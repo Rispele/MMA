@@ -8,9 +8,11 @@ public class MinioResource(string name)
     internal const string HttpEndpointName = "http";
     internal const string HttpAdminEndpointName = "admin";
 
-    [field: AllowNull, MaybeNull]
+    [field: AllowNull]
+    [field: MaybeNull]
     public EndpointReference HttpEndpoint => field ??= new EndpointReference(this, HttpEndpointName);
 
-    [field: AllowNull, MaybeNull]
+    [field: AllowNull]
+    [field: MaybeNull]
     public EndpointReference HttpAdminEndpoint => field ??= new EndpointReference(this, HttpAdminEndpointName);
 }

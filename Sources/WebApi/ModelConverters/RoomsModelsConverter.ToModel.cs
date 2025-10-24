@@ -53,9 +53,9 @@ public static partial class RoomsModelsConverter
     private static RoomParametersModel Convert(RoomParametersDto dto)
     {
         return new RoomParametersModel(
-            Type: Convert(dto.Type),
-            Layout: Convert(dto.Layout),
-            NetType: Convert(dto.NetType),
+            Convert(dto.Type),
+            Convert(dto.Layout),
+            Convert(dto.NetType),
             dto.Seats,
             dto.ComputerSeats,
             dto.HasConditioning);
@@ -64,8 +64,8 @@ public static partial class RoomsModelsConverter
     private static RoomAttachmentsModel Convert(RoomAttachmentsDto dto)
     {
         return new RoomAttachmentsModel(
-            PdfRoomScheme: Convert(dto.PdfRoomScheme),
-            Photo: Convert(dto.Photo));
+            Convert(dto.PdfRoomScheme),
+            Convert(dto.Photo));
     }
 
     private static FileDescriptorModel? Convert(FileDescriptorDto? dto)

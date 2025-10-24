@@ -10,5 +10,7 @@ public interface IEquipmentService
     Task<EquipmentModel> GetEquipmentByIdAsync(int id, CancellationToken cancellationToken);
     Task<EquipmentModel> CreateEquipmentAsync(CreateEquipmentModel model, CancellationToken cancellationToken);
     Task<PatchEquipmentModel> GetPatchModel(int equipmentId, CancellationToken cancellationToken);
-    Task<EquipmentModel> PatchEquipmentAsync(int equipmentId, PatchEquipmentModel request, CancellationToken cancellationToken);
+
+    Task<EquipmentModel> PatchEquipmentAsync(int equipmentId, PatchEquipmentModel request,
+        CancellationToken cancellationToken);
 }

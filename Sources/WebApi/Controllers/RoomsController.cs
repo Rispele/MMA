@@ -33,10 +33,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(model.Name))
-        {
-            return BadRequest("Name is required for idempotency and creation.");
-        }
+        if (string.IsNullOrWhiteSpace(model.Name)) return BadRequest("Name is required for idempotency and creation.");
 
         var created = await roomService.CreateRoomAsync(model, cancellationToken);
 
@@ -61,10 +58,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
 
         patch.ApplyTo(patchModel);
 
-        if (!TryValidateModel(patchModel))
-        {
-            return ValidationProblem(ModelState);
-        }
+        if (!TryValidateModel(patchModel)) return ValidationProblem(ModelState);
 
         var updated = await roomService.PatchRoomAsync(roomId, patchModel, cancellationToken);
 

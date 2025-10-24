@@ -7,17 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.10" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="9.0.10" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.10" />
-      <PackageReference Include="Minio" Version="6.0.5" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.10"/>
+        <PackageReference Include="Minio" Version="6.0.5"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Commons\Commons.csproj" />
-      <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj" />
+        <ProjectReference Include="..\Commons\Commons.csproj"/>
+        <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

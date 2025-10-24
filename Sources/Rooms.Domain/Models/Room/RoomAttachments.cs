@@ -5,9 +5,6 @@ namespace Rooms.Domain.Models.Room;
 
 public class RoomAttachments
 {
-    public FileDescriptor? PdfRoomScheme { get; private set; }
-    public FileDescriptor? Photo { get; private set; }
-
     [UsedImplicitly]
     protected RoomAttachments()
     {
@@ -18,4 +15,7 @@ public class RoomAttachments
         PdfRoomScheme = pdfRoomScheme;
         Photo = photo;
     }
+
+    public FileDescriptor? PdfRoomScheme { get; private set; }
+    public FileDescriptor? Photo { get; private set; }
 }

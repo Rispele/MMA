@@ -8,7 +8,8 @@ public class PatchRoomModel
 {
     [Required]
     [Length(1, 64, ErrorMessage = "Длина имени должна быть от 1 до 64 символов включительно")]
-    [RegularExpression("[a-zA-Zа-яА-Я0-9,\\.\\-#№\\(\\)]{0,64}", ErrorMessage = "В поле Name переданы недоступные символы")]
+    [RegularExpression("[a-zA-Zа-яА-Я0-9,\\.\\-#№\\(\\)]{0,64}",
+        ErrorMessage = "В поле Name переданы недоступные символы")]
     public required string Name { get; set; }
 
     [Length(1, 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]

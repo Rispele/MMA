@@ -7,11 +7,9 @@ namespace Rooms.Core.Dtos.Requests.Equipments;
 
 public record CreateEquipmentDto
 {
-    [Required]
-    public RoomDto Room { get; set; } = default!;
+    [Required] public RoomDto Room { get; set; } = default!;
 
-    [Required]
-    public EquipmentSchemaDto SchemaDto { get; set; }
+    [Required] public EquipmentSchemaDto SchemaDto { get; set; }
 
     [Length(1, 256, ErrorMessage = "Длина инвентарного номера должна быть от 1 до 256 символов включительно")]
     public string? InventoryNumber { get; set; } = default!;

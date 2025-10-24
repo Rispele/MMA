@@ -35,7 +35,7 @@ public static partial class RoomsModelsConverter
                     Owner = MapFilterParameter(filter.Owner, v => v),
                     RoomStatuses = MapFilterMultiParameter(filter.RoomStatuses, Convert),
                     FixDeadline = MapFilterParameter(filter.FixDeadline, v => v),
-                    Comment = MapFilterParameter(filter.Comment, v => v),
+                    Comment = MapFilterParameter(filter.Comment, v => v)
                 }));
     }
 
@@ -101,13 +101,15 @@ public static partial class RoomsModelsConverter
     }
 
 
-    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src, Func<TIn, TOut> map)
+    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src,
+        Func<TIn, TOut> map)
     {
         if (src == null || src.Value == null) return null;
         return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
-    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(FilterMultiParameterModel<TIn>? src, Func<TIn, TOut> map)
+    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(
+        FilterMultiParameterModel<TIn>? src, Func<TIn, TOut> map)
     {
         if (src?.Values == null || src.Values.Length == 0) return null;
         return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
@@ -175,14 +177,17 @@ public static partial class RoomsModelsConverter
 
     private static ScheduleAddressDto? Convert(ScheduleAddressModel? model)
     {
-        return model == null ? null : new ScheduleAddressDto(
-            model.Address,
-            model.RoomNumber
-        );
+        return model == null
+            ? null
+            : new ScheduleAddressDto(
+                model.Address,
+                model.RoomNumber
+            );
     }
+
     private static RoomParametersDto Convert(RoomParametersModel model)
     {
-        return  new RoomParametersDto(
+        return new RoomParametersDto(
             Convert(model.Type),
             Convert(model.Layout),
             Convert(model.NetType),
@@ -194,12 +199,14 @@ public static partial class RoomsModelsConverter
 
     private static RoomOperatorDepartmentDto? Convert(RoomOperatorDepartmentModel? model)
     {
-        return model == null ? null : new RoomOperatorDepartmentDto(
-            model.Id,
-            model.Name,
-            model.Contacts,
-            model.RoomOperator.Select(Convert).ToArray()
-        );
+        return model == null
+            ? null
+            : new RoomOperatorDepartmentDto(
+                model.Id,
+                model.Name,
+                model.Contacts,
+                model.RoomOperator.Select(Convert).ToArray()
+            );
     }
 
     private static RoomAttachmentsDto Convert(RoomAttachmentsModel model)
@@ -221,11 +228,13 @@ public static partial class RoomsModelsConverter
 
     private static RoomOperatorDto? Convert(RoomOperatorModel? model)
     {
-        return model == null ? null : new RoomOperatorDto(
-            model.Id,
-            model.Name,
-            model.UserId
-        );
+        return model == null
+            ? null
+            : new RoomOperatorDto(
+                model.Id,
+                model.Name,
+                model.UserId
+            );
     }
 
     private static FileDescriptorDto? Convert(FileDescriptorModel? model)

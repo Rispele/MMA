@@ -30,10 +30,7 @@ public class FilterEquipmentsQuery :
     private IQueryable<Equipment> Filters(
         IQueryable<Equipment> equipments)
     {
-        if (Filter is null)
-        {
-            return equipments;
-        }
+        if (Filter is null) return equipments;
 
         equipments = Filter.RoomName
             .AsOptional()
@@ -91,10 +88,7 @@ public class FilterEquipmentsQuery :
     private IQueryable<Equipment> Sort(
         IQueryable<Equipment> equipments)
     {
-        if (Filter is null)
-        {
-            return equipments;
-        }
+        if (Filter is null) return equipments;
 
         (SortDirection? direction, Expression<Func<Equipment, object>> parameter)[]
             sorts =
@@ -106,14 +100,11 @@ public class FilterEquipmentsQuery :
                 BuildSort(Filter.SerialNumber?.SortDirection, t => t.Room.Name),
                 BuildSort(Filter.NetworkEquipmentIp?.SortDirection, t => t.Room.Name),
                 BuildSort(Filter.Comment?.SortDirection, t => t.Room.Name),
-                BuildSort(Filter.Statuses?.SortDirection, t => t.Room.Name),
+                BuildSort(Filter.Statuses?.SortDirection, t => t.Room.Name)
             ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirection.None)).ToArray();
-        if (sortsToApply.Length == 0)
-        {
-            return equipments;
-        }
+        if (sortsToApply.Length == 0) return equipments;
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
@@ -124,14 +115,12 @@ public class FilterEquipmentsQuery :
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
-        {
             orderedQueryable = direction switch
             {
                 SortDirection.Ascending => orderedQueryable.ThenBy(parameter),
                 SortDirection.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
-        }
 
         return orderedQueryable;
 

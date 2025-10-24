@@ -18,7 +18,7 @@ public static partial class EquipmentsModelsConverter
             SerialNumber = equipment.SerialNumber,
             NetworkEquipmentIp = equipment.NetworkEquipmentIp,
             Comment = equipment.Comment,
-            Status = equipment.Status,
+            Status = equipment.Status
         };
     }
 
@@ -32,7 +32,7 @@ public static partial class EquipmentsModelsConverter
             SerialNumber = dto.SerialNumber,
             NetworkEquipmentIp = dto.NetworkEquipmentIp,
             Comment = dto.Comment,
-            Status = dto.Status,
+            Status = dto.Status
         };
     }
 
@@ -42,7 +42,7 @@ public static partial class EquipmentsModelsConverter
         {
             Id = entity.Id,
             TypeModel = entity.TypeDto.Map(Convert),
-            ParameterValues = entity.ParameterValues,
+            ParameterValues = entity.ParameterValues
         };
     }
 
@@ -61,7 +61,7 @@ public static partial class EquipmentsModelsConverter
         return descriptors.Select(x => new EquipmentParameterDescriptorModel
         {
             Name = x.Name,
-            Required = x.Required,
+            Required = x.Required
         }).ToArray();
     }
 }

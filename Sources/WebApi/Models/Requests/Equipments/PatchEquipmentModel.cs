@@ -8,10 +8,11 @@ namespace WebApi.Models.Requests.Equipments;
 public record PatchEquipmentModel
 {
     public RoomDto? Room { get; init; }
-    [Required]
-    public EquipmentTypeDto Type { get; init; }
-    [Required]
-    public EquipmentSchemaDto Schema { get; init; }
+
+    [Required] public EquipmentTypeDto Type { get; init; }
+
+    [Required] public EquipmentSchemaDto Schema { get; init; }
+
     public string? InventoryNumber { get; init; }
     public string? SerialNumber { get; init; }
     public string? NetworkEquipmentIp { get; init; }

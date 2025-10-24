@@ -4,9 +4,6 @@ namespace Rooms.Domain.Models.File;
 
 public class FileDescriptor
 {
-    public string Filename { get; init; } = null!;
-    public FileLocation FileLocation { get; init; } = null!;
-
     [UsedImplicitly]
     protected FileDescriptor()
     {
@@ -17,4 +14,7 @@ public class FileDescriptor
         Filename = filename;
         FileLocation = fileLocation;
     }
+
+    public string Filename { get; init; } = null!;
+    public FileLocation FileLocation { get; init; } = null!;
 }

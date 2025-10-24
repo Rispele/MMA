@@ -19,7 +19,7 @@ public static partial class RoomDtoConverter
             room.Parameters.Map(Convert),
             room.Attachments.Map(Convert),
             room.Owner,
-            operatorDepartment: null,
+            null,
             room.FixInfo.Map(Convert),
             room.AllowBooking);
     }

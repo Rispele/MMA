@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Commons\Commons.csproj" />
-      <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj" />
+        <ProjectReference Include="..\Commons\Commons.csproj"/>
+        <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Minio" Version="6.0.5" />
+        <PackageReference Include="Minio" Version="6.0.5"/>
     </ItemGroup>
 
 </Project>

@@ -2,14 +2,14 @@
 using Rooms.Persistence.Configuration;
 using Sources.ServiceDefaults;
 
-namespace WebApi.Startup;
+namespace WebApi.Startup.ConfigurationExtensions;
 
 public static class DbContextConfigurationExtensions
 {
     public static IHostApplicationBuilder AddRoomsDbContext(this IHostApplicationBuilder builder)
     {
         return builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, RoomsDbContext>(
-            connectionName: KnownResourceNames.MmrDb,
+            KnownResourceNames.MmrDb,
             NpgsqlDbContextOptionsExtensions.ConfigureNpgsqlRoomsDbContextOptions);
     }
 }

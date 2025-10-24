@@ -3,17 +3,17 @@
 public enum EquipmentStatus
 {
     /// <summary>
-    /// Исправно
+    ///     Исправно
     /// </summary>
     Ok = 1,
 
     /// <summary>
-    /// Неисправно
+    ///     Неисправно
     /// </summary>
     Malfunction = 2,
 
     /// <summary>
-    /// Сообщение об ошибке
+    ///     Сообщение об ошибке
     /// </summary>
-    Error = 3,
+    Error = 3
 }

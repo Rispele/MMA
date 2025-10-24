@@ -3,7 +3,7 @@ using Rooms.Domain.Queries.Implementations.Room;
 
 namespace Rooms.Persistence.Queries.Room;
 
-public readonly struct FindRoomByIdQuery: IFindRoomByIdQuery
+public readonly struct FindRoomByIdQuery : IFindRoomByIdQuery
 {
     public required int RoomId { get; init; }
 
@@ -11,6 +11,6 @@ public readonly struct FindRoomByIdQuery: IFindRoomByIdQuery
     {
         var id = RoomId;
 
-        return source.Rooms.FirstOrDefaultAsync(t => t.Id == id, cancellationToken: cancellationToken);
+        return source.Rooms.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 }

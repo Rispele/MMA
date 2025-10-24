@@ -21,9 +21,9 @@ public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorag
             .WithObject(id.ToString())
             .WithStreamData(content)
             .WithObjectSize(length);
-        
+
         await minioClient.PutObjectAsync(putObjectArgs, cancellationToken);
-        
+
         return new FileDescriptor(filename, new FileLocation(id, bucket));
     }
 

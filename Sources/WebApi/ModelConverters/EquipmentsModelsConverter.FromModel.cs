@@ -30,7 +30,7 @@ public static partial class EquipmentsModelsConverter
                     SerialNumber = MapFilterParameter(filter.SerialNumber, v => v),
                     NetworkEquipmentIp = MapFilterParameter(filter.NetworkEquipmentIp, v => v),
                     Comment = MapFilterParameter(filter.Comment, v => v),
-                    Statuses = MapFilterMultiParameter(filter.Statuses, v => v),
+                    Statuses = MapFilterMultiParameter(filter.Statuses, v => v)
                 }));
     }
 
@@ -44,24 +44,24 @@ public static partial class EquipmentsModelsConverter
             SerialNumber = model.SerialNumber,
             NetworkEquipmentIp = model.NetworkEquipmentIp,
             Comment = model.Comment,
-            Status = model.Status,
+            Status = model.Status
         };
     }
 
     public static PatchEquipmentDto Convert(PatchEquipmentModel patchModel)
     {
-        return new PatchEquipmentDto
-        {
-        };
+        return new PatchEquipmentDto();
     }
 
-    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src, Func<TIn, TOut> map)
+    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src,
+        Func<TIn, TOut> map)
     {
         if (src == null || src.Value == null) return null;
         return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
-    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(FilterMultiParameterModel<TIn>? src, Func<TIn, TOut> map)
+    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(
+        FilterMultiParameterModel<TIn>? src, Func<TIn, TOut> map)
     {
         if (src?.Values == null || src.Values.Length == 0) return null;
         return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
@@ -89,7 +89,7 @@ public static partial class EquipmentsModelsConverter
             SerialNumber = equipment.SerialNumber,
             NetworkEquipmentIp = equipment.NetworkEquipmentIp,
             Comment = equipment.Comment,
-            Status = equipment.Status,
+            Status = equipment.Status
         };
     }
 
@@ -99,7 +99,7 @@ public static partial class EquipmentsModelsConverter
         {
             Id = entity.Id,
             TypeDto = entity.TypeModel.Map(Convert),
-            ParameterValues = entity.ParameterValues,
+            ParameterValues = entity.ParameterValues
         };
     }
 
@@ -118,7 +118,7 @@ public static partial class EquipmentsModelsConverter
         return descriptors.Select(x => new EquipmentParameterDescriptorDto
         {
             Name = x.Name,
-            Required = x.Required,
+            Required = x.Required
         }).ToArray();
     }
 }

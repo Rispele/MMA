@@ -2,7 +2,7 @@
 
 namespace Rooms.Domain.Queries.Implementations.Room;
 
-public interface IFilterRoomsQuery: IQuerySpecification<Models.Room.Room>
+public interface IFilterRoomsQuery : IQuerySpecification<Models.Room.Room>
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

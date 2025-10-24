@@ -2,7 +2,7 @@
 
 namespace Rooms.Domain.Queries.Implementations.Equipment;
 
-public interface IFilterEquipmentsQuery : IQuerySpecification<Models.Equipment.Equipment> 
+public interface IFilterEquipmentsQuery : IQuerySpecification<Models.Equipment.Equipment>
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

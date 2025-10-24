@@ -1,6 +1,5 @@
 ﻿using Commons;
 using Commons.Optional;
-using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;

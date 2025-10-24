@@ -9,16 +9,15 @@ using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
 using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
 using CoreEquipmentService = Rooms.Core.Services.Implementations.EquipmentService;
-
 using IRoomService = WebApi.Services.Interfaces.IRoomService;
 using RoomService = WebApi.Services.Implementations.RoomService;
 using IEquipmentService = WebApi.Services.Interfaces.IEquipmentService;
 using EquipmentService = WebApi.Services.Implementations.EquipmentService;
 
 
-namespace WebApi.Startup;
+namespace WebApi.Startup.ConfigurationExtensions;
 
-public static class WebApiServiceConfigurator
+public static class ServicesConfigurationExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
     {
@@ -28,12 +27,12 @@ public static class WebApiServiceConfigurator
 
         serviceCollection.AddControllers(options =>
         {
-            options.InputFormatters.Insert(index: 0, new StreamInputFormatter());
-            options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
+            options.InputFormatters.Insert(0, new StreamInputFormatter());
+            options.InputFormatters.Insert(1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
         });
 
         serviceCollection.WithServices();
-        
+
         return serviceCollection;
     }
 
@@ -50,7 +49,7 @@ public static class WebApiServiceConfigurator
             .AddScoped<IRoomAttachmentsService, RoomAttachmentsService>()
             .AddScoped<ICoreRoomService, CoreRoomService>()
             .AddScoped<ICoreEquipmentService, CoreEquipmentService>()
-            
+
             // WebApi
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IEquipmentService, EquipmentService>();

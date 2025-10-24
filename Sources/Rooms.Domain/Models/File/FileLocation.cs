@@ -4,9 +4,6 @@ namespace Rooms.Domain.Models.File;
 
 public class FileLocation
 {
-    public Guid Id { get; private set; }
-    public string Bucket { get; private set; } = null!;
-
     [UsedImplicitly]
     protected FileLocation()
     {
@@ -17,4 +14,7 @@ public class FileLocation
         Id = id;
         Bucket = bucket;
     }
+
+    public Guid Id { get; private set; }
+    public string Bucket { get; private set; } = null!;
 }

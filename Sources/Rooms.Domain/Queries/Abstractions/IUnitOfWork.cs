@@ -11,9 +11,9 @@ public interface IUnitOfWork : IAsyncDisposable
 
     public void Add<TEntity>(TEntity entity)
         where TEntity : class;
-    
+
     public void Update<TEntity>(TEntity entity)
         where TEntity : class;
-    
+
     public Task Commit(CancellationToken cancellationToken = default);
 }

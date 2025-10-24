@@ -13,7 +13,7 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
     public async Task<TempFileUrlDto?> Load(FileLocationDto fileLocation)
     {
         var data = await objectStorageService.FindObject(
-            location: FileDtoConverter.Convert(fileLocation),
+            FileDtoConverter.Convert(fileLocation),
             AttachmentsExpirationInSeconds);
 
         return new TempFileUrlDto { Url = data.Url };
@@ -21,8 +21,8 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
 
     public async Task<FileDescriptorDto> Store(
         Guid id,
-        string fileName, 
-        Stream content, 
+        string fileName,
+        Stream content,
         long length,
         CancellationToken cancellationToken)
     {
@@ -33,7 +33,7 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
             content,
             length,
             cancellationToken);
-        
+
         return FileDtoConverter.Convert(fileDescriptor);
     }
 

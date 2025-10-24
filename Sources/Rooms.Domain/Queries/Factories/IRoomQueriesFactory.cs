@@ -9,8 +9,8 @@ public interface IRoomQueriesFactory
         int batchNumber,
         int afterRoomId = -1,
         RoomsFilter? filter = null);
-    
+
     public IFindRoomByIdQuery FindById(int roomId);
-    
+
     public IFindRoomByNameQuery FindByName(string name);
 }

@@ -9,7 +9,7 @@ public static partial class FileDtoConverter
     {
         return new FileDescriptorDto(
             fileDescriptor.Filename,
-            FileLocation: Convert(fileDescriptor.FileLocation)
+            Convert(fileDescriptor.FileLocation)
         );
     }
 

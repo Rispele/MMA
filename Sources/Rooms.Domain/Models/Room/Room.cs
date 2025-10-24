@@ -8,17 +8,6 @@ namespace Rooms.Domain.Models.Room;
 
 public class Room
 {
-    public int Id { get; [UsedImplicitly] private set; }
-    public string Name { get; private set; } = null!;
-    public string? Description { get; private set; }
-    public RoomScheduleAddress? ScheduleAddress { get; private set; }
-    public RoomParameters Parameters { get; private set; } = null!;
-    public RoomAttachments Attachments { get; private set; } = null!;
-    public string? Owner { get; private set; }
-    public RoomFixInfo FixInfo { get; private set; } = null!;
-    public bool AllowBooking { get; private set; }
-    public ICollection<Equipment.Equipment> Equipments { get; set; } = new List<Equipment.Equipment>();
-
     [UsedImplicitly]
     protected Room()
     {
@@ -44,6 +33,17 @@ public class Room
         AllowBooking = allowBooking;
     }
 
+    public int Id { get; [UsedImplicitly] private set; }
+    public string Name { get; private set; } = null!;
+    public string? Description { get; private set; }
+    public RoomScheduleAddress? ScheduleAddress { get; private set; }
+    public RoomParameters Parameters { get; private set; } = null!;
+    public RoomAttachments Attachments { get; private set; } = null!;
+    public string? Owner { get; private set; }
+    public RoomFixInfo FixInfo { get; private set; } = null!;
+    public bool AllowBooking { get; private set; }
+    public ICollection<Equipment.Equipment> Equipments { get; set; } = new List<Equipment.Equipment>();
+
     public static Room New(
         string name,
         string? description,
@@ -53,7 +53,7 @@ public class Room
         RoomFixInfo fixInfo,
         bool allowBooking)
     {
-        return new Room(name, description, scheduleAddress: null, parameters, attachments, owner, fixInfo, allowBooking);
+        return new Room(name, description, null, parameters, attachments, owner, fixInfo, allowBooking);
     }
 
     public void Update(

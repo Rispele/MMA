@@ -45,7 +45,8 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         return RoomsModelsConverter.ConvertToPatchModel(room);
     }
 
-    public async Task<RoomModel> PatchRoomAsync(int roomId, PatchRoomModel patchModel, CancellationToken cancellationToken)
+    public async Task<RoomModel> PatchRoomAsync(int roomId, PatchRoomModel patchModel,
+        CancellationToken cancellationToken)
     {
         var patchRequest = RoomsModelsConverter.Convert(patchModel);
 

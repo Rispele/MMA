@@ -9,7 +9,7 @@ var builder = Host.CreateApplicationBuilder(args);
 builder
     .AddServiceDefaults()
     .ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, RoomsDbContext>(
-        connectionName: KnownResourceNames.MmrDb,
+        KnownResourceNames.MmrDb,
         NpgsqlDbContextOptionsExtensions.ConfigureNpgsqlRoomsDbContextOptions);
 
 builder.Services.AddHostedService<Worker>();

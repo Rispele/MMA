@@ -4,15 +4,6 @@ namespace Rooms.Domain.Models.Equipment;
 
 public class Equipment
 {
-    public int Id { get; set; }
-    public Room.Room Room { get; set; } = default!;
-    public EquipmentSchema Schema { get; set; }
-    public string? InventoryNumber { get; set; }
-    public string? SerialNumber { get; set; }
-    public string? NetworkEquipmentIp { get; set; }
-    public string? Comment { get; set; }
-    public EquipmentStatus? Status { get; set; }
-
     [UsedImplicitly]
     protected Equipment()
     {
@@ -35,6 +26,15 @@ public class Equipment
         Comment = comment;
         Status = status;
     }
+
+    public int Id { get; set; }
+    public Room.Room Room { get; set; } = default!;
+    public EquipmentSchema Schema { get; set; }
+    public string? InventoryNumber { get; set; }
+    public string? SerialNumber { get; set; }
+    public string? NetworkEquipmentIp { get; set; }
+    public string? Comment { get; set; }
+    public EquipmentStatus? Status { get; set; }
 
     public static Equipment New(
         Room.Room room,

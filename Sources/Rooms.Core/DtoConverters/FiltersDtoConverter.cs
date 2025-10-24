@@ -22,10 +22,10 @@ public static class FiltersDtoConverter
             SerialNumber = MapFilterParameter(filter.SerialNumber, v => v),
             NetworkEquipmentIp = MapFilterParameter(filter.NetworkEquipmentIp, v => v),
             Comment = MapFilterParameter(filter.Comment, v => v),
-            Statuses = MapFilterMultiParameter(filter.Statuses, v => v),
+            Statuses = MapFilterMultiParameter(filter.Statuses, v => v)
         };
     }
-    
+
     public static RoomsFilter Convert(RoomsFilterDto filter)
     {
         ArgumentNullException.ThrowIfNull(filter);
@@ -43,17 +43,19 @@ public static class FiltersDtoConverter
             Owner = MapFilterParameter(filter.Owner, v => v),
             RoomStatuses = MapFilterMultiParameter(filter.RoomStatuses, RoomDtoConverter.Convert),
             FixDeadline = MapFilterParameter(filter.FixDeadline, v => v),
-            Comment = MapFilterParameter(filter.Comment, v => v),
+            Comment = MapFilterParameter(filter.Comment, v => v)
         };
     }
-    
-    private static FilterParameter<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterDto<TIn>? src, Func<TIn, TOut> map)
+
+    private static FilterParameter<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterDto<TIn>? src,
+        Func<TIn, TOut> map)
     {
         if (src == null || src.Value == null) return null;
         return new FilterParameter<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
-    private static FilterMultiParameter<TOut>? MapFilterMultiParameter<TIn, TOut>(FilterMultiParameterDto<TIn>? src, Func<TIn, TOut> map)
+    private static FilterMultiParameter<TOut>? MapFilterMultiParameter<TIn, TOut>(FilterMultiParameterDto<TIn>? src,
+        Func<TIn, TOut> map)
     {
         if (src?.Values == null || src.Values.Length == 0) return null;
         return new FilterMultiParameter<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));

@@ -6,7 +6,7 @@ using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Room;
 
-public class FilterRoomsQuery : 
+public class FilterRoomsQuery :
     IFilterRoomsQuery,
     IQueryImplementer<Domain.Models.Room.Room?, RoomsDbContext>
 {
@@ -28,10 +28,7 @@ public class FilterRoomsQuery :
 
     private IQueryable<Domain.Models.Room.Room> Filters(IQueryable<Domain.Models.Room.Room> rooms)
     {
-        if (Filter is null)
-        {
-            return rooms;
-        }
+        if (Filter is null) return rooms;
 
         rooms = Filter.Name
             .AsOptional()
@@ -110,10 +107,7 @@ public class FilterRoomsQuery :
 
     private IQueryable<Domain.Models.Room.Room> Sort(IQueryable<Domain.Models.Room.Room> rooms)
     {
-        if (Filter is null)
-        {
-            return rooms;
-        }
+        if (Filter is null) return rooms;
 
         (SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)[] sorts =
         [
@@ -128,14 +122,11 @@ public class FilterRoomsQuery :
             BuildSort(Filter.Owner?.SortDirection, t => t.Name),
             BuildSort(Filter.RoomStatuses?.SortDirection, t => t.Name),
             BuildSort(Filter.FixDeadline?.SortDirection, t => t.Name),
-            BuildSort(Filter.Comment?.SortDirection, t => t.Name),
+            BuildSort(Filter.Comment?.SortDirection, t => t.Name)
         ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirection.None)).ToArray();
-        if (sortsToApply.Length == 0)
-        {
-            return rooms;
-        }
+        if (sortsToApply.Length == 0) return rooms;
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
@@ -146,14 +137,12 @@ public class FilterRoomsQuery :
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
-        {
             orderedQueryable = direction switch
             {
                 SortDirection.Ascending => orderedQueryable.ThenBy(parameter),
                 SortDirection.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
-        }
 
         return orderedQueryable;
 

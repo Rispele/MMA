@@ -1,5 +1,5 @@
-﻿using Minio;
-using Sources.ServiceDefaults;
+﻿using Sources.ServiceDefaults;
+using WebApi.Startup.ConfigurationExtensions;
 
 namespace WebApi.Startup;
 
@@ -14,12 +14,20 @@ public static class ApplicationRunner
             .AddRoomsDbContext()
             .AddMinio();
 
-        builder.Services
-            .ConfigureServices();
+        builder.Services.ConfigureServices();
 
+        return ConfigureApplication(builder);
+    }
+
+    public static void Run(WebApplication application)
+    {
+        application.Run();
+    }
+
+    private static WebApplication ConfigureApplication(WebApplicationBuilder builder)
+    {
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
@@ -30,10 +38,5 @@ public static class ApplicationRunner
         app.UseHttpsRedirection();
 
         return app;
-    }
-
-    public static void Run(WebApplication application)
-    {
-        application.Run();
     }
 }

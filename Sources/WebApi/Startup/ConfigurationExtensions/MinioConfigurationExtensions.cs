@@ -1,7 +1,6 @@
 ﻿using Minio;
-using Sources.ServiceDefaults;
 
-namespace WebApi.Startup;
+namespace WebApi.Startup.ConfigurationExtensions;
 
 public static class MinioConfigurationExtensions
 {

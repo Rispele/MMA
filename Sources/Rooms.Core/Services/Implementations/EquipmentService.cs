@@ -33,10 +33,10 @@ public class EquipmentService(
 
         var domainFilter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert);
         var query = equipmentQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentId, domainFilter);
-        
+
         var equipments = await context
             .ApplyQuery(query)
-            .ToArrayAsync(cancellationToken: cancellationToken);
+            .ToArrayAsync(cancellationToken);
 
         var convertedEquipments = equipments.Select(EquipmentDtoConverter.Convert).ToArray();
         int? lastEquipmentId = convertedEquipments.Length == 0 ? null : convertedEquipments.Select(t => t.Id).Max();

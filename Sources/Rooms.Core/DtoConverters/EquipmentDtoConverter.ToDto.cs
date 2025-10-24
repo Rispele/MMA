@@ -11,13 +11,13 @@ public static partial class EquipmentDtoConverter
         return new EquipmentDto
         {
             Id = equipment.Id,
-            Room = equipment.Room.Map(Core.DtoConverters.RoomDtoConverter.Convert),
+            Room = equipment.Room.Map(RoomDtoConverter.Convert),
             SchemaDto = equipment.Schema.Map(Convert),
             InventoryNumber = equipment.InventoryNumber,
             SerialNumber = equipment.SerialNumber,
             NetworkEquipmentIp = equipment.NetworkEquipmentIp,
             Comment = equipment.Comment,
-            Status = equipment.Status,
+            Status = equipment.Status
         };
     }
 
@@ -27,7 +27,7 @@ public static partial class EquipmentDtoConverter
         {
             Id = entity.Id,
             TypeDto = entity.Type.Map(Convert),
-            ParameterValues = entity.ParameterValues,
+            ParameterValues = entity.ParameterValues
         };
     }
 
@@ -46,7 +46,7 @@ public static partial class EquipmentDtoConverter
         return descriptors.Select(x => new EquipmentParameterDescriptorDto
         {
             Name = x.Name,
-            Required = x.Required,
+            Required = x.Required
         }).ToArray();
     }
 }

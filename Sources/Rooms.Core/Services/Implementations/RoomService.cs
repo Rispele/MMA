@@ -35,10 +35,10 @@ public class RoomService(
 
         var domainFilter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert);
         var query = queriesFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterRoomId, domainFilter);
-        
+
         var rooms = await unitOfWork
             .ApplyQuery(query)
-            .ToArrayAsync(cancellationToken: cancellationToken);
+            .ToArrayAsync(cancellationToken);
 
         var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
@@ -113,7 +113,7 @@ public class RoomService(
     private async Task<Room> GetRoomByIdInner(IUnitOfWork unitOfWork, int roomId, CancellationToken cancellationToken)
     {
         var query = queriesFactory.FindById(roomId);
-        
+
         return await unitOfWork.ApplyQuery(query, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
     }
@@ -123,9 +123,6 @@ public class RoomService(
         var query = queriesFactory.FindByName(dto.Name);
         var room = await unitOfWork.ApplyQuery(query, cancellationToken);
 
-        if (room is not null)
-        {
-            throw new RoomAlreadyCreatedException($"Room with name [{dto.Name}] already exists");
-        }
+        if (room is not null) throw new RoomAlreadyCreatedException($"Room with name [{dto.Name}] already exists");
     }
 }

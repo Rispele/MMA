@@ -5,7 +5,6 @@ using Rooms.Domain.Models.Room;
 using Rooms.Domain.Queries.Abstractions;
 using Rooms.Persistence.EntityConfigurations.Equipment;
 using Rooms.Persistence.EntityConfigurations.Room;
-using Rooms.Persistence.Queries;
 using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence;
@@ -16,23 +15,11 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
 
     public DbSet<Equipment> Equipments { get; [UsedImplicitly] private set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfiguration(new EquipmentEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new EquipmentSchemaEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new EquipmentTypeEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new RoomEntityTypeConfiguration());
-
-        base.OnModelCreating(modelBuilder);
-    }
-
     public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(IQuerySpecification<TEntity> querySpecification)
     {
         if (querySpecification is not IQueryImplementer<TEntity, RoomsDbContext> implementer)
-        {
             throw new InvalidOperationException(
                 $"QuerySpecification expected to be of type IQueryImplementer<TEntity, RoomsDbContext>, but was {querySpecification.GetType()}");
-        }
 
         return implementer.Apply(this);
     }
@@ -42,19 +29,17 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         CancellationToken cancellationToken)
     {
         if (querySpecification is not ISingleQueryImplementer<TEntity, RoomsDbContext> implementer)
-        {
             throw new InvalidOperationException(
                 $"QuerySpecification expected to be of type ISingleQueryImplementer<TEntity, RoomsDbContext>, but was {querySpecification.GetType()}");
-        }
 
         return implementer.Apply(this, cancellationToken);
     }
 
-    public new void Add<TEntity>(TEntity entity) 
+    public new void Add<TEntity>(TEntity entity)
         where TEntity : class
     {
         var set = base.Set<TEntity>();
-        
+
         set.Add(entity);
     }
 
@@ -62,12 +47,22 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         where TEntity : class
     {
         var set = base.Set<TEntity>();
-        
+
         set.Update(entity);
     }
 
     public Task Commit(CancellationToken cancellationToken = default)
     {
         return SaveChangesAsync(cancellationToken);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new EquipmentEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new EquipmentSchemaEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new EquipmentTypeEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new RoomEntityTypeConfiguration());
+
+        base.OnModelCreating(modelBuilder);
     }
 }

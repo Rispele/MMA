@@ -58,10 +58,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
 
         patch.ApplyTo(patchModel);
 
-        if (!TryValidateModel(patchModel))
-        {
-            return ValidationProblem(ModelState);
-        }
+        if (!TryValidateModel(patchModel)) return ValidationProblem(ModelState);
 
         var updated = await equipmentService.PatchEquipmentAsync(equipmentId, patchModel, cancellationToken);
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Rooms.Domain.Queries.Abstractions;
 using Rooms.Domain.Queries.Implementations.Room;
 
 namespace Rooms.Persistence.Queries.Room;

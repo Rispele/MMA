@@ -21,4 +21,3 @@ public record RoomsFilterModel
     public FilterParameterModel<string>? Comment { get; init; }
     public FilterParameterModel<bool>? AllowBooking { get; init; }
 }
-

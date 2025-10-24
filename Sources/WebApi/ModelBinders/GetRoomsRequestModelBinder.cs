@@ -5,9 +5,9 @@ using WebApi.Models.Requests.Rooms;
 namespace WebApi.ModelBinders;
 
 /// <summary>
-/// Simple model binder: reads page/pageSize/afterRoomId from query,
-/// and reads a "filter" query parameter which contains JSON for RoomsFilterModel.
-/// This is practical and keeps nested filter mapping simple from frontend.
+///     Simple model binder: reads page/pageSize/afterRoomId from query,
+///     and reads a "filter" query parameter which contains JSON for RoomsFilterModel.
+///     This is practical and keeps nested filter mapping simple from frontend.
 /// </summary>
 public class GetRoomsRequestModelBinder : IModelBinder
 {
@@ -51,6 +51,8 @@ public class GetRoomsRequestModelBinder : IModelBinder
         return Task.CompletedTask;
 
         static int ParseIntOrDefault(string? value, int defaultValue)
-            => int.TryParse(value, out var v) ? v : defaultValue;
+        {
+            return int.TryParse(value, out var v) ? v : defaultValue;
+        }
     }
 }

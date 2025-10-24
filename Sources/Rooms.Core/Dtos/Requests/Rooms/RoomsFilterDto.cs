@@ -12,7 +12,9 @@ public record RoomsFilterDto
     public FilterParameterDto<int>? Seats { get; init; }
     public FilterParameterDto<int>? ComputerSeats { get; init; }
     public FilterMultiParameterDto<RoomNetTypeDto>? NetTypes { get; init; }
+
     public FilterParameterDto<bool>? Conditioning { get; init; }
+
     // public FilterMultiParameterDto<int>? OperatorDepartments { get; init; }
     // public FilterParameterDto<string>? Operator { get; init; }
     public FilterParameterDto<string>? Owner { get; init; }
@@ -20,4 +22,3 @@ public record RoomsFilterDto
     public FilterParameterDto<DateTime>? FixDeadline { get; init; }
     public FilterParameterDto<string>? Comment { get; init; }
 }
-

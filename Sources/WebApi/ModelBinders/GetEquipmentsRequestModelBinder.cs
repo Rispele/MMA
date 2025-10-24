@@ -46,6 +46,8 @@ public class GetEquipmentsRequestModelBinder : IModelBinder
         return Task.CompletedTask;
 
         static int ParseIntOrDefault(string? value, int defaultValue)
-            => int.TryParse(value, out var v) ? v : defaultValue;
+        {
+            return int.TryParse(value, out var v) ? v : defaultValue;
+        }
     }
 }
