@@ -1,14 +1,12 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
-using Rooms.Domain.Persistence;
+using Rooms.Domain.Models.EquipmentModels;
+using Rooms.Domain.Models.RoomModels.Fix;
+using Rooms.Domain.Models.RoomModels.Parameters;
 
 // ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
 
-namespace Rooms.Domain.Models.Room;
+namespace Rooms.Domain.Models.RoomModels;
 
-[EntityTypeConfiguration<RoomEntityTypeConfiguration, Room>]
 public class Room
 {
     public int Id { get; [UsedImplicitly] private set; }
@@ -20,7 +18,7 @@ public class Room
     public string? Owner { get; private set; }
     public RoomFixInfo FixInfo { get; private set; } = null!;
     public bool AllowBooking { get; private set; }
-    public ICollection<Equipment.Equipment> Equipments { get; set; } = new List<Equipment.Equipment>();
+    public ICollection<Equipment> Equipments { get; set; } = new List<Equipment>();
 
     [UsedImplicitly]
     protected Room()

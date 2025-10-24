@@ -1,6 +1,6 @@
 ﻿using Commons;
 using Rooms.Core.Dtos.Equipment;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.EquipmentModels;
 
 namespace Rooms.Core.DtoConverters;
 

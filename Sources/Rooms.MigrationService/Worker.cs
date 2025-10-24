@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Domain.Persistence;
+using Rooms.Persistence;
 
 namespace Rooms.MigrationService;
 

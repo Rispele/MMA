@@ -1,5 +1,5 @@
 ﻿using Rooms.Core.Dtos.Files;
-using Rooms.Domain.Models.File;
+using Rooms.Domain.Models.FileModels;
 
 namespace Rooms.Core.DtoConverters;
 

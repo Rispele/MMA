@@ -1,14 +1,12 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
-using Rooms.Domain.Persistence;
+using Rooms.Domain.Models.RoomModels;
 
-namespace Rooms.Domain.Models.Equipment;
+namespace Rooms.Domain.Models.EquipmentModels;
 
-[EntityTypeConfiguration<EquipmentEntityTypeConfiguration, Equipment>]
 public class Equipment
 {
     public int Id { get; set; }
-    public Room.Room Room { get; set; } = default!;
+    public Room Room { get; set; } = default!;
     public EquipmentSchema Schema { get; set; }
     public string? InventoryNumber { get; set; }
     public string? SerialNumber { get; set; }
@@ -22,7 +20,7 @@ public class Equipment
     }
 
     public Equipment(
-        Room.Room room,
+        Room room,
         EquipmentSchema schema,
         string? inventoryNumber,
         string? serialNumber,
@@ -40,7 +38,7 @@ public class Equipment
     }
 
     public static Equipment New(
-        Room.Room room,
+        Room room,
         EquipmentSchema schema,
         string? inventoryNumber,
         string? serialNumber,
@@ -52,7 +50,7 @@ public class Equipment
     }
 
     public void Update(
-        Room.Room room,
+        Room room,
         EquipmentSchema schema,
         string? inventoryNumber,
         string? serialNumber,

@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Commons\Commons.csproj" />
       <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj" />
+      <ProjectReference Include="..\Rooms.Persistence\Rooms.Persistence.csproj" />
       <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
     </ItemGroup>
 

@@ -1,5 +1,5 @@
 ﻿using Rooms.Core.Dtos.Room;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.EquipmentModels;
 
 namespace Rooms.Core.Dtos.Equipment;
 

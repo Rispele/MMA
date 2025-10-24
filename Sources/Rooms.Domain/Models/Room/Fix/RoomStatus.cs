@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.Room.Fix;
+﻿namespace Rooms.Domain.Models.RoomModels.Fix;
 
 public enum RoomStatus
 {

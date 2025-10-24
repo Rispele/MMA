@@ -1,9 +1,9 @@
 ﻿using Commons;
 using Commons.Optional;
 using Rooms.Core.Dtos.Room;
-using Rooms.Domain.Models.Room;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
+using Rooms.Domain.Models.RoomModels;
+using Rooms.Domain.Models.RoomModels.Fix;
+using Rooms.Domain.Models.RoomModels.Parameters;
 
 namespace Rooms.Core.DtoConverters;
 

@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.Equipment;
+﻿namespace Rooms.Domain.Models.EquipmentModels;
 
 public enum EquipmentStatus
 {

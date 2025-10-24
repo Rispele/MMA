@@ -1,5 +1,5 @@
 ﻿// ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
-namespace Rooms.Domain.Models.Room.Fix;
+namespace Rooms.Domain.Models.RoomModels.Fix;
 
 public class RoomFixInfo
 {

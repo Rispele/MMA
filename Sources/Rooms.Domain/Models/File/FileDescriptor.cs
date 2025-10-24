@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Rooms.Domain.Models.File;
+namespace Rooms.Domain.Models.FileModels;
 
 public class FileDescriptor
 {

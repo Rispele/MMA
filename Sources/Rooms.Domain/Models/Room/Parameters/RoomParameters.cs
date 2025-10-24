@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.Room.Parameters;
+﻿namespace Rooms.Domain.Models.RoomModels.Parameters;
 
 public class RoomParameters
 {

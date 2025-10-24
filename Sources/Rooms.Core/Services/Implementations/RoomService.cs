@@ -1,16 +1,18 @@
 ﻿using Commons;
-using Commons.Queries;
+using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
+using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
-using Rooms.Core.PersistenceModels;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.Room;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
-using Rooms.Domain.Persistence;
+using Rooms.Domain.Models.RoomModels;
+using Rooms.Domain.Models.RoomModels.Fix;
+using Rooms.Domain.Models.RoomModels.Parameters;
+using Rooms.Domain.Queries;
+using Rooms.Persistence;
+using Rooms.Persistence.Queries.Room;
 using FileDtoConverter = Rooms.Core.DtoConverters.FileDtoConverter;
 using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
@@ -32,7 +34,13 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
 
         var rooms = await context
-            .ApplyQuery(new FilterRoomsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterRoomId, dto.Filter))
+            .ApplyQuery(new FilterRoomsQuery
+            {
+                BatchSize = dto.BatchSize,
+                BatchNumber = dto.BatchNumber,
+                AfterRoomId = dto.AfterRoomId,
+                Filter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert),
+            })
             .ToArrayAsync(cancellationToken: cancellationToken);
 
         var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
@@ -107,13 +115,13 @@ public class RoomService(IDbContextFactory<RoomsDbContext> domainDbContextProvid
 
     private static async Task<Room> GetRoomByIdInner(int roomId, CancellationToken cancellationToken, RoomsDbContext context)
     {
-        return await context.ApplyQuery(new FindRoomByIdQuery(roomId), cancellationToken)
+        return await context.ApplyQuery(new FindRoomByIdQuery {RoomId = roomId}, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
     }
 
     private async Task Validate(RoomsDbContext dbContext, CreateRoomDto dto, CancellationToken cancellationToken)
     {
-        var room = await dbContext.ApplyQuery(new FindRoomByNameQuery(dto.Name), cancellationToken);
+        var room = await dbContext.ApplyQuery(new FindRoomByNameQuery {Name = dto.Name}, cancellationToken);
 
         if (room is not null)
         {

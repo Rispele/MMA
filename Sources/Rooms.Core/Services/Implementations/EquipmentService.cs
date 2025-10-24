@@ -1,20 +1,22 @@
 ﻿using Commons;
-using Commons.Queries;
+using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
+using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Responses;
-using Rooms.Core.PersistenceModels;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.Equipment;
-using Rooms.Domain.Persistence;
+using Rooms.Domain.Models.EquipmentModels;
+using Rooms.Domain.Queries;
+using Rooms.Persistence;
+using Rooms.Persistence.Queries.Equipment;
 using EquipmentDtoConverter = Rooms.Core.DtoConverters.EquipmentDtoConverter;
 using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
-public class EquipmentService(IDbContextFactory<RoomsDbContext> domainDbContextProvider): IEquipmentService
+public class EquipmentService(IDbContextFactory<RoomsDbContext> domainDbContextProvider) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {
@@ -30,7 +32,13 @@ public class EquipmentService(IDbContextFactory<RoomsDbContext> domainDbContextP
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
 
         var equipments = await context
-            .ApplyQuery(new FilterEquipmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentId, dto.Filter))
+            .ApplyQuery(new FilterEquipmentsQuery
+            {
+                BatchSize = dto.BatchSize,
+                BatchNumber = dto.BatchNumber,
+                AfterEquipmentId = dto.AfterEquipmentId,
+                Filter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert),
+            })
             .ToArrayAsync(cancellationToken: cancellationToken);
 
         var convertedEquipments = equipments.Select(EquipmentDtoConverter.Convert).ToArray();
@@ -59,7 +67,10 @@ public class EquipmentService(IDbContextFactory<RoomsDbContext> domainDbContextP
         return EquipmentDtoConverter.Convert(equipmentEntity.Entity);
     }
 
-    public async Task<EquipmentDto> PatchEquipment(int equipmentId, PatchEquipmentDto dto, CancellationToken cancellationToken)
+    public async Task<EquipmentDto> PatchEquipment(
+        int equipmentId,
+        PatchEquipmentDto dto,
+        CancellationToken cancellationToken)
     {
         await using var context = await domainDbContextProvider.CreateDbContextAsync(cancellationToken);
 
@@ -79,9 +90,12 @@ public class EquipmentService(IDbContextFactory<RoomsDbContext> domainDbContextP
         return EquipmentDtoConverter.Convert(equipmentToPatch);
     }
 
-    private static async Task<Equipment> GetEquipmentByIdInner(int equipmentId, CancellationToken cancellationToken, RoomsDbContext context)
+    private static async Task<Equipment> GetEquipmentByIdInner(
+        int equipmentId,
+        CancellationToken cancellationToken,
+        RoomsDbContext context)
     {
-        return await context.ApplyQuery(new FindEquipmentByIdQuery(equipmentId), cancellationToken)
+        return await context.ApplyQuery(new FindEquipmentByIdQuery { EquipmentId = equipmentId }, cancellationToken)
                ?? throw new EquipmentNotFoundException($"Equipment [{equipmentId}] not found");
     }
 }
