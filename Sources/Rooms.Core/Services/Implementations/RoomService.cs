@@ -1,6 +1,5 @@
 ﻿using Commons;
 using Commons.Optional;
-using Microsoft.EntityFrameworkCore;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;

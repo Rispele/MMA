@@ -7,5 +7,5 @@
         "mmr": "Host=localhost;Port=PORT;Username=USERNAME;Password=PASSWORD;Database=mmr"
     }
    ```
-4. Запустить команду `dotnet ef migrations add ENTER_MIGRATION_NAME --project ..\Domain\Domain.csproj` из корня проекта.
+4. Запустить команду `dotnet ef migrations add ENTER_MIGRATION_NAME --project ..\Rooms.Persistence\Rooms.Persistence.csproj` из корня проекта.
 5. Миграция появится в папке Domain/Migrations.
