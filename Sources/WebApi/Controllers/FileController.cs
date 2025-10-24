@@ -6,13 +6,21 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("files")]
-public class FileController(IFileService fileService) : ControllerBase
+public class FileController(IRoomAttachmentsService roomAttachmentsService) : ControllerBase
 {
     [HttpPost]
-    public async Task<FileLocationModel> StoreFile([FromBody] byte[] content, CancellationToken cancellationToken)
+    public async Task<FileLocationModel> StoreFile(
+        [FromQuery] Guid id,
+        [FromQuery] string fileName,
+        [FromBody] byte[] content,
+        CancellationToken cancellationToken)
     {
-        var location = await fileService.StoreFileAsync(new MemoryStream(content), cancellationToken);
+        var descriptor = await roomAttachmentsService.StoreFileAsync(
+            id,
+            fileName,
+            new MemoryStream(content),
+            cancellationToken);
 
-        return new FileLocationModel(location.Id, location.Bucket);
+        return new FileLocationModel(descriptor.FileLocation.Id, descriptor.FileLocation.Bucket);
     }
 }

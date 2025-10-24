@@ -23,9 +23,9 @@ public record CreateRoomDto
     [Range(0, int.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? ComputerSeats { get; init; }
 
-    public FileMetadataDto? PdfRoomSchemeFileMetadata { get; init; }
+    public FileDescriptorDto? PdfRoomSchemeFileMetadata { get; init; }
 
-    public FileMetadataDto? PhotoFileMetadata { get; init; }
+    public FileDescriptorDto? PhotoFileMetadata { get; init; }
 
     public RoomNetTypeDto NetType { get; init; }
     public bool HasConditioning { get; init; }

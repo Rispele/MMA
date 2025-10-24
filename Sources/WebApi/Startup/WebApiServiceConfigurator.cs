@@ -1,13 +1,14 @@
-﻿using Rooms.Core.Configuration;
+﻿using Minio;
+using Rooms.Core.Configuration;
 using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Queries.Factories;
+using Rooms.Domain.Services;
 using Rooms.Persistence;
 using Rooms.Persistence.Factories;
+using Rooms.Persistence.Services;
 using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
-using ICoreFileService = Rooms.Core.Services.Interfaces.IFileService;
-using CoreFileService = Rooms.Core.Services.Implementations.FileService;
 using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
 using CoreEquipmentService = Rooms.Core.Services.Implementations.EquipmentService;
 
@@ -66,14 +67,17 @@ public class WebApiServiceConfigurator
     private IServiceCollection WithServices(IServiceCollection serviceCollection)
     {
         serviceCollection
-            // Core
+            // Infrastructure
+            .AddScoped<IObjectStorageService, MinioObjectStorageService>()
             .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory<RoomsDbContext>>()
             .AddScoped<IRoomQueriesFactory, RoomQueriesFactory>()
             .AddScoped<IEquipmentQueryFactory, EquipmentQueryFactory>()
-            .AddScoped<ICoreFileService, CoreFileService>()
+
+            // Core
+            .AddScoped<IRoomAttachmentsService, RoomAttachmentsService>()
             .AddScoped<ICoreRoomService, CoreRoomService>()
             .AddScoped<ICoreEquipmentService, CoreEquipmentService>()
-            .AddScoped<IMinioStorageService, MinioStorageService>()
+            
             // WebApi
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IFileService, FileService>()

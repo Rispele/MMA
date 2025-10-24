@@ -15,13 +15,22 @@ var configuration = new ConfigurationBuilder()
         reloadOnChange: true)
     .Build();
 
-serviceCollection.Configure<MinioContainerConfiguration>(configuration.GetSection("MinioContainerConfiguration"));
+var minioRootUser = builder.AddParameter("MinioRootUser", secret: true);
+var minioRootUserPassword = builder.AddParameter("MinioRootUserPassword", secret: true);
+
+var minioConfig = configuration
+                      .GetSection("MinioContainerConfiguration")
+                      .Get<MinioContainerConfiguration>()
+                  ?? throw new InvalidOperationException("Minio container configuration not found");
+
+var minio = builder.AddMinio(minioConfig, KnownResourceNames.Minio, minioRootUser, minioRootUserPassword);
 
 var postgresUserName = builder.AddParameter("PostgresUserName", secret: true);
 var postgresPassword = builder.AddParameter("PostgresUserPassword", secret: true);
 var postgresPort = builder.AddParameter("PostgresPort", secret: true);
 
-var port = await postgresPort.Resource.GetValueAsync(CancellationToken.None) ?? throw new InvalidOperationException("Port not specified");
+var port = await postgresPort.Resource.GetValueAsync(CancellationToken.None) ??
+           throw new InvalidOperationException("Port not specified");
 
 var postgresService = builder
     .AddPostgres(KnownResourceNames.PostgresService, postgresUserName, postgresPassword, port: int.Parse(port))
@@ -35,18 +44,11 @@ var roomsMigrationService = builder
 builder
     .AddProject<Projects.WebApi>(KnownResourceNames.WebApiService)
     .WithExternalHttpEndpoints()
+    .WithEnvironment("MINIO_ACCESS_KEY", minioRootUser)
+    .WithEnvironment("MINIO_SECRET_KEY", minioRootUserPassword)
+    .WithReference(minio)
     .WithReference(postgresService)
     .WaitForCompletion(roomsMigrationService);
 
-var minioConfigSection = configuration.GetSection("MinioContainerConfiguration");
-var minioConfig = new MinioContainerConfiguration
-{
-    Registry = minioConfigSection.GetSection("Registry").Value ?? throw new ArgumentException(),
-    Image = minioConfigSection.GetSection("Image").Value ?? throw new ArgumentException(),
-    Tag = minioConfigSection.GetSection("Tag").Value ?? throw new ArgumentException(),
-};
-
-builder
-    .AddMinio(minioConfig, "minio", "admin", "admin123");
 
 builder.Build().Run();

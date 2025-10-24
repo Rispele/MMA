@@ -8,12 +8,12 @@ public static class ContainerBuildExtensions
         this IDistributedApplicationBuilder builder,
         MinioContainerConfiguration config,
         string name,
-        string rootUser,
-        string rootPassword,
+        IResourceBuilder<ParameterResource> rootUser,
+        IResourceBuilder<ParameterResource> rootPassword,
         int minioPort = 9000,
         int minioAdminPort = 9001)
     {
-        var minioResource = new MinioResource(name, rootUser, rootPassword);
+        var minioResource = new MinioResource(name);
 
         return builder.AddResource(minioResource)
             .WithImage(config.Image)
@@ -24,8 +24,8 @@ public static class ContainerBuildExtensions
             .WithEnvironment("MINIO_PROMETHEUS_AUTH_TYPE", "public")
             .WithHttpEndpoint(name: MinioResource.HttpEndpointName, port: minioPort, targetPort: 9000)
             .WithHttpEndpoint(name: MinioResource.HttpAdminEndpointName, port: minioAdminPort, targetPort: 9001)
-            .WithEnvironment("MINIO_ROOT_USER", minioResource.RootUser)
-            .WithEnvironment("MINIO_ROOT_PASSWORD", minioResource.RootPassword)
+            .WithEnvironment("MINIO_ROOT_USER", rootUser)
+            .WithEnvironment("MINIO_ROOT_PASSWORD", rootPassword)
             .WithArgs("server", "/data");
     }
 }

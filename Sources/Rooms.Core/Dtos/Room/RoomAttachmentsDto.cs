@@ -2,4 +2,4 @@
 
 namespace Rooms.Core.Dtos.Room;
 
-public record RoomAttachmentsDto(FileMetadataDto? PdfRoomScheme, FileMetadataDto? Photo);
+public record RoomAttachmentsDto(FileDescriptorDto? PdfRoomScheme, FileDescriptorDto? Photo);

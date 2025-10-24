@@ -5,9 +5,9 @@ namespace Rooms.Core.DtoConverters;
 
 public static class FileConvertExtensions
 {
-    public static FileMetadataDto ToDto(this FileDescriptor fileDescriptor)
+    public static FileDescriptorDto ToDto(this FileDescriptor fileDescriptor)
     {
-        return new FileMetadataDto(
+        return new FileDescriptorDto(
             fileDescriptor.Filename,
             fileDescriptor.FileLocation.ToDto());
     }
@@ -17,7 +17,7 @@ public static class FileConvertExtensions
         return new FileLocationDto(fileLocation.Id, fileLocation.Bucket);
     }
 
-    public static FileDescriptor FromDto(this FileMetadataDto fileDescriptor)
+    public static FileDescriptor FromDto(this FileDescriptorDto fileDescriptor)
     {
         return new FileDescriptor(
             fileDescriptor.FileName,

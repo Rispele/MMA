@@ -68,7 +68,7 @@ public static partial class RoomsModelsConverter
             Photo: Convert(dto.Photo));
     }
 
-    private static FileMetadataModel? Convert(FileMetadataDto? dto)
+    private static FileMetadataModel? Convert(FileDescriptorDto? dto)
     {
         return dto == null ? null : new FileMetadataModel(dto.FileName, Convert(dto.FileLocation));
     }

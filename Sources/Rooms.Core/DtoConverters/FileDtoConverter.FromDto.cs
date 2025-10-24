@@ -5,7 +5,7 @@ namespace Rooms.Core.DtoConverters;
 
 public static partial class FileDtoConverter
 {
-    public static FileDescriptor? Convert(FileMetadataDto? fileMetadata)
+    public static FileDescriptor? Convert(FileDescriptorDto? fileMetadata)
     {
         return fileMetadata == null ? null : new FileDescriptor(
             fileMetadata.FileName,
@@ -13,7 +13,7 @@ public static partial class FileDtoConverter
         );
     }
 
-    private static FileLocation Convert(FileLocationDto fileLocation)
+    public static FileLocation Convert(FileLocationDto fileLocation)
     {
         return new FileLocation(fileLocation.Id, fileLocation.Bucket);
     }

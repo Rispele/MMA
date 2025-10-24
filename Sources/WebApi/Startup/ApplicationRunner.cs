@@ -1,4 +1,5 @@
-﻿using Rooms.Core.Configuration;
+﻿using Minio;
+using Rooms.Core.Configuration;
 using Sources.ServiceDefaults;
 
 namespace WebApi.Startup;
@@ -9,11 +10,14 @@ public static class ApplicationRunner
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder
             .AddServiceDefaults()
-            .AddRoomsDbContext();
+            .AddRoomsDbContext()
+            .Services.AddMinio(configureClient => configureClient
+                .WithHttpClient(new HttpClient { BaseAddress = new Uri("https+http://minio") })
+                .WithCredentials(
+                    accessKey: builder.Configuration.GetValue<string>("MINIO_ACCESS_KEY"),
+                    secretKey: builder.Configuration.GetValue<string>("MINIO_SECRET_KEY")));
 
         var serviceConfigurator = new WebApiServiceConfigurator();
         serviceConfigurator.ConfigureServices(builder.Services);
