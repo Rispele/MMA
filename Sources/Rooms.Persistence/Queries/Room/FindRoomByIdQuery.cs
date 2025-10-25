@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rooms.Domain.Queries.Implementations.Room;
+using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Room;
 
-public readonly struct FindRoomByIdQuery : IFindRoomByIdQuery
+public readonly struct FindRoomByIdQuery : 
+    IFindRoomByIdQuery,
+    ISingleQueryImplementer<Domain.Models.Room.Room?, RoomsDbContext>
 {
     public required int RoomId { get; init; }
 

@@ -12,11 +12,11 @@ namespace WebApi.ModelConverters;
 
 public static partial class RoomsModelsConverter
 {
-    public static GetRoomsDto Convert(GetRoomsModel model)
+    public static GetRoomsRequestDto Convert(GetRoomsModel model)
     {
         ArgumentNullException.ThrowIfNull(model);
 
-        return new GetRoomsDto(
+        return new GetRoomsRequestDto(
             Math.Max(0, model.Page - 1),
             model.PageSize,
             model.AfterRoomId,

@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Implementations.Dtos.Requests.Filtering;
-using Rooms.Core.Implementations.Dtos.Requests.Rooms;
-using Rooms.Core.Implementations.Dtos.Room;
+﻿using Rooms.Core.Dtos.Requests.Filtering;
+using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Core.Dtos.Room;
 
 namespace WebApi.Tests.SDK;
 
@@ -18,7 +18,6 @@ public class RoomsFilterBuilder
     private FilterMultiParameterDto<RoomStatusDto>? status;
     private FilterParameterDto<DateTime>? fixDeadline;
     private FilterParameterDto<string>? comment;
-    private FilterParameterDto<bool>? allowBooking;
 
     public RoomsFilterBuilder Name(string value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
@@ -89,12 +88,6 @@ public class RoomsFilterBuilder
     public RoomsFilterBuilder Comment(string value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
         comment =  new FilterParameterDto<string>(value, sortDirection);
-        return this;
-    }
-
-    public RoomsFilterBuilder AllowBooking(bool value, SortDirectionDto sortDirection = SortDirectionDto.None)
-    {
-        allowBooking =  new FilterParameterDto<bool>(value, sortDirection);
         return this;
     }
 

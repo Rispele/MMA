@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Configuration;
-using Rooms.Domain.Persistence;
+using Rooms.Persistence;
+using Rooms.Persistence.Configuration;
 using Sources.ServiceDefaults;
-using WebApi.Startup;
+using WebApi.Startup.ConfigurationExtensions;
 
 namespace WebApi.Tests.TestingInfrastructure.Configuration;
 
@@ -21,7 +21,7 @@ public class TestingContainerFactory
 
     public TestingContainerFactory ConfigureWebApiServices()
     {
-        new WebApiServiceConfigurator().ConfigureServices(serviceCollection);
+        serviceCollection.ConfigureServices();
 
         return this;
     }

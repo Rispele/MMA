@@ -1,9 +1,9 @@
-﻿using Rooms.Core.Implementations.Dtos.Requests.Rooms;
-using Rooms.Core.Implementations.Dtos.Room;
+﻿using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Core.Dtos.Room;
 
 namespace WebApi.Tests.SDK;
 
-public struct CreateRoomRequestBuilder
+public class CreateRoomRequestBuilder
 {
     private string? description;
     private RoomTypeDto type;
@@ -101,9 +101,9 @@ public struct CreateRoomRequestBuilder
         return this;
     }
 
-    public CreateRoomRequest Build()
+    public CreateRoomDto Build()
     {
-        return new CreateRoomRequest
+        return new CreateRoomDto
         {
             Name = name,
             Description = description,
@@ -121,7 +121,7 @@ public struct CreateRoomRequestBuilder
         };
     }
 
-    public static implicit operator CreateRoomRequest(CreateRoomRequestBuilder builder)
+    public static implicit operator CreateRoomDto(CreateRoomRequestBuilder builder)
     {
         return builder.Build();
     }

@@ -14,8 +14,8 @@ public class FilterRoomsQuery :
 {
     public required int BatchSize { get; init; }
     public required int BatchNumber { get; init; }
-    public int AfterRoomId { get; init; } = 0;
-    public RoomsFilterDto? Filter { get; init; } = null;
+    public int AfterRoomId { get; init; }
+    public RoomsFilterDto? Filter { get; init; }
 
     public IAsyncEnumerable<Domain.Models.Room.Room> Apply(RoomsDbContext source)
     {

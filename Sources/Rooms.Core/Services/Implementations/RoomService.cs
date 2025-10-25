@@ -29,11 +29,11 @@ public class RoomService(
         return room.Map(RoomDtoConverter.Convert);
     }
 
-    public async Task<RoomsResponseDto> FilterRooms(GetRoomsDto dto, CancellationToken cancellationToken)
+    public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = queriesFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterRoomId, dto.Filter);
+        var query = queriesFactory.Filter(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterRoomId, requestDto.Filter);
 
         var rooms = await unitOfWork
             .ApplyQuery(query)

@@ -1,5 +1,5 @@
-﻿using Rooms.Core.Implementations.Dtos.Requests.Rooms;
-using Rooms.Core.Implementations.Dtos.Room;
+﻿using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Core.Dtos.Room;
 
 namespace WebApi.Tests.SDK;
 
@@ -12,7 +12,7 @@ public class PatchRoomRequestBuilder
     private int? seats;
     private int? computerSeats;
     private RoomNetTypeDto netType;
-    private bool hasConditioning;
+    private bool? hasConditioning;
     private string? owner;
     private RoomStatusDto roomStatus;
     private string? comment;
@@ -27,7 +27,7 @@ public class PatchRoomRequestBuilder
         int? seats, 
         int? computerSeats, 
         RoomNetTypeDto netType, 
-        bool hasConditioning, 
+        bool? hasConditioning, 
         string? owner, 
         RoomStatusDto roomStatus,
         string? comment, 
@@ -61,9 +61,9 @@ public class PatchRoomRequestBuilder
             room.Parameters.NetType,
             room.Parameters.HasConditioning,
             room.Owner,
-            room.FixInfo.Status,
-            room.FixInfo.Comment,
-            room.FixInfo.FixDeadline,
+            room.FixStatus.Status,
+            room.FixStatus.Comment,
+            room.FixStatus.FixDeadline,
             room.AllowBooking);
     }
 
@@ -145,9 +145,9 @@ public class PatchRoomRequestBuilder
         return this;
     }
 
-    public PatchRoomRequest Build()
+    public PatchRoomDto Build()
     {
-        return new PatchRoomRequest
+        return new PatchRoomDto
         {
             Name = name,
             Description = description,
@@ -165,7 +165,7 @@ public class PatchRoomRequestBuilder
         };
     }
 
-    public static implicit operator PatchRoomRequest(PatchRoomRequestBuilder builder)
+    public static implicit operator PatchRoomDto(PatchRoomRequestBuilder builder)
     {
         return builder.Build();
     }

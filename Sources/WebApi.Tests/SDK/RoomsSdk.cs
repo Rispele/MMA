@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Implementations.Dtos.Responses;
-using Rooms.Core.Implementations.Dtos.Room;
-using Rooms.Core.Implementations.Services.Rooms;
+﻿using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.Room;
+using Rooms.Core.Services.Interfaces;
 
 namespace WebApi.Tests.SDK;
 
@@ -34,13 +34,13 @@ public class RoomsSdk(IRoomService roomService)
         return roomService.GetRoomById(roomId, cancellationToken);
     }
 
-    public Task<RoomsBatchDto> GetRooms(
+    public Task<RoomsResponseDto> FilterRooms(
         int batchNumber = 0,
         int batchSize = 100,
-        Action<GetRoomsRequestBuilder>? builder = null,
+        Action<FilterRoomsRequestBuilder>? builder = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetRoomsRequestBuilder.Create(batchNumber, batchSize);
+        var request = FilterRoomsRequestBuilder.Create(batchNumber, batchSize);
 
         builder?.Invoke(request);
 
