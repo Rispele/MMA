@@ -33,8 +33,7 @@ public class RoomService(
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var domainFilter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert);
-        var query = queriesFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterRoomId, domainFilter);
+        var query = queriesFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterRoomId, dto.Filter);
 
         var rooms = await unitOfWork
             .ApplyQuery(query)

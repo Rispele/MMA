@@ -1,4 +1,5 @@
-﻿using Rooms.Domain.Queries.Factories;
+﻿using Rooms.Core.Dtos.Requests.Equipments;
+using Rooms.Domain.Queries.Factories;
 using Rooms.Domain.Queries.Implementations.Equipment;
 using Rooms.Persistence.Queries.Equipments;
 
@@ -10,7 +11,7 @@ public class EquipmentQueryFactory : IEquipmentQueryFactory
         int batchSize,
         int batchNumber,
         int afterEquipmentId = -1,
-        EquipmentsFilter? filter = null)
+        EquipmentsFilterDto? filter = null)
     {
         return new FilterEquipmentsQuery
         {

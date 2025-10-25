@@ -1,4 +1,5 @@
-﻿using Rooms.Domain.Queries.Implementations.Room;
+﻿using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Domain.Queries.Implementations.Room;
 
 namespace Rooms.Domain.Queries.Factories;
 
@@ -8,7 +9,7 @@ public interface IRoomQueriesFactory
         int batchSize,
         int batchNumber,
         int afterRoomId = -1,
-        RoomsFilter? filter = null);
+        RoomsFilterDto? filter = null);
 
     public IFindRoomByIdQuery FindById(int roomId);
 

@@ -31,8 +31,7 @@ public class EquipmentService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var domainFilter = dto.Filter.AsOptional().Map(FiltersDtoConverter.Convert);
-        var query = equipmentQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentId, domainFilter);
+        var query = equipmentQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentId, dto.Filter);
 
         var equipments = await context
             .ApplyQuery(query)

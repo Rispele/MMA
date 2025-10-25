@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
-using Rooms.Domain.Queries.Implementations.Filtering;
+using Rooms.Core.DtoConverters;
+using Rooms.Core.Dtos.Requests.Filtering;
+using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Domain.Queries.Implementations.Room;
 using Rooms.Persistence.Queries.Abstractions;
 
@@ -13,7 +15,7 @@ public class FilterRoomsQuery :
     public required int BatchSize { get; init; }
     public required int BatchNumber { get; init; }
     public int AfterRoomId { get; init; } = 0;
-    public RoomsFilter? Filter { get; init; } = null;
+    public RoomsFilterDto? Filter { get; init; } = null;
 
     public IAsyncEnumerable<Domain.Models.Room.Room> Apply(RoomsDbContext source)
     {
@@ -45,7 +47,8 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 (queryable, parameter) =>
                 {
-                    return queryable.Where(t => Enumerable.Contains(parameter.Values, t.Parameters.Type));
+                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    return queryable.Where(t => values.Contains(t.Parameters.Type));
                 });
 
         rooms = Filter.RoomLayout
@@ -53,7 +56,8 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 (queryable, parameter) =>
                 {
-                    return queryable.Where(t => Enumerable.Contains(parameter.Values, t.Parameters.Layout));
+                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    return queryable.Where(t => values.Contains(t.Parameters.Layout));
                 });
 
         rooms = Filter.Seats
@@ -70,7 +74,8 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 (queryable, parameter) =>
                 {
-                    return queryable.Where(t => Enumerable.Contains(parameter.Values, t.Parameters.NetType));
+                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    return queryable.Where(t => values.Contains(t.Parameters.NetType));
                 });
 
         rooms = Filter.Conditioning
@@ -88,7 +93,8 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 (queryable, parameter) =>
                 {
-                    return queryable.Where(t => Enumerable.Contains(parameter.Values, t.FixInfo.Status));
+                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    return queryable.Where(t => values.Contains(t.FixInfo.Status));
                 });
 
         rooms = Filter.FixDeadline
@@ -109,7 +115,7 @@ public class FilterRoomsQuery :
     {
         if (Filter is null) return rooms;
 
-        (SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)[] sorts =
+        (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)[] sorts =
         [
             BuildSort(Filter.Name?.SortDirection, t => t.Name),
             BuildSort(Filter.Description?.SortDirection, t => t.Name),
@@ -125,29 +131,29 @@ public class FilterRoomsQuery :
             BuildSort(Filter.Comment?.SortDirection, t => t.Name)
         ];
 
-        var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirection.None)).ToArray();
+        var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
         if (sortsToApply.Length == 0) return rooms;
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
         {
-            SortDirection.Ascending => rooms.OrderBy(firstSort.parameter),
-            SortDirection.Descending => rooms.OrderByDescending(firstSort.parameter),
+            SortDirectionDto.Ascending => rooms.OrderBy(firstSort.parameter),
+            SortDirectionDto.Descending => rooms.OrderByDescending(firstSort.parameter),
             _ => throw new ArgumentOutOfRangeException()
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
             orderedQueryable = direction switch
             {
-                SortDirection.Ascending => orderedQueryable.ThenBy(parameter),
-                SortDirection.Descending => orderedQueryable.ThenByDescending(parameter),
+                SortDirectionDto.Ascending => orderedQueryable.ThenBy(parameter),
+                SortDirectionDto.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
         return orderedQueryable;
 
-        (SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>>) BuildSort(
-            SortDirection? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)
+        (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>>) BuildSort(
+            SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)
         {
             return (direction, parameter);
         }

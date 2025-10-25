@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
+using Rooms.Core.DtoConverters;
+using Rooms.Core.Dtos.Requests.Equipments;
+using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Domain.Models.Equipment;
 using Rooms.Domain.Queries.Implementations.Equipment;
-using Rooms.Domain.Queries.Implementations.Filtering;
 using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Equipments;
@@ -14,7 +16,7 @@ public class FilterEquipmentsQuery :
     public required int BatchSize { get; init; }
     public required int BatchNumber { get; init; }
     public int AfterEquipmentId { get; init; }
-    public EquipmentsFilter? Filter { get; init; }
+    public EquipmentsFilterDto? Filter { get; init; }
 
     public IAsyncEnumerable<Equipment> Apply(RoomsDbContext source)
     {
@@ -42,7 +44,8 @@ public class FilterEquipmentsQuery :
             .Apply(equipments,
                 (queryable, parameter) =>
                 {
-                    return queryable.Where(t => Enumerable.Contains(parameter.Values, t.Schema.Type));
+                    var types = parameter.Values.Select(EquipmentDtoConverter.Convert);
+                    return queryable.Where(t => types.Contains(t.Schema.Type));
                 });
 
         equipments = Filter.Schemas
@@ -50,7 +53,8 @@ public class FilterEquipmentsQuery :
             .Apply(equipments,
                 (queryable, parameter) =>
                 {
-                    return queryable.Where(t => Enumerable.Contains(parameter.Values, t.Schema));
+                    var types = parameter.Values.Select(EquipmentDtoConverter.Convert);
+                    return queryable.Where(t => types.Contains(t.Schema));
                 });
 
         equipments = Filter.InventoryNumber
@@ -90,7 +94,7 @@ public class FilterEquipmentsQuery :
     {
         if (Filter is null) return equipments;
 
-        (SortDirection? direction, Expression<Func<Equipment, object>> parameter)[]
+        (SortDirectionDto? direction, Expression<Func<Equipment, object>> parameter)[]
             sorts =
             [
                 BuildSort(Filter.RoomName?.SortDirection, t => t.Room.Name),
@@ -103,29 +107,29 @@ public class FilterEquipmentsQuery :
                 BuildSort(Filter.Statuses?.SortDirection, t => t.Room.Name)
             ];
 
-        var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirection.None)).ToArray();
+        var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
         if (sortsToApply.Length == 0) return equipments;
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
         {
-            SortDirection.Ascending => equipments.OrderBy(firstSort.parameter),
-            SortDirection.Descending => equipments.OrderByDescending(firstSort.parameter),
+            SortDirectionDto.Ascending => equipments.OrderBy(firstSort.parameter),
+            SortDirectionDto.Descending => equipments.OrderByDescending(firstSort.parameter),
             _ => throw new ArgumentOutOfRangeException()
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
             orderedQueryable = direction switch
             {
-                SortDirection.Ascending => orderedQueryable.ThenBy(parameter),
-                SortDirection.Descending => orderedQueryable.ThenByDescending(parameter),
+                SortDirectionDto.Ascending => orderedQueryable.ThenBy(parameter),
+                SortDirectionDto.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
         return orderedQueryable;
 
-        (SortDirection? direction, Expression<Func<Equipment, object>>) BuildSort(
-            SortDirection? direction, Expression<Func<Equipment, object>> parameter)
+        (SortDirectionDto? direction, Expression<Func<Equipment, object>>) BuildSort(
+            SortDirectionDto? direction, Expression<Func<Equipment, object>> parameter)
         {
             return (direction, parameter);
         }
