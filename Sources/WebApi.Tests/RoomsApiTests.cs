@@ -79,24 +79,21 @@ public class RoomsApiTests : ContainerTestBase
         response.Rooms.Select(t => t.Parameters.Seats).Min().Should().BeGreaterThanOrEqualTo(9);
     }
 
-    [Test]
-    public async Task PatchRoom_ShouldBePatched()
+    [TestCaseSource(nameof(PatchRoomTestCases))]
+    public async Task PatchRoom_ShouldBePatched(
+        Action<CreateRoomRequestBuilder> createRoomRequest,
+        Action<PatchRoomRequestBuilder> patchRoomRequest,
+        Action<RoomDto> assertRoom)
     {
         var roomName = Guid.NewGuid().ToString();
 
-        var created = await roomsSdk.CreateRoom(
-            roomName,
-            b => b.Comment("comment"));
-
-        var patched = await roomsSdk.PatchRoom(
-            created.Id,
-            b => b.Comment("comment1"));
-        
+        var created = await roomsSdk.CreateRoom(roomName, createRoomRequest);
+        var patched = await roomsSdk.PatchRoom(created.Id, patchRoomRequest);
         var found = await roomsSdk.GetRoom(created.Id);
 
         found.Should().NotBeEquivalentTo(created);
         found.Should().BeEquivalentTo(patched);
-        found.FixStatus.Comment.Should().BeEquivalentTo("comment1");
+        assertRoom(found);
     }
 
     private static IEnumerable<TestCaseData> FilterRoomTestCases()
@@ -129,11 +126,53 @@ public class RoomsApiTests : ContainerTestBase
                 (Action<FilterRoomsRequestBuilder>)(b => b.Filter(f => f.NetType([RoomNetTypeDto.Wired]))))
             .SetName("Enum: Net type");
 
-
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
                 (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Flat)),
                 (Action<FilterRoomsRequestBuilder>)(b => b.Filter(f => f.Layout([RoomLayoutDto.Amphitheater]))))
             .SetName("Enum: Layout type");
+    }
+
+    private static IEnumerable<TestCaseData> PatchRoomTestCases()
+    {
+        var name = Guid.NewGuid().ToString();
+        yield return new TestCaseData(
+                (Action<CreateRoomRequestBuilder>)(_ => {}),
+                (Action<PatchRoomRequestBuilder>)(b => b.Name(name)),
+                (Action<RoomDto>)(t => t.Name.Should().Be(name)))
+            .SetName("Name");
+
+        
+        var comment11 = Guid.NewGuid().ToString();
+        var comment12 = Guid.NewGuid().ToString();
+        yield return new TestCaseData(
+                (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment11)),
+                (Action<PatchRoomRequestBuilder>)(b => b.Comment(comment12)),
+                (Action<RoomDto>)(t => t.FixStatus.Comment.Should().Be(comment12)))
+            .SetName("FixStatus.Comment");
+        
+        yield return new TestCaseData(
+                (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.NotReady)),
+                (Action<PatchRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.Ready)),
+                (Action<RoomDto>)(b => b.FixStatus.Status.Should().Be(RoomStatusDto.Ready)))
+            .SetName("FixStatus.Status");
+        
+        yield return new TestCaseData(
+                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Computer)),
+                (Action<PatchRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Multimedia)),
+                (Action<RoomDto>)(b => b.Parameters.Type.Should().Be(RoomTypeDto.Multimedia)))
+            .SetName("Parameters.Type");
+
+        yield return new TestCaseData(
+                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wired)),
+                (Action<PatchRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wireless)),
+                (Action<RoomDto>)(b => b.Parameters.NetType.Should().Be(RoomNetTypeDto.Wireless)))
+            .SetName("Parameters.NetType");
+
+        yield return new TestCaseData(
+                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
+                (Action<PatchRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Flat)),
+                (Action<RoomDto>)(b => b.Parameters.Layout.Should().Be(RoomLayoutDto.Flat)))
+            .SetName("Parameters.Layout");
     }
 }

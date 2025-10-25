@@ -33,8 +33,6 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(model.Name)) return BadRequest("Name is required for idempotency and creation.");
-
         var created = await roomService.CreateRoomAsync(model, cancellationToken);
 
         return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);
