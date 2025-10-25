@@ -1,4 +1,5 @@
-﻿using WebApi.Models.Requests.Rooms;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
@@ -29,7 +30,7 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         return RoomsModelsConverter.Convert(room);
     }
 
-    public async Task<RoomModel> CreateRoomAsync(CreateRoomModel model, CancellationToken cancellationToken)
+    public async Task<RoomModel> CreateRoom(CreateRoomModel model, CancellationToken cancellationToken)
     {
         var innerRequest = RoomsModelsConverter.Convert(model);
 
@@ -38,14 +39,29 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         return RoomsModelsConverter.Convert(room);
     }
 
-    public async Task<PatchRoomModel> GetPatchModel(int roomId, CancellationToken cancellationToken)
+    public async Task<(RoomModel? result, bool isOk)> PatchRoomAsync(
+        int roomId,
+        JsonPatchDocument<PatchRoomModel> patch,
+        Func<PatchRoomModel, bool> validate,
+        CancellationToken cancellationToken)
+    {
+        var patchModel = await GetPatchModel(roomId, cancellationToken);
+
+        patch.ApplyTo(patchModel);
+
+        return !validate(patchModel) 
+            ? (null, isOk: false) 
+            : (await PatchRoomAsync(roomId, patchModel, cancellationToken), isOk: true);
+    }
+
+    private async Task<PatchRoomModel> GetPatchModel(int roomId, CancellationToken cancellationToken)
     {
         var room = await roomService.GetRoomById(roomId, cancellationToken);
 
         return RoomsModelsConverter.ConvertToPatchModel(room);
     }
 
-    public async Task<RoomModel> PatchRoomAsync(int roomId, PatchRoomModel patchModel,
+    private async Task<RoomModel> PatchRoomAsync(int roomId, PatchRoomModel patchModel,
         CancellationToken cancellationToken)
     {
         var patchRequest = RoomsModelsConverter.Convert(patchModel);

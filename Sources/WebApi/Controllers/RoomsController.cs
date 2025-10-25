@@ -33,7 +33,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
-        var created = await roomService.CreateRoomAsync(model, cancellationToken);
+        var created = await roomService.CreateRoom(model, cancellationToken);
 
         return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);
     }
@@ -52,14 +52,10 @@ public class RoomsController(IRoomService roomService) : ControllerBase
             throw new BadHttpRequestException(string.Join("; ", errorMessage));
         }
 
-        var patchModel = await roomService.GetPatchModel(roomId, cancellationToken);
+        var (model, isOk) = await roomService.PatchRoomAsync(roomId, patch, TryValidateModel, cancellationToken);
 
-        patch.ApplyTo(patchModel);
-
-        if (!TryValidateModel(patchModel)) return ValidationProblem(ModelState);
-
-        var updated = await roomService.PatchRoomAsync(roomId, patchModel, cancellationToken);
-
-        return Ok(updated);
+        return isOk 
+            ? ValidationProblem(ModelState) 
+            : Ok(model);
     }
 }
