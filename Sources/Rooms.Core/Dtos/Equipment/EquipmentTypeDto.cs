@@ -4,5 +4,5 @@ public class EquipmentTypeDto
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public EquipmentParameterDescriptorDto[] Parameters { get; set; }
+    public IEnumerable<EquipmentParameterDescriptorDto> Parameters { get; set; }
 }

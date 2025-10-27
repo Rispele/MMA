@@ -49,8 +49,8 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
 
         patch.ApplyTo(patchModel);
 
-        return !validate(patchModel) 
-            ? (null, isOk: false) 
+        return !validate(patchModel)
+            ? (null, isOk: false)
             : (await PatchRoomAsync(roomId, patchModel, cancellationToken), isOk: true);
     }
 

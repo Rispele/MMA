@@ -21,7 +21,8 @@ public static partial class RoomDtoConverter
             room.Owner,
             null,
             room.FixInfo.Map(Convert),
-            room.AllowBooking);
+            room.AllowBooking,
+            room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)));
     }
 
     private static ScheduleAddressDto? Convert(RoomScheduleAddress? entity)

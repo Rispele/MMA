@@ -1,9 +1,9 @@
 ﻿using Rooms.Core.Dtos.Requests.Equipments;
-using Rooms.Domain.Queries.Abstractions;
+using Rooms.Core.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Equipment;
+namespace Rooms.Core.Queries.Implementations.Equipment;
 
-public interface IFilterEquipmentsQuery : IQuerySpecification<Models.Equipment.Equipment>
+public interface IFilterEquipmentsQuery : IQuerySpecification<Domain.Models.Equipment.Equipment>
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

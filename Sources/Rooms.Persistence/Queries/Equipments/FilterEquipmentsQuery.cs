@@ -3,8 +3,8 @@ using Commons.Optional;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Requests.Filtering;
+using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Domain.Models.Equipment;
-using Rooms.Domain.Queries.Implementations.Equipment;
 using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Equipments;
@@ -44,8 +44,8 @@ public class FilterEquipmentsQuery :
             .Apply(equipments,
                 (queryable, parameter) =>
                 {
-                    var types = parameter.Values.Select(EquipmentDtoConverter.Convert);
-                    return queryable.Where(t => types.Contains(t.Schema.Type));
+                    var types = parameter.Values.Select(EquipmentTypeDtoConverter.Convert);
+                    return queryable.Where(t => types.Contains(t.Schema.EquipmentType));
                 });
 
         equipments = Filter.Schemas
@@ -53,7 +53,7 @@ public class FilterEquipmentsQuery :
             .Apply(equipments,
                 (queryable, parameter) =>
                 {
-                    var types = parameter.Values.Select(EquipmentDtoConverter.Convert);
+                    var types = parameter.Values.Select(EquipmentSchemaDtoConverter.Convert);
                     return queryable.Where(t => types.Contains(t.Schema));
                 });
 

@@ -1,4 +1,6 @@
-﻿namespace WebApi.Models.Room;
+﻿using WebApi.Models.Equipment;
+
+namespace WebApi.Models.Room;
 
 public record RoomModel
 {
@@ -12,4 +14,5 @@ public record RoomModel
     public RoomOperatorDepartmentModel? OperatorDepartment { get; init; }
     public required RoomFixStatusModel FixStatus { get; init; }
     public bool AllowBooking { get; init; }
+    public IEnumerable<EquipmentModel> Equipments { get; init; } = default!;
 }

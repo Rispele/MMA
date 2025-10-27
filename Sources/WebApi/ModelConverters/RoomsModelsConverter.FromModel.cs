@@ -1,4 +1,5 @@
-﻿using Commons.Optional;
+﻿using Commons;
+using Commons.Optional;
 using Rooms.Core.Dtos.Files;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
@@ -96,7 +97,8 @@ public static partial class RoomsModelsConverter
             model.Owner,
             Convert(model.OperatorDepartment),
             Convert(model.FixStatus),
-            model.AllowBooking
+            model.AllowBooking,
+            model.Equipments.Select(x => x.Map(EquipmentsModelsConverter.Convert))
         );
     }
 

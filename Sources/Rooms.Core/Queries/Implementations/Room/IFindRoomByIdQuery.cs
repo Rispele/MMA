@@ -1,8 +1,8 @@
-﻿using Rooms.Domain.Queries.Abstractions;
+﻿using Rooms.Core.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Room;
+namespace Rooms.Core.Queries.Implementations.Room;
 
-public interface IFindRoomByIdQuery : ISingleQuerySpecification<Models.Room.Room>
+public interface IFindRoomByIdQuery : ISingleQuerySpecification<Domain.Models.Room.Room>
 {
     public int RoomId { get; init; }
 }

@@ -3,8 +3,8 @@
 public class EquipmentSchemaModel
 {
     public int Id { get; init; }
-    public EquipmentTypeModel TypeModel { get; init; } = default!;
-
-    public Dictionary<string, string> ParameterValues { get; init; } =
-        default!; // key = EquipmentParameterDescriptorDto.Name, value = InputValue as string - валидируем соответствие дескриптору
+    public string Name { get; set; } = default!;
+    public int EquipmentTypeId { get; init; }
+    public Dictionary<string, string> ParameterValues { get; init; } = default!;
+    public IEnumerable<int> EquipmentIds { get; init; }
 }

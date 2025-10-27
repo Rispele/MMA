@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Rooms.Domain.Queries.Abstractions;
-using Rooms.Domain.Queries.Factories;
+using Rooms.Core.Queries.Abstractions;
+using Rooms.Core.Queries.Factories;
 
 namespace Rooms.Persistence.Factories;
 

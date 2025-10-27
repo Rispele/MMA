@@ -1,14 +1,13 @@
 ﻿using Commons;
-using Commons.Optional;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Queries.Abstractions;
+using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipment;
-using Rooms.Domain.Queries.Abstractions;
-using Rooms.Domain.Queries.Factories;
 using EquipmentDtoConverter = Rooms.Core.DtoConverters.EquipmentDtoConverter;
 using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
@@ -16,7 +15,8 @@ namespace Rooms.Core.Services.Implementations;
 
 public class EquipmentService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IEquipmentQueryFactory equipmentQueryFactory) : IEquipmentService
+    IEquipmentQueryFactory equipmentQueryFactory,
+    IRoomService roomService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {
@@ -48,8 +48,8 @@ public class EquipmentService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipment = Equipment.New(
-            dto.Room.Map(RoomDtoConverter.Convert),
-            dto.SchemaDto.Map(EquipmentDtoConverter.Convert),
+            (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
+            dto.SchemaDto.Map(EquipmentSchemaDtoConverter.Convert),
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,
@@ -59,6 +59,8 @@ public class EquipmentService(
         context.Add(equipment);
 
         await context.Commit(cancellationToken);
+
+        await roomService.UpdateWithEquipment(dto.RoomId, equipment, cancellationToken);
 
         return EquipmentDtoConverter.Convert(equipment);
     }
@@ -73,8 +75,8 @@ public class EquipmentService(
         var equipmentToPatch = await GetEquipmentByIdInner(equipmentId, cancellationToken, context);
 
         equipmentToPatch.Update(
-            dto.Room.Map(RoomDtoConverter.Convert),
-            dto.SchemaDto.Map(EquipmentDtoConverter.Convert),
+            (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
+            dto.SchemaDto.Map(EquipmentSchemaDtoConverter.Convert),
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,

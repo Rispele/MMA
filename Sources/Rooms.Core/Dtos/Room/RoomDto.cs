@@ -1,4 +1,6 @@
-﻿namespace Rooms.Core.Dtos.Room;
+﻿using Rooms.Core.Dtos.Equipment;
+
+namespace Rooms.Core.Dtos.Room;
 
 public record RoomDto
 {
@@ -12,7 +14,8 @@ public record RoomDto
         string? owner,
         RoomOperatorDepartmentDto? operatorDepartment,
         RoomFixStatusDto fixStatus,
-        bool allowBooking)
+        bool allowBooking,
+        IEnumerable<EquipmentDto> equipments)
     {
         Id = id;
         Name = name;
@@ -23,6 +26,7 @@ public record RoomDto
         OperatorDepartment = operatorDepartment;
         FixStatus = fixStatus;
         AllowBooking = allowBooking;
+        Equipments = equipments;
         Owner = owner;
     }
 
@@ -36,4 +40,5 @@ public record RoomDto
     public RoomOperatorDepartmentDto? OperatorDepartment { get; init; }
     public RoomFixStatusDto FixStatus { get; init; }
     public bool AllowBooking { get; init; }
+    public IEnumerable<EquipmentDto> Equipments { get; init; }
 }

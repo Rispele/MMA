@@ -1,16 +1,15 @@
 ﻿using Commons;
-using Commons.Optional;
-using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Queries.Abstractions;
+using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
+using Rooms.Domain.Models.Equipment;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
-using Rooms.Domain.Queries.Abstractions;
-using Rooms.Domain.Queries.Factories;
 using FileDtoConverter = Rooms.Core.DtoConverters.FileDtoConverter;
 using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
@@ -76,6 +75,19 @@ public class RoomService(
         await unitOfWork.Commit(cancellationToken);
 
         return RoomDtoConverter.Convert(room);
+    }
+
+    public async Task<RoomDto> UpdateWithEquipment(int roomId, Equipment equipment, CancellationToken cancellationToken)
+    {
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
+
+        var roomToUpdate = await GetRoomByIdInner(unitOfWork, roomId, cancellationToken);
+
+        roomToUpdate.Equipments.Add(equipment);
+
+        await unitOfWork.Commit(cancellationToken);
+
+        return roomToUpdate.Map(RoomDtoConverter.Convert);
     }
 
     public async Task<RoomDto> PatchRoom(int roomId, PatchRoomDto dto, CancellationToken cancellationToken)

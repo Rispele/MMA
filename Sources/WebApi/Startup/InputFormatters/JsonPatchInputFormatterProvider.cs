@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 
-namespace WebApi.Startup;
+namespace WebApi.Startup.InputFormatters;
 
 public static class JsonPatchInputFormatterProvider
 {

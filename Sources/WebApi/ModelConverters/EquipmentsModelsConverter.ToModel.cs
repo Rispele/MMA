@@ -13,7 +13,7 @@ public static partial class EquipmentsModelsConverter
         {
             Id = equipment.Id,
             RoomModel = equipment.Room.Map(RoomsModelsConverter.Convert),
-            SchemaModel = equipment.SchemaDto.Map(Convert),
+            SchemaModel = equipment.SchemaDto.Map(EquipmentSchemasModelsConverter.Convert),
             InventoryNumber = equipment.InventoryNumber,
             SerialNumber = equipment.SerialNumber,
             NetworkEquipmentIp = equipment.NetworkEquipmentIp,
@@ -26,7 +26,7 @@ public static partial class EquipmentsModelsConverter
     {
         return new PatchEquipmentModel
         {
-            Room = dto.Room,
+            RoomId = dto.Room.Id,
             Schema = dto.SchemaDto,
             InventoryNumber = dto.InventoryNumber,
             SerialNumber = dto.SerialNumber,
@@ -34,34 +34,5 @@ public static partial class EquipmentsModelsConverter
             Comment = dto.Comment,
             Status = dto.Status
         };
-    }
-
-    public static EquipmentSchemaModel Convert(EquipmentSchemaDto entity)
-    {
-        return new EquipmentSchemaModel
-        {
-            Id = entity.Id,
-            TypeModel = entity.TypeDto.Map(Convert),
-            ParameterValues = entity.ParameterValues
-        };
-    }
-
-    public static EquipmentTypeModel Convert(EquipmentTypeDto type)
-    {
-        return new EquipmentTypeModel
-        {
-            Id = type.Id,
-            Name = type.Name,
-            Parameters = type.Parameters.Map(Convert)
-        };
-    }
-
-    public static EquipmentParameterDescriptorModel[] Convert(EquipmentParameterDescriptorDto[] descriptors)
-    {
-        return descriptors.Select(x => new EquipmentParameterDescriptorModel
-        {
-            Name = x.Name,
-            Required = x.Required
-        }).ToArray();
     }
 }

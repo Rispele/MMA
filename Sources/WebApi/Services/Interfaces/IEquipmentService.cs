@@ -9,8 +9,7 @@ public interface IEquipmentService
     Task<EquipmentsResponseModel> GetEquipmentsAsync(GetEquipmentsModel model, CancellationToken cancellationToken);
     Task<EquipmentModel> GetEquipmentByIdAsync(int id, CancellationToken cancellationToken);
     Task<EquipmentModel> CreateEquipmentAsync(CreateEquipmentModel model, CancellationToken cancellationToken);
-    Task<PatchEquipmentModel> GetPatchModel(int equipmentId, CancellationToken cancellationToken);
-
+    Task<PatchEquipmentModel> GetEquipmentPatchModel(int equipmentId, CancellationToken cancellationToken);
     Task<EquipmentModel> PatchEquipmentAsync(int equipmentId, PatchEquipmentModel request,
         CancellationToken cancellationToken);
 }

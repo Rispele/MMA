@@ -3,7 +3,7 @@ using Commons.Optional;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Domain.Queries.Implementations.Room;
+using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Room;

@@ -54,7 +54,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
             throw new BadHttpRequestException(string.Join("; ", errorMessage));
         }
 
-        var patchModel = await equipmentService.GetPatchModel(equipmentId, cancellationToken);
+        var patchModel = await equipmentService.GetEquipmentPatchModel(equipmentId, cancellationToken);
 
         patch.ApplyTo(patchModel);
 

@@ -1,7 +1,7 @@
 ﻿using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Domain.Queries.Implementations.Room;
+using Rooms.Core.Queries.Implementations.Room;
 
-namespace Rooms.Domain.Queries.Factories;
+namespace Rooms.Core.Queries.Factories;
 
 public interface IRoomQueriesFactory
 {

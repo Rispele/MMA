@@ -1,9 +1,9 @@
 ﻿using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Domain.Queries.Abstractions;
+using Rooms.Core.Queries.Abstractions;
 
-namespace Rooms.Domain.Queries.Implementations.Room;
+namespace Rooms.Core.Queries.Implementations.Room;
 
-public interface IFilterRoomsQuery : IQuerySpecification<Models.Room.Room>
+public interface IFilterRoomsQuery : IQuerySpecification<Domain.Models.Room.Room>
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

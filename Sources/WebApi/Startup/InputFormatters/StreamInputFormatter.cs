@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 
-namespace WebApi.Startup;
+namespace WebApi.Startup.InputFormatters;
 
 public class StreamInputFormatter : InputFormatter
 {

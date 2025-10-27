@@ -24,8 +24,8 @@ public static partial class EquipmentsModelsConverter
                 .Map(filter => new EquipmentsFilterDto
                 {
                     RoomName = MapFilterMultiParameter(filter.RoomName, v => v),
-                    Types = MapFilterMultiParameter(filter.Types, Convert),
-                    Schemas = MapFilterMultiParameter(filter.Schemas, Convert),
+                    Types = MapFilterMultiParameter(filter.Types, EquipmentTypesModelsConverter.Convert),
+                    Schemas = MapFilterMultiParameter(filter.Schemas, EquipmentSchemasModelsConverter.Convert),
                     InventoryNumber = MapFilterParameter(filter.InventoryNumber, v => v),
                     SerialNumber = MapFilterParameter(filter.SerialNumber, v => v),
                     NetworkEquipmentIp = MapFilterParameter(filter.NetworkEquipmentIp, v => v),
@@ -38,8 +38,8 @@ public static partial class EquipmentsModelsConverter
     {
         return new CreateEquipmentDto
         {
-            Room = RoomsModelsConverter.Convert(model.RoomModel),
-            SchemaDto = Convert(model.SchemaModel),
+            RoomId = model.RoomId,
+            SchemaDto = model.SchemaModel.Map(EquipmentSchemasModelsConverter.Convert),
             InventoryNumber = model.InventoryNumber,
             SerialNumber = model.SerialNumber,
             NetworkEquipmentIp = model.NetworkEquipmentIp,
@@ -84,41 +84,12 @@ public static partial class EquipmentsModelsConverter
         {
             Id = equipment.Id,
             Room = equipment.RoomModel.Map(RoomsModelsConverter.Convert),
-            SchemaDto = equipment.SchemaModel.Map(Convert),
+            SchemaDto = equipment.SchemaModel.Map(EquipmentSchemasModelsConverter.Convert),
             InventoryNumber = equipment.InventoryNumber,
             SerialNumber = equipment.SerialNumber,
             NetworkEquipmentIp = equipment.NetworkEquipmentIp,
             Comment = equipment.Comment,
             Status = equipment.Status
         };
-    }
-
-    private static EquipmentSchemaDto Convert(EquipmentSchemaModel entity)
-    {
-        return new EquipmentSchemaDto
-        {
-            Id = entity.Id,
-            TypeDto = entity.TypeModel.Map(Convert),
-            ParameterValues = entity.ParameterValues
-        };
-    }
-
-    private static EquipmentTypeDto Convert(EquipmentTypeModel type)
-    {
-        return new EquipmentTypeDto
-        {
-            Id = type.Id,
-            Name = type.Name,
-            Parameters = type.Parameters.Map(Convert)
-        };
-    }
-
-    private static EquipmentParameterDescriptorDto[] Convert(EquipmentParameterDescriptorModel[] descriptors)
-    {
-        return descriptors.Select(x => new EquipmentParameterDescriptorDto
-        {
-            Name = x.Name,
-            Required = x.Required
-        }).ToArray();
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Room;
 using Rooms.Domain.Models.Equipment;
 
 namespace Rooms.Core.Dtos.Requests.Equipments;
 
 public record PatchEquipmentDto
 {
-    [Required] public RoomDto Room { get; set; } = default!;
+    [Required] public int RoomId { get; set; }
 
     [Required] public EquipmentSchemaDto SchemaDto { get; set; }
 

@@ -9,7 +9,7 @@ public class EquipmentSchemaEntityTypeConfiguration : IEntityTypeConfiguration<E
     public void Configure(EntityTypeBuilder<EquipmentSchema> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasOne(x => x.Type).WithMany(x => x.Schemas).HasForeignKey(x => x.Id);
+        builder.HasOne(x => x.EquipmentType).WithMany(x => x.Schemas).HasForeignKey(x => x.Id);
         builder.Property(x => x.ParameterValues).HasColumnType("jsonb");
     }
 }

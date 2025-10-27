@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.Requests.Equipments;
-using Rooms.Domain.Queries.Factories;
-using Rooms.Domain.Queries.Implementations.Equipment;
+using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Persistence.Queries.Equipments;
 
 namespace Rooms.Persistence.Factories;

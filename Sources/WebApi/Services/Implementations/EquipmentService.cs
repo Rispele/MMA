@@ -40,7 +40,7 @@ public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipme
         return EquipmentsModelsConverter.Convert(equipment);
     }
 
-    public async Task<PatchEquipmentModel> GetPatchModel(int equipmentId, CancellationToken cancellationToken)
+    public async Task<PatchEquipmentModel> GetEquipmentPatchModel(int equipmentId, CancellationToken cancellationToken)
     {
         var equipment = await equipmentService.GetEquipmentById(equipmentId, cancellationToken);
 

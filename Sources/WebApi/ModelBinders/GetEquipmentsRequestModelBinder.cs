@@ -13,7 +13,7 @@ public class GetEquipmentsRequestModelBinder : IModelBinder
         // read basic scalars
         var page = ParseIntOrDefault(q["page"], 1);
         var pageSize = ParseIntOrDefault(q["pageSize"], 10);
-        var afterRoomId = ParseIntOrDefault(q["afterRoomId"], 0);
+        var afterEquipmentId = ParseIntOrDefault(q["afterEquipmentId"], 0);
 
         EquipmentsFilterModel? filter = null;
         if (q.TryGetValue("filter", out var filterValues) && filterValues.Count > 0)
@@ -38,7 +38,7 @@ public class GetEquipmentsRequestModelBinder : IModelBinder
         {
             Page = page,
             PageSize = pageSize,
-            AfterEquipmentId = afterRoomId,
+            AfterEquipmentId = afterEquipmentId,
             Filter = filter
         };
 

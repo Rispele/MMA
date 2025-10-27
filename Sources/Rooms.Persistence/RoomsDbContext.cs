@@ -1,8 +1,8 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Rooms.Core.Queries.Abstractions;
 using Rooms.Domain.Models.Equipment;
 using Rooms.Domain.Models.Room;
-using Rooms.Domain.Queries.Abstractions;
 using Rooms.Persistence.EntityConfigurations.Equipment;
 using Rooms.Persistence.EntityConfigurations.Room;
 using Rooms.Persistence.Queries.Abstractions;

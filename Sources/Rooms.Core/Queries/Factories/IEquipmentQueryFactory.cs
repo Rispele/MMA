@@ -1,7 +1,7 @@
 ﻿using Rooms.Core.Dtos.Requests.Equipments;
-using Rooms.Domain.Queries.Implementations.Equipment;
+using Rooms.Core.Queries.Implementations.Equipment;
 
-namespace Rooms.Domain.Queries.Factories;
+namespace Rooms.Core.Queries.Factories;
 
 public interface IEquipmentQueryFactory
 {

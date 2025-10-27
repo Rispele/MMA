@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Queries.Abstractions;
+﻿namespace Rooms.Core.Queries.Abstractions;
 
 public interface IUnitOfWork : IAsyncDisposable
 {
