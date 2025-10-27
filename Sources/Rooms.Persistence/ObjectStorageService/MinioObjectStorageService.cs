@@ -16,6 +16,7 @@ public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorag
         long length,
         CancellationToken cancellationToken = default)
     {
+        await CreateBucketIfNotExists(bucket);
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(bucket)
             .WithObject(id.ToString())
@@ -46,5 +47,14 @@ public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorag
             .WithObject(location.Id.ToString());
 
         return minioClient.RemoveObjectAsync(removeObjectArgs, cancellationToken);
+    }
+
+    private async Task CreateBucketIfNotExists(string bucketName)
+    {
+        var found = await minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName));
+        if (!found)
+        {
+            await minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
+        }
     }
 }

@@ -26,6 +26,6 @@ public static class ContainerBuildExtensions
             .WithHttpEndpoint(name: MinioResource.HttpAdminEndpointName, port: minioAdminPort, targetPort: 9001)
             .WithEnvironment("MINIO_ROOT_USER", rootUser)
             .WithEnvironment("MINIO_ROOT_PASSWORD", rootPassword)
-            .WithArgs("server", "/data");
+            .WithArgs("server", config.Storage);
     }
 }
