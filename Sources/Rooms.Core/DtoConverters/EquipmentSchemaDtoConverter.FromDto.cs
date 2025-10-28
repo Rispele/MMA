@@ -8,10 +8,13 @@ public static partial class EquipmentSchemaDtoConverter
 {
     public static EquipmentSchema Convert(EquipmentSchemaDto entity)
     {
-        return new EquipmentSchema(
-            entity.Name,
-            entity.EquipmentType.Map(EquipmentTypeDtoConverter.Convert),
-            entity.ParameterValues,
-            entity.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)));
+        return new EquipmentSchema
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            EquipmentType = entity.EquipmentType.Map(EquipmentTypeDtoConverter.Convert),
+            ParameterValues = entity.ParameterValues,
+            Equipments = entity.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)).ToList(),
+        };
     }
 }

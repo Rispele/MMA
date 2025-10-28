@@ -1,5 +1,9 @@
-﻿namespace Application.Clients.Dtos.Requests.Filtering;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
+namespace Application.Clients.Dtos.Requests.Filtering;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum SortDirectionDto
 {
     None = 0,

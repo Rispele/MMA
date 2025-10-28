@@ -17,7 +17,7 @@ using Rooms.Persistence;
 namespace Rooms.Persistence.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    [Migration("20251024121510_Initial")]
+    [Migration("20251028001720_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -41,6 +41,8 @@ namespace Rooms.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Comment")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
@@ -56,6 +58,14 @@ namespace Rooms.Persistence.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("network_equipment_ip");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer")
+                        .HasColumnName("room_id");
+
+                    b.Property<int>("SchemaId")
+                        .HasColumnType("integer")
+                        .HasColumnName("schema_id");
+
                     b.Property<string>("SerialNumber")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
@@ -68,14 +78,33 @@ namespace Rooms.Persistence.Migrations
                     b.HasKey("Id")
                         .HasName("pk_equipments");
 
+                    b.HasIndex("RoomId")
+                        .HasDatabaseName("ix_equipments_room_id");
+
+                    b.HasIndex("SchemaId")
+                        .HasDatabaseName("ix_equipments_schema_id");
+
                     b.ToTable("equipments", (string)null);
                 });
 
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.EquipmentSchema", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EquipmentTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("equipment_type_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
 
                     b.Property<Dictionary<string, string>>("ParameterValues")
                         .IsRequired()
@@ -83,9 +112,12 @@ namespace Rooms.Persistence.Migrations
                         .HasColumnName("parameter_values");
 
                     b.HasKey("Id")
-                        .HasName("pk_equipment_schema");
+                        .HasName("pk_equipment_schemas");
 
-                    b.ToTable("equipment_schema", (string)null);
+                    b.HasIndex("EquipmentTypeId")
+                        .HasDatabaseName("ix_equipment_schemas_equipment_type_id");
+
+                    b.ToTable("equipment_schemas", (string)null);
                 });
 
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.EquipmentType", b =>
@@ -103,15 +135,15 @@ namespace Rooms.Persistence.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
-                    b.Property<EquipmentParameterDescriptor[]>("Parameters")
+                    b.Property<List<EquipmentParameterDescriptor>>("Parameters")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("parameters");
 
                     b.HasKey("Id")
-                        .HasName("pk_equipment_type");
+                        .HasName("pk_equipment_types");
 
-                    b.ToTable("equipment_type", (string)null);
+                    b.ToTable("equipment_types", (string)null);
                 });
 
             modelBuilder.Entity("Rooms.Domain.Models.Room.Room", b =>
@@ -156,19 +188,19 @@ namespace Rooms.Persistence.Migrations
 
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.Equipment", b =>
                 {
-                    b.HasOne("Rooms.Domain.Models.Equipment.EquipmentSchema", "Schema")
-                        .WithMany("Equipments")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_equipments_equipment_schema_id");
-
                     b.HasOne("Rooms.Domain.Models.Room.Room", "Room")
                         .WithMany("Equipments")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_equipments_rooms_id");
+                        .HasConstraintName("fk_equipments_rooms_room_id");
+
+                    b.HasOne("Rooms.Domain.Models.Equipment.EquipmentSchema", "Schema")
+                        .WithMany("Equipments")
+                        .HasForeignKey("SchemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_equipments_equipment_schemas_schema_id");
 
                     b.Navigation("Room");
 
@@ -177,14 +209,14 @@ namespace Rooms.Persistence.Migrations
 
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.EquipmentSchema", b =>
                 {
-                    b.HasOne("Rooms.Domain.Models.Equipment.EquipmentType", "Type")
+                    b.HasOne("Rooms.Domain.Models.Equipment.EquipmentType", "EquipmentType")
                         .WithMany("Schemas")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("EquipmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_equipment_schema_equipment_type_id");
+                        .HasConstraintName("fk_equipment_schemas_equipment_types_equipment_type_id");
 
-                    b.Navigation("Type");
+                    b.Navigation("EquipmentType");
                 });
 
             modelBuilder.Entity("Rooms.Domain.Models.Room.Room", b =>

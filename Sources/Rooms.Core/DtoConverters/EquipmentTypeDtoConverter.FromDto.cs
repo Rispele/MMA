@@ -8,10 +8,13 @@ public static partial class EquipmentTypeDtoConverter
 {
     public static EquipmentType Convert(EquipmentTypeDto type)
     {
-        return new EquipmentType(
-            type.Name,
-            type.Parameters.Select(x => x.Map(Convert)),
-            []);
+        return new EquipmentType
+        {
+            Id = type.Id,
+            Name = type.Name,
+            Parameters = type.Parameters.Select(x => x.Map(Convert)).ToList(),
+            Schemas = [],
+        };
     }
 
     public static EquipmentParameterDescriptor Convert(EquipmentParameterDescriptorDto dto)

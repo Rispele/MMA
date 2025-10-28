@@ -11,15 +11,18 @@ public static partial class RoomDtoConverter
 {
     public static Room Convert(RoomDto room)
     {
-        return new Room(
-            room.Name,
-            room.Description,
-            room.ScheduleAddress.Map(Convert),
-            room.Parameters.Map(Convert),
-            room.Attachments.Map(Convert),
-            room.Owner,
-            room.FixStatus.Map(Convert),
-            room.AllowBooking);
+        return new Room
+        {
+            Id = room.Id,
+            Name = room.Name,
+            Description = room.Description,
+            ScheduleAddress = room.ScheduleAddress.Map(Convert),
+            Parameters = room.Parameters.Map(Convert),
+            Attachments = room.Attachments.Map(Convert),
+            Owner = room.Owner,
+            FixInfo = room.FixStatus.Map(Convert),
+            AllowBooking = room.AllowBooking,
+        };
     }
 
     public static RoomType Convert(RoomTypeDto roomType)

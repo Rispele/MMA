@@ -11,5 +11,6 @@ public class EquipmentTypeEntityTypeConfiguration : IEntityTypeConfiguration<Equ
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
         builder.Property(x => x.Parameters).HasColumnType("jsonb");
+        builder.HasMany(x => x.Schemas).WithOne(x => x.EquipmentType).HasForeignKey(x => x.EquipmentTypeId);
     }
 }

@@ -1,5 +1,8 @@
-﻿namespace WebApi.Models.Room;
+﻿using System.Text.Json.Serialization;
 
+namespace WebApi.Models.Room;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomStatusModel
 {
     Unspecified = 0,

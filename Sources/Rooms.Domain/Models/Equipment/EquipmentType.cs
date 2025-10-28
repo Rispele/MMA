@@ -1,18 +1,15 @@
-﻿using JetBrains.Annotations;
-
-namespace Rooms.Domain.Models.Equipment;
+﻿namespace Rooms.Domain.Models.Equipment;
 
 public class EquipmentType
 {
-    [UsedImplicitly]
-    protected EquipmentType()
+    public EquipmentType()
     {
     }
 
     public EquipmentType(
         string name,
-        IEnumerable<EquipmentParameterDescriptor> parameters,
-        IEnumerable<EquipmentSchema> schemas)
+        List<EquipmentParameterDescriptor> parameters,
+        List<EquipmentSchema> schemas)
     {
         Name = name;
         Parameters = parameters;
@@ -20,22 +17,22 @@ public class EquipmentType
     }
 
     public int Id { get; set; }
-    public string Name { get; set; }
-    public IEnumerable<EquipmentParameterDescriptor> Parameters { get; set; }
-    public IEnumerable<EquipmentSchema> Schemas { get; set; }
+    public string Name { get; set; } = null!;
+    public List<EquipmentParameterDescriptor> Parameters { get; set; } = [];
+    public List<EquipmentSchema> Schemas { get; set; } = [];
 
     public static EquipmentType New(
         string name,
-        IEnumerable<EquipmentParameterDescriptor> parameters,
-        IEnumerable<EquipmentSchema> schemas)
+        List<EquipmentParameterDescriptor> parameters,
+        List<EquipmentSchema> schemas)
     {
         return new EquipmentType(name, parameters, schemas);
     }
 
     public void Update(
         string name,
-        IEnumerable<EquipmentParameterDescriptor> parameters,
-        IEnumerable<EquipmentSchema> schemas)
+        List<EquipmentParameterDescriptor> parameters,
+        List<EquipmentSchema> schemas)
     {
         Name = name;
         Parameters = parameters;

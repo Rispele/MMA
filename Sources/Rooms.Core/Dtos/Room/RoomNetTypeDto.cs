@@ -1,5 +1,8 @@
-﻿namespace Rooms.Core.Dtos.Room;
+﻿using System.Text.Json.Serialization;
 
+namespace Rooms.Core.Dtos.Room;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomNetTypeDto
 {
     Unspecified = 0,

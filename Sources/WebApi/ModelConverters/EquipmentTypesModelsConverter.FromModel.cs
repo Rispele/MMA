@@ -38,7 +38,11 @@ public static partial class EquipmentTypesModelsConverter
 
     public static PatchEquipmentTypeDto Convert(PatchEquipmentTypeModel patchModel)
     {
-        return new PatchEquipmentTypeDto();
+        return new PatchEquipmentTypeDto
+        {
+            Name = patchModel.Name,
+            Parameters = patchModel.Parameters.Select(x => x.Map(Convert)),
+        };
     }
 
     private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src,

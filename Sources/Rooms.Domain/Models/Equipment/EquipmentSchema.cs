@@ -1,11 +1,8 @@
-﻿using JetBrains.Annotations;
-
-namespace Rooms.Domain.Models.Equipment;
+﻿namespace Rooms.Domain.Models.Equipment;
 
 public class EquipmentSchema
 {
-    [UsedImplicitly]
-    protected EquipmentSchema()
+    public EquipmentSchema()
     {
     }
 
@@ -13,7 +10,7 @@ public class EquipmentSchema
         string name,
         EquipmentType equipmentType,
         Dictionary<string, string> parameterValues,
-        IEnumerable<Equipment> equipments)
+        List<Equipment> equipments)
     {
         Name = name;
         EquipmentType = equipmentType;
@@ -22,16 +19,17 @@ public class EquipmentSchema
     }
 
     public int Id { get; set; }
-    public string Name { get; set; }
-    public EquipmentType EquipmentType { get; set; } = default!;
-    public Dictionary<string, string> ParameterValues { get; set; } = default!;
-    public IEnumerable<Equipment> Equipments { get; set; }
+    public string Name { get; set; } = null!;
+    public int EquipmentTypeId { get; set; }
+    public EquipmentType EquipmentType { get; set; } = null!;
+    public Dictionary<string, string> ParameterValues { get; set; } = null!;
+    public List<Equipment> Equipments { get; set; } = [];
 
     public static EquipmentSchema New(
         string name,
         EquipmentType equipmentType,
         Dictionary<string, string> parameterValues,
-        IEnumerable<Equipment> equipments)
+        List<Equipment> equipments)
     {
         return new EquipmentSchema(name, equipmentType, parameterValues, equipments);
     }
@@ -40,7 +38,7 @@ public class EquipmentSchema
         string name,
         EquipmentType equipmentType,
         Dictionary<string, string> parameterValues,
-        IEnumerable<Equipment> equipments)
+        List<Equipment> equipments)
     {
         Name = name;
         EquipmentType = equipmentType;

@@ -1,4 +1,5 @@
 ﻿using Commons;
+using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
 using Rooms.Core.Dtos.Responses;
@@ -14,7 +15,7 @@ namespace Rooms.Core.Services.Implementations;
 public class EquipmentSchemaService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IEquipmentSchemaQueryFactory equipmentSchemaQueryFactory,
-    IRoomService roomService) : IEquipmentSchemaService
+    IEquipmentTypeService equipmentTypeService) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemaDto> GetEquipmentSchemaById(int equipmentSchemaId, CancellationToken cancellationToken)
     {
@@ -45,16 +46,20 @@ public class EquipmentSchemaService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var equipmentSchema = EquipmentSchema.New(
-            dto.Name,
-            null!,
-            dto.ParameterValues,
-            []);
+        var equipmentType = await equipmentTypeService.GetEquipmentTypeById(dto.EquipmentTypeId, cancellationToken);
+
+        var equipmentSchema = new EquipmentSchema
+        {
+            Name = dto.Name,
+            ParameterValues = dto.ParameterValues,
+            EquipmentTypeId = equipmentType.Id,
+        };
 
         context.Add(equipmentSchema);
 
         await context.Commit(cancellationToken);
 
+        equipmentSchema.EquipmentType = equipmentType.Map(EquipmentTypeDtoConverter.Convert);
         return EquipmentSchemaDtoConverter.Convert(equipmentSchema);
     }
 

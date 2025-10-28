@@ -39,7 +39,7 @@ public static partial class EquipmentsModelsConverter
         return new CreateEquipmentDto
         {
             RoomId = model.RoomId,
-            SchemaDto = model.SchemaModel.Map(EquipmentSchemasModelsConverter.Convert),
+            SchemaId = model.SchemaId,
             InventoryNumber = model.InventoryNumber,
             SerialNumber = model.SerialNumber,
             NetworkEquipmentIp = model.NetworkEquipmentIp,

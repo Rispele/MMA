@@ -1,5 +1,8 @@
-﻿namespace Rooms.Core.Dtos.Requests.Filtering;
+﻿using System.Text.Json.Serialization;
 
+namespace Rooms.Core.Dtos.Requests.Filtering;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum SortDirectionDto
 {
     None = 0,

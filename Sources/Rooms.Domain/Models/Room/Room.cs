@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Rooms.Domain.Models.Room.Fix;
+﻿using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
 
 // ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
@@ -8,8 +7,7 @@ namespace Rooms.Domain.Models.Room;
 
 public class Room
 {
-    [UsedImplicitly]
-    protected Room()
+    public Room()
     {
     }
 
@@ -33,16 +31,16 @@ public class Room
         AllowBooking = allowBooking;
     }
 
-    public int Id { get; [UsedImplicitly] private set; }
-    public string Name { get; private set; } = null!;
-    public string? Description { get; private set; }
-    public RoomScheduleAddress? ScheduleAddress { get; private set; }
-    public RoomParameters Parameters { get; private set; } = null!;
-    public RoomAttachments Attachments { get; private set; } = null!;
-    public string? Owner { get; private set; }
-    public RoomFixInfo FixInfo { get; private set; } = null!;
-    public bool AllowBooking { get; private set; }
-    public ICollection<Equipment.Equipment> Equipments { get; set; } = new List<Equipment.Equipment>();
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+    public RoomScheduleAddress? ScheduleAddress { get; set; }
+    public RoomParameters Parameters { get; set; } = null!;
+    public RoomAttachments Attachments { get; set; } = null!;
+    public string? Owner { get; set; }
+    public RoomFixInfo FixInfo { get; set; } = null!;
+    public bool AllowBooking { get; set; }
+    public List<Equipment.Equipment> Equipments { get; set; } = [];
 
     public static Room New(
         string name,

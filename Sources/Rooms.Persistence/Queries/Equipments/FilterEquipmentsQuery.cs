@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
+using Microsoft.EntityFrameworkCore;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Requests.Filtering;
@@ -20,7 +21,10 @@ public class FilterEquipmentsQuery :
 
     public IAsyncEnumerable<Equipment> Apply(RoomsDbContext source)
     {
-        IQueryable<Equipment> equipments = source.Equipments;
+        IQueryable<Equipment> equipments = source.Equipments
+            .Include(x => x.Room)
+            .Include(x => x.Schema)
+            .ThenInclude(x => x.EquipmentType);
 
         equipments = Filters(equipments);
         equipments = Sort(equipments);

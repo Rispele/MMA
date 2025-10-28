@@ -15,6 +15,10 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
 
     public DbSet<Equipment> Equipments { get; [UsedImplicitly] private set; }
 
+    public DbSet<EquipmentSchema> EquipmentSchemas { get; [UsedImplicitly] private set; }
+
+    public DbSet<EquipmentType> EquipmentTypes { get; [UsedImplicitly] private set; }
+
     public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(IQuerySpecification<TEntity> querySpecification)
     {
         if (querySpecification is not IQueryImplementer<TEntity, RoomsDbContext> implementer)

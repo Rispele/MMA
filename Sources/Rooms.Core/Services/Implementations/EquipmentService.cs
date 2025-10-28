@@ -16,7 +16,8 @@ namespace Rooms.Core.Services.Implementations;
 public class EquipmentService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IEquipmentQueryFactory equipmentQueryFactory,
-    IRoomService roomService) : IEquipmentService
+    IRoomService roomService,
+    IEquipmentSchemaService equipmentSchemaService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {
@@ -47,22 +48,27 @@ public class EquipmentService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var equipment = Equipment.New(
-            (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
-            dto.SchemaDto.Map(EquipmentSchemaDtoConverter.Convert),
-            dto.InventoryNumber,
-            dto.SerialNumber,
-            dto.NetworkEquipmentIp,
-            dto.Comment,
-            dto.Status);
+        var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
+        var schema = await equipmentSchemaService.GetEquipmentSchemaById(dto.SchemaId, cancellationToken);
+
+        var equipment = new Equipment
+        {
+            RoomId = room.Id,
+            SchemaId = schema.Id,
+            InventoryNumber = dto.InventoryNumber,
+            SerialNumber = dto.SerialNumber,
+            NetworkEquipmentIp = dto.NetworkEquipmentIp,
+            Comment = dto.Comment,
+            Status = dto.Status,
+        };
 
         context.Add(equipment);
 
         await context.Commit(cancellationToken);
 
-        await roomService.UpdateWithEquipment(dto.RoomId, equipment, cancellationToken);
-
-        return EquipmentDtoConverter.Convert(equipment);
+        equipment.Room = room.Map(RoomDtoConverter.Convert);
+        equipment.Schema = schema.Map(EquipmentSchemaDtoConverter.Convert);
+        return equipment.Map(EquipmentDtoConverter.Convert);
     }
 
     public async Task<EquipmentDto> PatchEquipment(

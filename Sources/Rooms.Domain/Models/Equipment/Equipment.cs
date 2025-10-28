@@ -1,11 +1,8 @@
-﻿using JetBrains.Annotations;
-
-namespace Rooms.Domain.Models.Equipment;
+﻿namespace Rooms.Domain.Models.Equipment;
 
 public class Equipment
 {
-    [UsedImplicitly]
-    protected Equipment()
+    public Equipment()
     {
     }
 
@@ -28,8 +25,10 @@ public class Equipment
     }
 
     public int Id { get; set; }
-    public Room.Room Room { get; set; } = default!;
-    public EquipmentSchema Schema { get; set; }
+    public int RoomId { get; set; }
+    public Room.Room Room { get; set; } = null!;
+    public int SchemaId { get; set; }
+    public EquipmentSchema Schema { get; set; } = null!;
     public string? InventoryNumber { get; set; }
     public string? SerialNumber { get; set; }
     public string? NetworkEquipmentIp { get; set; }

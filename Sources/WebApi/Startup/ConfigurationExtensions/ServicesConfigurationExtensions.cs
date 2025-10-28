@@ -10,10 +10,18 @@ using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
 using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
 using CoreEquipmentService = Rooms.Core.Services.Implementations.EquipmentService;
+using ICoreEquipmentTypeService = Rooms.Core.Services.Interfaces.IEquipmentTypeService;
+using CoreEquipmentTypeService = Rooms.Core.Services.Implementations.EquipmentTypeService;
+using ICoreEquipmentSchemaService = Rooms.Core.Services.Interfaces.IEquipmentSchemaService;
+using CoreEquipmentSchemaService = Rooms.Core.Services.Implementations.EquipmentSchemaService;
 using IRoomService = WebApi.Services.Interfaces.IRoomService;
 using RoomService = WebApi.Services.Implementations.RoomService;
 using IEquipmentService = WebApi.Services.Interfaces.IEquipmentService;
 using EquipmentService = WebApi.Services.Implementations.EquipmentService;
+using IEquipmentTypeService = WebApi.Services.Interfaces.IEquipmentTypeService;
+using EquipmentTypeService = WebApi.Services.Implementations.EquipmentTypeService;
+using IEquipmentSchemaService = WebApi.Services.Interfaces.IEquipmentSchemaService;
+using EquipmentSchemaService = WebApi.Services.Implementations.EquipmentSchemaService;
 
 
 namespace WebApi.Startup.ConfigurationExtensions;
@@ -45,15 +53,22 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory<RoomsDbContext>>()
             .AddScoped<IRoomQueriesFactory, RoomQueriesFactory>()
             .AddScoped<IEquipmentQueryFactory, EquipmentQueryFactory>()
+            .AddScoped<IEquipmentTypeQueryFactory, EquipmentTypeQueryFactory>()
+            .AddScoped<IEquipmentSchemaQueryFactory, EquipmentSchemaQueryFactory>()
 
             // Core
             .AddScoped<IRoomAttachmentsService, RoomAttachmentsService>()
             .AddScoped<ICoreRoomService, CoreRoomService>()
             .AddScoped<ICoreEquipmentService, CoreEquipmentService>()
+            .AddScoped<ICoreEquipmentTypeService, CoreEquipmentTypeService>()
+            .AddScoped<ICoreEquipmentSchemaService, CoreEquipmentSchemaService>()
 
             // WebApi
             .AddScoped<IRoomService, RoomService>()
-            .AddScoped<IEquipmentService, EquipmentService>();
+            .AddScoped<IEquipmentService, EquipmentService>()
+            .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
+            .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
+            ;
 
         return serviceCollection;
     }

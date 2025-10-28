@@ -1,5 +1,8 @@
-﻿namespace WebApi.Models.Requests.Filtering;
+﻿using System.Text.Json.Serialization;
 
+namespace WebApi.Models.Requests.Filtering;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum SortDirectionModel
 {
     None = 0,

@@ -45,6 +45,6 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
             });
         builder.Property(t => t.AllowBooking).IsRequired();
 
-        builder.HasMany(t => t.Equipments).WithOne(t => t.Room).HasForeignKey(t => t.Id);
+        builder.HasMany(t => t.Equipments).WithOne(t => t.Room).HasForeignKey(t => t.RoomId);
     }
 }

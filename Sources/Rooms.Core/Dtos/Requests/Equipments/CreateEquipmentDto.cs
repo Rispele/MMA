@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Rooms.Core.Dtos.Equipment;
 using Rooms.Domain.Models.Equipment;
 
 namespace Rooms.Core.Dtos.Requests.Equipments;
@@ -8,19 +7,19 @@ public record CreateEquipmentDto
 {
     [Required] public int RoomId { get; set; }
 
-    [Required] public EquipmentSchemaDto SchemaDto { get; set; }
+    [Required] public int SchemaId { get; set; }
 
     [Length(1, 256, ErrorMessage = "Длина инвентарного номера должна быть от 1 до 256 символов включительно")]
-    public string? InventoryNumber { get; set; } = default!;
+    public string? InventoryNumber { get; set; }
 
     [Length(1, 256, ErrorMessage = "Длина серийного номера должна быть от 1 до 256 символов включительно")]
-    public string? SerialNumber { get; set; } = default!;
+    public string? SerialNumber { get; set; }
 
     [Length(1, 256, ErrorMessage = "Длина ip-адреса должна быть от 1 до 256 символов включительно")]
-    public string? NetworkEquipmentIp { get; set; } = default!;
+    public string? NetworkEquipmentIp { get; set; }
 
     [Length(1, 256, ErrorMessage = "Длина комментария должна быть от 1 до 256 символов включительно")]
     public string? Comment { get; set; }
 
-    public EquipmentStatus? Status { get; set; } = default!;
+    public EquipmentStatus? Status { get; set; }
 }

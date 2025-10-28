@@ -24,17 +24,17 @@ namespace Rooms.Persistence.Migrations
                 .Annotation("Npgsql:Enum:room_type", "computer,mixed,multimedia,special,unspecified");
 
             migrationBuilder.CreateTable(
-                name: "equipment_type",
+                name: "equipment_types",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    parameters = table.Column<EquipmentParameterDescriptor[]>(type: "jsonb", nullable: false)
+                    parameters = table.Column<List<EquipmentParameterDescriptor>>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_equipment_type", x => x.id);
+                    table.PrimaryKey("pk_equipment_types", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,19 +66,22 @@ namespace Rooms.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "equipment_schema",
+                name: "equipment_schemas",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    equipment_type_id = table.Column<int>(type: "integer", nullable: false),
                     parameter_values = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_equipment_schema", x => x.id);
+                    table.PrimaryKey("pk_equipment_schemas", x => x.id);
                     table.ForeignKey(
-                        name: "fk_equipment_schema_equipment_type_id",
-                        column: x => x.id,
-                        principalTable: "equipment_type",
+                        name: "fk_equipment_schemas_equipment_types_equipment_type_id",
+                        column: x => x.equipment_type_id,
+                        principalTable: "equipment_types",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -87,7 +90,10 @@ namespace Rooms.Persistence.Migrations
                 name: "equipments",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    room_id = table.Column<int>(type: "integer", nullable: false),
+                    schema_id = table.Column<int>(type: "integer", nullable: false),
                     inventory_number = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     serial_number = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     network_equipment_ip = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -98,18 +104,33 @@ namespace Rooms.Persistence.Migrations
                 {
                     table.PrimaryKey("pk_equipments", x => x.id);
                     table.ForeignKey(
-                        name: "fk_equipments_equipment_schema_id",
-                        column: x => x.id,
-                        principalTable: "equipment_schema",
+                        name: "fk_equipments_equipment_schemas_schema_id",
+                        column: x => x.schema_id,
+                        principalTable: "equipment_schemas",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_equipments_rooms_id",
-                        column: x => x.id,
+                        name: "fk_equipments_rooms_room_id",
+                        column: x => x.room_id,
                         principalTable: "rooms",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_equipment_schemas_equipment_type_id",
+                table: "equipment_schemas",
+                column: "equipment_type_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_equipments_room_id",
+                table: "equipments",
+                column: "room_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_equipments_schema_id",
+                table: "equipments",
+                column: "schema_id");
         }
 
         /// <inheritdoc />
@@ -119,13 +140,13 @@ namespace Rooms.Persistence.Migrations
                 name: "equipments");
 
             migrationBuilder.DropTable(
-                name: "equipment_schema");
+                name: "equipment_schemas");
 
             migrationBuilder.DropTable(
                 name: "rooms");
 
             migrationBuilder.DropTable(
-                name: "equipment_type");
+                name: "equipment_types");
         }
     }
 }

@@ -45,10 +45,11 @@ public class EquipmentTypeService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var equipmentType = EquipmentType.New(
-            dto.Name,
-            dto.Parameters.Select(x => x.Map(EquipmentTypeDtoConverter.Convert)),
-            []);;
+        var equipmentType = new EquipmentType
+        {
+            Name = dto.Name,
+            Parameters = dto.Parameters.Select(x => x.Map(EquipmentTypeDtoConverter.Convert)).ToList(),
+        };
 
         context.Add(equipmentType);
 
@@ -68,7 +69,7 @@ public class EquipmentTypeService(
 
         equipmentTypeToPatch.Update(
             dto.Name,
-            dto.Parameters.Select(x => x.Map(EquipmentTypeDtoConverter.Convert)),
+            dto.Parameters.Select(x => x.Map(EquipmentTypeDtoConverter.Convert)).ToList(),
             []);
 
         await context.Commit(cancellationToken);
