@@ -37,7 +37,7 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         CancellationToken cancellationToken)
     {
         var created = await equipmentSchemaService.CreateEquipmentSchemaAsync(model, cancellationToken);
-        return CreatedAtAction(nameof(GetEquipmentSchemaById), new { equipmentId = created.Id }, created);
+        return Ok(created);
     }
 
     [HttpPatch("{equipmentSchemaId:int}")]

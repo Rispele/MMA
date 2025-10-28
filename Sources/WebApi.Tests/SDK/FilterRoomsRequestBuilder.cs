@@ -28,7 +28,7 @@ public class FilterRoomsRequestBuilder
         var builder = new RoomsFilterBuilder();
 
         action(builder);
-            
+
         filter = builder.Build();
 
         return this;
@@ -38,6 +38,6 @@ public class FilterRoomsRequestBuilder
     {
         return new GetRoomsRequestDto(batchNumber, batchSize, afterRoomId, filter);
     }
-    
+
     public static implicit operator GetRoomsRequestDto(FilterRoomsRequestBuilder builder) => builder.Build();
 }

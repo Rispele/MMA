@@ -34,8 +34,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
         var created = await roomService.CreateRoom(model, cancellationToken);
-
-        return CreatedAtAction(nameof(GetRoomById), new { roomId = created.Id }, created);
+        return Ok(created);
     }
 
     [HttpPatch("{roomId:int}")]

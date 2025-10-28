@@ -37,7 +37,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         CancellationToken cancellationToken)
     {
         var created = await equipmentService.CreateEquipmentAsync(model, cancellationToken);
-        return CreatedAtAction(nameof(GetEquipmentById), new { equipmentId = created.Id }, created);
+        return Ok(created);
     }
 
     [HttpPatch("{equipmentId:int}")]

@@ -14,5 +14,5 @@ public record RoomModel
     public RoomOperatorDepartmentModel? OperatorDepartment { get; init; }
     public required RoomFixStatusModel FixStatus { get; init; }
     public bool AllowBooking { get; init; }
-    public IEnumerable<EquipmentModel> Equipments { get; init; } = default!;
+    public IEnumerable<EquipmentModel> Equipments { get; init; } = [];
 }

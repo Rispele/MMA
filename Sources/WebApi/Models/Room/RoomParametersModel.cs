@@ -1,9 +1,11 @@
 ﻿namespace WebApi.Models.Room;
 
-public record RoomParametersModel(
-    RoomTypeModel Type,
-    RoomLayoutModel Layout,
-    RoomNetTypeModel NetType,
-    int? Seats,
-    int? ComputerSeats,
-    bool? HasConditioning);
+public record RoomParametersModel
+{
+    public required RoomTypeModel Type { get; init; }
+    public required RoomLayoutModel Layout { get; init; }
+    public required RoomNetTypeModel NetType { get; init; }
+    public int? Seats { get; init; }
+    public int? ComputerSeats { get; init; }
+    public bool? HasConditioning { get; init; }
+}

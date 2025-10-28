@@ -20,18 +20,18 @@ public class PatchRoomRequestBuilder
     private bool allowBooking;
 
     private PatchRoomRequestBuilder(
-        string name, 
+        string name,
         string? description,
         RoomTypeDto type,
-        RoomLayoutDto layout, 
-        int? seats, 
-        int? computerSeats, 
-        RoomNetTypeDto netType, 
-        bool? hasConditioning, 
-        string? owner, 
+        RoomLayoutDto layout,
+        int? seats,
+        int? computerSeats,
+        RoomNetTypeDto netType,
+        bool? hasConditioning,
+        string? owner,
         RoomStatusDto roomStatus,
-        string? comment, 
-        DateTime? fixDeadline, 
+        string? comment,
+        DateTime? fixDeadline,
         bool allowBooking)
     {
         this.name = name;
@@ -72,7 +72,7 @@ public class PatchRoomRequestBuilder
         name = nameToSet;
         return this;
     }
-    
+
     public PatchRoomRequestBuilder Description(string descriptionToSet)
     {
         description = descriptionToSet;

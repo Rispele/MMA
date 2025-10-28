@@ -23,7 +23,7 @@ public class RoomsSdk(IRoomService roomService)
         var room = await GetRoom(roomId, cancellationToken);
 
         var request = PatchRoomRequestBuilder.Create(room);
-        
+
         builder(request);
 
         return await roomService.PatchRoom(roomId, request, cancellationToken);

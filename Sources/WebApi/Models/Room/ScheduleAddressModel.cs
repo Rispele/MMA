@@ -1,3 +1,7 @@
 ﻿namespace WebApi.Models.Room;
 
-public record ScheduleAddressModel(string RoomNumber, string Address);
+public record ScheduleAddressModel
+{
+    public required string RoomNumber { get; init; }
+    public required string Address { get; init; }
+}
