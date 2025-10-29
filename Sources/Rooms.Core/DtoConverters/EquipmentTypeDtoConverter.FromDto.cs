@@ -13,7 +13,7 @@ public static partial class EquipmentTypeDtoConverter
             Id = type.Id,
             Name = type.Name,
             Parameters = type.Parameters.Select(x => x.Map(Convert)).ToList(),
-            Schemas = [],
+            Schemas = []
         };
     }
 

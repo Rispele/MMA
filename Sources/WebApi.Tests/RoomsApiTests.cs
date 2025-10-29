@@ -14,8 +14,11 @@ namespace WebApi.Tests;
 
 public class RoomsApiTests : ContainerTestBase
 {
-    [Inject] private readonly RoomsSdk roomsSdk = null!;
-    [Inject] private readonly IRoomService roomService = null!;
+    [Inject]
+    private readonly IRoomService roomService = null!;
+
+    [Inject]
+    private readonly RoomsSdk roomsSdk = null!;
 
     [Test]
     public async Task CreateRoom_ShouldBeCreated()
@@ -36,7 +39,7 @@ public class RoomsApiTests : ContainerTestBase
 
         var created = await roomsSdk.CreateRoom(
             roomName,
-            b => b.Comment("comment"));
+            builder: b => b.Comment("comment"));
         var found = await roomService.GetRoomByIdAsync(created.Id, CancellationToken.None);
 
         created.Should().BeEquivalentTo(found);
@@ -45,7 +48,7 @@ public class RoomsApiTests : ContainerTestBase
     [Test]
     public async Task GetRoom_ById_ForNotExistent_ShouldThrow()
     {
-        var action = () => roomService.GetRoomByIdAsync(-10, CancellationToken.None);
+        var action = () => roomService.GetRoomByIdAsync(id: -10, CancellationToken.None);
 
         await action.Should().ThrowAsync<RoomNotFoundException>();
     }
@@ -60,9 +63,9 @@ public class RoomsApiTests : ContainerTestBase
         var room2Name = Guid.NewGuid().ToString();
         var room3Name = Guid.NewGuid().ToString();
 
-        var room1 = await roomsSdk.CreateRoom(room1Name, builder: createRoomOfParameter1);
-        var room2 = await roomsSdk.CreateRoom(room2Name, builder: createRoomOfParameter1);
-        var room3 = await roomsSdk.CreateRoom(room3Name, builder: createRoomOfParameter2);
+        var room1 = await roomsSdk.CreateRoom(room1Name, createRoomOfParameter1);
+        var room2 = await roomsSdk.CreateRoom(room2Name, createRoomOfParameter1);
+        var room3 = await roomsSdk.CreateRoom(room3Name, createRoomOfParameter2);
 
         var response = await roomService.GetRoomsAsync(roomsRequest, CancellationToken.None);
 
@@ -103,7 +106,7 @@ public class RoomsApiTests : ContainerTestBase
         var (result, _) = await roomService.PatchRoomAsync(
             created.Id,
             patchRoom,
-            _ => true,
+            validate: _ => true,
             CancellationToken.None);
         var found = await roomsSdk.GetRoom(created.Id);
 
@@ -189,7 +192,7 @@ public class RoomsApiTests : ContainerTestBase
         var name = Guid.NewGuid().ToString();
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(_ => { }),
-                new JsonPatchDocument<PatchRoomModel>().Replace(t => t.Name, name),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Name, name),
                 (Action<RoomDto>)(t => t.Name.Should().Be(name)))
             .SetName("Name");
 
@@ -198,31 +201,31 @@ public class RoomsApiTests : ContainerTestBase
         var comment12 = Guid.NewGuid().ToString();
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment11)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(t => t.Comment, comment12),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Comment, comment12),
                 (Action<RoomDto>)(t => t.FixStatus.Comment.Should().Be(comment12)))
             .SetName("FixStatus.Comment");
 
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.NotReady)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(t => t.RoomStatus, RoomStatusModel.Ready),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.RoomStatus, RoomStatusModel.Ready),
                 (Action<RoomDto>)(b => b.FixStatus.Status.Should().Be(RoomStatusDto.Ready)))
             .SetName("FixStatus.Status");
 
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Computer)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(t => t.Type, RoomTypeModel.Multimedia),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Type, RoomTypeModel.Multimedia),
                 (Action<RoomDto>)(b => b.Parameters.Type.Should().Be(RoomTypeDto.Multimedia)))
             .SetName("Parameters.Type");
 
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wired)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(t => t.NetType, RoomNetTypeModel.Wireless),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.NetType, RoomNetTypeModel.Wireless),
                 (Action<RoomDto>)(b => b.Parameters.NetType.Should().Be(RoomNetTypeDto.Wireless)))
             .SetName("Parameters.NetType");
 
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(t => t.Layout, RoomLayoutModel.Flat),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Layout, RoomLayoutModel.Flat),
                 (Action<RoomDto>)(b => b.Parameters.Layout.Should().Be(RoomLayoutDto.Flat)))
             .SetName("Parameters.Layout");
     }

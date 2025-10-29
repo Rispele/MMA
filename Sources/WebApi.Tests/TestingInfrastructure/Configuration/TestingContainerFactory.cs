@@ -14,7 +14,7 @@ public class TestingContainerFactory
     {
         serviceCollection.ConfigurePostgresDbContext<RoomsDbContext>(
             roomsDbContextConnectionString,
-            builder => builder.ConfigureNpgsqlRoomsDbContextOptions());
+            npgsqlOptionsAction: builder => builder.ConfigureNpgsqlRoomsDbContextOptions());
 
         return this;
     }

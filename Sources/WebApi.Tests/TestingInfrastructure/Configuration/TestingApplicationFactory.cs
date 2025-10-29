@@ -4,10 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Projects;
 
 namespace WebApi.Tests.TestingInfrastructure.Configuration;
 
-public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(Projects.Sources_AppHost))
+public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(Sources_AppHost))
 {
     public DistributedApplication Application { get; private set; } = null!;
 
@@ -24,9 +25,9 @@ public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(
     {
         applicationBuilder.Services.AddLogging(logging => logging
             .AddConsole()
-            .AddFilter("Default", LogLevel.Information)
-            .AddFilter("Microsoft.AspNetCore", LogLevel.Warning)
-            .AddFilter("Aspire.Hosting.Dcp", LogLevel.Warning));
+            .AddFilter(category: "Default", LogLevel.Information)
+            .AddFilter(category: "Microsoft.AspNetCore", LogLevel.Warning)
+            .AddFilter(category: "Aspire.Hosting.Dcp", LogLevel.Warning));
 
         base.OnBuilding(applicationBuilder);
     }

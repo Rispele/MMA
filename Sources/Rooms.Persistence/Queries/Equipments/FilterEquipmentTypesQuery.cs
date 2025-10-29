@@ -31,12 +31,15 @@ public class FilterEquipmentTypesQuery :
     private IQueryable<EquipmentType> Filters(
         IQueryable<EquipmentType> equipmentTypes)
     {
-        if (Filter is null) return equipmentTypes;
+        if (Filter is null)
+        {
+            return equipmentTypes;
+        }
 
         equipmentTypes = Filter.Name
             .AsOptional()
             .Apply(equipmentTypes,
-                (queryable, parameter) => { return queryable.Where(t => t.Name != null! && t.Name.Contains(parameter.Value)); });
+                apply: (queryable, parameter) => { return queryable.Where(t => t.Name != null! && t.Name.Contains(parameter.Value)); });
 
         return equipmentTypes;
     }
@@ -44,16 +47,22 @@ public class FilterEquipmentTypesQuery :
     private IQueryable<EquipmentType> Sort(
         IQueryable<EquipmentType> equipmentTypes)
     {
-        if (Filter is null) return equipmentTypes;
+        if (Filter is null)
+        {
+            return equipmentTypes;
+        }
 
         (SortDirectionDto? direction, Expression<Func<EquipmentType, object>> parameter)[]
             sorts =
             [
-                BuildSort(Filter.Name?.SortDirection, t => t.Name),
+                BuildSort(Filter.Name?.SortDirection, parameter: t => t.Name)
             ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
-        if (sortsToApply.Length == 0) return equipmentTypes;
+        if (sortsToApply.Length == 0)
+        {
+            return equipmentTypes;
+        }
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
@@ -64,17 +73,20 @@ public class FilterEquipmentTypesQuery :
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
+        {
             orderedQueryable = direction switch
             {
                 SortDirectionDto.Ascending => orderedQueryable.ThenBy(parameter),
                 SortDirectionDto.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }
 
         return orderedQueryable;
 
         (SortDirectionDto? direction, Expression<Func<EquipmentType, object>>) BuildSort(
-            SortDirectionDto? direction, Expression<Func<EquipmentType, object>> parameter)
+            SortDirectionDto? direction,
+            Expression<Func<EquipmentType, object>> parameter)
         {
             return (direction, parameter);
         }

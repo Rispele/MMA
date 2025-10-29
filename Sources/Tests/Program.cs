@@ -9,8 +9,8 @@ namespace Tests;
 
 public class Program
 {
-    private readonly WebApiHttpClient _httpClient = new(new HttpClient(), BaseUrl);
     private const string BaseUrl = "http://localhost:5049";
+    private readonly WebApiHttpClient _httpClient = new(new HttpClient(), BaseUrl);
 
     [SetUp]
     public void Setup()
@@ -41,7 +41,7 @@ public class Program
         var actualType = await _httpClient.CreateEquipmentType(inputType);
 
         // Assert
-        actualType.Should().BeEquivalentTo(expectedType, opt => opt.Excluding(x => x.Id));
+        actualType.Should().BeEquivalentTo(expectedType, config: opt => opt.Excluding(x => x.Id));
     }
 
     [Test]
@@ -59,21 +59,21 @@ public class Program
         {
             Name = "Первое оборудование",
             EquipmentTypeId = actualType.Id,
-            ParameterValues = new Dictionary<string, string>() { { "Разрешение", "1920x1080" } },
+            ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } },
             EquipmentIds = []
         };
         var expectedSchema = new EquipmentSchemaModel
         {
             EquipmentTypeId = actualType.Id,
             Name = "Первое оборудование",
-            ParameterValues = new Dictionary<string, string>() { { "Разрешение", "1920x1080" } },
+            ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } }
         };
 
         // Act
         var actualSchema = await _httpClient.CreateEquipmentSchema(inputSchema);
 
         // Assert
-        actualSchema.Should().BeEquivalentTo(expectedSchema, opt => opt.Excluding(x => x.Id));
+        actualSchema.Should().BeEquivalentTo(expectedSchema, config: opt => opt.Excluding(x => x.Id));
     }
 
     [Test]
@@ -96,7 +96,7 @@ public class Program
             RoomStatus = RoomStatusModel.Ready,
             Comment = null,
             FixDeadline = null,
-            AllowBooking = true,
+            AllowBooking = true
         };
         var expectedRoom = new RoomModel
         {
@@ -117,18 +117,18 @@ public class Program
                 ComputerSeats = 10,
                 HasConditioning = true
             },
-            Attachments = new RoomAttachmentsModel(null, null),
+            Attachments = new RoomAttachmentsModel(PdfRoomScheme: null, Photo: null),
             Owner = null,
             OperatorDepartment = null,
-            FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, null, null),
+            FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, FixDeadline: null, Comment: null),
             AllowBooking = true,
-            Equipments = [],
+            Equipments = []
         };
 
         // Act
         var actualRoom = await _httpClient.CreateRoom(inputRoom);
 
         // Assert
-        actualRoom.Should().BeEquivalentTo(expectedRoom, opt => opt.Excluding(x => x.Id));
+        actualRoom.Should().BeEquivalentTo(expectedRoom, config: opt => opt.Excluding(x => x.Id));
     }
 }

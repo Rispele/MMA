@@ -17,8 +17,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Commons\Commons.csproj"/>
-        <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj" />
-        <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj" />
+        <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
+        <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

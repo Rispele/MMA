@@ -10,6 +10,9 @@ public interface IEquipmentSchemaService
     Task<EquipmentSchemaModel> GetEquipmentSchemaByIdAsync(int id, CancellationToken cancellationToken);
     Task<EquipmentSchemaModel> CreateEquipmentSchemaAsync(CreateEquipmentSchemaModel model, CancellationToken cancellationToken);
     Task<PatchEquipmentSchemaModel> GetEquipmentSchemaPatchModel(int equipmentSchemaId, CancellationToken cancellationToken);
-    Task<EquipmentSchemaModel> PatchEquipmentSchemaAsync(int equipmentSchemaId, PatchEquipmentSchemaModel request,
+
+    Task<EquipmentSchemaModel> PatchEquipmentSchemaAsync(
+        int equipmentSchemaId,
+        PatchEquipmentSchemaModel request,
         CancellationToken cancellationToken);
 }

@@ -11,13 +11,13 @@ serviceCollection.AddOptions();
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile(
-        "Config/MinioContainerConfig.json",
-        false,
-        true)
+        path: "Config/MinioContainerConfig.json",
+        optional: false,
+        reloadOnChange: true)
     .AddJsonFile(
-        "Config/TestDoubleLkUserApiConfig.json",
-        false,
-        true)
+        path: "Config/TestDoubleLkUserApiConfig.json",
+        optional: false,
+        reloadOnChange: true)
     .Build();
 
 var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);

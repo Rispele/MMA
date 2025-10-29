@@ -13,7 +13,7 @@ public class Worker(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        using var activity = ActivitySource.StartActivity("Migrating database", ActivityKind.Client);
+        using var activity = ActivitySource.StartActivity(name: "Migrating database", ActivityKind.Client);
 
         try
         {

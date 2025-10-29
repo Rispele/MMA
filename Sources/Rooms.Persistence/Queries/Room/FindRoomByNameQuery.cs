@@ -12,6 +12,6 @@ public class FindRoomByNameQuery :
 
     public Task<Domain.Models.Room.Room?> Apply(RoomsDbContext source, CancellationToken cancellationToken)
     {
-        return source.Rooms.FirstOrDefaultAsync(t => t.Name == Name, cancellationToken);
+        return source.Rooms.FirstOrDefaultAsync(predicate: t => t.Name == Name, cancellationToken);
     }
 }

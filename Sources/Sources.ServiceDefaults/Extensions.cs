@@ -60,17 +60,14 @@ public static class Extensions
             builder.Services.AddHealthChecks().AddDbContextCheck<TContext>();
         }
 
-        builder.Services.AddOpenTelemetry().WithTracing(tracerProviderBuilder =>
-        {
-            tracerProviderBuilder.AddNpgsql();
-        });
+        builder.Services.AddOpenTelemetry().WithTracing(tracerProviderBuilder => { tracerProviderBuilder.AddNpgsql(); });
 
         double[] secondsBuckets = [0, 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10];
         builder.Services.AddOpenTelemetry().WithMetrics(meterProviderBuilder => meterProviderBuilder
             .AddMeter("Npgsql")
-            .AddView("db.client.commands.duration",
+            .AddView(instrumentName: "db.client.commands.duration",
                 new ExplicitBucketHistogramConfiguration { Boundaries = secondsBuckets })
-            .AddView("db.client.connections.create_time",
+            .AddView(instrumentName: "db.client.connections.create_time",
                 new ExplicitBucketHistogramConfiguration { Boundaries = secondsBuckets }));
     }
 
@@ -141,7 +138,10 @@ public static class Extensions
     {
         var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-        if (useOtlpExporter) builder.Services.AddOpenTelemetry().UseOtlpExporter();
+        if (useOtlpExporter)
+        {
+            builder.Services.AddOpenTelemetry().UseOtlpExporter();
+        }
 
         // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
         //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
@@ -157,7 +157,7 @@ public static class Extensions
         where TBuilder : IHostApplicationBuilder
     {
         // Add a default liveness check to ensure app is responsive
-        builder.Services.AddHealthChecks().AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
+        builder.Services.AddHealthChecks().AddCheck(name: "self", check: () => HealthCheckResult.Healthy(), ["live"]);
 
         return builder;
     }

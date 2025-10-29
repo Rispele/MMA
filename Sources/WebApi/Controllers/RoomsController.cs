@@ -48,7 +48,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         {
             var errorMessage = ModelState.Values
                 .SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-            throw new BadHttpRequestException(string.Join("; ", errorMessage));
+            throw new BadHttpRequestException(string.Join(separator: "; ", errorMessage));
         }
 
         var (model, isOk) = await roomService.PatchRoomAsync(roomId, patch, TryValidateModel, cancellationToken);

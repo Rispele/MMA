@@ -134,6 +134,9 @@ public class RoomService(
         var query = queriesFactory.FindByName(dto.Name);
         var room = await unitOfWork.ApplyQuery(query, cancellationToken);
 
-        if (room is not null) throw new RoomAlreadyCreatedException($"Room with name [{dto.Name}] already exists");
+        if (room is not null)
+        {
+            throw new RoomAlreadyCreatedException($"Room with name [{dto.Name}] already exists");
+        }
     }
 }

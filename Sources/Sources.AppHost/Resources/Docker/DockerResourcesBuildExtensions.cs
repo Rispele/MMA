@@ -7,6 +7,28 @@ namespace Sources.AppHost.Resources.Docker;
 
 public static class DockerResourcesBuildExtensions
 {
+    #region Postgres
+
+    public static IResourceBuilder<PostgresDatabaseResource> AddPostgresResource(
+        this IDistributedApplicationBuilder distributedApplicationBuilder,
+        ResourceSpecification postgresSpecification,
+        ResourceSpecification dbSpecification)
+    {
+        var postgresUserName = distributedApplicationBuilder.AddParameter(name: "PostgresUserName", secret: true);
+        var postgresPassword = distributedApplicationBuilder.AddParameter(name: "PostgresUserPassword", secret: true);
+
+        var postgresService1 = distributedApplicationBuilder
+            .AddPostgres(
+                postgresSpecification.Name,
+                postgresUserName,
+                postgresPassword,
+                postgresSpecification.GetHttpEndpoint().TargetPort)
+            .AddDatabase(dbSpecification.Name);
+        return postgresService1;
+    }
+
+    #endregion
+
     #region Minio
 
     public static MinioResourceParameters AddMinio(
@@ -14,8 +36,8 @@ public static class DockerResourcesBuildExtensions
         ResourceSpecification specification,
         IConfigurationRoot configurationRoot)
     {
-        var user = distributedApplicationBuilder.AddParameter("MinioRootUser", true);
-        var password = distributedApplicationBuilder.AddParameter("MinioRootUserPassword", true);
+        var user = distributedApplicationBuilder.AddParameter(name: "MinioRootUser", secret: true);
+        var password = distributedApplicationBuilder.AddParameter(name: "MinioRootUserPassword", secret: true);
         var config = configurationRoot
                          .GetSection("MinioContainerConfiguration")
                          .Get<MinioContainerConfiguration>()
@@ -40,9 +62,9 @@ public static class DockerResourcesBuildExtensions
             .WithImage(config.Image)
             .WithImageRegistry(config.Registry)
             .WithImageTag(config.Tag)
-            .WithEnvironment("MINIO_ADDRESS", ":9000")
-            .WithEnvironment("MINIO_CONSOLE_ADDRESS", ":9001")
-            .WithEnvironment("MINIO_PROMETHEUS_AUTH_TYPE", "public")
+            .WithEnvironment(name: "MINIO_ADDRESS", value: ":9000")
+            .WithEnvironment(name: "MINIO_CONSOLE_ADDRESS", value: ":9001")
+            .WithEnvironment(name: "MINIO_PROMETHEUS_AUTH_TYPE", value: "public")
             .WithHttpEndpoint(
                 name: KnownEndpoints.Http,
                 port: minioPort,
@@ -51,8 +73,8 @@ public static class DockerResourcesBuildExtensions
                 name: KnownEndpoints.Admin,
                 port: minioAdminPort,
                 targetPort: specification.GetAdminEndpoint().TargetPort)
-            .WithEnvironment("MINIO_ROOT_USER", rootUser)
-            .WithEnvironment("MINIO_ROOT_PASSWORD", rootPassword)
+            .WithEnvironment(name: "MINIO_ROOT_USER", rootUser)
+            .WithEnvironment(name: "MINIO_ROOT_PASSWORD", rootPassword)
             .WithArgs("server", config.Storage);
     }
 
@@ -65,8 +87,8 @@ public static class DockerResourcesBuildExtensions
         ResourceSpecification specification,
         IConfigurationRoot configurationRoot)
     {
-        var user = distributedApplicationBuilder.AddParameter("TestDoubleLkUserApiUser", true);
-        var password = distributedApplicationBuilder.AddParameter("TestDoubleLkUserApiUserPassword", true);
+        var user = distributedApplicationBuilder.AddParameter(name: "TestDoubleLkUserApiUser", secret: true);
+        var password = distributedApplicationBuilder.AddParameter(name: "TestDoubleLkUserApiUserPassword", secret: true);
         var config = configurationRoot
                          .GetSection("TestDoubleLkUserApiConfig")
                          .Get<TestDoubleLkUserApiContainerConfiguration>()
@@ -94,30 +116,8 @@ public static class DockerResourcesBuildExtensions
                 name: KnownEndpoints.Http,
                 port: port,
                 targetPort: specification.GetHttpEndpoint().TargetPort)
-            .WithEnvironment("AUTH_BASIC_LOGIN", login)
-            .WithEnvironment("AUTH_BASIC_PASSWORD", password);
-    }
-
-    #endregion
-
-    #region Postgres
-
-    public static IResourceBuilder<PostgresDatabaseResource> AddPostgresResource(
-        this IDistributedApplicationBuilder distributedApplicationBuilder,
-        ResourceSpecification postgresSpecification,
-        ResourceSpecification dbSpecification)
-    {
-        var postgresUserName = distributedApplicationBuilder.AddParameter("PostgresUserName", true);
-        var postgresPassword = distributedApplicationBuilder.AddParameter("PostgresUserPassword", true);
-
-        var postgresService1 = distributedApplicationBuilder
-            .AddPostgres(
-                postgresSpecification.Name,
-                postgresUserName,
-                postgresPassword,
-                postgresSpecification.GetHttpEndpoint().TargetPort)
-            .AddDatabase(dbSpecification.Name);
-        return postgresService1;
+            .WithEnvironment(name: "AUTH_BASIC_LOGIN", login)
+            .WithEnvironment(name: "AUTH_BASIC_PASSWORD", password);
     }
 
     #endregion

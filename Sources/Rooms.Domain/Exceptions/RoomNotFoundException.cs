@@ -1,3 +1,3 @@
 ﻿namespace Rooms.Domain.Exceptions;
 
-public class RoomNotFoundException(string message) : DomainException(404, "RoomNotFound", message);
+public class RoomNotFoundException(string message) : DomainException(code: 404, errorCode: "RoomNotFound", message);

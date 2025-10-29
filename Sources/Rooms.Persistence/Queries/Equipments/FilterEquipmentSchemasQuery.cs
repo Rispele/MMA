@@ -32,24 +32,27 @@ public class FilterEquipmentSchemasQuery :
     private IQueryable<EquipmentSchema> Filters(
         IQueryable<EquipmentSchema> equipmentSchemas)
     {
-        if (Filter is null) return equipmentSchemas;
+        if (Filter is null)
+        {
+            return equipmentSchemas;
+        }
 
         equipmentSchemas = Filter.Name
             .AsOptional()
             .Apply(equipmentSchemas,
-                (queryable, parameter) => queryable.Where(t =>
+                apply: (queryable, parameter) => queryable.Where(t =>
                     t.Name != null! && t.Name.Contains(parameter.Value)));
 
         equipmentSchemas = Filter.EquipmentTypeName
             .AsOptional()
             .Apply(equipmentSchemas,
-                (queryable, parameter) => queryable.Where(t =>
+                apply: (queryable, parameter) => queryable.Where(t =>
                     t.EquipmentType != null! && t.EquipmentType.ToString()!.Contains(parameter.Value)));
 
         equipmentSchemas = Filter.EquipmentParameters
             .AsOptional()
             .Apply(equipmentSchemas,
-                (queryable, parameter) => queryable.Where(t =>
+                apply: (queryable, parameter) => queryable.Where(t =>
                     t.ParameterValues != null! && t.ParameterValues.Keys.Any(x => x.Contains(parameter.Value))));
 
         return equipmentSchemas;
@@ -58,18 +61,24 @@ public class FilterEquipmentSchemasQuery :
     private IQueryable<EquipmentSchema> Sort(
         IQueryable<EquipmentSchema> equipmentSchemas)
     {
-        if (Filter is null) return equipmentSchemas;
+        if (Filter is null)
+        {
+            return equipmentSchemas;
+        }
 
         (SortDirectionDto? direction, Expression<Func<EquipmentSchema, object>> parameter)[]
             sorts =
             [
-                BuildSort(Filter.Name?.SortDirection, t => t.Name),
-                BuildSort(Filter.EquipmentTypeName?.SortDirection, t => t.Name),
-                BuildSort(Filter.EquipmentParameters?.SortDirection, t => t.Name),
+                BuildSort(Filter.Name?.SortDirection, parameter: t => t.Name),
+                BuildSort(Filter.EquipmentTypeName?.SortDirection, parameter: t => t.Name),
+                BuildSort(Filter.EquipmentParameters?.SortDirection, parameter: t => t.Name)
             ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
-        if (sortsToApply.Length == 0) return equipmentSchemas;
+        if (sortsToApply.Length == 0)
+        {
+            return equipmentSchemas;
+        }
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
@@ -80,17 +89,20 @@ public class FilterEquipmentSchemasQuery :
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
+        {
             orderedQueryable = direction switch
             {
                 SortDirectionDto.Ascending => orderedQueryable.ThenBy(parameter),
                 SortDirectionDto.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }
 
         return orderedQueryable;
 
         (SortDirectionDto? direction, Expression<Func<EquipmentSchema, object>>) BuildSort(
-            SortDirectionDto? direction, Expression<Func<EquipmentSchema, object>> parameter)
+            SortDirectionDto? direction,
+            Expression<Func<EquipmentSchema, object>> parameter)
         {
             return (direction, parameter);
         }

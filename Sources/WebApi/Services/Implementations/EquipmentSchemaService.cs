@@ -9,7 +9,8 @@ namespace WebApi.Services.Implementations;
 
 public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaService) : IEquipmentSchemaService
 {
-    public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(GetEquipmentSchemasModel model,
+    public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(
+        GetEquipmentSchemasModel model,
         CancellationToken cancellationToken)
     {
         var getEquipmentSchemasRequest = EquipmentSchemasModelsConverter.Convert(model);
@@ -30,7 +31,8 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         return EquipmentSchemasModelsConverter.Convert(equipmentSchema);
     }
 
-    public async Task<EquipmentSchemaModel> CreateEquipmentSchemaAsync(CreateEquipmentSchemaModel model,
+    public async Task<EquipmentSchemaModel> CreateEquipmentSchemaAsync(
+        CreateEquipmentSchemaModel model,
         CancellationToken cancellationToken)
     {
         var innerRequest = EquipmentSchemasModelsConverter.Convert(model);
@@ -47,7 +49,9 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         return EquipmentSchemasModelsConverter.ConvertToPatchModel(equipmentSchema);
     }
 
-    public async Task<EquipmentSchemaModel> PatchEquipmentSchemaAsync(int equipmentSchemaId, PatchEquipmentSchemaModel patchModel,
+    public async Task<EquipmentSchemaModel> PatchEquipmentSchemaAsync(
+        int equipmentSchemaId,
+        PatchEquipmentSchemaModel patchModel,
         CancellationToken cancellationToken)
     {
         var patchRequest = EquipmentSchemasModelsConverter.Convert(patchModel);

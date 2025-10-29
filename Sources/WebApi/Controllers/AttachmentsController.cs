@@ -39,11 +39,17 @@ public class AttachmentsController(IRoomAttachmentsService roomAttachmentsServic
     [Produces("application/json")]
     public async Task<IActionResult> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket)
     {
-        if (id == Guid.Empty || string.IsNullOrWhiteSpace(bucket)) return BadRequest();
+        if (id == Guid.Empty || string.IsNullOrWhiteSpace(bucket))
+        {
+            return BadRequest();
+        }
 
         var locationToLoad = new FileLocationDto(id, bucket);
         var file = await roomAttachmentsService.Load(locationToLoad);
-        if (file is null) return NotFound();
+        if (file is null)
+        {
+            return NotFound();
+        }
 
         return Ok(file);
     }

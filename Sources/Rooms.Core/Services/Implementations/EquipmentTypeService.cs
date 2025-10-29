@@ -48,7 +48,7 @@ public class EquipmentTypeService(
         var equipmentType = new EquipmentType
         {
             Name = dto.Name,
-            Parameters = dto.Parameters.Select(x => x.Map(EquipmentTypeDtoConverter.Convert)).ToList(),
+            Parameters = dto.Parameters.Select(x => x.Map(EquipmentTypeDtoConverter.Convert)).ToList()
         };
 
         context.Add(equipmentType);

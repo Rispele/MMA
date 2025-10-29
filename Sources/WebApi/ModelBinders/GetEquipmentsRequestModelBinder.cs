@@ -11,12 +11,12 @@ public class GetEquipmentsRequestModelBinder : IModelBinder
         var q = bindingContext.HttpContext.Request.Query;
 
         // read basic scalars
-        var page = ParseIntOrDefault(q["page"], 1);
-        var pageSize = ParseIntOrDefault(q["pageSize"], 10);
-        var afterEquipmentId = ParseIntOrDefault(q["afterEquipmentId"], 0);
+        var page = ParseIntOrDefault(q["page"], defaultValue: 1);
+        var pageSize = ParseIntOrDefault(q["pageSize"], defaultValue: 10);
+        var afterEquipmentId = ParseIntOrDefault(q["afterEquipmentId"], defaultValue: 0);
 
         EquipmentsFilterModel? filter = null;
-        if (q.TryGetValue("filter", out var filterValues) && filterValues.Count > 0)
+        if (q.TryGetValue(key: "filter", out var filterValues) && filterValues.Count > 0)
         {
             var json = filterValues[0];
             try
@@ -28,7 +28,7 @@ public class GetEquipmentsRequestModelBinder : IModelBinder
             }
             catch (JsonException)
             {
-                bindingContext.ModelState.AddModelError("filter", "Filter parameter is invalid JSON.");
+                bindingContext.ModelState.AddModelError(key: "filter", errorMessage: "Filter parameter is invalid JSON.");
                 bindingContext.Result = ModelBindingResult.Failed();
                 return Task.CompletedTask;
             }

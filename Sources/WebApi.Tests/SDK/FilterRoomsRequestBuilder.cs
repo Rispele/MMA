@@ -6,7 +6,7 @@ public class FilterRoomsRequestBuilder
 {
     private readonly int batchNumber;
     private readonly int batchSize;
-    private int afterRoomId = 0;
+    private int afterRoomId;
     private RoomsFilterDto? filter;
 
     private FilterRoomsRequestBuilder(int batchNumber, int batchSize)
@@ -15,7 +15,10 @@ public class FilterRoomsRequestBuilder
         this.batchSize = batchSize;
     }
 
-    public static FilterRoomsRequestBuilder Create(int batchNumber, int batchSize) => new(batchNumber, batchSize);
+    public static FilterRoomsRequestBuilder Create(int batchNumber, int batchSize)
+    {
+        return new FilterRoomsRequestBuilder(batchNumber, batchSize);
+    }
 
     public FilterRoomsRequestBuilder AfterRoomId(int roomId)
     {
@@ -39,5 +42,8 @@ public class FilterRoomsRequestBuilder
         return new GetRoomsRequestDto(batchNumber, batchSize, afterRoomId, filter);
     }
 
-    public static implicit operator GetRoomsRequestDto(FilterRoomsRequestBuilder builder) => builder.Build();
+    public static implicit operator GetRoomsRequestDto(FilterRoomsRequestBuilder builder)
+    {
+        return builder.Build();
+    }
 }

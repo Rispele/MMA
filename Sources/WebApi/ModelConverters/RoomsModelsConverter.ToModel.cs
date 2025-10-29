@@ -47,11 +47,13 @@ public static partial class RoomsModelsConverter
 
     private static ScheduleAddressModel? Convert(ScheduleAddressDto? dto)
     {
-        return dto == null ? null : new ScheduleAddressModel
-        {
-            RoomNumber = dto.RoomNumber,
-            Address = dto.Address,
-        };
+        return dto == null
+            ? null
+            : new ScheduleAddressModel
+            {
+                RoomNumber = dto.RoomNumber,
+                Address = dto.Address
+            };
     }
 
     private static RoomParametersModel Convert(RoomParametersDto dto)
@@ -63,7 +65,7 @@ public static partial class RoomsModelsConverter
             NetType = Convert(dto.NetType),
             Seats = dto.Seats,
             ComputerSeats = dto.ComputerSeats,
-            HasConditioning = dto.HasConditioning,
+            HasConditioning = dto.HasConditioning
         };
     }
 
@@ -86,7 +88,11 @@ public static partial class RoomsModelsConverter
 
     private static RoomOperatorDepartmentModel? Convert(RoomOperatorDepartmentDto? dto)
     {
-        if (dto == null) return null;
+        if (dto == null)
+        {
+            return null;
+        }
+
         return new RoomOperatorDepartmentModel(
             dto.Id,
             dto.Name,

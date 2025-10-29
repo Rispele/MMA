@@ -9,7 +9,8 @@ namespace WebApi.Services.Implementations;
 
 public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService) : IEquipmentTypeService
 {
-    public async Task<EquipmentTypesResponseModel> GetEquipmentTypesAsync(GetEquipmentTypesModel model,
+    public async Task<EquipmentTypesResponseModel> GetEquipmentTypesAsync(
+        GetEquipmentTypesModel model,
         CancellationToken cancellationToken)
     {
         var getEquipmentTypesRequest = EquipmentTypesModelsConverter.Convert(model);
@@ -30,7 +31,8 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         return EquipmentTypesModelsConverter.Convert(equipmentType);
     }
 
-    public async Task<EquipmentTypeModel> CreateEquipmentTypeAsync(CreateEquipmentTypeModel model,
+    public async Task<EquipmentTypeModel> CreateEquipmentTypeAsync(
+        CreateEquipmentTypeModel model,
         CancellationToken cancellationToken)
     {
         var innerRequest = EquipmentTypesModelsConverter.Convert(model);
@@ -47,7 +49,9 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         return EquipmentTypesModelsConverter.ConvertToPatchModel(equipmentType);
     }
 
-    public async Task<EquipmentTypeModel> PatchEquipmentTypeAsync(int equipmentTypeId, PatchEquipmentTypeModel patchModel,
+    public async Task<EquipmentTypeModel> PatchEquipmentTypeAsync(
+        int equipmentTypeId,
+        PatchEquipmentTypeModel patchModel,
         CancellationToken cancellationToken)
     {
         var patchRequest = EquipmentTypesModelsConverter.Convert(patchModel);

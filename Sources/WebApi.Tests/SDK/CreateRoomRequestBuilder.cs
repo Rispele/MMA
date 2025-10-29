@@ -5,19 +5,19 @@ namespace WebApi.Tests.SDK;
 
 public class CreateRoomRequestBuilder
 {
-    private string? description;
-    private RoomTypeDto type;
-    private RoomLayoutDto layout;
-    private int? seats;
+    private readonly string name;
+    private bool allowBooking;
+    private string? comment;
     private int? computerSeats;
-    private RoomNetTypeDto netType;
+    private string? description;
+    private DateTime? fixDeadline;
     private bool hasConditioning;
+    private RoomLayoutDto layout;
+    private RoomNetTypeDto netType;
     private string? owner;
     private RoomStatusDto roomStatus;
-    private string? comment;
-    private DateTime? fixDeadline;
-    private bool allowBooking;
-    private readonly string name;
+    private int? seats;
+    private RoomTypeDto type;
 
     private CreateRoomRequestBuilder(string name)
     {

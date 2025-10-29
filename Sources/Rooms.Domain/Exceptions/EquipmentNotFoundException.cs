@@ -1,3 +1,3 @@
 ﻿namespace Rooms.Domain.Exceptions;
 
-public class EquipmentNotFoundException(string message) : DomainException(404, "EquipmentNotFound", message);
+public class EquipmentNotFoundException(string message) : DomainException(code: 404, errorCode: "EquipmentNotFound", message);

@@ -11,11 +11,12 @@ public readonly struct FindEquipmentTypeByIdQuery :
 {
     public required int EquipmentTypeId { get; init; }
 
-    public Task<EquipmentType?> Apply(RoomsDbContext source,
+    public Task<EquipmentType?> Apply(
+        RoomsDbContext source,
         CancellationToken cancellationToken)
     {
         var id = EquipmentTypeId;
 
-        return source.EquipmentTypes.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+        return source.EquipmentTypes.FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

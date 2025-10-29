@@ -13,7 +13,7 @@ public static partial class EquipmentSchemasModelsConverter
             Id = entity.Id,
             Name = entity.Name,
             EquipmentTypeId = entity.EquipmentType.Id,
-            ParameterValues = entity.ParameterValues,
+            ParameterValues = entity.ParameterValues
         };
     }
 

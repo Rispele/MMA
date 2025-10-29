@@ -14,6 +14,6 @@ public readonly struct FindRoomByIdQuery :
     {
         var id = RoomId;
 
-        return source.Rooms.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+        return source.Rooms.FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

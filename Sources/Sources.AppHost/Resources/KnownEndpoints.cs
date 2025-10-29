@@ -12,12 +12,12 @@ public static class KnownEndpoints
     {
         return specification.GetEndpoint(Http);
     }
-    
+
     public static EndpointSpecification GetHttpsEndpoint(this ResourceSpecification specification)
     {
         return specification.GetEndpoint(Https);
     }
-    
+
     public static EndpointSpecification GetAdminEndpoint(this ResourceSpecification specification)
     {
         return specification.GetEndpoint(Admin);

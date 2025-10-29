@@ -19,7 +19,7 @@ public static partial class RoomDtoConverter
             room.Parameters.Map(Convert),
             room.Attachments.Map(Convert),
             room.Owner,
-            null,
+            operatorDepartment: null,
             room.FixInfo.Map(Convert),
             room.AllowBooking,
             room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)));
@@ -52,7 +52,7 @@ public static partial class RoomDtoConverter
             RoomType.Computer => RoomTypeDto.Computer,
             RoomType.Special => RoomTypeDto.Special,
             RoomType.Mixed => RoomTypeDto.Mixed,
-            _ => throw new ArgumentOutOfRangeException(nameof(roomType), roomType, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(roomType), roomType, message: null)
         };
     }
 
@@ -63,7 +63,7 @@ public static partial class RoomDtoConverter
             RoomLayout.Unspecified => RoomLayoutDto.Unspecified,
             RoomLayout.Flat => RoomLayoutDto.Flat,
             RoomLayout.Amphitheater => RoomLayoutDto.Amphitheater,
-            _ => throw new ArgumentOutOfRangeException(nameof(roomLayout), roomLayout, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(roomLayout), roomLayout, message: null)
         };
     }
 
@@ -76,7 +76,7 @@ public static partial class RoomDtoConverter
             RoomNetType.Wired => RoomNetTypeDto.Wired,
             RoomNetType.Wireless => RoomNetTypeDto.Wireless,
             RoomNetType.WiredAndWireless => RoomNetTypeDto.WiredAndWireless,
-            _ => throw new ArgumentOutOfRangeException(nameof(roomNetType), roomNetType, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(roomNetType), roomNetType, message: null)
         };
     }
 
@@ -103,7 +103,7 @@ public static partial class RoomDtoConverter
             RoomStatus.Ready => RoomStatusDto.Ready,
             RoomStatus.PartiallyReady => RoomStatusDto.PartiallyReady,
             RoomStatus.NotReady => RoomStatusDto.NotReady,
-            _ => throw new ArgumentOutOfRangeException(nameof(roomStatus), roomStatus, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(roomStatus), roomStatus, message: null)
         };
     }
 }

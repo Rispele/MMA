@@ -59,7 +59,7 @@ public class EquipmentService(
             SerialNumber = dto.SerialNumber,
             NetworkEquipmentIp = dto.NetworkEquipmentIp,
             Comment = dto.Comment,
-            Status = dto.Status,
+            Status = dto.Status
         };
 
         context.Add(equipment);

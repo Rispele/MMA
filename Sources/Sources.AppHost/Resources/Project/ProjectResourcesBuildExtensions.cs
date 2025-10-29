@@ -37,16 +37,16 @@ public static class ProjectResourcesBuildExtensions
 
             #region Minio
 
-            .WithEnvironment("MINIO_ACCESS_KEY", minioResourceParameters.Username)
-            .WithEnvironment("MINIO_SECRET_KEY", minioResourceParameters.Password)
+            .WithEnvironment(name: "MINIO_ACCESS_KEY", minioResourceParameters.Username)
+            .WithEnvironment(name: "MINIO_SECRET_KEY", minioResourceParameters.Password)
             .WithReference(minioResourceParameters.Name)
 
             #endregion
 
             #region TestDoubleLkUserApi
 
-            .WithEnvironment("TEST_DOUBLE_LK_USER_API_USERNAME", testDoubleLkUserApiParameters.Username)
-            .WithEnvironment("TEST_DOUBLE_LK_USER_API_PASSWORD", testDoubleLkUserApiParameters.Password)
+            .WithEnvironment(name: "TEST_DOUBLE_LK_USER_API_USERNAME", testDoubleLkUserApiParameters.Username)
+            .WithEnvironment(name: "TEST_DOUBLE_LK_USER_API_PASSWORD", testDoubleLkUserApiParameters.Password)
             .WithReference(testDoubleLkUserApiParameters.Name)
 
             #endregion

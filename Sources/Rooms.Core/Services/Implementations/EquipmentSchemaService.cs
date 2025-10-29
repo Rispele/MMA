@@ -52,7 +52,7 @@ public class EquipmentSchemaService(
         {
             Name = dto.Name,
             ParameterValues = dto.ParameterValues,
-            EquipmentTypeId = equipmentType.Id,
+            EquipmentTypeId = equipmentType.Id
         };
 
         context.Add(equipmentSchema);

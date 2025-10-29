@@ -22,8 +22,10 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
     public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(IQuerySpecification<TEntity> querySpecification)
     {
         if (querySpecification is not IQueryImplementer<TEntity, RoomsDbContext> implementer)
+        {
             throw new InvalidOperationException(
                 $"QuerySpecification expected to be of type IQueryImplementer<TEntity, RoomsDbContext>, but was {querySpecification.GetType()}");
+        }
 
         return implementer.Apply(this);
     }
@@ -33,8 +35,10 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         CancellationToken cancellationToken)
     {
         if (querySpecification is not ISingleQueryImplementer<TEntity, RoomsDbContext> implementer)
+        {
             throw new InvalidOperationException(
                 $"QuerySpecification expected to be of type ISingleQueryImplementer<TEntity, RoomsDbContext>, but was {querySpecification.GetType()}");
+        }
 
         return implementer.Apply(this, cancellationToken);
     }

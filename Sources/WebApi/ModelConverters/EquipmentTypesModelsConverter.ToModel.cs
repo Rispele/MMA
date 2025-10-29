@@ -31,7 +31,7 @@ public static partial class EquipmentTypesModelsConverter
         return new PatchEquipmentTypeModel
         {
             Name = dto.Name,
-            Parameters = dto.Parameters.Select(x => x.Map(EquipmentTypesModelsConverter.Convert))
+            Parameters = dto.Parameters.Select(x => x.Map(Convert))
         };
     }
 }

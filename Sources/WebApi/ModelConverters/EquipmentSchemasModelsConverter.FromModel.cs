@@ -15,16 +15,16 @@ public static partial class EquipmentSchemasModelsConverter
         ArgumentNullException.ThrowIfNull(model);
 
         return new GetEquipmentSchemasDto(
-            Math.Max(0, model.Page - 1),
+            Math.Max(val1: 0, model.Page - 1),
             model.PageSize,
             model.AfterEquipmentSchemaId,
             model.Filter
                 .AsOptional()
                 .Map(filter => new EquipmentSchemasFilterDto
                 {
-                    Name = MapFilterParameter(filter.Name, v => v),
-                    EquipmentTypeName = MapFilterParameter(filter.EquipmentTypeName, v => v),
-                    EquipmentParameters = MapFilterParameter(filter.EquipmentParameters, v => v),
+                    Name = MapFilterParameter(filter.Name, map: v => v),
+                    EquipmentTypeName = MapFilterParameter(filter.EquipmentTypeName, map: v => v),
+                    EquipmentParameters = MapFilterParameter(filter.EquipmentParameters, map: v => v)
                 }));
     }
 
@@ -34,7 +34,7 @@ public static partial class EquipmentSchemasModelsConverter
         {
             Name = model.Name,
             EquipmentTypeId = model.EquipmentTypeId,
-            ParameterValues = model.ParameterValues,
+            ParameterValues = model.ParameterValues
         };
     }
 
@@ -43,17 +43,27 @@ public static partial class EquipmentSchemasModelsConverter
         return new PatchEquipmentSchemaDto();
     }
 
-    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(FilterParameterModel<TIn>? src,
+    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(
+        FilterParameterModel<TIn>? src,
         Func<TIn, TOut> map)
     {
-        if (src == null || src.Value == null) return null;
+        if (src == null || src.Value == null)
+        {
+            return null;
+        }
+
         return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
     private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(
-        FilterMultiParameterModel<TIn>? src, Func<TIn, TOut> map)
+        FilterMultiParameterModel<TIn>? src,
+        Func<TIn, TOut> map)
     {
-        if (src?.Values == null || src.Values.Length == 0) return null;
+        if (src?.Values == null || src.Values.Length == 0)
+        {
+            return null;
+        }
+
         return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
     }
 

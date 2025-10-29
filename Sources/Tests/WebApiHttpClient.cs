@@ -19,7 +19,8 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 
     public async Task<EquipmentTypeModel> GetEquipmentTypeById(int equipmentTypeId)
     {
-        return ((await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/equipment-types/{equipmentTypeId}", typeof(EquipmentTypeModel))) as EquipmentTypeModel)!;
+        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/equipment-types/{equipmentTypeId}", typeof(EquipmentTypeModel)) as
+            EquipmentTypeModel)!;
     }
 
     #endregion
@@ -34,7 +35,8 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 
     public async Task<EquipmentSchemaModel> GetEquipmentSchemaById(int equipmentSchemaId)
     {
-        return ((await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/equipment-schemas/{equipmentSchemaId}", typeof(EquipmentSchemaModel))) as EquipmentSchemaModel)!;
+        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/equipment-schemas/{equipmentSchemaId}", typeof(EquipmentSchemaModel)) as
+            EquipmentSchemaModel)!;
     }
 
     #endregion
@@ -49,7 +51,7 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 
     public async Task<RoomModel> GetRoomById(int roomId)
     {
-        return ((await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/rooms/{roomId}", typeof(RoomModel))) as RoomModel)!;
+        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/rooms/{roomId}", typeof(RoomModel)) as RoomModel)!;
     }
 
     #endregion

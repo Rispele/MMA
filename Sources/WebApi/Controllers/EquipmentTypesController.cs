@@ -51,14 +51,17 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
         {
             var errorMessage = ModelState.Values
                 .SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-            throw new BadHttpRequestException(string.Join("; ", errorMessage));
+            throw new BadHttpRequestException(string.Join(separator: "; ", errorMessage));
         }
 
         var patchModel = await equipmentTypeService.GetEquipmentTypePatchModel(equipmentTypeId, cancellationToken);
 
         patch.ApplyTo(patchModel);
 
-        if (!TryValidateModel(patchModel)) return ValidationProblem(ModelState);
+        if (!TryValidateModel(patchModel))
+        {
+            return ValidationProblem(ModelState);
+        }
 
         var updated = await equipmentTypeService.PatchEquipmentTypeAsync(equipmentTypeId, patchModel, cancellationToken);
 

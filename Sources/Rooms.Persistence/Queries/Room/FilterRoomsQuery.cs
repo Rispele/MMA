@@ -30,22 +30,25 @@ public class FilterRoomsQuery :
 
     private IQueryable<Domain.Models.Room.Room> Filters(IQueryable<Domain.Models.Room.Room> rooms)
     {
-        if (Filter is null) return rooms;
+        if (Filter is null)
+        {
+            return rooms;
+        }
 
         rooms = Filter.Name
             .AsOptional()
-            .Apply(rooms, (queryable, parameter) => queryable.Where(t => t.Name.Contains(parameter.Value)));
+            .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.Name.Contains(parameter.Value)));
 
         rooms = Filter.Description
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) =>
+                apply: (queryable, parameter) =>
                     queryable.Where(t => t.Description != null && t.Description.Contains(parameter.Value)));
 
         rooms = Filter.RoomTypes
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) =>
+                apply: (queryable, parameter) =>
                 {
                     var values = parameter.Values.Select(RoomDtoConverter.Convert);
                     return queryable.Where(t => values.Contains(t.Parameters.Type));
@@ -54,7 +57,7 @@ public class FilterRoomsQuery :
         rooms = Filter.RoomLayout
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) =>
+                apply: (queryable, parameter) =>
                 {
                     var values = parameter.Values.Select(RoomDtoConverter.Convert);
                     return queryable.Where(t => values.Contains(t.Parameters.Layout));
@@ -62,17 +65,17 @@ public class FilterRoomsQuery :
 
         rooms = Filter.Seats
             .AsOptional()
-            .Apply(rooms, (queryable, parameter) => queryable.Where(t => t.Parameters.Seats >= parameter.Value));
+            .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.Parameters.Seats >= parameter.Value));
 
         rooms = Filter.ComputerSeats
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) => queryable.Where(t => t.Parameters.ComputerSeats >= parameter.Value));
+                apply: (queryable, parameter) => queryable.Where(t => t.Parameters.ComputerSeats >= parameter.Value));
 
         rooms = Filter.NetTypes
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) =>
+                apply: (queryable, parameter) =>
                 {
                     var values = parameter.Values.Select(RoomDtoConverter.Convert);
                     return queryable.Where(t => values.Contains(t.Parameters.NetType));
@@ -81,17 +84,17 @@ public class FilterRoomsQuery :
         rooms = Filter.Conditioning
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) => queryable.Where(t => t.Parameters.HasConditioning == parameter.Value));
+                apply: (queryable, parameter) => queryable.Where(t => t.Parameters.HasConditioning == parameter.Value));
 
         rooms = Filter.Owner
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) => queryable.Where(t => t.Owner != null && t.Owner.Contains(parameter.Value)));
+                apply: (queryable, parameter) => queryable.Where(t => t.Owner != null && t.Owner.Contains(parameter.Value)));
 
         rooms = Filter.RoomStatuses
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) =>
+                apply: (queryable, parameter) =>
                 {
                     var values = parameter.Values.Select(RoomDtoConverter.Convert);
                     return queryable.Where(t => values.Contains(t.FixInfo.Status));
@@ -99,13 +102,13 @@ public class FilterRoomsQuery :
 
         rooms = Filter.FixDeadline
             .AsOptional()
-            .Apply(rooms, (queryable, parameter) => queryable.Where(t => t.FixInfo.FixDeadline == parameter.Value));
+            .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.FixInfo.FixDeadline == parameter.Value));
 
 
         rooms = Filter.Comment
             .AsOptional()
             .Apply(rooms,
-                (queryable, parameter) => queryable.Where(t =>
+                apply: (queryable, parameter) => queryable.Where(t =>
                     t.FixInfo.Comment != null && t.FixInfo.Comment.Contains(parameter.Value)));
 
         return rooms;
@@ -113,26 +116,32 @@ public class FilterRoomsQuery :
 
     private IQueryable<Domain.Models.Room.Room> Sort(IQueryable<Domain.Models.Room.Room> rooms)
     {
-        if (Filter is null) return rooms;
+        if (Filter is null)
+        {
+            return rooms;
+        }
 
         (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)[] sorts =
         [
-            BuildSort(Filter.Name?.SortDirection, t => t.Name),
-            BuildSort(Filter.Description?.SortDirection, t => t.Name),
-            BuildSort(Filter.RoomTypes?.SortDirection, t => t.Name),
-            BuildSort(Filter.RoomLayout?.SortDirection, t => t.Name),
-            BuildSort(Filter.Seats?.SortDirection, t => t.Name),
-            BuildSort(Filter.ComputerSeats?.SortDirection, t => t.Name),
-            BuildSort(Filter.NetTypes?.SortDirection, t => t.Name),
-            BuildSort(Filter.Conditioning?.SortDirection, t => t.Name),
-            BuildSort(Filter.Owner?.SortDirection, t => t.Name),
-            BuildSort(Filter.RoomStatuses?.SortDirection, t => t.Name),
-            BuildSort(Filter.FixDeadline?.SortDirection, t => t.Name),
-            BuildSort(Filter.Comment?.SortDirection, t => t.Name)
+            BuildSort(Filter.Name?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.Description?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.RoomTypes?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.RoomLayout?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.Seats?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.ComputerSeats?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.NetTypes?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.Conditioning?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.Owner?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.RoomStatuses?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.FixDeadline?.SortDirection, parameter: t => t.Name),
+            BuildSort(Filter.Comment?.SortDirection, parameter: t => t.Name)
         ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
-        if (sortsToApply.Length == 0) return rooms;
+        if (sortsToApply.Length == 0)
+        {
+            return rooms;
+        }
 
         var firstSort = sortsToApply.FirstOrDefault();
         var orderedQueryable = firstSort.direction switch
@@ -143,17 +152,20 @@ public class FilterRoomsQuery :
         };
 
         foreach (var (direction, parameter) in sortsToApply.Skip(1))
+        {
             orderedQueryable = direction switch
             {
                 SortDirectionDto.Ascending => orderedQueryable.ThenBy(parameter),
                 SortDirectionDto.Descending => orderedQueryable.ThenByDescending(parameter),
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }
 
         return orderedQueryable;
 
         (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>>) BuildSort(
-            SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)
+            SortDirectionDto? direction,
+            Expression<Func<Domain.Models.Room.Room, object>> parameter)
         {
             return (direction, parameter);
         }

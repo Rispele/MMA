@@ -31,7 +31,7 @@ public static class ApplicationRunner
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
-            app.UseSwaggerUI(b => { b.SwaggerEndpoint("/openapi/v1.json", "My API V1"); });
+            app.UseSwaggerUI(b => { b.SwaggerEndpoint(url: "/openapi/v1.json", name: "My API V1"); });
         }
 
         app.MapControllers();

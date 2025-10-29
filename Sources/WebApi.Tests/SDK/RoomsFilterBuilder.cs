@@ -6,18 +6,18 @@ namespace WebApi.Tests.SDK;
 
 public class RoomsFilterBuilder
 {
-    private FilterParameterDto<string>? name;
-    private FilterParameterDto<string>? description;
-    private FilterMultiParameterDto<RoomTypeDto>? types;
-    private FilterMultiParameterDto<RoomLayoutDto>? layout;
-    private FilterParameterDto<int>? seats;
-    private FilterParameterDto<int>? computerSeats;
-    private FilterMultiParameterDto<RoomNetTypeDto>? netTypes;
-    private FilterParameterDto<bool>? hasConditioning;
-    private FilterParameterDto<string>? owner;
-    private FilterMultiParameterDto<RoomStatusDto>? status;
-    private FilterParameterDto<DateTime>? fixDeadline;
     private FilterParameterDto<string>? comment;
+    private FilterParameterDto<int>? computerSeats;
+    private FilterParameterDto<string>? description;
+    private FilterParameterDto<DateTime>? fixDeadline;
+    private FilterParameterDto<bool>? hasConditioning;
+    private FilterMultiParameterDto<RoomLayoutDto>? layout;
+    private FilterParameterDto<string>? name;
+    private FilterMultiParameterDto<RoomNetTypeDto>? netTypes;
+    private FilterParameterDto<string>? owner;
+    private FilterParameterDto<int>? seats;
+    private FilterMultiParameterDto<RoomStatusDto>? status;
+    private FilterMultiParameterDto<RoomTypeDto>? types;
 
     public RoomsFilterBuilder Name(string value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
@@ -81,13 +81,13 @@ public class RoomsFilterBuilder
 
     public RoomsFilterBuilder FixDeadline(DateTime value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
-        fixDeadline =  new FilterParameterDto<DateTime>(value, sortDirection);
+        fixDeadline = new FilterParameterDto<DateTime>(value, sortDirection);
         return this;
     }
 
     public RoomsFilterBuilder Comment(string value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
-        comment =  new FilterParameterDto<string>(value, sortDirection);
+        comment = new FilterParameterDto<string>(value, sortDirection);
         return this;
     }
 
@@ -106,7 +106,7 @@ public class RoomsFilterBuilder
             Owner = owner,
             RoomStatuses = status,
             FixDeadline = fixDeadline,
-            Comment = comment,
+            Comment = comment
         };
     }
 

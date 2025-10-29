@@ -51,14 +51,17 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         {
             var errorMessage = ModelState.Values
                 .SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-            throw new BadHttpRequestException(string.Join("; ", errorMessage));
+            throw new BadHttpRequestException(string.Join(separator: "; ", errorMessage));
         }
 
         var patchModel = await equipmentSchemaService.GetEquipmentSchemaPatchModel(equipmentSchemaId, cancellationToken);
 
         patch.ApplyTo(patchModel);
 
-        if (!TryValidateModel(patchModel)) return ValidationProblem(ModelState);
+        if (!TryValidateModel(patchModel))
+        {
+            return ValidationProblem(ModelState);
+        }
 
         var updated = await equipmentSchemaService.PatchEquipmentSchemaAsync(equipmentSchemaId, patchModel, cancellationToken);
 

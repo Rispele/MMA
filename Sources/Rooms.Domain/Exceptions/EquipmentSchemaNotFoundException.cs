@@ -1,3 +1,3 @@
 ﻿namespace Rooms.Domain.Exceptions;
 
-public class EquipmentSchemaNotFoundException(string message) : DomainException(404, "EquipmentSchemaNotFound", message);
+public class EquipmentSchemaNotFoundException(string message) : DomainException(code: 404, errorCode: "EquipmentSchemaNotFound", message);

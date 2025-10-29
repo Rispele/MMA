@@ -14,7 +14,7 @@ public static partial class EquipmentSchemaDtoConverter
             Name = entity.Name,
             EquipmentType = entity.EquipmentType.Map(EquipmentTypeDtoConverter.Convert),
             ParameterValues = entity.ParameterValues,
-            Equipments = entity.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)).ToList(),
+            Equipments = entity.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)).ToList()
         };
     }
 }

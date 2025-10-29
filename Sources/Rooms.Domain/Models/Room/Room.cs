@@ -51,7 +51,7 @@ public class Room
         RoomFixInfo fixInfo,
         bool allowBooking)
     {
-        return new Room(name, description, null, parameters, attachments, owner, fixInfo, allowBooking);
+        return new Room(name, description, scheduleAddress: null, parameters, attachments, owner, fixInfo, allowBooking);
     }
 
     public void Update(

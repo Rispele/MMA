@@ -14,16 +14,16 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
         builder.Property(x => x.Description).HasMaxLength(256);
 
         builder.OwnsOne(
-            t => t.ScheduleAddress,
-            b =>
+            navigationExpression: t => t.ScheduleAddress,
+            buildAction: b =>
             {
                 b.Property(x => x.Address).HasMaxLength(64);
                 b.Property(x => x.RoomNumber).HasMaxLength(32);
             });
 
         builder.OwnsOne(
-            t => t.Parameters,
-            b =>
+            navigationExpression: t => t.Parameters,
+            buildAction: b =>
             {
                 b.Property(t => t.Type).IsRequired();
                 b.Property(t => t.Layout).IsRequired();
@@ -36,8 +36,8 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
         builder.Property(t => t.Attachments).HasColumnType("jsonb");
         builder.Property(t => t.Owner).HasMaxLength(64);
         builder.OwnsOne(
-            t => t.FixInfo,
-            b =>
+            navigationExpression: t => t.FixInfo,
+            buildAction: b =>
             {
                 b.Property(t => t.Status).IsRequired();
                 b.Property(t => t.Comment).HasMaxLength(256);
