@@ -39,7 +39,13 @@ public class FilterRoomsRequestBuilder
 
     public GetRoomsRequestDto Build()
     {
-        return new GetRoomsRequestDto(batchNumber, batchSize, afterRoomId, filter);
+        return new GetRoomsRequestDto
+        {
+            BatchNumber = batchNumber,
+            BatchSize = batchSize,
+            AfterRoomId = afterRoomId,
+            Filter = filter
+        };
     }
 
     public static implicit operator GetRoomsRequestDto(FilterRoomsRequestBuilder builder)

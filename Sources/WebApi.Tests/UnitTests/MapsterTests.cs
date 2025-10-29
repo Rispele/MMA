@@ -2,6 +2,7 @@
 using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
+using Rooms.Core.Dtos.Requests.Rooms;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 using WebApi.Startup.ConfigurationExtensions;
@@ -33,6 +34,16 @@ public class MapsterTests
         
         var mapped = mapper.Map<PatchRoomModel>(dto);
         mapped.Should().BeEquivalentTo(model);
+    }
+    
+    [Test]
+    public void Map_GetRoomsModel_To_GetRoomRequestDto_ShouldCorrectlyMap()
+    {
+        var dto = RoomMapsterTestHelper.CreateGetRoomsRequestDto();
+        var model = RoomMapsterTestHelper.CreateGetRoomsModel();
+        
+        var mapped = mapper.Map<GetRoomsRequestDto>(model);
+        mapped.Should().BeEquivalentTo(dto);
     }
 }
 

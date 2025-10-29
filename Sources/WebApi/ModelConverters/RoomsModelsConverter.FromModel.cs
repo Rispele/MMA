@@ -13,33 +13,6 @@ namespace WebApi.ModelConverters;
 
 public static partial class RoomsModelsConverter
 {
-    public static GetRoomsRequestDto Convert(GetRoomsModel model)
-    {
-        ArgumentNullException.ThrowIfNull(model);
-
-        return new GetRoomsRequestDto(
-            Math.Max(val1: 0, model.Page - 1),
-            model.PageSize,
-            model.AfterRoomId,
-            model.Filter
-                .AsOptional()
-                .Map(filter => new RoomsFilterDto
-                {
-                    Name = MapFilterParameter(filter.Name, map: v => v),
-                    Description = MapFilterParameter(filter.Description, map: v => v),
-                    RoomTypes = MapFilterMultiParameter(filter.RoomTypes, Convert),
-                    RoomLayout = MapFilterMultiParameter(filter.RoomLayout, Convert),
-                    Seats = MapFilterParameter(filter.Seats, map: v => v),
-                    ComputerSeats = MapFilterParameter(filter.ComputerSeats, map: v => v),
-                    NetTypes = MapFilterMultiParameter(filter.NetTypes, Convert),
-                    Conditioning = MapFilterParameter(filter.Conditioning, map: v => v),
-                    Owner = MapFilterParameter(filter.Owner, map: v => v),
-                    RoomStatuses = MapFilterMultiParameter(filter.RoomStatuses, Convert),
-                    FixDeadline = MapFilterParameter(filter.FixDeadline, map: v => v),
-                    Comment = MapFilterParameter(filter.Comment, map: v => v)
-                }));
-    }
-
     public static CreateRoomDto Convert(CreateRoomModel model)
     {
         return new CreateRoomDto

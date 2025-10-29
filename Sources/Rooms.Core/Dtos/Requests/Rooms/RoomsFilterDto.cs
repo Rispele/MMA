@@ -15,8 +15,8 @@ public record RoomsFilterDto
 
     public FilterParameterDto<bool>? Conditioning { get; init; }
 
-    // public FilterMultiParameterDto<int>? OperatorDepartments { get; init; }
-    // public FilterParameterDto<string>? Operator { get; init; }
+    public FilterMultiParameterDto<int>? OperatorDepartments { get; init; }
+    public FilterParameterDto<string>? Operator { get; init; }
     public FilterParameterDto<string>? Owner { get; init; }
     public FilterMultiParameterDto<RoomStatusDto>? RoomStatuses { get; init; }
     public FilterParameterDto<DateTime>? FixDeadline { get; init; }

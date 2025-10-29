@@ -1,6 +1,9 @@
 ﻿using Rooms.Core.Dtos.Files;
+using Rooms.Core.Dtos.Requests.Filtering;
+using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
 using WebApi.Models.Files;
+using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 
@@ -42,6 +45,16 @@ public static class RoomMapsterTestHelper
     private const RoomLayoutModel ToRoomLayout = RoomLayoutModel.Amphitheater;
     private const RoomNetTypeModel ToRoomNetType = RoomNetTypeModel.WiredAndWireless;
     private const RoomStatusModel ToRoomStatus = RoomStatusModel.Ready;
+
+    private const int Page = 10;
+    private const int PageSize = 11;
+    private const int AfterRoomId = 12;
+
+    private const SortDirectionDto AscendingSortDirectionDto = SortDirectionDto.Ascending;
+    private const SortDirectionDto DescendingSortDirectionDto = SortDirectionDto.Descending;
+
+    private const SortDirectionModel AscendingSortDirectionModel = SortDirectionModel.Ascending;
+    private const SortDirectionModel DescendingSortDirectionModel = SortDirectionModel.Descending;
 
     public static RoomDto CreateRoomDto()
     {
@@ -122,5 +135,99 @@ public static class RoomMapsterTestHelper
             FixDeadline = FixDeadline,
             AllowBooking = AllowBooking
         };
+    }
+
+    public static GetRoomsRequestDto CreateGetRoomsRequestDto()
+    {
+        return new GetRoomsRequestDto
+        {
+            BatchNumber = Page - 1,
+            BatchSize = PageSize,
+            AfterRoomId = AfterRoomId,
+            Filter = new RoomsFilterDto
+            {
+                Name = CreateFilterParameterDto(AscendingSortDirectionDto, RoomName),
+                Description = CreateFilterParameterDto(AscendingSortDirectionDto, RoomDescription),
+                RoomTypes = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomType),
+                RoomLayout = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomLayout),
+                Seats = CreateFilterParameterDto(AscendingSortDirectionDto, Seats),
+                ComputerSeats = CreateFilterParameterDto(AscendingSortDirectionDto, ComputerSeats),
+                NetTypes = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomNetType),
+                Conditioning = CreateFilterParameterDto(AscendingSortDirectionDto, HasConditioning),
+                OperatorDepartments = CreateFilterMultiParameterDto(AscendingSortDirectionDto, OperatorDepartmentId),
+                Operator = CreateFilterParameterDto(AscendingSortDirectionDto, OperatorName),
+                Owner = CreateFilterParameterDto(AscendingSortDirectionDto, Owner),
+                RoomStatuses = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomStatus),
+                FixDeadline = CreateFilterParameterDto(AscendingSortDirectionDto, FixDeadline),
+                Comment = CreateFilterParameterDto(AscendingSortDirectionDto, FixComment),
+                // AllowBooking = CreateFilterParameterDto(DescendingSortDirectionDto, AllowBooking),
+            }
+        };
+    }
+
+    public static GetRoomsModel CreateGetRoomsModel()
+    {
+        return new GetRoomsModel
+        {
+            Page = Page,
+            PageSize = PageSize,
+            AfterRoomId = AfterRoomId,
+            Filter = new RoomsFilterModel
+            {
+                Name = CreateFilterParameterModel(AscendingSortDirectionModel, RoomName),
+                Description = CreateFilterParameterModel(AscendingSortDirectionModel, RoomDescription),
+                RoomTypes = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomType),
+                RoomLayout = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomLayout),
+                Seats = CreateFilterParameterModel(AscendingSortDirectionModel, Seats),
+                ComputerSeats = CreateFilterParameterModel(AscendingSortDirectionModel, ComputerSeats),
+                NetTypes = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomNetType),
+                Conditioning = CreateFilterParameterModel(AscendingSortDirectionModel, HasConditioning),
+                OperatorDepartments = CreateFilterMultiParameterModel(AscendingSortDirectionModel, OperatorDepartmentId),
+                Operator = CreateFilterParameterModel(AscendingSortDirectionModel, OperatorName),
+                Owner = CreateFilterParameterModel(AscendingSortDirectionModel, Owner),
+                RoomStatuses = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomStatus),
+                FixDeadline = CreateFilterParameterModel(AscendingSortDirectionModel, FixDeadline),
+                Comment = CreateFilterParameterModel(AscendingSortDirectionModel, FixComment),
+                AllowBooking = CreateFilterParameterModel(DescendingSortDirectionModel, AllowBooking),
+            }
+        };
+    }
+
+    private static FilterParameterModel<TValue> CreateFilterParameterModel<TValue>(SortDirectionModel sortDirection, TValue value)
+    {
+        return new FilterParameterModel<TValue>
+        {
+            SortDirection = sortDirection,
+            Value = value
+        };
+    }
+
+    private static FilterMultiParameterModel<TValue> CreateFilterMultiParameterModel<TValue>(
+        SortDirectionModel sortDirection,
+        TValue value,
+        params TValue[] values)
+    {
+        var values1 = new[] { value }.Concat(values).ToArray();
+
+        return new FilterMultiParameterModel<TValue>
+        {
+            SortDirection = sortDirection,
+            Values = values1
+        };
+    }
+
+    private static FilterParameterDto<TValue> CreateFilterParameterDto<TValue>(SortDirectionDto sortDirection, TValue value)
+    {
+        return new FilterParameterDto<TValue>(value, sortDirection);
+    }
+
+    private static FilterMultiParameterDto<TValue> CreateFilterMultiParameterDto<TValue>(
+        SortDirectionDto sortDirection,
+        TValue value,
+        params TValue[] values)
+    {
+        var values1 = new[] { value }.Concat(values).ToArray();
+
+        return new FilterMultiParameterDto<TValue>(values1, sortDirection);
     }
 }

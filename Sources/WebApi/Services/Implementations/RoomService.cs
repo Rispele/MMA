@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.JsonPatch;
+using Rooms.Core.Dtos.Requests.Rooms;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -15,7 +16,7 @@ public class RoomService(
 {
     public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {
-        var getRoomsRequest = RoomsModelsConverter.Convert(model);
+        var getRoomsRequest = mapper.Map<GetRoomsRequestDto>(model);
 
         var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
 

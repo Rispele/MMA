@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
 using WebApi.Models.Requests.Rooms;
 
@@ -21,8 +22,14 @@ public static class MapsterConfigurationExtensions
             .Map(t => t.Comment, t => t.FixStatus.Comment)
             .Map(t => t.FixDeadline, t => t.FixStatus.FixDeadline)
             .Map(t => t.RoomStatus, t => t.FixStatus.Status);
-            
-        
+
+        config
+            .NewConfig<GetRoomsModel, GetRoomsRequestDto>()
+            .Map(t => t.BatchNumber, t => Math.Max(0, t.Page - 1))
+            .Map(t => t.BatchSize, t => t.PageSize)
+            .Map(t => t.AfterRoomId, t => t.AfterRoomId)
+            .Map(t => t.Filter, t => t.Filter);
+
         return config;
     }
 }
