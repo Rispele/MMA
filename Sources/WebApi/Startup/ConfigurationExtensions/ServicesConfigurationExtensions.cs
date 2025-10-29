@@ -1,4 +1,6 @@
-﻿using Rooms.Core.Queries.Factories;
+﻿using Mapster;
+using MapsterMapper;
+using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Services;
@@ -40,7 +42,19 @@ public static class ServicesConfigurationExtensions
             options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
         });
 
-        serviceCollection.WithServices();
+        serviceCollection
+            .WithMapster()
+            .WithServices();
+
+        return serviceCollection;
+    }
+
+    private static IServiceCollection WithMapster(this IServiceCollection serviceCollection)
+    {
+        var config = new TypeAdapterConfig().ConfigureMapster();
+
+        serviceCollection.AddSingleton(config);
+        serviceCollection.AddScoped<IMapper, ServiceMapper>();
 
         return serviceCollection;
     }

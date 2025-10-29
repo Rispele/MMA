@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using WebApi.Tests.IntegrationTests;
 
 namespace WebApi.Tests.TestingInfrastructure;
 

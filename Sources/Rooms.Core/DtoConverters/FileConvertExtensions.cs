@@ -21,7 +21,7 @@ public static class FileConvertExtensions
     {
         return new FileDescriptor(
             fileDescriptor.FileName,
-            fileDescriptor.FileLocation.FromDto());
+            fileDescriptor.Location.FromDto());
     }
 
     public static FileLocation FromDto(this FileLocationDto fileLocation)

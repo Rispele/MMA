@@ -3,7 +3,7 @@ using Sources.AppHost.Resources;
 using WebApi.Tests.SDK;
 using WebApi.Tests.TestingInfrastructure.Configuration;
 
-namespace WebApi.Tests;
+namespace WebApi.Tests.IntegrationTests;
 
 [SetUpFixture]
 public class WebApiTestsContext

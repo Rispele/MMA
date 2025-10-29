@@ -11,7 +11,7 @@ public static partial class FileDtoConverter
             ? null
             : new FileDescriptor(
                 fileMetadata.FileName,
-                Convert(fileMetadata.FileLocation)
+                Convert(fileMetadata.Location)
             );
     }
 

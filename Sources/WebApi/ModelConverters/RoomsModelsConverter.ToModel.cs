@@ -1,7 +1,6 @@
 ﻿using Rooms.Core.Dtos.Files;
 using Rooms.Core.Dtos.Room;
 using WebApi.Models.Files;
-using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 
 namespace WebApi.ModelConverters;
@@ -21,26 +20,6 @@ public static partial class RoomsModelsConverter
             Owner = dto.Owner,
             OperatorDepartment = Convert(dto.OperatorDepartment),
             FixStatus = Convert(dto.FixStatus),
-            AllowBooking = dto.AllowBooking
-        };
-    }
-
-    public static PatchRoomModel ConvertToPatchModel(RoomDto dto)
-    {
-        return new PatchRoomModel
-        {
-            Name = dto.Name,
-            Description = dto.Description,
-            Type = Convert(dto.Parameters.Type),
-            Layout = Convert(dto.Parameters.Layout),
-            NetType = Convert(dto.Parameters.NetType),
-            Seats = dto.Parameters.Seats,
-            ComputerSeats = dto.Parameters.ComputerSeats,
-            HasConditioning = dto.Parameters.HasConditioning,
-            Owner = dto.Owner,
-            RoomStatus = Convert(dto.FixStatus.Status),
-            FixDeadline = dto.FixStatus.FixDeadline,
-            Comment = dto.FixStatus.Comment,
             AllowBooking = dto.AllowBooking
         };
     }
@@ -78,7 +57,7 @@ public static partial class RoomsModelsConverter
 
     private static FileDescriptorModel? Convert(FileDescriptorDto? dto)
     {
-        return dto == null ? null : new FileDescriptorModel(dto.FileName, Convert(dto.FileLocation));
+        return dto == null ? null : new FileDescriptorModel(dto.FileName, Convert(dto.Location));
     }
 
     private static FileLocationModel Convert(FileLocationDto dto)

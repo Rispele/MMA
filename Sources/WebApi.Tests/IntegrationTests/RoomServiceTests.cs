@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
+using MapsterMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Rooms.Core.Dtos.Room;
 using Rooms.Domain.Exceptions;
-using WebApi.ModelConverters;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
@@ -10,15 +10,18 @@ using WebApi.Services.Interfaces;
 using WebApi.Tests.SDK;
 using WebApi.Tests.TestingInfrastructure;
 
-namespace WebApi.Tests;
+namespace WebApi.Tests.IntegrationTests;
 
-public class RoomsApiTests : ContainerTestBase
+public class RoomServiceTests : ContainerTestBase
 {
     [Inject]
     private readonly IRoomService roomService = null!;
 
     [Inject]
     private readonly RoomsSdk roomsSdk = null!;
+
+    [Inject]
+    private readonly IMapper mapper = null!;
 
     [Test]
     public async Task CreateRoom_ShouldBeCreated()
@@ -68,12 +71,14 @@ public class RoomsApiTests : ContainerTestBase
         var room3 = await roomsSdk.CreateRoom(room3Name, createRoomOfParameter2);
 
         var response = await roomService.GetRoomsAsync(roomsRequest, CancellationToken.None);
+        var room1Model = mapper.Map<RoomModel>(room1);
+        var room2Model = mapper.Map<RoomModel>(room2);
+        var room3Model = mapper.Map<RoomModel>(room3);
 
         response.Rooms.Should().HaveCount(2);
-        response.Rooms.Should().ContainInConsecutiveOrder(
-            RoomsModelsConverter.Convert(room1),
-            RoomsModelsConverter.Convert(room2));
-        response.Rooms.Should().NotContainEquivalentOf(RoomsModelsConverter.Convert(room3));
+        response.Rooms[0].Should().BeEquivalentTo(room1Model);
+        response.Rooms[1].Should().BeEquivalentTo(room2Model);
+        response.Rooms.Should().NotContainEquivalentOf(room3Model);
     }
 
     [Test]

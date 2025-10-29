@@ -29,8 +29,8 @@ public class AttachmentsController(IRoomAttachmentsService roomAttachmentsServic
         var response = new FileDescriptorModel(
             fileName,
             new FileLocationModel(
-                descriptor.FileLocation.Id,
-                descriptor.FileLocation.Bucket));
+                descriptor.Location.Id,
+                descriptor.Location.Bucket));
 
         return Ok(response);
     }

@@ -1,0 +1,64 @@
+﻿using FluentAssertions;
+using Mapster;
+using MapsterMapper;
+using Microsoft.Extensions.DependencyInjection;
+using WebApi.Models.Requests.Rooms;
+using WebApi.Models.Room;
+using WebApi.Startup.ConfigurationExtensions;
+
+namespace WebApi.Tests.UnitTests;
+
+[TestFixture]
+public class MapsterTests
+{
+    private readonly IMapper mapper = new ServiceMapper(
+        new ServiceCollection().BuildServiceProvider(),
+        new TypeAdapterConfig().ConfigureMapster());
+
+    [Test]
+    public void Map_RoomDto_To_RoomModel_ShouldCorrectlyMap()
+    {
+        var dto = RoomMapsterTestHelper.CreateRoomDto();
+        var model = RoomMapsterTestHelper.CreateRoomModel();
+        
+        var mapped = mapper.Map<RoomModel>(dto);
+        mapped.Should().BeEquivalentTo(model);
+    }
+
+    [Test]
+    public void Map_RoomDto_To_PatchRoomModel_ShouldCorrectlyMap()
+    {
+        var dto = RoomMapsterTestHelper.CreateRoomDto();
+        var model = RoomMapsterTestHelper.CreatePatchRoomModel();
+        
+        var mapped = mapper.Map<PatchRoomModel>(dto);
+        mapped.Should().BeEquivalentTo(model);
+    }
+}
+
+// [
+//     new EquipmentDto()
+//     {
+//         Comment = "comment",
+//         Id = 1,
+//         InventoryNumber = "123",
+//         NetworkEquipmentIp = "123",
+//         Room = null!,
+//         SchemaDto = new EquipmentSchemaDto()
+//         {
+//             Equipments = [],
+//             EquipmentType = new EquipmentTypeDto()
+//             {
+//                 Id = 1,
+//                 Name = "EquipmentTypeName",
+//                 Parameters = [new EquipmentParameterDescriptorDto() { Name = "Parameter", Required = true }]
+//             },
+//             Id = 3,
+//             Name = "EquipmentSchemaName",
+//             ParameterValues = new Dictionary<string, string>()
+//             {
+//                 ["key"] = "value"
+//             }
+//         }
+//     }
+// ]
