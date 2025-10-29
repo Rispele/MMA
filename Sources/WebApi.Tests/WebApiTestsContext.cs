@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sources.AppHost;
+using Sources.AppHost.Resources;
 using WebApi.Tests.SDK;
 using WebApi.Tests.TestingInfrastructure.Configuration;
 
@@ -34,13 +34,13 @@ public class WebApiTestsContext
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-        await TestingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResourceNames.WebApiService, cts.Token);
+        await TestingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.WebApiService.Name, cts.Token);
     }
 
     private static async Task BuildServiceProvider()
     {
         var roomsDbContextConnectionString = await TestingApplicationFactory
-            .GetConnectionString(KnownResourceNames.MmrDb) ?? throw new InvalidOperationException("Database connection string is not set");
+            .GetConnectionString(KnownResources.MmrDb.Name) ?? throw new InvalidOperationException("Database connection string is not set");
 
         ServiceProvider = new TestingContainerFactory()
             .ConfigureRoomsDbContext(roomsDbContextConnectionString)

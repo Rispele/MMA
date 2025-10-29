@@ -1,4 +1,4 @@
-﻿namespace Sources.AppHost.Resources;
+﻿namespace Sources.AppHost.Resources.Docker.Minio;
 
 public class MinioContainerConfiguration
 {

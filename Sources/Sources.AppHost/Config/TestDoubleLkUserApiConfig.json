@@ -1,0 +1,7 @@
+﻿{
+  "TestDoubleLkUserApiConfig": {
+    "Registry": "k8store.urfu.ru",
+    "Image": "test-doubles/lk-user-api",
+    "Tag": "latest"
+  }
+}
