@@ -1,62 +1,14 @@
 ﻿using Commons;
 using Commons.Optional;
 using Rooms.Core.Dtos.Files;
-using Rooms.Core.Dtos.Requests.Filtering;
-using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
 using WebApi.Models.Files;
-using WebApi.Models.Requests.Filtering;
-using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 
 namespace WebApi.ModelConverters;
 
 public static partial class RoomsModelsConverter
 {
-    public static CreateRoomDto Convert(CreateRoomModel model)
-    {
-        return new CreateRoomDto
-        {
-            Name = model.Name,
-            Description = model.Description,
-            Type = Convert(model.Type),
-            Layout = Convert(model.Layout),
-            Seats = model.Seats,
-            ComputerSeats = model.ComputerSeats,
-            PdfRoomSchemeFile = Convert(model.PdfRoomSchemeFile),
-            PhotoFile = Convert(model.PhotoFile),
-            NetType = Convert(model.NetType),
-            HasConditioning = model.HasConditioning,
-            Owner = model.Owner,
-            RoomStatus = Convert(model.RoomStatus),
-            Comment = model.Comment,
-            FixDeadline = model.FixDeadline,
-            AllowBooking = model.AllowBooking
-        };
-    }
-
-    public static PatchRoomDto Convert(PatchRoomModel patchModel)
-    {
-        return new PatchRoomDto
-        {
-            Name = patchModel.Name,
-            Description = patchModel.Description,
-            Type = Convert(patchModel.Type),
-            Layout = Convert(patchModel.Layout),
-            Seats = patchModel.Seats,
-            ComputerSeats = patchModel.ComputerSeats,
-            PdfRoomSchemeFile = Convert(patchModel.PdfRoomSchemeFile),
-            PhotoFile = Convert(patchModel.PhotoFile),
-            NetType = Convert(patchModel.NetType),
-            HasConditioning = patchModel.HasConditioning,
-            Owner = patchModel.Owner,
-            RoomStatus = Convert(patchModel.RoomStatus),
-            Comment = patchModel.Comment,
-            FixDeadline = patchModel.FixDeadline,
-            AllowBooking = patchModel.AllowBooking
-        };
-    }
-
     public static RoomDto Convert(RoomModel model)
     {
         return new RoomDto
@@ -75,41 +27,6 @@ public static partial class RoomsModelsConverter
         );
     }
 
-
-    private static FilterParameterDto<TOut>? MapFilterParameter<TIn, TOut>(
-        FilterParameterModel<TIn>? src,
-        Func<TIn, TOut> map)
-    {
-        if (src == null || src.Value == null)
-        {
-            return null;
-        }
-
-        return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
-    }
-
-    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(
-        FilterMultiParameterModel<TIn>? src,
-        Func<TIn, TOut> map)
-    {
-        if (src?.Values == null || src.Values.Length == 0)
-        {
-            return null;
-        }
-
-        return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
-    }
-
-    private static SortDirectionDto Convert(SortDirectionModel direction)
-    {
-        return direction switch
-        {
-            SortDirectionModel.None => SortDirectionDto.None,
-            SortDirectionModel.Ascending => SortDirectionDto.Ascending,
-            SortDirectionModel.Descending => SortDirectionDto.Descending,
-            _ => SortDirectionDto.None
-        };
-    }
 
     private static RoomTypeDto Convert(RoomTypeModel value)
     {

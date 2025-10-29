@@ -37,6 +37,26 @@ public class MapsterTests
     }
     
     [Test]
+    public void Map_PatchRoomModel_To_PatchRoomDto_ShouldCorrectlyMap()
+    {
+        var dto = RoomMapsterTestHelper.CreatePatchRoomDto();
+        var model = RoomMapsterTestHelper.CreatePatchRoomModel();
+        
+        var mapped = mapper.Map<PatchRoomDto>(model);
+        mapped.Should().BeEquivalentTo(dto);
+    }
+
+    [Test]
+    public void Map_CreateRoomModel_To_CreateRoomDto_ShouldCorrectlyMap()
+    {
+        var dto = RoomMapsterTestHelper.CreateCreateRoomDto();
+        var model = RoomMapsterTestHelper.CreateCreateRoomModel();
+
+        var mapped = mapper.Map<CreateRoomModel>(model);
+        mapped.Should().BeEquivalentTo(dto);
+    }
+    
+    [Test]
     public void Map_GetRoomsModel_To_GetRoomRequestDto_ShouldCorrectlyMap()
     {
         var dto = RoomMapsterTestHelper.CreateGetRoomsRequestDto();

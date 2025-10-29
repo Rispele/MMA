@@ -114,6 +114,51 @@ public static class RoomMapsterTestHelper
             }
         };
     }
+    
+    public static CreateRoomModel CreateCreateRoomModel()
+    {
+        return new CreateRoomModel
+        {
+            Name = RoomName,
+            Description = RoomDescription,
+            Type = ToRoomType,
+            Layout = ToRoomLayout,
+            NetType = ToRoomNetType,
+            Seats = Seats,
+            ComputerSeats = ComputerSeats,
+            PdfRoomSchemeFile = new FileDescriptorModel(File1Name, new FileLocationModel(File1Id, File1Bucket)),
+            PhotoFile = new FileDescriptorModel(File2Name, new FileLocationModel(File2Id, File2Bucket)),
+            HasConditioning = HasConditioning,
+            Owner = Owner,
+            RoomStatus = ToRoomStatus,
+            Comment = FixComment,
+            FixDeadline = FixDeadline,
+            AllowBooking = AllowBooking
+        };
+    }
+    
+    public static CreateRoomDto CreateCreateRoomDto()
+    {
+        return new CreateRoomDto
+        {
+            Name = RoomName,
+            Description = RoomDescription,
+            Type = FromRoomType,
+            Layout = FromRoomLayout,
+            NetType = FromRoomNetType,
+            Seats = Seats,
+            ComputerSeats = ComputerSeats,
+            PdfRoomSchemeFile = new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
+            PhotoFile = new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket)),
+            HasConditioning = HasConditioning,
+            Owner = Owner,
+            RoomStatus = FromRoomStatus,
+            Comment = FixComment,
+            FixDeadline = FixDeadline,
+            AllowBooking = AllowBooking
+        };
+    }
+
 
     public static PatchRoomModel CreatePatchRoomModel()
     {
@@ -131,6 +176,28 @@ public static class RoomMapsterTestHelper
             HasConditioning = HasConditioning,
             Owner = Owner,
             RoomStatus = ToRoomStatus,
+            Comment = FixComment,
+            FixDeadline = FixDeadline,
+            AllowBooking = AllowBooking
+        };
+    }
+
+    public static PatchRoomDto CreatePatchRoomDto()
+    {
+        return new PatchRoomDto
+        {
+            Name = RoomName,
+            Description = RoomDescription,
+            Type = FromRoomType,
+            Layout = FromRoomLayout,
+            NetType = FromRoomNetType,
+            Seats = Seats,
+            ComputerSeats = ComputerSeats,
+            PdfRoomSchemeFile = new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
+            PhotoFile = new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket)),
+            HasConditioning = HasConditioning,
+            Owner = Owner,
+            RoomStatus = FromRoomStatus,
             Comment = FixComment,
             FixDeadline = FixDeadline,
             AllowBooking = AllowBooking

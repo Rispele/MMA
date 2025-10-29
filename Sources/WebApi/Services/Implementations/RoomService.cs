@@ -6,7 +6,6 @@ using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
 using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
-using RoomsModelsConverter = WebApi.ModelConverters.RoomsModelsConverter;
 
 namespace WebApi.Services.Implementations;
 
@@ -32,7 +31,7 @@ public class RoomService(
 
     public async Task<RoomModel> CreateRoom(CreateRoomModel model, CancellationToken cancellationToken)
     {
-        var innerRequest = RoomsModelsConverter.Convert(model);
+        var innerRequest = mapper.Map<CreateRoomDto>(model);
 
         var room = await roomService.CreateRoom(innerRequest, cancellationToken);
 
@@ -66,7 +65,7 @@ public class RoomService(
         PatchRoomModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = RoomsModelsConverter.Convert(patchModel);
+        var patchRequest = mapper.Map<PatchRoomDto>(patchModel);
 
         var patched = await roomService.PatchRoom(roomId, patchRequest, cancellationToken);
 
