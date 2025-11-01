@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Requests.Rooms;
@@ -37,6 +38,16 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
     {
         return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/equipment-schemas/{equipmentSchemaId}", typeof(EquipmentSchemaModel)) as
             EquipmentSchemaModel)!;
+    }
+
+    #endregion
+
+    #region EquipmentController
+
+    public async Task<EquipmentModel> CreateEquipment(CreateEquipmentModel model)
+    {
+        var response = await httpClient.PostAsJsonAsync($"{baseUrl}/webapi/equipments", model);
+        return (await response.Content.ReadFromJsonAsync<EquipmentModel>())!;
     }
 
     #endregion

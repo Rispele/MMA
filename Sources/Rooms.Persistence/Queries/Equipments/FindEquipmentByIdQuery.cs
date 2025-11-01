@@ -17,6 +17,9 @@ public readonly struct FindEquipmentByIdQuery :
     {
         var id = EquipmentId;
 
-        return source.Equipments.FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
+        return source.Equipments
+            .Include(x => x.Schema)
+            .ThenInclude(x => x.EquipmentType)
+            .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

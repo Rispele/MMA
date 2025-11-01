@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
+using Rooms.Domain.Models.Equipment;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Requests.Rooms;
@@ -64,8 +66,14 @@ public class Program
         };
         var expectedSchema = new EquipmentSchemaModel
         {
-            EquipmentTypeId = actualType.Id,
             Name = "Первое оборудование",
+            TypeId = actualType.Id,
+            Type = new EquipmentTypeModel
+            {
+                Id = actualType.Id,
+                Name = "Проектор",
+                Parameters = [new EquipmentParameterDescriptorModel { Name = "Разрешение", Required = true }]
+            },
             ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } }
         };
 
@@ -130,5 +138,105 @@ public class Program
 
         // Assert
         actualRoom.Should().BeEquivalentTo(expectedRoom, config: opt => opt.Excluding(x => x.Id));
+    }
+
+    [Test]
+    public async Task ModelsRelationMatchingTest()
+    {
+        // Arrange
+        var createEquipmentTypeModel = new CreateEquipmentTypeModel
+        {
+            Name = "Проектор",
+            Parameters = [new EquipmentParameterDescriptorModel { Name = "Разрешение", Required = true }]
+        };
+        var equipmentType = await _httpClient.CreateEquipmentType(createEquipmentTypeModel);
+
+        var createEquipmentSchemaModel = new CreateEquipmentSchemaModel
+        {
+            Name = "Первое оборудование",
+            EquipmentTypeId = equipmentType.Id,
+            ParameterValues = new Dictionary<string, string>() { { "Разрешение", "1920x1080" } },
+            EquipmentIds = []
+        };
+        var equipmentSchema = await _httpClient.CreateEquipmentSchema(createEquipmentSchemaModel);
+
+        var createRoomModel = new CreateRoomModel
+        {
+            Name = "ВтораяАудитория",
+            Description = "Описание",
+            Type = RoomTypeModel.Computer,
+            Layout = RoomLayoutModel.Unspecified,
+            Seats = 15,
+            ComputerSeats = 10,
+            PdfRoomSchemeFile = null,
+            PhotoFile = null,
+            NetType = RoomNetTypeModel.Wired,
+            HasConditioning = true,
+            Owner = null,
+            RoomStatus = RoomStatusModel.Ready,
+            Comment = null,
+            FixDeadline = null,
+            AllowBooking = true,
+        };
+        var room = await _httpClient.CreateRoom(createRoomModel);
+
+        var createEquipmentModel = new CreateEquipmentModel
+        {
+            RoomId = room.Id,
+            SchemaId = equipmentSchema.Id,
+            InventoryNumber = "1234",
+            SerialNumber = "5678",
+            NetworkEquipmentIp = "127.0.0.1",
+            Comment = null,
+            Status = EquipmentStatus.Ok,
+        };
+        var equipment = await _httpClient.CreateEquipment(createEquipmentModel);
+
+        var expectedRoom = new RoomModel
+        {
+            Id = 1,
+            Name = "ВтораяАудитория",
+            Description = "Описание",
+            // ScheduleAddress = new ScheduleAddressModel
+            // {
+            //     Address = "Мира 19",
+            //     RoomNumber = "150"
+            // },
+            Parameters = new RoomParametersModel
+            {
+                Type = RoomTypeModel.Computer,
+                Layout = RoomLayoutModel.Unspecified,
+                NetType = RoomNetTypeModel.Wired,
+                Seats = 15,
+                ComputerSeats = 10,
+                HasConditioning = true
+            },
+            Attachments = new RoomAttachmentsModel(null, null),
+            Owner = null,
+            OperatorDepartment = null,
+            FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, null, null),
+            AllowBooking = true,
+            Equipments =
+            [
+                new EquipmentModel
+                {
+                    Id = equipment.Id,
+                    RoomId = room.Id,
+                    SchemaId = equipmentSchema.Id,
+                    Schema = equipmentSchema,
+                    InventoryNumber = "1234",
+                    SerialNumber = "5678",
+                    NetworkEquipmentIp = "127.0.0.1",
+                    Comment = null,
+                    Status = EquipmentStatus.Ok,
+                }
+            ],
+        };
+
+        // Act
+        var actualRoom = await _httpClient.GetRoomById(room.Id);
+
+        // Assert
+        actualRoom.Should().BeEquivalentTo(expectedRoom, opt => opt.Excluding(x => x.Id));
     }
 }

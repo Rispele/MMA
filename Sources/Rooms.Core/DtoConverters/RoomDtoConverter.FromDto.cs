@@ -83,27 +83,33 @@ public static partial class RoomDtoConverter
 
     private static RoomParameters Convert(RoomParametersDto parameters)
     {
-        return new RoomParameters(
-            parameters.Type.Map(Convert),
-            parameters.Layout.Map(Convert),
-            parameters.NetType.Map(Convert),
-            parameters.Seats,
-            parameters.ComputerSeats,
-            parameters.HasConditioning);
+        return new RoomParameters
+        {
+            Type = parameters.Type.Map(Convert),
+            Layout = parameters.Layout.Map(Convert),
+            NetType = parameters.NetType.Map(Convert),
+            Seats = parameters.Seats,
+            ComputerSeats = parameters.ComputerSeats,
+            HasConditioning = parameters.HasConditioning
+        };
     }
 
     private static RoomAttachments Convert(RoomAttachmentsDto attachments)
     {
-        return new RoomAttachments(
-            attachments.PdfRoomScheme.AsOptional().Map(FileConvertExtensions.FromDto),
-            attachments.Photo.AsOptional().Map(FileConvertExtensions.FromDto));
+        return new RoomAttachments
+        {
+            PdfRoomScheme = attachments.PdfRoomScheme.AsOptional().Map(FileConvertExtensions.FromDto),
+            Photo = attachments.Photo.AsOptional().Map(FileConvertExtensions.FromDto),
+        };
     }
 
     private static RoomFixInfo Convert(RoomFixStatusDto fixStatus)
     {
-        return new RoomFixInfo(
-            fixStatus.Status.Map(Convert),
-            fixStatus.FixDeadline,
-            fixStatus.Comment);
+        return new RoomFixInfo
+        {
+            Status = fixStatus.Status.Map(Convert),
+            FixDeadline = fixStatus.FixDeadline,
+            Comment = fixStatus.Comment,
+        };
     }
 }

@@ -114,7 +114,7 @@ public static class RoomMapsterTestHelper
             }
         };
     }
-    
+
     public static CreateRoomModel CreateCreateRoomModel()
     {
         return new CreateRoomModel
@@ -136,7 +136,7 @@ public static class RoomMapsterTestHelper
             AllowBooking = AllowBooking
         };
     }
-    
+
     public static CreateRoomDto CreateCreateRoomDto()
     {
         return new CreateRoomDto

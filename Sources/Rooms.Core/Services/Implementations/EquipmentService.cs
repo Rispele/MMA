@@ -9,7 +9,6 @@ using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipment;
 using EquipmentDtoConverter = Rooms.Core.DtoConverters.EquipmentDtoConverter;
-using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -66,7 +65,6 @@ public class EquipmentService(
 
         await context.Commit(cancellationToken);
 
-        equipment.Room = room.Map(RoomDtoConverter.Convert);
         equipment.Schema = schema.Map(EquipmentSchemaDtoConverter.Convert);
         return equipment.Map(EquipmentDtoConverter.Convert);
     }

@@ -1,4 +1,5 @@
-﻿using Rooms.Core.Dtos.Files;
+﻿using Commons;
+using Rooms.Core.Dtos.Files;
 using Rooms.Core.Dtos.Room;
 using WebApi.Models.Files;
 using WebApi.Models.Room;
@@ -20,7 +21,8 @@ public static partial class RoomsModelsConverter
             Owner = dto.Owner,
             OperatorDepartment = Convert(dto.OperatorDepartment),
             FixStatus = Convert(dto.FixStatus),
-            AllowBooking = dto.AllowBooking
+            AllowBooking = dto.AllowBooking,
+            Equipments = dto.Equipments.Select(x => x.Map(EquipmentsModelsConverter.Convert))
         };
     }
 

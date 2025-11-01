@@ -21,7 +21,7 @@ public class MapsterTests
     {
         var dto = RoomMapsterTestHelper.CreateRoomDto();
         var model = RoomMapsterTestHelper.CreateRoomModel();
-        
+
         var mapped = mapper.Map<RoomModel>(dto);
         mapped.Should().BeEquivalentTo(model);
     }
@@ -31,17 +31,17 @@ public class MapsterTests
     {
         var dto = RoomMapsterTestHelper.CreateRoomDto();
         var model = RoomMapsterTestHelper.CreatePatchRoomModel();
-        
+
         var mapped = mapper.Map<PatchRoomModel>(dto);
         mapped.Should().BeEquivalentTo(model);
     }
-    
+
     [Test]
     public void Map_PatchRoomModel_To_PatchRoomDto_ShouldCorrectlyMap()
     {
         var dto = RoomMapsterTestHelper.CreatePatchRoomDto();
         var model = RoomMapsterTestHelper.CreatePatchRoomModel();
-        
+
         var mapped = mapper.Map<PatchRoomDto>(model);
         mapped.Should().BeEquivalentTo(dto);
     }
@@ -55,13 +55,13 @@ public class MapsterTests
         var mapped = mapper.Map<CreateRoomModel>(model);
         mapped.Should().BeEquivalentTo(dto);
     }
-    
+
     [Test]
     public void Map_GetRoomsModel_To_GetRoomRequestDto_ShouldCorrectlyMap()
     {
         var dto = RoomMapsterTestHelper.CreateGetRoomsRequestDto();
         var model = RoomMapsterTestHelper.CreateGetRoomsModel();
-        
+
         var mapped = mapper.Map<GetRoomsRequestDto>(model);
         mapped.Should().BeEquivalentTo(dto);
     }

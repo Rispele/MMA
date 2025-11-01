@@ -12,9 +12,9 @@ public static partial class EquipmentSchemaDtoConverter
         {
             Id = entity.Id,
             Name = entity.Name,
-            EquipmentType = entity.EquipmentType.Map(EquipmentTypeDtoConverter.Convert),
+            TypeId = entity.EquipmentTypeId,
+            Type = entity.EquipmentType.Map(EquipmentTypeDtoConverter.Convert),
             ParameterValues = entity.ParameterValues,
-            Equipments = entity.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert))
         };
     }
 }

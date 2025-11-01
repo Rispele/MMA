@@ -25,7 +25,7 @@ public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorag
 
         await minioClient.PutObjectAsync(putObjectArgs, cancellationToken);
 
-        return new FileDescriptor(filename, new FileLocation(id, bucket));
+        return new FileDescriptor { Filename = filename, Location = new FileLocation { Id = id, Bucket = bucket } };
     }
 
     public async Task<TempFileUrl> FindObject(FileLocation location, int expiresIn)

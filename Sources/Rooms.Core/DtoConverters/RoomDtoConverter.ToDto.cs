@@ -22,7 +22,7 @@ public static partial class RoomDtoConverter
             operatorDepartment: null,
             room.FixInfo.Map(Convert),
             room.AllowBooking,
-            room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)));
+            room.Equipments.IsNotEmpty() ? room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)) : []);
     }
 
     private static ScheduleAddressDto? Convert(RoomScheduleAddress? entity)

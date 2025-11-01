@@ -6,4 +6,9 @@ public static class EnumerableExtensions
     {
         return string.Join(delimiter, enumerable);
     }
+
+    public static bool IsNotEmpty<TValue>(this IEnumerable<TValue> enumerable)
+    {
+        return enumerable != null! && enumerable.Any();
+    }
 }

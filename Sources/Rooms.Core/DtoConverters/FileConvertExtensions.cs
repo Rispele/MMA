@@ -9,7 +9,7 @@ public static class FileConvertExtensions
     {
         return new FileDescriptorDto(
             fileDescriptor.Filename,
-            fileDescriptor.FileLocation.ToDto());
+            fileDescriptor.Location.ToDto());
     }
 
     public static FileLocationDto ToDto(this FileLocation fileLocation)
@@ -19,13 +19,19 @@ public static class FileConvertExtensions
 
     public static FileDescriptor FromDto(this FileDescriptorDto fileDescriptor)
     {
-        return new FileDescriptor(
-            fileDescriptor.FileName,
-            fileDescriptor.Location.FromDto());
+        return new FileDescriptor
+        {
+            Filename = fileDescriptor.FileName,
+            Location = fileDescriptor.Location.FromDto(),
+        };
     }
 
     public static FileLocation FromDto(this FileLocationDto fileLocation)
     {
-        return new FileLocation(fileLocation.Id, fileLocation.Bucket);
+        return new FileLocation
+        {
+            Id = fileLocation.Id,
+            Bucket = fileLocation.Bucket,
+        };
     }
 }

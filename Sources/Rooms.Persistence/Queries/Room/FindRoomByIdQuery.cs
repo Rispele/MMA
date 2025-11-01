@@ -14,6 +14,10 @@ public readonly struct FindRoomByIdQuery :
     {
         var id = RoomId;
 
-        return source.Rooms.FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
+        return source.Rooms
+            .Include(x => x.Equipments)
+            .ThenInclude(x => x.Schema)
+            .ThenInclude(x => x.EquipmentType)
+            .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

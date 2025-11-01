@@ -1,4 +1,5 @@
-﻿using Rooms.Core.Dtos.Equipment;
+﻿using Commons;
+using Rooms.Core.Dtos.Equipment;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentSchemas;
 
@@ -12,7 +13,8 @@ public static partial class EquipmentSchemasModelsConverter
         {
             Id = entity.Id,
             Name = entity.Name,
-            EquipmentTypeId = entity.EquipmentType.Id,
+            TypeId = entity.Type.Id,
+            Type = entity.Type.Map(EquipmentTypesModelsConverter.Convert),
             ParameterValues = entity.ParameterValues
         };
     }
@@ -22,9 +24,8 @@ public static partial class EquipmentSchemasModelsConverter
         return new PatchEquipmentSchemaModel
         {
             Name = entity.Name,
-            EquipmentTypeId = entity.EquipmentType.Id,
+            EquipmentTypeId = entity.Type.Id,
             ParameterValues = entity.ParameterValues,
-            EquipmentIds = entity.Equipments.Select(x => x.Id)
         };
     }
 }

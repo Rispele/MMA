@@ -12,8 +12,9 @@ public static partial class EquipmentsModelsConverter
         return new EquipmentModel
         {
             Id = equipment.Id,
-            RoomModel = equipment.Room.Map(RoomsModelsConverter.Convert),
-            SchemaModel = equipment.SchemaDto.Map(EquipmentSchemasModelsConverter.Convert),
+            RoomId = equipment.RoomId,
+            SchemaId = equipment.Schema.Id,
+            Schema = equipment.Schema.Map(EquipmentSchemasModelsConverter.Convert),
             InventoryNumber = equipment.InventoryNumber,
             SerialNumber = equipment.SerialNumber,
             NetworkEquipmentIp = equipment.NetworkEquipmentIp,
@@ -26,8 +27,8 @@ public static partial class EquipmentsModelsConverter
     {
         return new PatchEquipmentModel
         {
-            RoomId = dto.Room.Id,
-            Schema = dto.SchemaDto,
+            RoomId = dto.RoomId,
+            Schema = dto.Schema,
             InventoryNumber = dto.InventoryNumber,
             SerialNumber = dto.SerialNumber,
             NetworkEquipmentIp = dto.NetworkEquipmentIp,

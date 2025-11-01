@@ -50,25 +50,33 @@ public class RoomService(
 
         await Validate(unitOfWork, dto, cancellationToken);
 
-        var room = Room.New(
-            dto.Name,
-            dto.Description,
-            new RoomParameters(
-                RoomDtoConverter.Convert(dto.Type),
-                RoomDtoConverter.Convert(dto.Layout),
-                RoomDtoConverter.Convert(dto.NetType),
-                dto.Seats,
-                dto.ComputerSeats,
-                dto.HasConditioning),
-            new RoomAttachments(
-                FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
-                FileDtoConverter.Convert(dto.PhotoFile)),
-            dto.Owner,
-            new RoomFixInfo(
-                RoomDtoConverter.Convert(dto.RoomStatus),
-                dto.FixDeadline,
-                dto.Comment),
-            dto.AllowBooking);
+        var room = new Room
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            Parameters = new RoomParameters
+            {
+                Type = RoomDtoConverter.Convert(dto.Type),
+                Layout = RoomDtoConverter.Convert(dto.Layout),
+                NetType = RoomDtoConverter.Convert(dto.NetType),
+                Seats = dto.Seats,
+                ComputerSeats = dto.ComputerSeats,
+                HasConditioning = dto.HasConditioning,
+            },
+            Attachments = new RoomAttachments
+            {
+                PdfRoomScheme = FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
+                Photo = FileDtoConverter.Convert(dto.PhotoFile),
+            },
+            Owner = dto.Owner,
+            FixInfo = new RoomFixInfo
+            {
+                Status = RoomDtoConverter.Convert(dto.RoomStatus),
+                FixDeadline = dto.FixDeadline,
+                Comment = dto.Comment,
+            },
+            AllowBooking = dto.AllowBooking,
+        };
 
         unitOfWork.Add(room);
 
@@ -99,21 +107,27 @@ public class RoomService(
         roomToPatch.Update(
             dto.Name,
             dto.Description,
-            new RoomParameters(
-                RoomDtoConverter.Convert(dto.Type),
-                RoomDtoConverter.Convert(dto.Layout),
-                RoomDtoConverter.Convert(dto.NetType),
-                dto.Seats,
-                dto.ComputerSeats,
-                dto.HasConditioning),
-            new RoomAttachments(
-                FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
-                FileDtoConverter.Convert(dto.PhotoFile)),
+            new RoomParameters
+            {
+                Type = RoomDtoConverter.Convert(dto.Type),
+                Layout = RoomDtoConverter.Convert(dto.Layout),
+                NetType = RoomDtoConverter.Convert(dto.NetType),
+                Seats = dto.Seats,
+                ComputerSeats = dto.ComputerSeats,
+                HasConditioning = dto.HasConditioning
+            },
+            new RoomAttachments
+            {
+                PdfRoomScheme = FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
+                Photo = FileDtoConverter.Convert(dto.PhotoFile)
+            },
             dto.Owner,
-            new RoomFixInfo(
-                RoomDtoConverter.Convert(dto.RoomStatus),
-                dto.FixDeadline,
-                dto.Comment),
+            new RoomFixInfo
+            {
+                Status = RoomDtoConverter.Convert(dto.RoomStatus),
+                FixDeadline = dto.FixDeadline,
+                Comment = dto.Comment
+            },
             dto.AllowBooking);
 
         await unitOfWork.Commit(cancellationToken);

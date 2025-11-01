@@ -1,13 +1,13 @@
 ﻿using Rooms.Domain.Models.Equipment;
-using WebApi.Models.Room;
 
 namespace WebApi.Models.Equipment;
 
 public class EquipmentModel
 {
     public int Id { get; init; }
-    public RoomModel RoomModel { get; init; } = default!;
-    public required EquipmentSchemaModel SchemaModel { get; init; }
+    public int RoomId { get; init; }
+    public int SchemaId { get; init; }
+    public EquipmentSchemaModel Schema { get; init; } = null!;
     public string? InventoryNumber { get; init; }
     public string? SerialNumber { get; init; }
     public string? NetworkEquipmentIp { get; init; }
