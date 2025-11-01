@@ -28,6 +28,15 @@ public class RoomService(
         return room.Map(RoomDtoConverter.Convert);
     }
 
+    public async Task<IEnumerable<RoomDto>> GetRoomsById(IEnumerable<int> roomIds, CancellationToken cancellationToken)
+    {
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
+
+        var rooms = await GetRoomsByIdInner(unitOfWork, roomIds, cancellationToken);
+
+        return rooms.Select(x => x.Map(RoomDtoConverter.Convert));
+    }
+
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
@@ -128,7 +137,8 @@ public class RoomService(
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },
-            dto.AllowBooking);
+            dto.AllowBooking,
+            dto.OperatorRoomId);
 
         await unitOfWork.Commit(cancellationToken);
 
@@ -141,6 +151,16 @@ public class RoomService(
 
         return await unitOfWork.ApplyQuery(query, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
+    }
+
+    private async Task<Room[]> GetRoomsByIdInner(IUnitOfWork unitOfWork, IEnumerable<int> roomIds, CancellationToken cancellationToken)
+    {
+        var query = queriesFactory.FindByIds(roomIds);
+
+        return await unitOfWork
+                   .ApplyQuery(query)
+                   .ToArrayAsync(cancellationToken)
+               ?? throw new RoomNotFoundException($"Rooms [{string.Join(", ", roomIds)}] not found");
     }
 
     private async Task Validate(IUnitOfWork unitOfWork, CreateRoomDto dto, CancellationToken cancellationToken)

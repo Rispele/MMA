@@ -15,6 +15,8 @@ public class Room
     public RoomFixInfo FixInfo { get; set; } = null!;
     public bool AllowBooking { get; set; }
     public List<Equipment.Equipment> Equipments { get; set; } = [];
+    public int? OperatorRoomId { get; set; }
+    public OperatorRoom.OperatorRoom OperatorRoom { get; set; } = null!;
 
     public void Update(
         string name,
@@ -23,7 +25,8 @@ public class Room
         RoomAttachments attachments,
         string? owner,
         RoomFixInfo fixInfo,
-        bool allowBooking)
+        bool allowBooking,
+        int operatorRoomId)
     {
         Name = name;
         Description = description;
@@ -32,5 +35,6 @@ public class Room
         Owner = owner;
         FixInfo = fixInfo;
         AllowBooking = allowBooking;
+        OperatorRoomId = operatorRoomId;
     }
 }

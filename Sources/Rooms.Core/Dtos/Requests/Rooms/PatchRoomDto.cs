@@ -41,4 +41,5 @@ public record PatchRoomDto
 
     public DateTime? FixDeadline { get; init; }
     public bool AllowBooking { get; init; }
+    public int OperatorRoomId { get; init; }
 }

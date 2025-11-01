@@ -17,7 +17,7 @@ using Rooms.Persistence;
 namespace Rooms.Persistence.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    [Migration("20251028001720_Initial")]
+    [Migration("20251101063736_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -32,6 +32,7 @@ namespace Rooms.Persistence.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_net_type", new[] { "none", "unspecified", "wired", "wired_and_wireless", "wireless" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_status", new[] { "not_ready", "partially_ready", "ready", "unspecified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_type", new[] { "computer", "mixed", "multimedia", "special", "unspecified" });
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "hstore");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.Equipment", b =>
@@ -146,6 +147,36 @@ namespace Rooms.Persistence.Migrations
                     b.ToTable("equipment_types", (string)null);
                 });
 
+            modelBuilder.Entity("Rooms.Domain.Models.OperatorRoom.OperatorRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Contacts")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("contacts");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<Dictionary<string, string>>("Operators")
+                        .IsRequired()
+                        .HasColumnType("hstore")
+                        .HasColumnName("operators");
+
+                    b.HasKey("Id")
+                        .HasName("pk_operator_rooms");
+
+                    b.ToTable("operator_rooms", (string)null);
+                });
+
             modelBuilder.Entity("Rooms.Domain.Models.Room.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -175,6 +206,10 @@ namespace Rooms.Persistence.Migrations
                         .HasColumnType("character varying(64)")
                         .HasColumnName("name");
 
+                    b.Property<int?>("OperatorRoomId")
+                        .HasColumnType("integer")
+                        .HasColumnName("operator_room_id");
+
                     b.Property<string>("Owner")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)")
@@ -182,6 +217,9 @@ namespace Rooms.Persistence.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_rooms");
+
+                    b.HasIndex("OperatorRoomId")
+                        .HasDatabaseName("ix_rooms_operator_room_id");
 
                     b.ToTable("rooms", (string)null);
                 });
@@ -221,6 +259,11 @@ namespace Rooms.Persistence.Migrations
 
             modelBuilder.Entity("Rooms.Domain.Models.Room.Room", b =>
                 {
+                    b.HasOne("Rooms.Domain.Models.OperatorRoom.OperatorRoom", "OperatorRoom")
+                        .WithMany("Rooms")
+                        .HasForeignKey("OperatorRoomId")
+                        .HasConstraintName("fk_rooms_operator_rooms_operator_room_id");
+
                     b.OwnsOne("Rooms.Domain.Models.Room.Fix.RoomFixInfo", "FixInfo", b1 =>
                         {
                             b1.Property<int>("RoomId")
@@ -318,6 +361,8 @@ namespace Rooms.Persistence.Migrations
                     b.Navigation("FixInfo")
                         .IsRequired();
 
+                    b.Navigation("OperatorRoom");
+
                     b.Navigation("Parameters")
                         .IsRequired();
 
@@ -332,6 +377,11 @@ namespace Rooms.Persistence.Migrations
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.EquipmentType", b =>
                 {
                     b.Navigation("Schemas");
+                });
+
+            modelBuilder.Entity("Rooms.Domain.Models.OperatorRoom.OperatorRoom", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("Rooms.Domain.Models.Room.Room", b =>

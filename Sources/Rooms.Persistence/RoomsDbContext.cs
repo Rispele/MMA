@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.OperatorRoom;
 using Rooms.Domain.Models.Room;
 using Rooms.Persistence.EntityConfigurations.Equipment;
 using Rooms.Persistence.EntityConfigurations.Room;
@@ -18,6 +19,8 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
     public DbSet<EquipmentSchema> EquipmentSchemas { get; [UsedImplicitly] private set; }
 
     public DbSet<EquipmentType> EquipmentTypes { get; [UsedImplicitly] private set; }
+
+    public DbSet<OperatorRoom> OperatorRooms { get; [UsedImplicitly] private set; }
 
     public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(IQuerySpecification<TEntity> querySpecification)
     {

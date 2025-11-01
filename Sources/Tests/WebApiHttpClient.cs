@@ -1,8 +1,10 @@
 ﻿using System.Net.Http.Json;
 using WebApi.Models.Equipment;
+using WebApi.Models.OperatorRoom;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
+using WebApi.Models.Requests.OperatorRooms;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 
@@ -63,6 +65,21 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
     public async Task<RoomModel> GetRoomById(int roomId)
     {
         return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/rooms/{roomId}", typeof(RoomModel)) as RoomModel)!;
+    }
+
+    #endregion
+
+    #region OperatorRoomsController
+
+    public async Task<OperatorRoomModel> CreateOperatorRoom(CreateOperatorRoomModel model)
+    {
+        var response = await httpClient.PostAsJsonAsync($"{baseUrl}/webapi/operator-rooms", model);
+        return (await response.Content.ReadFromJsonAsync<OperatorRoomModel>())!;
+    }
+
+    public async Task<OperatorRoomModel> GetOperatorRoomById(int operatorRoomId)
+    {
+        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/operator-rooms/{operatorRoomId}", typeof(OperatorRoomModel)) as OperatorRoomModel)!;
     }
 
     #endregion

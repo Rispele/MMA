@@ -1,5 +1,6 @@
 ﻿using Commons;
 using Commons.Optional;
+using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
@@ -71,6 +72,29 @@ public static partial class RoomDtoConverter
             RoomStatusDto.PartiallyReady => RoomStatus.PartiallyReady,
             RoomStatusDto.NotReady => RoomStatus.NotReady,
             _ => throw new ArgumentOutOfRangeException(nameof(roomStatus), roomStatus, message: null)
+        };
+    }
+
+    public static PatchRoomDto ConvertPatch(RoomDto entity)
+    {
+        return new PatchRoomDto
+        {
+            Name = entity.Name,
+            Description = entity.Description,
+            Type = entity.Parameters.Type,
+            Layout = entity.Parameters.Layout,
+            NetType = entity.Parameters.NetType,
+            Seats = entity.Parameters.Seats,
+            ComputerSeats = entity.Parameters.ComputerSeats,
+            PdfRoomSchemeFile = entity.Attachments.PdfRoomScheme,
+            PhotoFile = entity.Attachments.Photo,
+            HasConditioning = entity.Parameters.HasConditioning,
+            Owner = entity.Owner,
+            RoomStatus = entity.FixStatus.Status,
+            Comment = entity.FixStatus.Comment,
+            FixDeadline = entity.FixStatus.FixDeadline,
+            AllowBooking = entity.AllowBooking,
+            OperatorRoomId = entity.OperatorRoomId,
         };
     }
 

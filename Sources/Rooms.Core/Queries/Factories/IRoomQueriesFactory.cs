@@ -13,5 +13,7 @@ public interface IRoomQueriesFactory
 
     public IFindRoomByIdQuery FindById(int roomId);
 
+    public IFindRoomsByIdQuery FindByIds(IEnumerable<int> roomIds);
+
     public IFindRoomByNameQuery FindByName(string name);
 }

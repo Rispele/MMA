@@ -26,6 +26,14 @@ public class RoomQueriesFactory : IRoomQueriesFactory
         };
     }
 
+    public IFindRoomsByIdQuery FindByIds(IEnumerable<int> roomIds)
+    {
+        return new FindRoomsByIdQuery
+        {
+            RoomIds = roomIds
+        };
+    }
+
     public IFindRoomByNameQuery FindByName(string name)
     {
         return new FindRoomByNameQuery

@@ -8,6 +8,7 @@ namespace Rooms.Core.Services.Interfaces;
 public interface IRoomService
 {
     Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken);
+    Task<IEnumerable<RoomDto>> GetRoomsById(IEnumerable<int> roomIds, CancellationToken cancellationToken);
     Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken);
     Task<RoomDto> CreateRoom(CreateRoomDto dto, CancellationToken cancellationToken);
     Task<RoomDto> UpdateWithEquipment(int roomId, Equipment equipment, CancellationToken cancellationToken);

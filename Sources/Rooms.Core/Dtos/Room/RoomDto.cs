@@ -41,4 +41,5 @@ public record RoomDto
     public RoomFixStatusDto FixStatus { get; init; }
     public bool AllowBooking { get; init; }
     public IEnumerable<EquipmentDto> Equipments { get; init; }
+    public int OperatorRoomId { get; set; }
 }

@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
 using Rooms.Domain.Models.Equipment;
 using WebApi.Models.Equipment;
+using WebApi.Models.OperatorRoom;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
+using WebApi.Models.Requests.OperatorRooms;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 
@@ -238,5 +240,51 @@ public class Program
 
         // Assert
         actualRoom.Should().BeEquivalentTo(expectedRoom, opt => opt.Excluding(x => x.Id));
+    }
+
+    [Test]
+    public async Task CreateOperatorRoomTest()
+    {
+        // Arrange
+        var createRoomModel = new CreateRoomModel
+        {
+            Name = "ТретьяАудитория",
+            Description = "Описание",
+            Type = RoomTypeModel.Computer,
+            Layout = RoomLayoutModel.Unspecified,
+            Seats = 15,
+            ComputerSeats = 10,
+            PdfRoomSchemeFile = null,
+            PhotoFile = null,
+            NetType = RoomNetTypeModel.Wired,
+            HasConditioning = true,
+            Owner = null,
+            RoomStatus = RoomStatusModel.Ready,
+            Comment = null,
+            FixDeadline = null,
+            AllowBooking = true,
+        };
+        var room = await _httpClient.CreateRoom(createRoomModel);
+
+        var inputOperatorRoom = new CreateOperatorRoomModel
+        {
+            Name = "Операторская",
+            RoomIds = [room.Id],
+            Operators = new Dictionary<string, string> { { "1", "Иван" } },
+            Contacts = "123",
+        };
+        var expectedOperatorRoom = new OperatorRoomModel
+        {
+            Name = "Операторская",
+            Rooms = new Dictionary<int, string>() { { 1, "ТретьяАудитория" } },
+            Operators = new Dictionary<string, string>() { { "1", "Иван" } },
+            Contacts = "123",
+        };
+
+        // Act
+        var actualOperatorRoom = await _httpClient.CreateOperatorRoom(inputOperatorRoom);
+
+        // Assert
+        actualOperatorRoom.Should().BeEquivalentTo(expectedOperatorRoom, opt => opt.Excluding(x => x.Id));
     }
 }
