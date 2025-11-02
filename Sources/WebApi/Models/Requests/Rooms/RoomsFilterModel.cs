@@ -1,5 +1,6 @@
 ﻿using WebApi.Models.Requests.Filtering;
-using WebApi.Models.Room;
+using WebApi.Models.Room.Fix;
+using WebApi.Models.Room.Parameters;
 
 namespace WebApi.Models.Requests.Rooms;
 

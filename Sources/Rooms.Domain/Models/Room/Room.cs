@@ -26,7 +26,7 @@ public class Room
         string? owner,
         RoomFixInfo fixInfo,
         bool allowBooking,
-        int operatorRoomId)
+        int? operatorRoomId)
     {
         Name = name;
         Description = description;

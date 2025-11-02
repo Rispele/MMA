@@ -2,10 +2,14 @@
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 using WebApi.Models.Files;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
+using WebApi.Models.Room.Fix;
+using WebApi.Models.Room.Parameters;
 
 namespace WebApi.Tests.UnitTests;
 
@@ -68,16 +72,17 @@ public static class RoomMapsterTestHelper
                 new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
                 new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket))),
             Owner,
-            new RoomOperatorDepartmentDto(
-                OperatorDepartmentId,
-                DepartmentName,
-                Contacts,
-                [
-                    new RoomOperatorDto(OperatorId, OperatorName, OperatorUserId)
-                ]),
+            // new RoomOperatorDepartmentDto(
+            //     OperatorDepartmentId,
+            //     DepartmentName,
+            //     Contacts,
+            //     [
+            //         new RoomOperatorDto(OperatorId, OperatorName, OperatorUserId)
+            //     ]),
             new RoomFixStatusDto(FromRoomStatus, FixDeadline, FixComment),
             AllowBooking,
-            []);
+            [],
+            null);
     }
 
     public static RoomModel CreateRoomModel()
@@ -93,11 +98,11 @@ public static class RoomMapsterTestHelper
                 new FileDescriptorModel(File2Name, new FileLocationModel(File2Id, File2Bucket))),
             Owner = Owner,
             FixStatus = new RoomFixStatusModel(ToRoomStatus, FixDeadline, FixComment),
-            OperatorDepartment = new RoomOperatorDepartmentModel(
-                OperatorDepartmentId,
-                DepartmentName,
-                Contacts,
-                [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
+            // OperatorDepartment = new RoomOperatorDepartmentModel(
+            //     OperatorDepartmentId,
+            //     DepartmentName,
+            //     Contacts,
+            //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
             Parameters = new RoomParametersModel
             {
                 ComputerSeats = ComputerSeats,

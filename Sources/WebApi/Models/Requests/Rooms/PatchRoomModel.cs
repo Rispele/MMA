@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WebApi.Models.Files;
-using WebApi.Models.Room;
+using WebApi.Models.Room.Fix;
+using WebApi.Models.Room.Parameters;
 
 namespace WebApi.Models.Requests.Rooms;
 

@@ -1,4 +1,6 @@
 ﻿using Rooms.Core.Dtos.Equipment;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 
 namespace Rooms.Core.Dtos.Room;
 
@@ -12,10 +14,10 @@ public record RoomDto
         RoomParametersDto parameters,
         RoomAttachmentsDto attachments,
         string? owner,
-        RoomOperatorDepartmentDto? operatorDepartment,
         RoomFixStatusDto fixStatus,
         bool allowBooking,
-        IEnumerable<EquipmentDto> equipments)
+        IEnumerable<EquipmentDto> equipments,
+        int? operatorRoomId)
     {
         Id = id;
         Name = name;
@@ -23,11 +25,11 @@ public record RoomDto
         ScheduleAddress = scheduleAddress;
         Parameters = parameters;
         Attachments = attachments;
-        OperatorDepartment = operatorDepartment;
         FixStatus = fixStatus;
         AllowBooking = allowBooking;
         Equipments = equipments;
         Owner = owner;
+        OperatorRoomId = operatorRoomId;
     }
 
     public int Id { get; init; }
@@ -37,9 +39,8 @@ public record RoomDto
     public RoomParametersDto Parameters { get; init; }
     public RoomAttachmentsDto Attachments { get; init; }
     public string? Owner { get; init; }
-    public RoomOperatorDepartmentDto? OperatorDepartment { get; init; }
     public RoomFixStatusDto FixStatus { get; init; }
     public bool AllowBooking { get; init; }
     public IEnumerable<EquipmentDto> Equipments { get; init; }
-    public int OperatorRoomId { get; set; }
+    public int? OperatorRoomId { get; set; }
 }

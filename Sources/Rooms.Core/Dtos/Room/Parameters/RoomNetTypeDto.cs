@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebApi.Models.Room;
+namespace Rooms.Core.Dtos.Room.Parameters;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum RoomNetTypeModel
+public enum RoomNetTypeDto
 {
     Unspecified = 0,
     None = 1,

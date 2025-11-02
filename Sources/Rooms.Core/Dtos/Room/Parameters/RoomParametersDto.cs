@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Dtos.Room;
+﻿namespace Rooms.Core.Dtos.Room.Parameters;
 
 public record RoomParametersDto(
     RoomTypeDto Type,

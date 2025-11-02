@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models.Room;
+﻿namespace WebApi.Models.Room.Parameters;
 
 public record RoomParametersModel
 {

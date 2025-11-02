@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Rooms.Core.Dtos.Files;
-using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 
 namespace Rooms.Core.Dtos.Requests.Rooms;
 
@@ -41,5 +42,5 @@ public record PatchRoomDto
 
     public DateTime? FixDeadline { get; init; }
     public bool AllowBooking { get; init; }
-    public int OperatorRoomId { get; init; }
+    public int? OperatorRoomId { get; init; }
 }

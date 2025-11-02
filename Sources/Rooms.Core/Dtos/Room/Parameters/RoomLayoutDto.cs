@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Rooms.Core.Dtos.Room;
+namespace Rooms.Core.Dtos.Room.Parameters;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomLayoutDto

@@ -1,8 +1,12 @@
 ﻿using Commons;
 using Rooms.Core.Dtos.Files;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 using WebApi.Models.Files;
 using WebApi.Models.Room;
+using WebApi.Models.Room.Fix;
+using WebApi.Models.Room.Parameters;
 
 namespace WebApi.ModelConverters;
 
@@ -19,10 +23,10 @@ public static partial class RoomsModelsConverter
             Parameters = Convert(dto.Parameters),
             Attachments = Convert(dto.Attachments),
             Owner = dto.Owner,
-            OperatorDepartment = Convert(dto.OperatorDepartment),
             FixStatus = Convert(dto.FixStatus),
             AllowBooking = dto.AllowBooking,
-            Equipments = dto.Equipments.Select(x => x.Map(EquipmentsModelsConverter.Convert))
+            Equipments = dto.Equipments.Select(x => x.Map(EquipmentsModelsConverter.Convert)),
+            OperatorRoomId = dto.OperatorRoomId,
         };
     }
 
@@ -65,25 +69,6 @@ public static partial class RoomsModelsConverter
     private static FileLocationModel Convert(FileLocationDto dto)
     {
         return new FileLocationModel(dto.Id, dto.Bucket);
-    }
-
-    private static RoomOperatorDepartmentModel? Convert(RoomOperatorDepartmentDto? dto)
-    {
-        if (dto == null)
-        {
-            return null;
-        }
-
-        return new RoomOperatorDepartmentModel(
-            dto.Id,
-            dto.Name,
-            dto.Contacts,
-            dto.RoomOperator.Select(Convert).ToArray());
-    }
-
-    private static RoomOperatorModel Convert(RoomOperatorDto dto)
-    {
-        return new RoomOperatorModel(dto.Id, dto.Name, dto.UserId);
     }
 
     private static RoomFixStatusModel Convert(RoomFixStatusDto dto)

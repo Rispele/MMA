@@ -1,6 +1,8 @@
 ﻿using Commons;
 using Commons.Optional;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
@@ -19,10 +21,10 @@ public static partial class RoomDtoConverter
             room.Parameters.Map(Convert),
             room.Attachments.Map(Convert),
             room.Owner,
-            operatorDepartment: null,
             room.FixInfo.Map(Convert),
             room.AllowBooking,
-            room.Equipments.IsNotEmpty() ? room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)) : []);
+            room.Equipments.IsNotEmpty() ? room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)) : [],
+            room.OperatorRoomId);
     }
 
     private static ScheduleAddressDto? Convert(RoomScheduleAddress? entity)

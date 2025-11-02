@@ -8,6 +8,8 @@ using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Requests.OperatorRooms;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
+using WebApi.Models.Room.Fix;
+using WebApi.Models.Room.Parameters;
 
 namespace Tests;
 
@@ -129,7 +131,6 @@ public class Program
             },
             Attachments = new RoomAttachmentsModel(PdfRoomScheme: null, Photo: null),
             Owner = null,
-            OperatorDepartment = null,
             FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, FixDeadline: null, Comment: null),
             AllowBooking = true,
             Equipments = []
@@ -215,7 +216,6 @@ public class Program
             },
             Attachments = new RoomAttachmentsModel(null, null),
             Owner = null,
-            OperatorDepartment = null,
             FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, null, null),
             AllowBooking = true,
             Equipments =

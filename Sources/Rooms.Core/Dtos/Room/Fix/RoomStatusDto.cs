@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebApi.Models.Room;
+namespace Rooms.Core.Dtos.Room.Fix;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum RoomStatusModel
+public enum RoomStatusDto
 {
     Unspecified = 0,
     Ready = 1,

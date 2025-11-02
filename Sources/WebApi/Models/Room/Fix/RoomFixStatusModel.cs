@@ -1,3 +1,3 @@
-﻿namespace WebApi.Models.Room;
+﻿namespace WebApi.Models.Room.Fix;
 
 public record RoomFixStatusModel(RoomStatusModel Status, DateTime? FixDeadline, string? Comment);

@@ -2,10 +2,14 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Domain.Exceptions;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
+using WebApi.Models.Room.Fix;
+using WebApi.Models.Room.Parameters;
 using WebApi.Services.Interfaces;
 using WebApi.Tests.SDK;
 using WebApi.Tests.TestingInfrastructure;
