@@ -1,4 +1,5 @@
-﻿using WebApi.Models.Equipment;
+﻿using WebApi.Models;
+using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -59,5 +60,16 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         var patched = await equipmentTypeService.PatchEquipmentType(equipmentTypeId, patchRequest, cancellationToken);
 
         return EquipmentTypesModelsConverter.Convert(patched);
+    }
+
+    public async Task<FileExportModel> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)
+    {
+        var fileData = await equipmentTypeService.ExportEquipmentTypeRegistry(cancellationToken);
+        return new FileExportModel
+        {
+            FileName = fileData.FileName,
+            Content = fileData.Content,
+            ContentType = fileData.ContentType,
+        };
     }
 }

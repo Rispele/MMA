@@ -1,7 +1,9 @@
 ﻿using Commons;
+using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Responses;
+using Rooms.Core.ExcelExporters.Exporters;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
@@ -75,6 +77,19 @@ public class EquipmentTypeService(
         await context.Commit(cancellationToken);
 
         return EquipmentTypeDtoConverter.Convert(equipmentTypeToPatch);
+    }
+
+    public async Task<FileExportDto> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)
+    {
+        var exportDtos = new[]
+        {
+            new EquipmentTypeRegistryExcelExportDto
+            {
+                Name = string.Empty,
+            }
+        };
+        var exporter = new EquipmentTypeRegistryExcelExporter();
+        return exporter.Export(exportDtos, cancellationToken);
     }
 
     private async Task<EquipmentType> GetEquipmentTypeByIdInner(

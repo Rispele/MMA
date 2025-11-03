@@ -1,4 +1,5 @@
-﻿using WebApi.Models.Equipment;
+﻿using WebApi.Models;
+using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 
@@ -10,9 +11,9 @@ public interface IEquipmentService
     Task<EquipmentModel> GetEquipmentByIdAsync(int id, CancellationToken cancellationToken);
     Task<EquipmentModel> CreateEquipmentAsync(CreateEquipmentModel model, CancellationToken cancellationToken);
     Task<PatchEquipmentModel> GetEquipmentPatchModel(int equipmentId, CancellationToken cancellationToken);
-
     Task<EquipmentModel> PatchEquipmentAsync(
         int equipmentId,
         PatchEquipmentModel request,
         CancellationToken cancellationToken);
+    Task<FileExportModel> ExportEquipmentRegistry(CancellationToken cancellationToken);
 }

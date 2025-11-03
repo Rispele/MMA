@@ -1,4 +1,5 @@
-﻿using Rooms.Core.Dtos.Equipment;
+﻿using Rooms.Core.Dtos;
+using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Responses;
 
@@ -10,4 +11,5 @@ public interface IEquipmentTypeService
     Task<EquipmentTypesResponseDto> FilterEquipmentTypes(GetEquipmentTypesDto dto, CancellationToken cancellationToken);
     Task<EquipmentTypeDto> CreateEquipmentType(CreateEquipmentTypeDto dto, CancellationToken cancellationToken);
     Task<EquipmentTypeDto> PatchEquipmentType(int equipmentTypeId, PatchEquipmentTypeDto dto, CancellationToken cancellationToken);
+    Task<FileExportDto> ExportEquipmentTypeRegistry(CancellationToken cancellationToken);
 }

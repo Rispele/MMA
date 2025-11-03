@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.ModelBinders;
+using WebApi.Models;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Responses;
@@ -66,5 +67,12 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
         var updated = await equipmentTypeService.PatchEquipmentTypeAsync(equipmentTypeId, patchModel, cancellationToken);
 
         return Ok(updated);
+    }
+
+    [HttpGet("export")]
+    public async Task<ActionResult<FileExportModel>> ExportRegistry(CancellationToken cancellationToken)
+    {
+        var model = await equipmentTypeService.ExportEquipmentTypeRegistry(cancellationToken);
+        return Ok(model);
     }
 }

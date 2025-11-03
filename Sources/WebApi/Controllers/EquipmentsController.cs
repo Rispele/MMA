@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Rooms.Domain.Models.Equipment;
 using WebApi.ModelBinders;
+using WebApi.Models;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -66,5 +67,12 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         var updated = await equipmentService.PatchEquipmentAsync(equipmentId, patchModel, cancellationToken);
 
         return Ok(updated);
+    }
+
+    [HttpGet("export")]
+    public async Task<ActionResult<FileExportModel>> ExportRegistry(CancellationToken cancellationToken)
+    {
+        var model = await equipmentService.ExportEquipmentRegistry(cancellationToken);
+        return Ok(model);
     }
 }
