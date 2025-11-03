@@ -31,6 +31,13 @@ public class OperatorRoomService(ICoreOperatorRoomService operatorRoomService) :
         return OperatorRoomsModelsConverter.Convert(operatorRoom);
     }
 
+    public async Task<Dictionary<Guid, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken)
+    {
+        var operators = await operatorRoomService.GetAvailableOperators(cancellationToken);
+
+        return operators;
+    }
+
     public async Task<OperatorRoomModel> CreateOperatorRoomAsync(
         CreateOperatorRoomModel model,
         CancellationToken cancellationToken)

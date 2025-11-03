@@ -246,6 +246,7 @@ public class Program
     public async Task CreateOperatorRoomTest()
     {
         // Arrange
+        var operatorId = Guid.NewGuid();
         var createRoomModel = new CreateRoomModel
         {
             Name = "ТретьяАудитория",
@@ -270,14 +271,14 @@ public class Program
         {
             Name = "Операторская",
             RoomIds = [room.Id],
-            Operators = new Dictionary<string, string> { { "1", "Иван" } },
+            Operators = new Dictionary<Guid, string> { { operatorId, "Иван" } },
             Contacts = "123",
         };
         var expectedOperatorRoom = new OperatorRoomModel
         {
             Name = "Операторская",
             Rooms = new Dictionary<int, string>() { { 1, "ТретьяАудитория" } },
-            Operators = new Dictionary<string, string>() { { "1", "Иван" } },
+            Operators = new Dictionary<Guid, string>() { { operatorId, "Иван" } },
             Contacts = "123",
         };
 

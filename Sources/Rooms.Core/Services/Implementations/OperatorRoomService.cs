@@ -1,4 +1,5 @@
 ﻿using Commons;
+using Rooms.Core.Clients;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.OperatorRoom;
 using Rooms.Core.Dtos.Requests.OperatorRooms;
@@ -14,7 +15,8 @@ namespace Rooms.Core.Services.Implementations;
 public class OperatorRoomService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IOperatorRoomQueryFactory operatorRoomQueryFactory,
-    IRoomService roomService) : IOperatorRoomService
+    IRoomService roomService,
+    IOperatorRoomClient operatorRoomClient) : IOperatorRoomService
 {
     public async Task<OperatorRoomDto> GetOperatorRoomById(int operatorRoomId, CancellationToken cancellationToken)
     {
@@ -23,6 +25,13 @@ public class OperatorRoomService(
         var operatorRoom = await GetOperatorRoomByIdInner(operatorRoomId, cancellationToken, context);
 
         return operatorRoom.Map(OperatorRoomDtoConverter.Convert);
+    }
+
+    public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
+    {
+        var operators = await operatorRoomClient.GetAvailableOperators();
+
+        return operators;
     }
 
     public async Task<OperatorRoomsResponseDto> FilterOperatorRooms(GetOperatorRoomsDto dto, CancellationToken cancellationToken)

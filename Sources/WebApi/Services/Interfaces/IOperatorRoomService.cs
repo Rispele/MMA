@@ -8,6 +8,7 @@ public interface IOperatorRoomService
 {
     Task<OperatorRoomsResponseModel> GetOperatorRoomsAsync(GetOperatorRoomsModel model, CancellationToken cancellationToken);
     Task<OperatorRoomModel> GetOperatorRoomByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Dictionary<Guid, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken);
     Task<OperatorRoomModel> CreateOperatorRoomAsync(CreateOperatorRoomModel model, CancellationToken cancellationToken);
     Task<PatchOperatorRoomModel> GetOperatorRoomPatchModel(int operatorRoomId, CancellationToken cancellationToken);
 

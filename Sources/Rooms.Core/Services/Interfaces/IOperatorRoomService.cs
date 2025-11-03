@@ -7,6 +7,7 @@ namespace Rooms.Core.Services.Interfaces;
 public interface IOperatorRoomService
 {
     Task<OperatorRoomDto> GetOperatorRoomById(int operatorRoomId, CancellationToken cancellationToken);
+    Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken);
     Task<OperatorRoomsResponseDto> FilterOperatorRooms(GetOperatorRoomsDto dto, CancellationToken cancellationToken);
     Task<OperatorRoomDto> CreateOperatorRoom(CreateOperatorRoomDto dto, CancellationToken cancellationToken);
     Task<OperatorRoomDto> PatchOperatorRoom(int operatorRoomId, PatchOperatorRoomDto dto, CancellationToken cancellationToken);

@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using Rooms.Core.Clients;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
@@ -68,6 +69,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection
             // Infrastructure
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()
+            .AddScoped<IOperatorRoomClient, OperatorRoomClient>()
             .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory<RoomsDbContext>>()
             .AddScoped<IRoomQueriesFactory, RoomQueriesFactory>()
             .AddScoped<IEquipmentQueryFactory, EquipmentQueryFactory>()
