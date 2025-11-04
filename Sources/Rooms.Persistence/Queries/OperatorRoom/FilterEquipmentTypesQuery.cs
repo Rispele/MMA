@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
+using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.OperatorRooms;
 using Rooms.Core.Queries.Implementations.OperatorRoom;
@@ -18,7 +19,7 @@ public class FilterOperatorRoomsQuery :
 
     public IAsyncEnumerable<Domain.Models.OperatorRoom.OperatorRoom> Apply(RoomsDbContext source)
     {
-        IQueryable<Domain.Models.OperatorRoom.OperatorRoom> operatorRooms = source.OperatorRooms;
+        IQueryable<Domain.Models.OperatorRoom.OperatorRoom> operatorRooms = source.OperatorRooms.Include(x => x.Rooms);
 
         operatorRooms = Filters(operatorRooms);
         operatorRooms = Sort(operatorRooms);

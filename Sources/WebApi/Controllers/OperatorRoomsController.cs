@@ -31,7 +31,7 @@ public class OperatorRoomsController(IOperatorRoomService operatorRoomService) :
         return Ok(operatorRoom);
     }
 
-    [HttpGet]
+    [HttpGet("operators")]
     public async Task<ActionResult<Dictionary<Guid, string>>> GetAvailableOperators(CancellationToken cancellationToken)
     {
         var operators = await operatorRoomService.GetAvailableOperatorsAsync(cancellationToken);

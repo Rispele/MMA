@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Rooms.Domain.Models.Equipment;
 using WebApi.ModelBinders;
-using WebApi.Models;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -70,9 +70,12 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     }
 
     [HttpGet("export")]
-    public async Task<ActionResult<FileExportModel>> ExportRegistry(CancellationToken cancellationToken)
+    public async Task<FileStreamResult> ExportRegistry(CancellationToken cancellationToken)
     {
         var model = await equipmentService.ExportEquipmentRegistry(cancellationToken);
-        return Ok(model);
+        return new FileStreamResult(model.Content, new MediaTypeHeaderValue(model.ContentType))
+        {
+            FileDownloadName = model.FileName,
+        };
     }
 }

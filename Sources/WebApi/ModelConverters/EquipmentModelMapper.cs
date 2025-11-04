@@ -1,5 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
 using Rooms.Core.Dtos.Equipment;
+using Rooms.Core.Dtos.Requests.Equipments;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
 
@@ -15,6 +16,10 @@ public static partial class EquipmentModelMapper
     [MapperIgnoreSource(nameof(EquipmentDto.Id))]
     [MapperIgnoreSource(nameof(EquipmentDto.SchemaId))]
     public static partial PatchEquipmentModel MapEquipmentToPatchModel(EquipmentDto equipment);
+
+    public static partial CreateEquipmentDto MapCreateEquipmentFromModel(CreateEquipmentModel equipment);
+
+    public static partial PatchEquipmentDto MapPatchEquipmentTypeFromModel(PatchEquipmentModel equipment);
 
     [MapProperty(nameof(EquipmentModel.Schema.Type), nameof(EquipmentDto.Schema.Type))]
     public static partial EquipmentDto MapEquipmentFromModel(EquipmentModel equipment);

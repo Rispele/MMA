@@ -81,7 +81,7 @@ public class EquipmentService(
 
         equipmentToPatch.Update(
             (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
-            EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto(dto.SchemaDto),
+            EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto(dto.Schema),
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,

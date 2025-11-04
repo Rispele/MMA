@@ -36,7 +36,7 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         CreateEquipmentTypeModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = EquipmentTypeModelConverter.Convert(model);
+        var innerRequest = EquipmentTypeModelMapper.MapCreateEquipmentTypeFromModel(model);
 
         var equipmentType = await equipmentTypeService.CreateEquipmentType(innerRequest, cancellationToken);
 
@@ -55,7 +55,7 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         PatchEquipmentTypeModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = EquipmentTypeModelConverter.Convert(patchModel);
+        var patchRequest = EquipmentTypeModelMapper.MapPatchEquipmentTypeFromModel(patchModel);
 
         var patched = await equipmentTypeService.PatchEquipmentType(equipmentTypeId, patchRequest, cancellationToken);
 

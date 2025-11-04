@@ -36,7 +36,7 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         CreateEquipmentSchemaModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = EquipmentSchemaModelConverter.Convert(model);
+        var innerRequest = EquipmentSchemaModelMapper.MapCreateEquipmentSchemaFromModel(model);
 
         var equipmentSchema = await equipmentSchemaService.CreateEquipmentSchema(innerRequest, cancellationToken);
 
@@ -55,7 +55,7 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         PatchEquipmentSchemaModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = EquipmentSchemaModelConverter.Convert(patchModel);
+        var patchRequest = EquipmentSchemaModelMapper.MapPatchEquipmentTypeFromModel(patchModel);
 
         var patched = await equipmentSchemaService.PatchEquipmentSchema(equipmentSchemaId, patchRequest, cancellationToken);
 

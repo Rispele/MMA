@@ -34,6 +34,28 @@ namespace WebApi.ModelConverters
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
+        public static partial global::Rooms.Core.Dtos.Requests.EquipmentTypes.CreateEquipmentTypeDto MapCreateEquipmentTypeFromModel(global::WebApi.Models.Requests.EquipmentTypes.CreateEquipmentTypeModel equipmentType)
+        {
+            var target = new global::Rooms.Core.Dtos.Requests.EquipmentTypes.CreateEquipmentTypeDto()
+            {
+                Name = equipmentType.Name,
+                Parameters = global::System.Linq.Enumerable.Select(equipmentType.Parameters, x => MapToEquipmentParameterDescriptorDto(x)),
+            };
+            return target;
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
+        public static partial global::Rooms.Core.Dtos.Requests.EquipmentTypes.PatchEquipmentTypeDto MapPatchEquipmentTypeFromModel(global::WebApi.Models.Requests.EquipmentTypes.PatchEquipmentTypeModel equipmentType)
+        {
+            var target = new global::Rooms.Core.Dtos.Requests.EquipmentTypes.PatchEquipmentTypeDto()
+            {
+                Name = equipmentType.Name,
+                Parameters = global::System.Linq.Enumerable.Select(equipmentType.Parameters, x => MapToEquipmentParameterDescriptorDto(x)),
+            };
+            return target;
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
         public static partial global::Rooms.Core.Dtos.Equipment.EquipmentTypeDto MapEquipmentTypeFromModel(global::WebApi.Models.Equipment.EquipmentTypeModel equipmentType)
         {
             var target = new global::Rooms.Core.Dtos.Equipment.EquipmentTypeDto()

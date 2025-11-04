@@ -39,6 +39,37 @@ namespace WebApi.ModelConverters
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
+        public static partial global::Rooms.Core.Dtos.Requests.Equipments.CreateEquipmentDto MapCreateEquipmentFromModel(global::WebApi.Models.Requests.Equipments.CreateEquipmentModel equipment)
+        {
+            var target = new global::Rooms.Core.Dtos.Requests.Equipments.CreateEquipmentDto();
+            target.RoomId = equipment.RoomId;
+            target.SchemaId = equipment.SchemaId;
+            target.InventoryNumber = equipment.InventoryNumber;
+            target.SerialNumber = equipment.SerialNumber;
+            target.NetworkEquipmentIp = equipment.NetworkEquipmentIp;
+            target.Comment = equipment.Comment;
+            target.Status = equipment.Status;
+            return target;
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
+        public static partial global::Rooms.Core.Dtos.Requests.Equipments.PatchEquipmentDto MapPatchEquipmentTypeFromModel(global::WebApi.Models.Requests.Equipments.PatchEquipmentModel equipment)
+        {
+            var target = new global::Rooms.Core.Dtos.Requests.Equipments.PatchEquipmentDto();
+            if (equipment.RoomId != null)
+            {
+                target.RoomId = equipment.RoomId.Value;
+            }
+            target.Schema = MapToEquipmentSchemaDto(equipment.Schema);
+            target.InventoryNumber = equipment.InventoryNumber;
+            target.SerialNumber = equipment.SerialNumber;
+            target.NetworkEquipmentIp = equipment.NetworkEquipmentIp;
+            target.Comment = equipment.Comment;
+            target.Status = equipment.Status;
+            return target;
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
         public static partial global::Rooms.Core.Dtos.Equipment.EquipmentDto MapEquipmentFromModel(global::WebApi.Models.Equipment.EquipmentModel equipment)
         {
             var target = new global::Rooms.Core.Dtos.Equipment.EquipmentDto()
