@@ -1,15 +1,12 @@
-﻿using Commons;
-using Commons.Optional;
-using Rooms.Core.Dtos.Equipment;
+﻿using Commons.Optional;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Requests.Filtering;
-using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.Filtering;
 
 namespace WebApi.ModelConverters;
 
-public static partial class EquipmentsModelsConverter
+public static partial class EquipmentModelConverter
 {
     public static GetEquipmentsDto Convert(GetEquipmentsModel model)
     {
@@ -24,8 +21,8 @@ public static partial class EquipmentsModelsConverter
                 .Map(filter => new EquipmentsFilterDto
                 {
                     RoomName = MapFilterMultiParameter(filter.RoomName, map: v => v),
-                    Types = MapFilterMultiParameter(filter.Types, EquipmentTypesModelsConverter.Convert),
-                    Schemas = MapFilterMultiParameter(filter.Schemas, EquipmentSchemasModelsConverter.Convert),
+                    Types = MapFilterMultiParameter(filter.Types, EquipmentTypeModelMapper.MapEquipmentTypeFromModel),
+                    Schemas = MapFilterMultiParameter(filter.Schemas, EquipmentSchemaModelMapper.MapEquipmentSchemaFromModel),
                     InventoryNumber = MapFilterParameter(filter.InventoryNumber, map: v => v),
                     SerialNumber = MapFilterParameter(filter.SerialNumber, map: v => v),
                     NetworkEquipmentIp = MapFilterParameter(filter.NetworkEquipmentIp, map: v => v),
@@ -85,22 +82,6 @@ public static partial class EquipmentsModelsConverter
             SortDirectionModel.Ascending => SortDirectionDto.Ascending,
             SortDirectionModel.Descending => SortDirectionDto.Descending,
             _ => SortDirectionDto.None
-        };
-    }
-
-    public static EquipmentDto Convert(EquipmentModel equipment)
-    {
-        return new EquipmentDto
-        {
-            Id = equipment.Id,
-            RoomId = equipment.RoomId,
-            SchemaId = equipment.SchemaId,
-            Schema = equipment.Schema.Map(EquipmentSchemasModelsConverter.Convert),
-            InventoryNumber = equipment.InventoryNumber,
-            SerialNumber = equipment.SerialNumber,
-            NetworkEquipmentIp = equipment.NetworkEquipmentIp,
-            Comment = equipment.Comment,
-            Status = equipment.Status
         };
     }
 }

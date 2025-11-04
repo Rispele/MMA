@@ -21,8 +21,7 @@ namespace Rooms.Persistence.Migrations
                 .Annotation("Npgsql:Enum:room_layout", "amphitheater,flat,unspecified")
                 .Annotation("Npgsql:Enum:room_net_type", "none,unspecified,wired,wired_and_wireless,wireless")
                 .Annotation("Npgsql:Enum:room_status", "not_ready,partially_ready,ready,unspecified")
-                .Annotation("Npgsql:Enum:room_type", "computer,mixed,multimedia,special,unspecified")
-                .Annotation("Npgsql:PostgresExtension:hstore", ",,");
+                .Annotation("Npgsql:Enum:room_type", "computer,mixed,multimedia,special,unspecified");
 
             migrationBuilder.CreateTable(
                 name: "equipment_types",
@@ -44,9 +43,9 @@ namespace Rooms.Persistence.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    operators = table.Column<Dictionary<string, string>>(type: "hstore", nullable: false),
-                    contacts = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    operators = table.Column<Dictionary<Guid, string>>(type: "jsonb", nullable: false),
+                    contacts = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

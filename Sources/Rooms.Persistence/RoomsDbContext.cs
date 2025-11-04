@@ -5,6 +5,7 @@ using Rooms.Domain.Models.Equipment;
 using Rooms.Domain.Models.OperatorRoom;
 using Rooms.Domain.Models.Room;
 using Rooms.Persistence.EntityConfigurations.Equipment;
+using Rooms.Persistence.EntityConfigurations.OperatorRoom;
 using Rooms.Persistence.EntityConfigurations.Room;
 using Rooms.Persistence.Queries.Abstractions;
 
@@ -73,6 +74,7 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         modelBuilder.ApplyConfiguration(new EquipmentSchemaEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new EquipmentTypeEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RoomEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OperatorRoomEntityTypeConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

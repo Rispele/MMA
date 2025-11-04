@@ -23,7 +23,7 @@ public static partial class RoomDtoConverter
             room.Owner,
             room.FixInfo.Map(Convert),
             room.AllowBooking,
-            room.Equipments.IsNotEmpty() ? room.Equipments.Select(x => x.Map(EquipmentDtoConverter.Convert)) : [],
+            room.Equipments.IsNotEmpty() ? room.Equipments.Select(x => x.Map(EquipmentDtoMapper.MapEquipmentToDto)) : [],
             room.OperatorRoomId);
     }
 

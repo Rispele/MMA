@@ -1,5 +1,4 @@
-﻿using Commons;
-using Rooms.Core.DtoConverters;
+﻿using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
@@ -10,7 +9,6 @@ using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipment;
-using EquipmentSchemaDtoConverter = Rooms.Core.DtoConverters.EquipmentSchemaDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -25,7 +23,7 @@ public class EquipmentSchemaService(
 
         var equipmentSchema = await GetEquipmentSchemaByIdInner(equipmentSchemaId, cancellationToken, context);
 
-        return equipmentSchema.Map(EquipmentSchemaDtoConverter.Convert);
+        return EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto(equipmentSchema);
     }
 
     public async Task<EquipmentSchemasResponseDto> FilterEquipmentSchemas(GetEquipmentSchemasDto dto, CancellationToken cancellationToken)
@@ -38,7 +36,7 @@ public class EquipmentSchemaService(
             .ApplyQuery(query)
             .ToArrayAsync(cancellationToken);
 
-        var convertedEquipmentSchemas = equipmentSchemas.Select(EquipmentSchemaDtoConverter.Convert).ToArray();
+        var convertedEquipmentSchemas = equipmentSchemas.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto).ToArray();
         int? lastEquipmentSchemaId = convertedEquipmentSchemas.Length == 0 ? null : convertedEquipmentSchemas.Select(t => t.Id).Max();
 
         return new EquipmentSchemasResponseDto(convertedEquipmentSchemas, convertedEquipmentSchemas.Length, lastEquipmentSchemaId);
@@ -61,8 +59,8 @@ public class EquipmentSchemaService(
 
         await context.Commit(cancellationToken);
 
-        equipmentSchema.EquipmentType = equipmentType.Map(EquipmentTypeDtoConverter.Convert);
-        return EquipmentSchemaDtoConverter.Convert(equipmentSchema);
+        equipmentSchema.EquipmentType = EquipmentTypeDtoMapper.MapEquipmentTypeFromDto(equipmentType);
+        return EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto(equipmentSchema);
     }
 
     public async Task<EquipmentSchemaDto> PatchEquipmentSchema(
@@ -82,7 +80,7 @@ public class EquipmentSchemaService(
 
         await context.Commit(cancellationToken);
 
-        return EquipmentSchemaDtoConverter.Convert(equipmentSchemaToPatch);
+        return EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto(equipmentSchemaToPatch);
     }
 
     public async Task<FileExportDto> ExportEquipmentSchemaRegistry(CancellationToken cancellationToken)

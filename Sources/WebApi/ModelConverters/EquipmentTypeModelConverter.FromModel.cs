@@ -1,15 +1,13 @@
-﻿using Commons;
-using Commons.Optional;
+﻿using Commons.Optional;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Requests.Filtering;
-using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Requests.Filtering;
 
 namespace WebApi.ModelConverters;
 
-public static partial class EquipmentTypesModelsConverter
+public static partial class EquipmentTypeModelConverter
 {
     public static GetEquipmentTypesDto Convert(GetEquipmentTypesModel model)
     {
@@ -32,7 +30,11 @@ public static partial class EquipmentTypesModelsConverter
         return new CreateEquipmentTypeDto
         {
             Name = model.Name,
-            Parameters = model.Parameters.Select(Convert)
+            Parameters = model.Parameters.Select(x => new EquipmentParameterDescriptorDto
+            {
+                Name = x.Name,
+                Required = x.Required,
+            })
         };
     }
 
@@ -41,7 +43,11 @@ public static partial class EquipmentTypesModelsConverter
         return new PatchEquipmentTypeDto
         {
             Name = patchModel.Name,
-            Parameters = patchModel.Parameters.Select(x => x.Map(Convert))
+            Parameters = patchModel.Parameters.Select(x => new EquipmentParameterDescriptorDto
+            {
+                Name = x.Name,
+                Required = x.Required,
+            })
         };
     }
 
@@ -57,18 +63,6 @@ public static partial class EquipmentTypesModelsConverter
         return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
-    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(
-        FilterMultiParameterModel<TIn>? src,
-        Func<TIn, TOut> map)
-    {
-        if (src?.Values == null || src.Values.Length == 0)
-        {
-            return null;
-        }
-
-        return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
-    }
-
     private static SortDirectionDto Convert(SortDirectionModel direction)
     {
         return direction switch
@@ -77,25 +71,6 @@ public static partial class EquipmentTypesModelsConverter
             SortDirectionModel.Ascending => SortDirectionDto.Ascending,
             SortDirectionModel.Descending => SortDirectionDto.Descending,
             _ => SortDirectionDto.None
-        };
-    }
-
-    public static EquipmentTypeDto Convert(EquipmentTypeModel type)
-    {
-        return new EquipmentTypeDto
-        {
-            Id = type.Id,
-            Name = type.Name,
-            Parameters = type.Parameters.Select(x => x.Map(Convert))
-        };
-    }
-
-    public static EquipmentParameterDescriptorDto Convert(EquipmentParameterDescriptorModel model)
-    {
-        return new EquipmentParameterDescriptorDto
-        {
-            Name = model.Name,
-            Required = model.Required
         };
     }
 }

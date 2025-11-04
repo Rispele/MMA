@@ -26,7 +26,7 @@ public static partial class RoomsModelsConverter
             model.Owner,
             Convert(model.FixStatus),
             model.AllowBooking,
-            model.Equipments.Select(x => x.Map(EquipmentsModelsConverter.Convert)),
+            model.Equipments.Select(x => x.Map(EquipmentModelMapper.MapEquipmentFromModel)),
             model.OperatorRoomId
         );
     }

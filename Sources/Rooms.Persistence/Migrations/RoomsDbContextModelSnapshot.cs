@@ -29,7 +29,6 @@ namespace Rooms.Persistence.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_net_type", new[] { "none", "unspecified", "wired", "wired_and_wireless", "wireless" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_status", new[] { "not_ready", "partially_ready", "ready", "unspecified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_type", new[] { "computer", "mixed", "multimedia", "special", "unspecified" });
-            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "hstore");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Rooms.Domain.Models.Equipment.Equipment", b =>
@@ -155,17 +154,19 @@ namespace Rooms.Persistence.Migrations
 
                     b.Property<string>("Contacts")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("contacts");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
-                    b.Property<Dictionary<string, string>>("Operators")
+                    b.Property<Dictionary<Guid, string>>("Operators")
                         .IsRequired()
-                        .HasColumnType("hstore")
+                        .HasColumnType("jsonb")
                         .HasColumnName("operators");
 
                     b.HasKey("Id")

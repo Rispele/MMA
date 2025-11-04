@@ -1,14 +1,12 @@
 ﻿using Commons.Optional;
-using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
 using Rooms.Core.Dtos.Requests.Filtering;
-using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.Filtering;
 
 namespace WebApi.ModelConverters;
 
-public static partial class EquipmentSchemasModelsConverter
+public static partial class EquipmentSchemaModelConverter
 {
     public static GetEquipmentSchemasDto Convert(GetEquipmentSchemasModel model)
     {
@@ -55,18 +53,6 @@ public static partial class EquipmentSchemasModelsConverter
         return new FilterParameterDto<TOut>(map(src.Value), Convert(src.SortDirection));
     }
 
-    private static FilterMultiParameterDto<TOut>? MapFilterMultiParameter<TIn, TOut>(
-        FilterMultiParameterModel<TIn>? src,
-        Func<TIn, TOut> map)
-    {
-        if (src?.Values == null || src.Values.Length == 0)
-        {
-            return null;
-        }
-
-        return new FilterMultiParameterDto<TOut>(src.Values.Select(map).ToArray(), Convert(src.SortDirection));
-    }
-
     private static SortDirectionDto Convert(SortDirectionModel direction)
     {
         return direction switch
@@ -75,16 +61,6 @@ public static partial class EquipmentSchemasModelsConverter
             SortDirectionModel.Ascending => SortDirectionDto.Ascending,
             SortDirectionModel.Descending => SortDirectionDto.Descending,
             _ => SortDirectionDto.None
-        };
-    }
-
-    public static EquipmentSchemaDto Convert(EquipmentSchemaModel entity)
-    {
-        return new EquipmentSchemaDto
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            ParameterValues = entity.ParameterValues
         };
     }
 }

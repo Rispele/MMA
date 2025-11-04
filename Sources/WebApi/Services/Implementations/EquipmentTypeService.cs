@@ -1,9 +1,9 @@
-﻿using WebApi.Models;
+﻿using WebApi.ModelConverters;
+using WebApi.Models;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
-using EquipmentTypesModelsConverter = WebApi.ModelConverters.EquipmentTypesModelsConverter;
 using ICoreEquipmentTypeService = Rooms.Core.Services.Interfaces.IEquipmentTypeService;
 
 namespace WebApi.Services.Implementations;
@@ -14,13 +14,13 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         GetEquipmentTypesModel model,
         CancellationToken cancellationToken)
     {
-        var getEquipmentTypesRequest = EquipmentTypesModelsConverter.Convert(model);
+        var getEquipmentTypesRequest = EquipmentTypeModelConverter.Convert(model);
 
         var batch = await equipmentTypeService.FilterEquipmentTypes(getEquipmentTypesRequest, cancellationToken);
 
         return new EquipmentTypesResponseModel
         {
-            EquipmentTypes = batch.EquipmentTypes.Select(EquipmentTypesModelsConverter.Convert).ToArray(),
+            EquipmentTypes = batch.EquipmentTypes.Select(EquipmentTypeModelMapper.MapEquipmentTypeToModel).ToArray(),
             Count = batch.Count
         };
     }
@@ -29,25 +29,25 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
     {
         var equipmentType = await equipmentTypeService.GetEquipmentTypeById(id, cancellationToken);
 
-        return EquipmentTypesModelsConverter.Convert(equipmentType);
+        return EquipmentTypeModelMapper.MapEquipmentTypeToModel(equipmentType);
     }
 
     public async Task<EquipmentTypeModel> CreateEquipmentTypeAsync(
         CreateEquipmentTypeModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = EquipmentTypesModelsConverter.Convert(model);
+        var innerRequest = EquipmentTypeModelConverter.Convert(model);
 
         var equipmentType = await equipmentTypeService.CreateEquipmentType(innerRequest, cancellationToken);
 
-        return EquipmentTypesModelsConverter.Convert(equipmentType);
+        return EquipmentTypeModelMapper.MapEquipmentTypeToModel(equipmentType);
     }
 
     public async Task<PatchEquipmentTypeModel> GetEquipmentTypePatchModel(int equipmentTypeId, CancellationToken cancellationToken)
     {
         var equipmentType = await equipmentTypeService.GetEquipmentTypeById(equipmentTypeId, cancellationToken);
 
-        return EquipmentTypesModelsConverter.ConvertToPatchModel(equipmentType);
+        return EquipmentTypeModelMapper.MapEquipmentTypeToPatchModel(equipmentType);
     }
 
     public async Task<EquipmentTypeModel> PatchEquipmentTypeAsync(
@@ -55,11 +55,11 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         PatchEquipmentTypeModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = EquipmentTypesModelsConverter.Convert(patchModel);
+        var patchRequest = EquipmentTypeModelConverter.Convert(patchModel);
 
         var patched = await equipmentTypeService.PatchEquipmentType(equipmentTypeId, patchRequest, cancellationToken);
 
-        return EquipmentTypesModelsConverter.Convert(patched);
+        return EquipmentTypeModelMapper.MapEquipmentTypeToModel(patched);
     }
 
     public async Task<FileExportModel> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)

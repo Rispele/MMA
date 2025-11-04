@@ -10,7 +10,6 @@ using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipment;
-using EquipmentDtoConverter = Rooms.Core.DtoConverters.EquipmentDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -26,7 +25,7 @@ public class EquipmentService(
 
         var equipment = await GetEquipmentByIdInner(equipmentId, cancellationToken, context);
 
-        return equipment.Map(EquipmentDtoConverter.Convert);
+        return EquipmentDtoMapper.MapEquipmentToDto(equipment);
     }
 
     public async Task<EquipmentsResponseDto> FilterEquipments(GetEquipmentsDto dto, CancellationToken cancellationToken)
@@ -39,7 +38,7 @@ public class EquipmentService(
             .ApplyQuery(query)
             .ToArrayAsync(cancellationToken);
 
-        var convertedEquipments = equipments.Select(EquipmentDtoConverter.Convert).ToArray();
+        var convertedEquipments = equipments.Select(EquipmentDtoMapper.MapEquipmentToDto).ToArray();
         int? lastEquipmentId = convertedEquipments.Length == 0 ? null : convertedEquipments.Select(t => t.Id).Max();
 
         return new EquipmentsResponseDto(convertedEquipments, convertedEquipments.Length, lastEquipmentId);
@@ -67,8 +66,8 @@ public class EquipmentService(
 
         await context.Commit(cancellationToken);
 
-        equipment.Schema = schema.Map(EquipmentSchemaDtoConverter.Convert);
-        return equipment.Map(EquipmentDtoConverter.Convert);
+        equipment.Schema = EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto(schema);
+        return EquipmentDtoMapper.MapEquipmentToDto(equipment);
     }
 
     public async Task<EquipmentDto> PatchEquipment(
@@ -82,7 +81,7 @@ public class EquipmentService(
 
         equipmentToPatch.Update(
             (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
-            dto.SchemaDto.Map(EquipmentSchemaDtoConverter.Convert),
+            EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto(dto.SchemaDto),
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,
@@ -91,7 +90,7 @@ public class EquipmentService(
 
         await context.Commit(cancellationToken);
 
-        return EquipmentDtoConverter.Convert(equipmentToPatch);
+        return EquipmentDtoMapper.MapEquipmentToDto(equipmentToPatch);
     }
 
     public async Task<FileExportDto> ExportEquipmentRegistry(CancellationToken cancellationToken)

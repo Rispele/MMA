@@ -25,7 +25,7 @@ public static partial class RoomsModelsConverter
             Owner = dto.Owner,
             FixStatus = Convert(dto.FixStatus),
             AllowBooking = dto.AllowBooking,
-            Equipments = dto.Equipments.Select(x => x.Map(EquipmentsModelsConverter.Convert)),
+            Equipments = dto.Equipments.Select(x => x.Map(EquipmentModelMapper.MapEquipmentToModel)),
             OperatorRoomId = dto.OperatorRoomId,
         };
     }

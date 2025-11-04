@@ -51,7 +51,7 @@ public class FilterEquipmentsQuery :
             .Apply(equipments,
                 apply: (queryable, parameter) =>
                 {
-                    var types = parameter.Values.Select(EquipmentTypeDtoConverter.Convert);
+                    var types = parameter.Values.Select(EquipmentTypeDtoMapper.MapEquipmentTypeFromDto);
                     return queryable.Where(t => types.Contains(t.Schema.EquipmentType));
                 });
 
@@ -60,7 +60,7 @@ public class FilterEquipmentsQuery :
             .Apply(equipments,
                 apply: (queryable, parameter) =>
                 {
-                    var types = parameter.Values.Select(EquipmentSchemaDtoConverter.Convert);
+                    var types = parameter.Values.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto);
                     return queryable.Where(t => types.Contains(t.Schema));
                 });
 
