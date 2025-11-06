@@ -20,5 +20,4 @@ public record RoomsFilterModel
     public FilterMultiParameterModel<RoomStatusModel>? RoomStatuses { get; init; }
     public FilterParameterModel<DateTime>? FixDeadline { get; init; }
     public FilterParameterModel<string>? Comment { get; init; }
-    public FilterParameterModel<bool>? AllowBooking { get; init; }
 }

@@ -5,9 +5,9 @@ namespace Rooms.Core.Dtos.Requests.Equipments;
 
 public record EquipmentsFilterDto
 {
-    // public FilterMultiParameterDto<string>? RoomName { get; init; }
-    // public FilterMultiParameterDto<EquipmentTypeDto>? Types { get; init; }
-    // public FilterMultiParameterDto<EquipmentSchemaDto>? Schemas { get; init; }
+    public FilterMultiParameterDto<int>? Rooms { get; init; }
+    public FilterMultiParameterDto<int>? Types { get; init; }
+    public FilterMultiParameterDto<int>? Schemas { get; init; }
     public FilterParameterDto<string>? InventoryNumber { get; init; }
     public FilterParameterDto<string>? SerialNumber { get; init; }
     public FilterParameterDto<string>? NetworkEquipmentIp { get; init; }

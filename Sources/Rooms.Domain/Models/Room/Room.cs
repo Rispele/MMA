@@ -21,20 +21,20 @@ public class Room
     public void Update(
         string name,
         string? description,
+        RoomScheduleAddress? scheduleAddress,
         RoomParameters parameters,
         RoomAttachments attachments,
         string? owner,
         RoomFixInfo fixInfo,
-        bool allowBooking,
-        int? operatorDepartmentId)
+        bool allowBooking)
     {
         Name = name;
         Description = description;
+        ScheduleAddress = scheduleAddress;
         Parameters = parameters;
         Attachments = attachments;
         Owner = owner;
         FixInfo = fixInfo;
         AllowBooking = allowBooking;
-        OperatorDepartmentId = operatorDepartmentId;
     }
 }

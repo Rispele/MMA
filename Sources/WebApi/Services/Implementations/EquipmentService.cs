@@ -14,7 +14,7 @@ public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipme
         GetEquipmentsModel model,
         CancellationToken cancellationToken)
     {
-        var getEquipmentsRequest = EquipmentModelConverter.Convert(model);
+        var getEquipmentsRequest = EquipmentModelMapper.Convert(model);
 
         var batch = await equipmentService.FilterEquipments(getEquipmentsRequest, cancellationToken);
 

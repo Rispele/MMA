@@ -1,20 +1,15 @@
-﻿using Rooms.Core.Dtos.Files;
+﻿using Riok.Mapperly.Abstractions;
+using Rooms.Core.Dtos.Files;
 using Rooms.Domain.Models.File;
 
 namespace Rooms.Core.DtoConverters;
 
+[Mapper]
 public static partial class FileDtoConverter
 {
-    public static FileDescriptorDto Convert(FileDescriptor fileDescriptor)
-    {
-        return new FileDescriptorDto(
-            fileDescriptor.Filename,
-            Convert(fileDescriptor.Location)
-        );
-    }
+    public static partial FileDescriptorDto Convert(FileDescriptor fileDescriptor);
+    
+    public static partial FileDescriptor? Convert(FileDescriptorDto? fileMetadata);
 
-    public static FileLocationDto Convert(FileLocation fileLocation)
-    {
-        return new FileLocationDto(fileLocation.Id, fileLocation.Bucket);
-    }
+    public static partial FileLocation Convert(FileLocationDto fileLocation);
 }

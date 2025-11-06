@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WebApi.Models.Files;
+using WebApi.Models.Room;
 using WebApi.Models.Room.Fix;
 using WebApi.Models.Room.Parameters;
 
@@ -15,6 +16,8 @@ public class PatchRoomModel
 
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]
     public string? Description { get; set; }
+
+    public ScheduleAddressModel? ScheduleAddress { get; set; }
 
     public RoomTypeModel Type { get; set; }
     public RoomLayoutModel Layout { get; set; }

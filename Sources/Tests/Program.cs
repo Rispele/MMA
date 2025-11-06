@@ -66,7 +66,6 @@ public class Program
             Name = "Первое оборудование",
             EquipmentTypeId = actualType.Id,
             ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } },
-            EquipmentIds = []
         };
         var expectedSchema = new EquipmentSchemaModel
         {
@@ -159,7 +158,6 @@ public class Program
             Name = "Первое оборудование",
             EquipmentTypeId = equipmentType.Id,
             ParameterValues = new Dictionary<string, string>() { { "Разрешение", "1920x1080" } },
-            EquipmentIds = []
         };
         var equipmentSchema = await _httpClient.CreateEquipmentSchema(createEquipmentSchemaModel);
 
@@ -277,7 +275,7 @@ public class Program
         var expectedOperatorDepartment = new OperatorDepartmentModel
         {
             Name = "Операторская",
-            Rooms = new Dictionary<int, string>() { { 1, "ТретьяАудитория" } },
+            Rooms = [new OperatorDepartmentRoomInfoModel(1, new ScheduleAddressModel() { Address = "1", RoomNumber = "2" })],
             Operators = new Dictionary<Guid, string>() { { operatorId, "Иван" } },
             Contacts = "123",
         };

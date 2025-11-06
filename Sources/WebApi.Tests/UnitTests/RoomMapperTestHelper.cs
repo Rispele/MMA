@@ -259,7 +259,6 @@ public static class RoomMapperTestHelper
                 RoomStatuses = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomStatus),
                 FixDeadline = CreateFilterParameterModel(AscendingSortDirectionModel, FixDeadline),
                 Comment = CreateFilterParameterModel(AscendingSortDirectionModel, FixComment),
-                AllowBooking = CreateFilterParameterModel(DescendingSortDirectionModel, AllowBooking),
             }
         };
     }

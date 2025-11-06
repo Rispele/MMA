@@ -32,7 +32,7 @@ public class RoomService(
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var rooms = await GetRoomsByIdInner(unitOfWork, roomIds, cancellationToken);
+        var rooms = await GetRoomsByIdInner(unitOfWork, roomIds.ToArray(), cancellationToken);
 
         return rooms.Select(x => x.Map(RoomDtoConverter.Convert));
     }
@@ -116,6 +116,7 @@ public class RoomService(
         roomToPatch.Update(
             dto.Name,
             dto.Description,
+            dto.ScheduleAddress.Map(t => new RoomScheduleAddress(t.RoomNumber, t.Address)),
             new RoomParameters
             {
                 Type = RoomDtoConverter.Convert(dto.Type),
@@ -137,8 +138,7 @@ public class RoomService(
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },
-            dto.AllowBooking,
-            dto.OperatorDepartmentId);
+            dto.AllowBooking);
 
         await unitOfWork.Commit(cancellationToken);
 
@@ -153,7 +153,7 @@ public class RoomService(
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
     }
 
-    private async Task<Room[]> GetRoomsByIdInner(IUnitOfWork unitOfWork, IEnumerable<int> roomIds, CancellationToken cancellationToken)
+    private async Task<Room[]> GetRoomsByIdInner(IUnitOfWork unitOfWork, int[] roomIds, CancellationToken cancellationToken)
     {
         var query = queriesFactory.FindByIds(roomIds);
 

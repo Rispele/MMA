@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Rooms.Core.Dtos.Files;
+using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
 
@@ -16,6 +17,7 @@ public record PatchRoomDto
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]
     public string? Description { get; init; }
 
+    public ScheduleAddressDto? ScheduleAddress { get; init; }
     public RoomTypeDto Type { get; init; }
     public RoomLayoutDto Layout { get; init; }
 
@@ -42,5 +44,4 @@ public record PatchRoomDto
 
     public DateTime? FixDeadline { get; init; }
     public bool AllowBooking { get; init; }
-    public int? OperatorDepartmentId { get; init; }
 }

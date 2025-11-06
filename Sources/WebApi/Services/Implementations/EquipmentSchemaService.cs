@@ -14,7 +14,7 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         GetEquipmentSchemasModel model,
         CancellationToken cancellationToken)
     {
-        var getEquipmentSchemasRequest = EquipmentSchemaModelConverter.Convert(model);
+        var getEquipmentSchemasRequest = EquipmentSchemaModelMapper.Convert(model);
 
         var batch = await equipmentSchemaService.FilterEquipmentSchemas(getEquipmentSchemasRequest, cancellationToken);
 

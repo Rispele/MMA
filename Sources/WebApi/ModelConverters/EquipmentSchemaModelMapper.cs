@@ -12,11 +12,18 @@ public static partial class EquipmentSchemaModelMapper
     public static partial EquipmentSchemaModel MapEquipmentSchemaToModel(EquipmentSchemaDto equipmentSchema);
 
     [MapProperty(nameof(EquipmentSchemaDto.Type.Id), nameof(PatchEquipmentSchemaModel.EquipmentTypeId))]
+    [MapperIgnoreSource(nameof(EquipmentSchemaDto.Id))]
     public static partial PatchEquipmentSchemaModel MapEquipmentSchemaToPatchModel(EquipmentSchemaDto equipmentSchema);
 
     public static partial CreateEquipmentSchemaDto MapCreateEquipmentSchemaFromModel(CreateEquipmentSchemaModel equipmentSchema);
 
     public static partial PatchEquipmentSchemaDto MapPatchEquipmentTypeFromModel(PatchEquipmentSchemaModel equipmentSchema);
 
-    public static partial EquipmentSchemaDto MapEquipmentSchemaFromModel(EquipmentSchemaModel equipmentSchema);
+    [MapProperty(nameof(GetEquipmentSchemasModel.AfterEquipmentSchemaId), nameof(GetEquipmentSchemasDto.AfterEquipmentSchemaId))]
+    [MapProperty(nameof(GetEquipmentSchemasModel.PageSize), nameof(GetEquipmentSchemasDto.BatchSize))]
+    [MapProperty(
+        nameof(GetEquipmentSchemasModel.Page),
+        nameof(GetEquipmentSchemasDto.BatchNumber),
+        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+    public static partial GetEquipmentSchemasDto Convert(GetEquipmentSchemasModel model);
 }

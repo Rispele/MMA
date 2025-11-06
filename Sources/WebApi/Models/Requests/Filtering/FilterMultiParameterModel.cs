@@ -2,6 +2,6 @@
 
 public record FilterMultiParameterModel<T>
 {
-    public T[]? Values { get; init; }
+    public required T[] Values { get; init; }
     public SortDirectionModel SortDirection { get; init; }
 }
