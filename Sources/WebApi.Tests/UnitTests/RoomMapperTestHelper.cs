@@ -80,7 +80,7 @@ public static class RoomMapperTestHelper
             //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
             Equipments = [],
             Parameters = new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomAddress, RoomNumber),
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
         };
     }
 

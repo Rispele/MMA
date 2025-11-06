@@ -1,9 +1,7 @@
-﻿using Rooms.Core.Services.Interfaces;
-using WebApi.ModelConverters;
+﻿using WebApi.ModelConverters;
 using WebApi.Models.OperatorDepartments;
 using WebApi.Models.Requests.OperatorDepartments;
 using WebApi.Models.Responses;
-using WebApi.Services.Interfaces;
 using IOperatorDepartmentService = WebApi.Services.Interfaces.IOperatorDepartmentService;
 
 namespace WebApi.Services.Implementations;
