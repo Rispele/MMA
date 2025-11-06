@@ -1,9 +1,11 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
+using Microsoft.EntityFrameworkCore;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Queries.Implementations.Room;
+using Rooms.Domain.Models.Room;
 using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Room;
@@ -19,7 +21,7 @@ public class FilterRoomsQuery :
 
     public IAsyncEnumerable<Domain.Models.Room.Room> Apply(RoomsDbContext source)
     {
-        IQueryable<Domain.Models.Room.Room> rooms = source.Rooms;
+        var rooms = source.Rooms.Include(RoomFieldNames.Equipments);
 
         rooms = Filters(rooms);
         rooms = Sort(rooms);

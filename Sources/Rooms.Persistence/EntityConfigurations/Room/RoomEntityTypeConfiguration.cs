@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Rooms.Domain.Models.Room;
 
 namespace Rooms.Persistence.EntityConfigurations.Room;
 
@@ -45,6 +46,7 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
             });
         builder.Property(t => t.AllowBooking).IsRequired();
 
-        builder.HasMany(t => t.Equipments).WithOne().HasForeignKey(t => t.RoomId);
+        builder.Ignore(x => x.Equipments);
+        builder.HasMany<Domain.Models.Equipments.Equipment>(RoomFieldNames.Equipments).WithOne().HasForeignKey(t => t.RoomId);
     }
 }

@@ -225,7 +225,7 @@ namespace Rooms.Persistence.Migrations
             modelBuilder.Entity("Rooms.Domain.Models.Equipments.Equipment", b =>
                 {
                     b.HasOne("Rooms.Domain.Models.Room.Room", null)
-                        .WithMany("Equipments")
+                        .WithMany("equipments")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -370,7 +370,7 @@ namespace Rooms.Persistence.Migrations
 
             modelBuilder.Entity("Rooms.Domain.Models.Room.Room", b =>
                 {
-                    b.Navigation("Equipments");
+                    b.Navigation("equipments");
                 });
 #pragma warning restore 612, 618
         }

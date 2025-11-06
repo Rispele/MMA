@@ -10,4 +10,8 @@
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\PrivateFieldNamesExposingGenerator\PrivateFieldNamesExposingGenerator\PrivateFieldNamesExposingGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    </ItemGroup>
+
 </Project>

@@ -171,6 +171,11 @@ public static class RoomMapperTestHelper
             Name = RoomName,
             Description = RoomDescription,
             Type = ToRoomType,
+            ScheduleAddress = new ScheduleAddressModel
+            {
+                Address = RoomAddress,
+                RoomNumber = RoomNumber,
+            },
             Layout = ToRoomLayout,
             NetType = ToRoomNetType,
             Seats = Seats,
@@ -192,6 +197,7 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
             Type = FromRoomType,
             Layout = FromRoomLayout,
             NetType = FromRoomNetType,
