@@ -17,7 +17,7 @@ public readonly struct FindRoomByIdQuery :
         return source.Rooms
             .Include(x => x.Equipments)
             .ThenInclude(x => x.Schema)
-            .ThenInclude(x => x.EquipmentType)
+            .ThenInclude(x => x.Type)
             .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

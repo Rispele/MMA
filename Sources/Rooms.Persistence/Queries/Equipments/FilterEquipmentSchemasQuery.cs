@@ -20,7 +20,7 @@ public class FilterEquipmentSchemasQuery :
 
     public IAsyncEnumerable<EquipmentSchema> Apply(RoomsDbContext source)
     {
-        IQueryable<EquipmentSchema> equipmentSchemas = source.EquipmentSchemas.Include(x => x.EquipmentType);
+        IQueryable<EquipmentSchema> equipmentSchemas = source.EquipmentSchemas.Include(x => x.Type);
 
         equipmentSchemas = Filters(equipmentSchemas);
         equipmentSchemas = Sort(equipmentSchemas);
@@ -47,7 +47,7 @@ public class FilterEquipmentSchemasQuery :
             .AsOptional()
             .Apply(equipmentSchemas,
                 apply: (queryable, parameter) => queryable.Where(t =>
-                    t.EquipmentType != null! && t.EquipmentType.ToString()!.Contains(parameter.Value)));
+                    t.Type != null! && t.Type.ToString()!.Contains(parameter.Value)));
 
         equipmentSchemas = Filter.EquipmentParameters
             .AsOptional()

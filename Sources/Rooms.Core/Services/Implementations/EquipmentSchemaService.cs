@@ -15,7 +15,7 @@ namespace Rooms.Core.Services.Implementations;
 public class EquipmentSchemaService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IEquipmentSchemaQueryFactory equipmentSchemaQueryFactory,
-    IEquipmentTypeService equipmentTypeService) : IEquipmentSchemaService
+    IEquipmentTypeQueryFactory equipmentTypeQueryFactory) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemaDto> GetEquipmentSchemaById(int equipmentSchemaId, CancellationToken cancellationToken)
     {
@@ -46,20 +46,19 @@ public class EquipmentSchemaService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var equipmentType = await equipmentTypeService.GetEquipmentTypeById(dto.EquipmentTypeId, cancellationToken);
+        var equipmentType = await context.ApplyQuery(equipmentTypeQueryFactory.FindById(dto.EquipmentTypeId), cancellationToken);
 
         var equipmentSchema = new EquipmentSchema
         {
             Name = dto.Name,
             ParameterValues = dto.ParameterValues,
-            EquipmentTypeId = equipmentType.Id
+            Type = equipmentType,
         };
 
         context.Add(equipmentSchema);
 
         await context.Commit(cancellationToken);
 
-        equipmentSchema.EquipmentType = EquipmentTypeDtoMapper.MapEquipmentTypeFromDto(equipmentType);
         return EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto(equipmentSchema);
     }
 
@@ -71,12 +70,12 @@ public class EquipmentSchemaService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipmentSchemaToPatch = await GetEquipmentSchemaByIdInner(equipmentSchemaId, cancellationToken, context);
+        var equipmentType = await context.ApplyQuery(equipmentTypeQueryFactory.FindById(dto.EquipmentTypeId), cancellationToken);
 
         equipmentSchemaToPatch.Update(
             dto.Name,
-            null!,
-            dto.ParameterValues,
-            []);
+            equipmentType,
+            dto.ParameterValues);
 
         await context.Commit(cancellationToken);
 

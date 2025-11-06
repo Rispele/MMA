@@ -4,21 +4,16 @@ public class EquipmentSchema
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public required int EquipmentTypeId { get; set; }
-    public EquipmentType EquipmentType { get; set; } = null!;
+    public required EquipmentType Type { get; set; } = null!;
     public required Dictionary<string, string> ParameterValues { get; set; }
-    public List<Equipment> Equipments { get; set; } = [];
 
     public void Update(
         string name,
         EquipmentType equipmentType,
-        Dictionary<string, string> parameterValues,
-        List<Equipment> equipments)
+        Dictionary<string, string> parameterValues)
     {
         Name = name;
-        EquipmentTypeId = equipmentType.Id;
-        EquipmentType = equipmentType;
+        Type = equipmentType;
         ParameterValues = parameterValues;
-        Equipments = equipments;
     }
 }

@@ -6,7 +6,6 @@ public class EquipmentDto
 {
     public int Id { get; init; }
     public int RoomId { get; init; }
-    public int SchemaId { get; init; }
     public required EquipmentSchemaDto Schema { get; init; }
     public string? InventoryNumber { get; init; }
     public string? SerialNumber { get; init; }

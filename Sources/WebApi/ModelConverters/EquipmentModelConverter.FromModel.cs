@@ -18,9 +18,9 @@ public static partial class EquipmentModelConverter
                 .AsOptional()
                 .Map(filter => new EquipmentsFilterDto
                 {
-                    RoomName = FilterModelMapper.MapFilterMultiParameter(filter.RoomName, map: v => v),
-                    Types = FilterModelMapper.MapFilterMultiParameter(filter.Types, EquipmentTypeModelMapper.MapEquipmentTypeFromModel),
-                    Schemas = FilterModelMapper.MapFilterMultiParameter(filter.Schemas, EquipmentSchemaModelMapper.MapEquipmentSchemaFromModel),
+                    // RoomName = FilterModelMapper.MapFilterMultiParameter(filter.RoomName, map: v => v),
+                    // Types = FilterModelMapper.MapFilterMultiParameter(filter.Types, EquipmentTypeModelMapper.MapEquipmentTypeFromModel),
+                    // Schemas = FilterModelMapper.MapFilterMultiParameter(filter.Schemas, EquipmentSchemaModelMapper.MapEquipmentSchemaFromModel),
                     InventoryNumber = FilterModelMapper.MapFilterParameter(filter.InventoryNumber, map: v => v),
                     SerialNumber = FilterModelMapper.MapFilterParameter(filter.SerialNumber, map: v => v),
                     NetworkEquipmentIp = FilterModelMapper.MapFilterParameter(filter.NetworkEquipmentIp, map: v => v),

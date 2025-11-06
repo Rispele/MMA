@@ -72,14 +72,15 @@ public class EquipmentTypeService(
 
         var equipmentTypeToPatch = await GetEquipmentTypeByIdInner(equipmentTypeId, cancellationToken, context);
 
-        equipmentTypeToPatch.Update(
-            dto.Name,
-            dto.Parameters.Select(x => new EquipmentParameterDescriptor
+        var updatedParameters = dto.Parameters
+            .Select(x => new EquipmentParameterDescriptor
             {
                 Name = x.Name,
                 Required = x.Required,
-            }).ToList(),
-            []);
+            })
+            .ToList();
+
+        equipmentTypeToPatch.Update(dto.Name, updatedParameters);
 
         await context.Commit(cancellationToken);
 

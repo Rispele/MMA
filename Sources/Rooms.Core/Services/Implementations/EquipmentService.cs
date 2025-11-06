@@ -16,8 +16,8 @@ namespace Rooms.Core.Services.Implementations;
 public class EquipmentService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IEquipmentQueryFactory equipmentQueryFactory,
-    IRoomService roomService,
-    IEquipmentSchemaService equipmentSchemaService) : IEquipmentService
+    IEquipmentSchemaQueryFactory equipmentSchemaQueryFactory,
+    IRoomService roomService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {
@@ -49,12 +49,12 @@ public class EquipmentService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
-        var schema = await equipmentSchemaService.GetEquipmentSchemaById(dto.SchemaId, cancellationToken);
+        var equipmentSchema = await context.ApplyQuery(equipmentSchemaQueryFactory.FindById(dto.SchemaId), cancellationToken);
 
         var equipment = new Equipment
         {
             RoomId = room.Id,
-            SchemaId = schema.Id,
+            Schema = equipmentSchema,
             InventoryNumber = dto.InventoryNumber,
             SerialNumber = dto.SerialNumber,
             NetworkEquipmentIp = dto.NetworkEquipmentIp,
@@ -66,7 +66,6 @@ public class EquipmentService(
 
         await context.Commit(cancellationToken);
 
-        equipment.Schema = EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto(schema);
         return EquipmentDtoMapper.MapEquipmentToDto(equipment);
     }
 
@@ -78,10 +77,11 @@ public class EquipmentService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipmentToPatch = await GetEquipmentByIdInner(equipmentId, cancellationToken, context);
+        var equipmentSchema = await context.ApplyQuery(equipmentSchemaQueryFactory.FindById(dto.SchemaId), cancellationToken);
 
         equipmentToPatch.Update(
             (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
-            EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto(dto.Schema),
+            equipmentSchema,
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,

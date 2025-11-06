@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Queries.Implementations.Equipment;
@@ -22,9 +21,8 @@ public class FilterEquipmentsQuery :
     public IAsyncEnumerable<Equipment> Apply(RoomsDbContext source)
     {
         IQueryable<Equipment> equipments = source.Equipments
-            .Include(x => x.Room)
             .Include(x => x.Schema)
-            .ThenInclude(x => x.EquipmentType);
+            .ThenInclude(x => x.Type);
 
         equipments = Filters(equipments);
         equipments = Sort(equipments);
@@ -41,28 +39,28 @@ public class FilterEquipmentsQuery :
             return equipments;
         }
 
-        equipments = Filter.RoomName
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) => { return queryable.Where(t => parameter.Values.Contains(t.Room.Name)); });
+        // equipments = Filter.RoomName
+            // .AsOptional()
+            // .Apply(equipments,
+                // apply: (queryable, parameter) => { return queryable.Where(t => parameter.Values.Contains(t.Room.Name)); });
 
-        equipments = Filter.Types
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                {
-                    var types = parameter.Values.Select(EquipmentTypeDtoMapper.MapEquipmentTypeFromDto);
-                    return queryable.Where(t => types.Contains(t.Schema.EquipmentType));
-                });
+        // equipments = Filter.Types
+            // .AsOptional()
+            // .Apply(equipments,
+                // apply: (queryable, parameter) =>
+                // {
+                    // var types = parameter.Values.Select(EquipmentTypeDtoMapper.MapEquipmentTypeFromDto);
+                    // return queryable.Where(t => types.Contains(t.Schema.Type));
+                // });
 
-        equipments = Filter.Schemas
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                {
-                    var types = parameter.Values.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto);
-                    return queryable.Where(t => types.Contains(t.Schema));
-                });
+        // equipments = Filter.Schemas
+            // .AsOptional()
+            // .Apply(equipments,
+                // apply: (queryable, parameter) =>
+                // {
+                    // var types = parameter.Values.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto);
+                    // return queryable.Where(t => types.Contains(t.Schema));
+                // });
 
         equipments = Filter.InventoryNumber
             .AsOptional()
@@ -104,17 +102,17 @@ public class FilterEquipmentsQuery :
             return equipments;
         }
 
-        (SortDirectionDto? direction, Expression<Func<Equipment, object>> parameter)[]
+        (SortDirectionDto? direction, Expression<Func<Equipment, object?>> parameter)[]
             sorts =
             [
-                BuildSort(Filter.RoomName?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.Types?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.Schemas?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.InventoryNumber?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.SerialNumber?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.Comment?.SortDirection, parameter: t => t.Room.Name),
-                BuildSort(Filter.Statuses?.SortDirection, parameter: t => t.Room.Name)
+                // BuildSort(Filter.RoomName?.SortDirection, parameter: t => t.Room.Name),
+                // BuildSort(Filter.Types?.SortDirection, parameter: t => t.Room.Name),
+                // BuildSort(Filter.Schemas?.SortDirection, parameter: t => t.Room.Name),
+                BuildSort(Filter.InventoryNumber?.SortDirection, parameter: t => t.InventoryNumber),
+                BuildSort(Filter.SerialNumber?.SortDirection, parameter: t => t.SerialNumber),
+                BuildSort(Filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.NetworkEquipmentIp),
+                BuildSort(Filter.Comment?.SortDirection, parameter: t => t.Comment),
+                BuildSort(Filter.Statuses?.SortDirection, parameter: t => t.Status)
             ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
@@ -143,9 +141,9 @@ public class FilterEquipmentsQuery :
 
         return orderedQueryable;
 
-        (SortDirectionDto? direction, Expression<Func<Equipment, object>>) BuildSort(
+        (SortDirectionDto? direction, Expression<Func<Equipment, object?>>) BuildSort(
             SortDirectionDto? direction,
-            Expression<Func<Equipment, object>> parameter)
+            Expression<Func<Equipment, object?>> parameter)
         {
             return (direction, parameter);
         }

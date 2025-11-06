@@ -11,24 +11,43 @@ namespace Rooms.Core.DtoConverters
             {
                 Id = equipmentSchema.Id,
                 Name = equipmentSchema.Name,
-                TypeId = equipmentSchema.EquipmentTypeId,
-                Type = MapTypeToDto(equipmentSchema.EquipmentType),
+                Type = MapToEquipmentTypeDto(equipmentSchema.Type),
                 ParameterValues = equipmentSchema.ParameterValues,
             };
             return target;
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
-        public static partial global::Rooms.Domain.Models.Equipment.EquipmentSchema MapEquipmentSchemaFromDto(global::Rooms.Core.Dtos.Equipment.EquipmentSchemaDto equipmentSchema)
+        private static global::Rooms.Core.Dtos.Equipment.EquipmentTypeDto MapToEquipmentTypeDto(global::Rooms.Domain.Models.Equipment.EquipmentType source)
         {
-            var target = new global::Rooms.Domain.Models.Equipment.EquipmentSchema()
+            var target = new global::Rooms.Core.Dtos.Equipment.EquipmentTypeDto()
             {
-                Name = equipmentSchema.Name,
-                EquipmentTypeId = equipmentSchema.TypeId,
-                ParameterValues = equipmentSchema.ParameterValues,
+                Name = source.Name,
             };
-            target.Id = equipmentSchema.Id;
-            target.EquipmentType = MapTypeFromDto(equipmentSchema.Type);
+            target.Id = source.Id;
+            target.Parameters = MapToEquipmentParameterDescriptorDtoArray(source.Parameters);
+            return target;
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
+        private static global::Rooms.Core.Dtos.Equipment.EquipmentParameterDescriptorDto MapToEquipmentParameterDescriptorDto(global::Rooms.Domain.Models.Equipment.EquipmentParameterDescriptor source)
+        {
+            var target = new global::Rooms.Core.Dtos.Equipment.EquipmentParameterDescriptorDto();
+            target.Name = source.Name;
+            target.Required = source.Required;
+            return target;
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Riok.Mapperly", "4.3.0.0")]
+        private static global::Rooms.Core.Dtos.Equipment.EquipmentParameterDescriptorDto[] MapToEquipmentParameterDescriptorDtoArray(global::System.Collections.Generic.IReadOnlyCollection<global::Rooms.Domain.Models.Equipment.EquipmentParameterDescriptor> source)
+        {
+            var target = new global::Rooms.Core.Dtos.Equipment.EquipmentParameterDescriptorDto[source.Count];
+            var i = 0;
+            foreach (var item in source)
+            {
+                target[i] = MapToEquipmentParameterDescriptorDto(item);
+                i++;
+            }
             return target;
         }
     }

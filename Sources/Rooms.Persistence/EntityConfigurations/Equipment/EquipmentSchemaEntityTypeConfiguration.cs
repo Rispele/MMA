@@ -10,8 +10,7 @@ public class EquipmentSchemaEntityTypeConfiguration : IEntityTypeConfiguration<E
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name).HasMaxLength(50);
-        builder.HasOne(x => x.EquipmentType).WithMany(x => x.Schemas).HasForeignKey(x => x.EquipmentTypeId);
+        builder.HasOne(x => x.Type).WithMany();
         builder.Property(x => x.ParameterValues).HasColumnType("jsonb");
-        builder.HasMany(x => x.Equipments).WithOne(x => x.Schema).HasForeignKey(x => x.SchemaId);
     }
 }

@@ -121,20 +121,20 @@ public class FilterRoomsQuery :
             return rooms;
         }
 
-        (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>> parameter)[] sorts =
+        (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object?>> parameter)[] sorts =
         [
             BuildSort(Filter.Name?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.Description?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.RoomTypes?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.RoomLayout?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.Seats?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.ComputerSeats?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.NetTypes?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.Conditioning?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.Owner?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.RoomStatuses?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.FixDeadline?.SortDirection, parameter: t => t.Name),
-            BuildSort(Filter.Comment?.SortDirection, parameter: t => t.Name)
+            BuildSort(Filter.Description?.SortDirection, parameter: t => t.Description),
+            BuildSort(Filter.RoomTypes?.SortDirection, parameter: t => t.Parameters.Type),
+            BuildSort(Filter.RoomLayout?.SortDirection, parameter: t => t.Parameters.Layout),
+            BuildSort(Filter.Seats?.SortDirection, parameter: t => t.Parameters.Seats),
+            BuildSort(Filter.ComputerSeats?.SortDirection, parameter: t => t.Parameters.ComputerSeats),
+            BuildSort(Filter.NetTypes?.SortDirection, parameter: t => t.Parameters.NetType),
+            BuildSort(Filter.Conditioning?.SortDirection, parameter: t => t.Parameters.HasConditioning),
+            BuildSort(Filter.Owner?.SortDirection, parameter: t => t.Owner),
+            BuildSort(Filter.RoomStatuses?.SortDirection, parameter: t => t.FixInfo.Status),
+            BuildSort(Filter.FixDeadline?.SortDirection, parameter: t => t.FixInfo.FixDeadline),
+            BuildSort(Filter.Comment?.SortDirection, parameter: t => t.FixInfo.Comment)
         ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();
@@ -163,9 +163,9 @@ public class FilterRoomsQuery :
 
         return orderedQueryable;
 
-        (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object>>) BuildSort(
+        (SortDirectionDto? direction, Expression<Func<Domain.Models.Room.Room, object?>>) BuildSort(
             SortDirectionDto? direction,
-            Expression<Func<Domain.Models.Room.Room, object>> parameter)
+            Expression<Func<Domain.Models.Room.Room, object?>> parameter)
         {
             return (direction, parameter);
         }

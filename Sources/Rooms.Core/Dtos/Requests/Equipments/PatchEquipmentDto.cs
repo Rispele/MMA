@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Rooms.Core.Dtos.Equipment;
 using Rooms.Domain.Models.Equipment;
 
 namespace Rooms.Core.Dtos.Requests.Equipments;
@@ -10,7 +9,7 @@ public record PatchEquipmentDto
     public int RoomId { get; set; }
 
     [Required]
-    public EquipmentSchemaDto Schema { get; set; }
+    public int SchemaId { get; set; }
 
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина инвентарного номера должна быть от 1 до 256 символов включительно")]
     public string? InventoryNumber { get; set; }

@@ -10,8 +10,7 @@ public class EquipmentEntityTypeConfiguration : IEntityTypeConfiguration<Domain.
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
-        builder.HasOne(x => x.Room).WithMany(x => x.Equipments).HasForeignKey(x => x.RoomId);
-        builder.HasOne(x => x.Schema).WithMany(x => x.Equipments).HasForeignKey(x => x.SchemaId);
+        builder.HasOne(x => x.Schema).WithMany();
 
         builder.Property(t => t.InventoryNumber).HasMaxLength(256);
         builder.Property(t => t.SerialNumber).HasMaxLength(256);
