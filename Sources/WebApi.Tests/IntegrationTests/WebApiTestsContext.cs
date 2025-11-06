@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Aspire.Hosting.ApplicationModel;
+using Microsoft.Extensions.DependencyInjection;
 using Sources.AppHost.Resources;
 using WebApi.Tests.SDK;
 using WebApi.Tests.TestingInfrastructure.Configuration;
@@ -34,6 +35,7 @@ public class WebApiTestsContext
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
+        await TestingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(KnownResources.RoomsMigrationService.Name, KnownResourceStates.Finished, cts.Token);
         await TestingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.WebApiService.Name, cts.Token);
     }
 
