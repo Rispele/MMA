@@ -63,9 +63,9 @@ public class PatchRoomRequestBuilder
             room.Parameters.NetType,
             room.Parameters.HasConditioning,
             room.Owner,
-            room.FixStatus.Status,
-            room.FixStatus.Comment,
-            room.FixStatus.FixDeadline,
+            room.FixInfo.Status,
+            room.FixInfo.Comment,
+            room.FixInfo.FixDeadline,
             room.AllowBooking);
     }
 

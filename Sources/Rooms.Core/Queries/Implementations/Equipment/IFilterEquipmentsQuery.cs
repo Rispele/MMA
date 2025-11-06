@@ -3,7 +3,7 @@ using Rooms.Core.Queries.Abstractions;
 
 namespace Rooms.Core.Queries.Implementations.Equipment;
 
-public interface IFilterEquipmentsQuery : IQuerySpecification<Domain.Models.Equipment.Equipment>
+public interface IFilterEquipmentsQuery : IQuerySpecification<Domain.Models.Equipments.Equipment>
 {
     public int BatchSize { get; init; }
     public int BatchNumber { get; init; }

@@ -1,5 +1,5 @@
 ﻿using Rooms.Core.Dtos.Requests.Filtering;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Dtos.Requests.Equipments;
 

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Rooms.Persistence.EntityConfigurations.Equipment;
 
-public class EquipmentEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.Equipment.Equipment>
+public class EquipmentEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.Equipments.Equipment>
 {
-    public void Configure(EntityTypeBuilder<Domain.Models.Equipment.Equipment> builder)
+    public void Configure(EntityTypeBuilder<Domain.Models.Equipments.Equipment> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Persistence.EntityConfigurations.Equipment;
 

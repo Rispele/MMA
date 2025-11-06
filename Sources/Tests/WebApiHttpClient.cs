@@ -1,10 +1,10 @@
 ﻿using System.Net.Http.Json;
 using WebApi.Models.Equipment;
-using WebApi.Models.OperatorRoom;
+using WebApi.Models.OperatorDepartments;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Requests.OperatorRooms;
+using WebApi.Models.Requests.OperatorDepartments;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 
@@ -69,17 +69,17 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 
     #endregion
 
-    #region OperatorRoomsController
+    #region OperatorDepartmentsController
 
-    public async Task<OperatorRoomModel> CreateOperatorRoom(CreateOperatorRoomModel model)
+    public async Task<OperatorDepartmentModel> CreateOperatorDepartment(CreateOperatorDepartmentModel model)
     {
         var response = await httpClient.PostAsJsonAsync($"{baseUrl}/webapi/operator-rooms", model);
-        return (await response.Content.ReadFromJsonAsync<OperatorRoomModel>())!;
+        return (await response.Content.ReadFromJsonAsync<OperatorDepartmentModel>())!;
     }
 
-    public async Task<OperatorRoomModel> GetOperatorRoomById(int operatorRoomId)
+    public async Task<OperatorDepartmentModel> GetOperatorDepartmentById(int operatorDepartmentId)
     {
-        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/operator-rooms/{operatorRoomId}", typeof(OperatorRoomModel)) as OperatorRoomModel)!;
+        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/operator-rooms/{operatorDepartmentId}", typeof(OperatorDepartmentModel)) as OperatorDepartmentModel)!;
     }
 
     #endregion

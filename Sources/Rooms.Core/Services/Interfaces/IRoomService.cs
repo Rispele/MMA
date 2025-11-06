@@ -1,7 +1,7 @@
 ﻿using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Services.Interfaces;
 

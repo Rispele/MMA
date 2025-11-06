@@ -13,8 +13,8 @@ public record RoomModel
     public required RoomParametersModel Parameters { get; init; }
     public required RoomAttachmentsModel Attachments { get; init; }
     public string? Owner { get; init; }
-    public required RoomFixStatusModel FixStatus { get; init; }
+    public required RoomFixStatusModel FixInfo { get; init; }
     public bool AllowBooking { get; init; }
     public IEnumerable<EquipmentModel> Equipments { get; init; } = Enumerable.Empty<EquipmentModel>();
-    public int? OperatorRoomId { get; init; }
+    public int? OperatorDepartmentId { get; init; }
 }

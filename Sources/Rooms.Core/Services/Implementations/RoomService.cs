@@ -6,7 +6,7 @@ using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
@@ -138,7 +138,7 @@ public class RoomService(
                 Comment = dto.Comment
             },
             dto.AllowBooking,
-            dto.OperatorRoomId);
+            dto.OperatorDepartmentId);
 
         await unitOfWork.Commit(cancellationToken);
 

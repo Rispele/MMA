@@ -1,4 +1,5 @@
-﻿using Rooms.Domain.Models.Room.Fix;
+﻿using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
 
 namespace Rooms.Domain.Models.Room;
@@ -14,9 +15,8 @@ public class Room
     public string? Owner { get; set; }
     public RoomFixInfo FixInfo { get; set; } = null!;
     public bool AllowBooking { get; set; }
-    public List<Equipment.Equipment> Equipments { get; set; } = [];
-    public int? OperatorRoomId { get; set; }
-    public OperatorRoom.OperatorRoom OperatorRoom { get; set; } = null!;
+    public List<Equipment> Equipments { get; set; } = [];
+    public int? OperatorDepartmentId { get; set; }
 
     public void Update(
         string name,
@@ -26,7 +26,7 @@ public class Room
         string? owner,
         RoomFixInfo fixInfo,
         bool allowBooking,
-        int? operatorRoomId)
+        int? operatorDepartmentId)
     {
         Name = name;
         Description = description;
@@ -35,6 +35,6 @@ public class Room
         Owner = owner;
         FixInfo = fixInfo;
         AllowBooking = allowBooking;
-        OperatorRoomId = operatorRoomId;
+        OperatorDepartmentId = operatorDepartmentId;
     }
 }

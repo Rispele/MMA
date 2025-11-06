@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 using WebApi.ModelBinders;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;

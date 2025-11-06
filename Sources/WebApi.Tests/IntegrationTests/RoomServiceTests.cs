@@ -207,13 +207,13 @@ public class RoomServiceTests : ContainerTestBase
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment11)),
                 new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Comment, comment12),
-                (Action<RoomDto>)(t => t.FixStatus.Comment.Should().Be(comment12)))
+                (Action<RoomDto>)(t => t.FixInfo.Comment.Should().Be(comment12)))
             .SetName("FixStatus.Comment");
 
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.NotReady)),
                 new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.RoomStatus, RoomStatusModel.Ready),
-                (Action<RoomDto>)(b => b.FixStatus.Status.Should().Be(RoomStatusDto.Ready)))
+                (Action<RoomDto>)(b => b.FixInfo.Status.Should().Be(RoomStatusDto.Ready)))
             .SetName("FixStatus.Status");
 
         yield return new TestCaseData(

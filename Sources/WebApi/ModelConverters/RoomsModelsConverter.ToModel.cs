@@ -17,9 +17,9 @@ public static partial class RoomsModelsConverter
     [MapProperty(nameof(RoomDto.Parameters.HasConditioning), nameof(PatchRoomModel.HasConditioning))]
     [MapProperty(nameof(RoomDto.Attachments.PdfRoomScheme), nameof(PatchRoomModel.PdfRoomSchemeFile))]
     [MapProperty(nameof(RoomDto.Attachments.Photo), nameof(PatchRoomModel.PhotoFile))]
-    [MapProperty(nameof(RoomDto.FixStatus.Comment), nameof(PatchRoomModel.Comment))]
-    [MapProperty(nameof(RoomDto.FixStatus.FixDeadline), nameof(PatchRoomModel.FixDeadline))]
-    [MapProperty(nameof(RoomDto.FixStatus.Status), nameof(PatchRoomModel.RoomStatus))]
+    [MapProperty(nameof(RoomDto.FixInfo.Comment), nameof(PatchRoomModel.Comment))]
+    [MapProperty(nameof(RoomDto.FixInfo.FixDeadline), nameof(PatchRoomModel.FixDeadline))]
+    [MapProperty(nameof(RoomDto.FixInfo.Status), nameof(PatchRoomModel.RoomStatus))]
     public static partial PatchRoomModel MapToPatchRoomModel(RoomDto dto);
 
     public static partial RoomsResponseModel Map(RoomsResponseDto dto);

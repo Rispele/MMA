@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Queries.Abstractions;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Queries.Implementations.Equipment;
 

@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 using WebApi.Models.Equipment;
-using WebApi.Models.OperatorRoom;
+using WebApi.Models.OperatorDepartments;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Requests.OperatorRooms;
+using WebApi.Models.Requests.OperatorDepartments;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
 using WebApi.Models.Room.Fix;
@@ -131,7 +131,7 @@ public class Program
             },
             Attachments = new RoomAttachmentsModel(PdfRoomScheme: null, Photo: null),
             Owner = null,
-            FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, FixDeadline: null, Comment: null),
+            FixInfo = new RoomFixStatusModel(RoomStatusModel.Ready, FixDeadline: null, Comment: null),
             AllowBooking = true,
             Equipments = []
         };
@@ -216,7 +216,7 @@ public class Program
             },
             Attachments = new RoomAttachmentsModel(null, null),
             Owner = null,
-            FixStatus = new RoomFixStatusModel(RoomStatusModel.Ready, null, null),
+            FixInfo = new RoomFixStatusModel(RoomStatusModel.Ready, null, null),
             AllowBooking = true,
             Equipments =
             [
@@ -243,7 +243,7 @@ public class Program
     }
 
     [Test]
-    public async Task CreateOperatorRoomTest()
+    public async Task CreateOperatorDepartmentTest()
     {
         // Arrange
         var operatorId = Guid.NewGuid();
@@ -267,14 +267,14 @@ public class Program
         };
         var room = await _httpClient.CreateRoom(createRoomModel);
 
-        var inputOperatorRoom = new CreateOperatorRoomModel
+        var inputOperatorDepartment = new CreateOperatorDepartmentModel
         {
             Name = "Операторская",
             RoomIds = [room.Id],
             Operators = new Dictionary<Guid, string> { { operatorId, "Иван" } },
             Contacts = "123",
         };
-        var expectedOperatorRoom = new OperatorRoomModel
+        var expectedOperatorDepartment = new OperatorDepartmentModel
         {
             Name = "Операторская",
             Rooms = new Dictionary<int, string>() { { 1, "ТретьяАудитория" } },
@@ -283,9 +283,9 @@ public class Program
         };
 
         // Act
-        var actualOperatorRoom = await _httpClient.CreateOperatorRoom(inputOperatorRoom);
+        var actualOperatorDepartment = await _httpClient.CreateOperatorDepartment(inputOperatorDepartment);
 
         // Assert
-        actualOperatorRoom.Should().BeEquivalentTo(expectedOperatorRoom, opt => opt.Excluding(x => x.Id));
+        actualOperatorDepartment.Should().BeEquivalentTo(expectedOperatorDepartment, opt => opt.Excluding(x => x.Id));
     }
 }

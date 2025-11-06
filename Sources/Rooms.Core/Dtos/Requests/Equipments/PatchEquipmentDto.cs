@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Dtos.Requests.Equipments;
 

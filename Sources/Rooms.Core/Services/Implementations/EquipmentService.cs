@@ -1,5 +1,4 @@
-﻿using Commons;
-using Rooms.Core.DtoConverters;
+﻿using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.Equipments;
@@ -9,7 +8,7 @@ using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -80,7 +79,7 @@ public class EquipmentService(
         var equipmentSchema = await context.ApplyQuery(equipmentSchemaQueryFactory.FindById(dto.SchemaId), cancellationToken);
 
         equipmentToPatch.Update(
-            (await roomService.GetRoomById(dto.RoomId, cancellationToken)).Map(RoomDtoConverter.Convert),
+            equipmentToPatch.RoomId,
             equipmentSchema,
             dto.InventoryNumber,
             dto.SerialNumber,

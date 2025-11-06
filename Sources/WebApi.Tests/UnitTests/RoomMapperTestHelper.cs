@@ -62,27 +62,26 @@ public static class RoomMapperTestHelper
 
     public static RoomDto CreateRoomDto()
     {
-        return new RoomDto(
-            RoomId,
-            RoomName,
-            RoomDescription,
-            new ScheduleAddressDto(RoomNumber, RoomAddress),
-            new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
-            new RoomAttachmentsDto(
+        return new RoomDto
+        {
+            Id = RoomId,
+            Name = RoomName,
+            Description = RoomDescription,
+            AllowBooking = AllowBooking,
+            Attachments = new RoomAttachmentsDto(
                 new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
                 new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket))),
-            Owner,
-            // new RoomOperatorDepartmentDto(
+            Owner = Owner,
+            FixInfo = new RoomFixStatusDto(FromRoomStatus, FixDeadline, FixComment),
+            // OperatorDepartment = new RoomOperatorDepartmentModel(
             //     OperatorDepartmentId,
             //     DepartmentName,
             //     Contacts,
-            //     [
-            //         new RoomOperatorDto(OperatorId, OperatorName, OperatorUserId)
-            //     ]),
-            new RoomFixStatusDto(FromRoomStatus, FixDeadline, FixComment),
-            AllowBooking,
-            [],
-            null);
+            //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
+            Equipments = [],
+            Parameters = new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
+            ScheduleAddress = new ScheduleAddressDto(RoomAddress, RoomNumber),
+        };
     }
 
     public static RoomModel CreateRoomModel()
@@ -97,7 +96,7 @@ public static class RoomMapperTestHelper
                 new FileDescriptorModel(File1Name, new FileLocationModel(File1Id, File1Bucket)),
                 new FileDescriptorModel(File2Name, new FileLocationModel(File2Id, File2Bucket))),
             Owner = Owner,
-            FixStatus = new RoomFixStatusModel(ToRoomStatus, FixDeadline, FixComment),
+            FixInfo = new RoomFixStatusModel(ToRoomStatus, FixDeadline, FixComment),
             // OperatorDepartment = new RoomOperatorDepartmentModel(
             //     OperatorDepartmentId,
             //     DepartmentName,

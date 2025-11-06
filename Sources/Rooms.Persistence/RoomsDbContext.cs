@@ -1,11 +1,11 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Queries.Abstractions;
-using Rooms.Domain.Models.Equipment;
-using Rooms.Domain.Models.OperatorRoom;
+using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Models.OperatorDepartments;
 using Rooms.Domain.Models.Room;
 using Rooms.Persistence.EntityConfigurations.Equipment;
-using Rooms.Persistence.EntityConfigurations.OperatorRoom;
+using Rooms.Persistence.EntityConfigurations.OperatorDepartments;
 using Rooms.Persistence.EntityConfigurations.Room;
 using Rooms.Persistence.Queries.Abstractions;
 
@@ -21,7 +21,7 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
 
     public DbSet<EquipmentType> EquipmentTypes { get; [UsedImplicitly] private set; }
 
-    public DbSet<OperatorRoom> OperatorRooms { get; [UsedImplicitly] private set; }
+    public DbSet<OperatorDepartment> OperatorDepartments { get; [UsedImplicitly] private set; }
 
     public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(IQuerySpecification<TEntity> querySpecification)
     {
@@ -74,7 +74,7 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         modelBuilder.ApplyConfiguration(new EquipmentSchemaEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new EquipmentTypeEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RoomEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new OperatorRoomEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OperatorDepartmentEntityTypeConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

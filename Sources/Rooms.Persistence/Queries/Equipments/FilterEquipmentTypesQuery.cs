@@ -3,7 +3,7 @@ using Commons.Optional;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Queries.Implementations.Equipment;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 using Rooms.Persistence.Queries.Abstractions;
 
 namespace Rooms.Persistence.Queries.Equipments;

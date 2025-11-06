@@ -1,4 +1,4 @@
-﻿using Rooms.Domain.Models.Equipment;
+﻿using Rooms.Domain.Models.Equipments;
 
 namespace WebApi.Models.Equipment;
 

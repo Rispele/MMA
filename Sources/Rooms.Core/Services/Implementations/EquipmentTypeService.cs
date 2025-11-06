@@ -8,7 +8,7 @@ using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.Equipment;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Services.Implementations;
 
