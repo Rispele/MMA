@@ -1,68 +1,58 @@
 ﻿using FluentAssertions;
-using Mapster;
-using MapsterMapper;
-using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Dtos.Requests.Rooms;
-using WebApi.Models.Requests.Rooms;
-using WebApi.Models.Room;
-using WebApi.Startup.ConfigurationExtensions;
+using WebApi.ModelConverters;
 
 namespace WebApi.Tests.UnitTests;
 
 [TestFixture]
-public class MapsterTests
+public class MapperTests
 {
-    private readonly IMapper mapper = new ServiceMapper(
-        new ServiceCollection().BuildServiceProvider(),
-        new TypeAdapterConfig().ConfigureMapster());
-
     [Test]
     public void Map_RoomDto_To_RoomModel_ShouldCorrectlyMap()
     {
-        var dto = RoomMapsterTestHelper.CreateRoomDto();
-        var model = RoomMapsterTestHelper.CreateRoomModel();
+        var dto = RoomMapperTestHelper.CreateRoomDto();
+        var model = RoomMapperTestHelper.CreateRoomModel();
 
-        var mapped = mapper.Map<RoomModel>(dto);
+        var mapped = RoomsModelsConverter.Map(dto);
         mapped.Should().BeEquivalentTo(model);
     }
 
     [Test]
     public void Map_RoomDto_To_PatchRoomModel_ShouldCorrectlyMap()
     {
-        var dto = RoomMapsterTestHelper.CreateRoomDto();
-        var model = RoomMapsterTestHelper.CreatePatchRoomModel();
+        var dto = RoomMapperTestHelper.CreateRoomDto();
+        var model = RoomMapperTestHelper.CreatePatchRoomModel();
 
-        var mapped = mapper.Map<PatchRoomModel>(dto);
+        var mapped = RoomsModelsConverter.MapToPatchRoomModel(dto);
         mapped.Should().BeEquivalentTo(model);
     }
 
     [Test]
     public void Map_PatchRoomModel_To_PatchRoomDto_ShouldCorrectlyMap()
     {
-        var dto = RoomMapsterTestHelper.CreatePatchRoomDto();
-        var model = RoomMapsterTestHelper.CreatePatchRoomModel();
+        var dto = RoomMapperTestHelper.CreatePatchRoomDto();
+        var model = RoomMapperTestHelper.CreatePatchRoomModel();
 
-        var mapped = mapper.Map<PatchRoomDto>(model);
+        var mapped = RoomsModelsConverter.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 
     [Test]
     public void Map_CreateRoomModel_To_CreateRoomDto_ShouldCorrectlyMap()
     {
-        var dto = RoomMapsterTestHelper.CreateCreateRoomDto();
-        var model = RoomMapsterTestHelper.CreateCreateRoomModel();
+        var dto = RoomMapperTestHelper.CreateCreateRoomDto();
+        var model = RoomMapperTestHelper.CreateCreateRoomModel();
 
-        var mapped = mapper.Map<CreateRoomModel>(model);
+        var mapped = RoomsModelsConverter.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 
     [Test]
     public void Map_GetRoomsModel_To_GetRoomRequestDto_ShouldCorrectlyMap()
     {
-        var dto = RoomMapsterTestHelper.CreateGetRoomsRequestDto();
-        var model = RoomMapsterTestHelper.CreateGetRoomsModel();
+        var dto = RoomMapperTestHelper.CreateGetRoomsRequestDto();
+        var model = RoomMapperTestHelper.CreateGetRoomsModel();
 
-        var mapped = mapper.Map<GetRoomsRequestDto>(model);
+        var mapped = RoomsModelsConverter.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 }

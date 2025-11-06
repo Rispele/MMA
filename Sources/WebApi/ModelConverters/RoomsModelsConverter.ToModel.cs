@@ -1,127 +1,28 @@
-﻿using Commons;
-using Rooms.Core.Dtos.Files;
+﻿using Riok.Mapperly.Abstractions;
+using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
-using WebApi.Models.Files;
+using WebApi.Models.Requests.Rooms;
+using WebApi.Models.Responses;
 using WebApi.Models.Room;
-using WebApi.Models.Room.Fix;
-using WebApi.Models.Room.Parameters;
 
 namespace WebApi.ModelConverters;
 
 public static partial class RoomsModelsConverter
 {
-    public static RoomModel Convert(RoomDto dto)
-    {
-        return new RoomModel
-        {
-            Id = dto.Id,
-            Name = dto.Name,
-            Description = dto.Description,
-            ScheduleAddress = Convert(dto.ScheduleAddress),
-            Parameters = Convert(dto.Parameters),
-            Attachments = Convert(dto.Attachments),
-            Owner = dto.Owner,
-            FixStatus = Convert(dto.FixStatus),
-            AllowBooking = dto.AllowBooking,
-            Equipments = dto.Equipments.Select(x => x.Map(EquipmentModelMapper.MapEquipmentToModel)),
-            OperatorRoomId = dto.OperatorRoomId,
-        };
-    }
+    [MapProperty(nameof(RoomDto.Parameters.Type), nameof(PatchRoomModel.Type))]
+    [MapProperty(nameof(RoomDto.Parameters.NetType), nameof(PatchRoomModel.NetType))]
+    [MapProperty(nameof(RoomDto.Parameters.Layout), nameof(PatchRoomModel.Layout))]
+    [MapProperty(nameof(RoomDto.Parameters.Seats), nameof(PatchRoomModel.Seats))]
+    [MapProperty(nameof(RoomDto.Parameters.ComputerSeats), nameof(PatchRoomModel.ComputerSeats))]
+    [MapProperty(nameof(RoomDto.Parameters.HasConditioning), nameof(PatchRoomModel.HasConditioning))]
+    [MapProperty(nameof(RoomDto.Attachments.PdfRoomScheme), nameof(PatchRoomModel.PdfRoomSchemeFile))]
+    [MapProperty(nameof(RoomDto.Attachments.Photo), nameof(PatchRoomModel.PhotoFile))]
+    [MapProperty(nameof(RoomDto.FixStatus.Comment), nameof(PatchRoomModel.Comment))]
+    [MapProperty(nameof(RoomDto.FixStatus.FixDeadline), nameof(PatchRoomModel.FixDeadline))]
+    [MapProperty(nameof(RoomDto.FixStatus.Status), nameof(PatchRoomModel.RoomStatus))]
+    public static partial PatchRoomModel MapToPatchRoomModel(RoomDto dto);
 
-    private static ScheduleAddressModel? Convert(ScheduleAddressDto? dto)
-    {
-        return dto == null
-            ? null
-            : new ScheduleAddressModel
-            {
-                RoomNumber = dto.RoomNumber,
-                Address = dto.Address
-            };
-    }
-
-    private static RoomParametersModel Convert(RoomParametersDto dto)
-    {
-        return new RoomParametersModel
-        {
-            Type = Convert(dto.Type),
-            Layout = Convert(dto.Layout),
-            NetType = Convert(dto.NetType),
-            Seats = dto.Seats,
-            ComputerSeats = dto.ComputerSeats,
-            HasConditioning = dto.HasConditioning
-        };
-    }
-
-    private static RoomAttachmentsModel Convert(RoomAttachmentsDto dto)
-    {
-        return new RoomAttachmentsModel(
-            Convert(dto.PdfRoomScheme),
-            Convert(dto.Photo));
-    }
-
-    private static FileDescriptorModel? Convert(FileDescriptorDto? dto)
-    {
-        return dto == null ? null : new FileDescriptorModel(dto.FileName, Convert(dto.Location));
-    }
-
-    private static FileLocationModel Convert(FileLocationDto dto)
-    {
-        return new FileLocationModel(dto.Id, dto.Bucket);
-    }
-
-    private static RoomFixStatusModel Convert(RoomFixStatusDto dto)
-    {
-        return new RoomFixStatusModel(Convert(dto.Status), dto.FixDeadline, dto.Comment);
-    }
-
-    private static RoomTypeModel Convert(RoomTypeDto value)
-    {
-        return value switch
-        {
-            RoomTypeDto.Unspecified => RoomTypeModel.Unspecified,
-            RoomTypeDto.Multimedia => RoomTypeModel.Multimedia,
-            RoomTypeDto.Computer => RoomTypeModel.Computer,
-            RoomTypeDto.Special => RoomTypeModel.Special,
-            RoomTypeDto.Mixed => RoomTypeModel.Mixed,
-            _ => RoomTypeModel.Unspecified
-        };
-    }
-
-    private static RoomLayoutModel Convert(RoomLayoutDto value)
-    {
-        return value switch
-        {
-            RoomLayoutDto.Unspecified => RoomLayoutModel.Unspecified,
-            RoomLayoutDto.Flat => RoomLayoutModel.Flat,
-            RoomLayoutDto.Amphitheater => RoomLayoutModel.Amphitheater,
-            _ => RoomLayoutModel.Unspecified
-        };
-    }
-
-    private static RoomNetTypeModel Convert(RoomNetTypeDto value)
-    {
-        return value switch
-        {
-            RoomNetTypeDto.Unspecified => RoomNetTypeModel.Unspecified,
-            RoomNetTypeDto.None => RoomNetTypeModel.None,
-            RoomNetTypeDto.Wired => RoomNetTypeModel.Wired,
-            RoomNetTypeDto.Wireless => RoomNetTypeModel.Wireless,
-            RoomNetTypeDto.WiredAndWireless => RoomNetTypeModel.WiredAndWireless,
-            _ => RoomNetTypeModel.Unspecified
-        };
-    }
-
-    private static RoomStatusModel Convert(RoomStatusDto value)
-    {
-        return value switch
-        {
-            RoomStatusDto.Unspecified => RoomStatusModel.Unspecified,
-            RoomStatusDto.Ready => RoomStatusModel.Ready,
-            RoomStatusDto.PartiallyReady => RoomStatusModel.PartiallyReady,
-            RoomStatusDto.NotReady => RoomStatusModel.NotReady,
-            _ => RoomStatusModel.Unspecified
-        };
-    }
+    public static partial RoomsResponseModel Map(RoomsResponseDto dto);
+    
+    public static partial RoomModel Map(RoomDto dto);
 }

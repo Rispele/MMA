@@ -2,6 +2,6 @@
 
 public record FilterParameterModel<T>
 {
-    public T? Value { get; init; }
+    public required T Value { get; init; }
     public SortDirectionModel SortDirection { get; init; }
 }

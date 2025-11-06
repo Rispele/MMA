@@ -1,6 +1,4 @@
-﻿using Mapster;
-using MapsterMapper;
-using Rooms.Core.Clients;
+﻿using Rooms.Core.Clients;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
@@ -56,11 +54,6 @@ public static class ServicesConfigurationExtensions
 
     private static IServiceCollection WithMapster(this IServiceCollection serviceCollection)
     {
-        var config = new TypeAdapterConfig().ConfigureMapster();
-
-        serviceCollection.AddSingleton(config);
-        serviceCollection.AddScoped<IMapper, ServiceMapper>();
-
         return serviceCollection;
     }
 

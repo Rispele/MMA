@@ -1,6 +1,5 @@
-﻿using MapsterMapper;
-using Microsoft.AspNetCore.JsonPatch;
-using Rooms.Core.Dtos.Requests.Rooms;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using WebApi.ModelConverters;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -9,33 +8,31 @@ using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomService(
-    ICoreRoomService roomService,
-    IMapper mapper) : IRoomService
+public class RoomService(ICoreRoomService roomService) : IRoomService
 {
     public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {
-        var getRoomsRequest = mapper.Map<GetRoomsRequestDto>(model);
+        var getRoomsRequest = RoomsModelsConverter.Map(model);
 
         var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
 
-        return mapper.Map<RoomsResponseModel>(batch);
+        return RoomsModelsConverter.Map(batch);
     }
 
     public async Task<RoomModel> GetRoomByIdAsync(int id, CancellationToken cancellationToken)
     {
         var room = await roomService.GetRoomById(id, cancellationToken);
 
-        return mapper.Map<RoomModel>(room);
+        return RoomsModelsConverter.Map(room);
     }
 
     public async Task<RoomModel> CreateRoom(CreateRoomModel model, CancellationToken cancellationToken)
     {
-        var innerRequest = mapper.Map<CreateRoomDto>(model);
+        var innerRequest = RoomsModelsConverter.Map(model);
 
         var room = await roomService.CreateRoom(innerRequest, cancellationToken);
 
-        return mapper.Map<RoomModel>(room);
+        return RoomsModelsConverter.Map(room);
     }
 
     public async Task<(RoomModel? result, bool isOk)> PatchRoomAsync(
@@ -50,14 +47,14 @@ public class RoomService(
 
         return !validate(patchModel)
             ? (null, isOk: false)
-            : (mapper.Map<RoomModel>(await PatchRoomAsync(roomId, patchModel, cancellationToken)), isOk: true);
+            : (await PatchRoomAsync(roomId, patchModel, cancellationToken), isOk: true);
     }
 
     private async Task<PatchRoomModel> GetPatchModel(int roomId, CancellationToken cancellationToken)
     {
         var room = await roomService.GetRoomById(roomId, cancellationToken);
 
-        return mapper.Map<PatchRoomModel>(room);
+        return RoomsModelsConverter.MapToPatchRoomModel(room);
     }
 
     private async Task<RoomModel> PatchRoomAsync(
@@ -65,10 +62,10 @@ public class RoomService(
         PatchRoomModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = mapper.Map<PatchRoomDto>(patchModel);
+        var patchRequest = RoomsModelsConverter.Map(patchModel);
 
         var patched = await roomService.PatchRoom(roomId, patchRequest, cancellationToken);
 
-        return mapper.Map<RoomModel>(patched);
+        return RoomsModelsConverter.Map(patched);
     }
 }

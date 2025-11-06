@@ -6,12 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>WebApi</RootNamespace>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-        <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Mapster" Version="7.4.0" />
-        <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.10"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.3.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.10"/>
@@ -24,15 +21,6 @@
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
         <ProjectReference Include="..\Rooms.Persistence\Rooms.Persistence.csproj"/>
         <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <_ContentIncludedByDefault Remove="Config\minioOptions.json"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Compile Remove="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
-        <None Include="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
     </ItemGroup>
 
 </Project>

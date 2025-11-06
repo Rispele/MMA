@@ -13,15 +13,15 @@ using WebApi.Models.Room.Parameters;
 
 namespace WebApi.Tests.UnitTests;
 
-public static class RoomMapsterTestHelper
+public static class RoomMapperTestHelper
 {
     private const int RoomId = 1;
     private const string RoomName = "Room";
     private const string RoomDescription = "Description";
     private const string RoomNumber = "Room Number";
     private const string RoomAddress = "Room Address";
-    private const int Seats = 1;
-    private const int ComputerSeats = 1;
+    private const int Seats = 10;
+    private const int ComputerSeats = 20;
     private const bool HasConditioning = true;
     private const string File1Name = "File1";
     private const string File2Name = "File2";
