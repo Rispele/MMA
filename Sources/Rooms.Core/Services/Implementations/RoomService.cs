@@ -36,7 +36,7 @@ public class RoomService(
 
         var rooms = await unitOfWork
             .ApplyQuery(query)
-            .ToArrayAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
         var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
@@ -127,16 +127,6 @@ public class RoomService(
 
         return await unitOfWork.ApplyQuery(query, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
-    }
-
-    private async Task<Room[]> GetRoomsByIdInner(IUnitOfWork unitOfWork, int[] roomIds, CancellationToken cancellationToken)
-    {
-        var query = queriesFactory.FindByIds(roomIds);
-
-        return await unitOfWork
-                   .ApplyQuery(query)
-                   .ToArrayAsync(cancellationToken)
-               ?? throw new RoomNotFoundException($"Rooms [{string.Join(", ", roomIds)}] not found");
     }
 
     private async Task Validate(IUnitOfWork unitOfWork, CreateRoomDto dto, CancellationToken cancellationToken)

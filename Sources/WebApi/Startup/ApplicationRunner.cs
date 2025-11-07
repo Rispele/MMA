@@ -14,7 +14,7 @@ public static class ApplicationRunner
             .AddRoomsDbContext()
             .AddMinio();
 
-        builder.Services.ConfigureServices();
+        builder.Services.ConfigureServicesForWebApi();
 
         return ConfigureApplication(builder);
     }

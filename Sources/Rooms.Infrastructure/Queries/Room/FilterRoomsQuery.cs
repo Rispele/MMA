@@ -27,7 +27,7 @@ public class FilterRoomsQuery :
         rooms = Sort(rooms);
         rooms = Paginate(rooms);
 
-        return rooms.ToAsyncEnumerable();
+        return rooms.AsAsyncEnumerable();
     }
 
     private IQueryable<Domain.Models.Room.Room> Filters(IQueryable<Domain.Models.Room.Room> rooms)

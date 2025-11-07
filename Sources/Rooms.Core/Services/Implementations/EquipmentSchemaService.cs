@@ -1,4 +1,5 @@
-﻿using Rooms.Core.DtoConverters;
+﻿using Commons;
+using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
@@ -34,7 +35,7 @@ public class EquipmentSchemaService(
 
         var equipmentSchemas = await context
             .ApplyQuery(query)
-            .ToArrayAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
         var convertedEquipmentSchemas = equipmentSchemas.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto).ToArray();
         int? lastEquipmentSchemaId = convertedEquipmentSchemas.Length == 0 ? null : convertedEquipmentSchemas.Select(t => t.Id).Max();

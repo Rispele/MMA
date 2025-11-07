@@ -28,7 +28,7 @@ public class FilterEquipmentsQuery :
         equipments = Sort(equipments);
         equipments = Paginate(equipments);
 
-        return equipments.ToAsyncEnumerable();
+        return equipments.AsAsyncEnumerable();
     }
 
     private IQueryable<Equipment> Filters(

@@ -26,7 +26,7 @@ public class FilterEquipmentSchemasQuery :
         equipmentSchemas = Sort(equipmentSchemas);
         equipmentSchemas = Paginate(equipmentSchemas);
 
-        return equipmentSchemas.ToAsyncEnumerable();
+        return equipmentSchemas.AsAsyncEnumerable();
     }
 
     private IQueryable<EquipmentSchema> Filters(

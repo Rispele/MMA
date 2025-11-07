@@ -1,4 +1,5 @@
-﻿using Rooms.Core.DtoConverters;
+﻿using Commons;
+using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
@@ -34,7 +35,7 @@ public class EquipmentTypeService(
 
         var equipmentTypes = await context
             .ApplyQuery(query)
-            .ToArrayAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
         var convertedEquipmentTypes = equipmentTypes.Select(EquipmentTypeDtoMapper.MapEquipmentTypeToDto).ToArray();
         int? lastEquipmentTypeId = convertedEquipmentTypes.Length == 0 ? null : convertedEquipmentTypes.Select(t => t.Id).Max();

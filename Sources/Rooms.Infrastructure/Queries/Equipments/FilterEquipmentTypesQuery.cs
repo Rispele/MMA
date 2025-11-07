@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
+using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Queries.Implementations.Equipment;
@@ -25,7 +26,7 @@ public class FilterEquipmentTypesQuery :
         equipmentTypes = Sort(equipmentTypes);
         equipmentTypes = Paginate(equipmentTypes);
 
-        return equipmentTypes.ToAsyncEnumerable();
+        return equipmentTypes.AsAsyncEnumerable();
     }
 
     private IQueryable<EquipmentType> Filters(

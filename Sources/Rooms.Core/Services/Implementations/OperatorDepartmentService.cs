@@ -42,7 +42,7 @@ public class OperatorDepartmentService(
 
         var operatorDepartments = await context
             .ApplyQuery(query)
-            .ToArrayAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
         var convertedOperatorDepartments = operatorDepartments.Select(OperatorDepartmentsDtoConverter.Convert).ToArray();
         int? lastOperatorDepartmentId = convertedOperatorDepartments.Length == 0 ? null : convertedOperatorDepartments.Select(t => t.Id).Max();

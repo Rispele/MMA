@@ -1,4 +1,5 @@
-﻿using Rooms.Core.Queries.Implementations.Room;
+﻿using Microsoft.EntityFrameworkCore;
+using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Infrastructure.Queries.Abstractions;
 
 namespace Rooms.Infrastructure.Queries.Room;
@@ -15,6 +16,6 @@ public readonly struct FindRoomsByIdQuery :
 
         return source.Rooms
             .Where(predicate: t => ids.Contains(t.Id))
-            .ToAsyncEnumerable();
+            .AsAsyncEnumerable();
     }
 }

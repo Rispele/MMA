@@ -1,20 +1,6 @@
-﻿using Rooms.Core.Clients;
-using Rooms.Core.Queries.Factories;
-using Rooms.Core.Services.Implementations;
-using Rooms.Core.Services.Interfaces;
-using Rooms.Domain.Services;
-using Rooms.Infrastructure;
-using Rooms.Infrastructure.Factories;
-using Rooms.Infrastructure.ObjectStorageService;
+﻿using Rooms.Core.ServicesConfiguration;
+using Rooms.Infrastructure.ServicesConfiguration;
 using WebApi.Startup.InputFormatters;
-using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
-using CoreRoomService = Rooms.Core.Services.Implementations.RoomService;
-using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
-using CoreEquipmentService = Rooms.Core.Services.Implementations.EquipmentService;
-using ICoreEquipmentTypeService = Rooms.Core.Services.Interfaces.IEquipmentTypeService;
-using CoreEquipmentTypeService = Rooms.Core.Services.Implementations.EquipmentTypeService;
-using ICoreEquipmentSchemaService = Rooms.Core.Services.Interfaces.IEquipmentSchemaService;
-using CoreEquipmentSchemaService = Rooms.Core.Services.Implementations.EquipmentSchemaService;
 using IRoomService = WebApi.Services.Interfaces.IRoomService;
 using RoomService = WebApi.Services.Implementations.RoomService;
 using IEquipmentService = WebApi.Services.Interfaces.IEquipmentService;
@@ -29,9 +15,8 @@ namespace WebApi.Startup.ConfigurationExtensions;
 
 public static class ServicesConfigurationExtensions
 {
-    public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection ConfigureServicesForWebApi(this IServiceCollection serviceCollection)
     {
-        //OpenApi
         serviceCollection.AddOpenApi();
         serviceCollection.AddEndpointsApiExplorer();
 
@@ -41,15 +26,8 @@ public static class ServicesConfigurationExtensions
             options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
         });
 
-        serviceCollection
-            .WithMapster()
-            .WithServices();
+        serviceCollection.WithServices();
 
-        return serviceCollection;
-    }
-
-    private static IServiceCollection WithMapster(this IServiceCollection serviceCollection)
-    {
         return serviceCollection;
     }
 
@@ -57,22 +35,10 @@ public static class ServicesConfigurationExtensions
     {
         serviceCollection
             // Infrastructure
-            .AddScoped<IObjectStorageService, MinioObjectStorageService>()
-            .AddScoped<IOperatorDepartmentClient, OperatorDepartmentClient>()
-            .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory<RoomsDbContext>>()
-            .AddScoped<IRoomQueriesFactory, RoomQueriesFactory>()
-            .AddScoped<IEquipmentQueryFactory, EquipmentQueryFactory>()
-            .AddScoped<IEquipmentTypeQueryFactory, EquipmentTypeQueryFactory>()
-            .AddScoped<IEquipmentSchemaQueryFactory, EquipmentSchemaQueryFactory>()
-            .AddScoped<IOperatorDepartmentQueryFactory, OperatorDepartmentQueryFactory>()
+            .ConfigureServicesForRoomsInfrastructure()
 
             // Core
-            .AddScoped<IRoomAttachmentsService, RoomAttachmentsService>()
-            .AddScoped<ICoreRoomService, CoreRoomService>()
-            .AddScoped<ICoreEquipmentService, CoreEquipmentService>()
-            .AddScoped<ICoreEquipmentTypeService, CoreEquipmentTypeService>()
-            .AddScoped<ICoreEquipmentSchemaService, CoreEquipmentSchemaService>()
-            .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>()
+            .ConfigureServicesForRoomsCore()
 
             // WebApi
             .AddScoped<IRoomService, RoomService>()
@@ -80,7 +46,6 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
             .AddScoped<Services.Interfaces.IOperatorDepartmentService, Services.Implementations.OperatorDepartmentService>();
-            ;
 
         return serviceCollection;
     }

@@ -20,10 +20,20 @@ var configuration = new ConfigurationBuilder()
         reloadOnChange: true)
     .Build();
 
-var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
-var testDoubleLkUserApi = builder.AddTestDoubleLkUserApi(KnownResources.TestDoubleLkUserApi, configuration);
-var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
-var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
-builder.AddWebApi(KnownResources.WebApiService, minioResourceParameters, testDoubleLkUserApi, postgresResource, roomsMigrationResource);
+var testingProfile = builder.Configuration["testing_profile"];
+
+if (testingProfile is "Testing.Core")
+{
+    builder.AddMinio(KnownResources.Minio, configuration);
+    var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
+    builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
+}
+else
+{
+    var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
+    var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
+    var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
+    builder.AddWebApi(KnownResources.WebApiService, minioResourceParameters, postgresResource, roomsMigrationResource);
+}
 
 builder.Build().Run();

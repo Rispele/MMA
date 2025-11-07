@@ -26,7 +26,7 @@ public class FilterOperatorDepartmentsQuery :
         operatorDepartments = Sort(operatorDepartments);
         operatorDepartments = Paginate(operatorDepartments);
 
-        return operatorDepartments.ToAsyncEnumerable();
+        return operatorDepartments.AsAsyncEnumerable();
     }
 
     private IQueryable<OperatorDepartment> Filters(

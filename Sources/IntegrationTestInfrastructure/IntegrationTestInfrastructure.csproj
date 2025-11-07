@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Aspire.Hosting.Testing" Version="9.5.1" />
+      <PackageReference Include="Aspire.Hosting.Testing" Version="9.5.2" />
+      <PackageReference Include="FluentAssertions" Version="8.8.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
       <PackageReference Include="NUnit" Version="4.4.0" />
       <PackageReference Include="SkbKontur.NUnit.Middlewares" Version="0.1.11" />

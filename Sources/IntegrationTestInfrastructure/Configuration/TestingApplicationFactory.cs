@@ -8,7 +8,7 @@ using Projects;
 
 namespace IntegrationTestInfrastructure.Configuration;
 
-public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(Sources_AppHost))
+public class TestingApplicationFactory(string testingProfile) : DistributedApplicationFactory(typeof(Sources_AppHost))
 {
     public DistributedApplication Application { get; private set; } = null!;
 
@@ -16,6 +16,7 @@ public class TestingApplicationFactory() : DistributedApplicationFactory(typeof(
     {
         hostOptions.Configuration ??= new ConfigurationManager();
         hostOptions.Configuration["environment"] = "Development";
+        hostOptions.Configuration["testing_profile"] = testingProfile;
 
         applicationOptions.AllowUnsecuredTransport = true;
         applicationOptions.DisableDashboard = false;
