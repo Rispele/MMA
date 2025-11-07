@@ -19,9 +19,4 @@
         <PackageReference Include="Riok.Mapperly" Version="4.3.0" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Compile Remove="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
-        <None Include="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
-    </ItemGroup>
-
 </Project>
