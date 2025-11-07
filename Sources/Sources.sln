@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rooms.Domain", "Rooms.Domai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests", "WebApi.Tests\WebApi.Tests.csproj", "{5699853D-7EB5-438E-AE92-8197911CA42A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rooms.Persistence", "Rooms.Persistence\Rooms.Persistence.csproj", "{0AF0D4BC-0C74-4751-A64D-D645FB06CC92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rooms.Infrastructure", "Rooms.Infrastructure\Rooms.Infrastructure.csproj", "{0AF0D4BC-0C74-4751-A64D-D645FB06CC92}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{94F86E6F-55C3-4A18-8623-C4F8EF8BF8CF}"
 EndProject

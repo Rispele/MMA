@@ -1,5 +1,5 @@
-﻿using Rooms.Persistence;
-using Rooms.Persistence.Configuration;
+﻿using Rooms.Infrastructure;
+using Rooms.Infrastructure.Configuration;
 using Sources.ServiceDefaults;
 
 namespace WebApi.Startup.ConfigurationExtensions;

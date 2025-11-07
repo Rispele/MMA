@@ -1,0 +1,44 @@
+﻿using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.Room;
+using Rooms.Infrastructure.Queries.Room;
+
+namespace Rooms.Infrastructure.Factories;
+
+public class RoomQueriesFactory : IRoomQueriesFactory
+{
+    public IFilterRoomsQuery Filter(int batchSize, int batchNumber, int afterRoomId = -1, RoomsFilterDto? filter = null)
+    {
+        return new FilterRoomsQuery
+        {
+            BatchSize = batchSize,
+            BatchNumber = batchNumber,
+            AfterRoomId = afterRoomId,
+            Filter = filter
+        };
+    }
+
+    public IFindRoomByIdQuery FindById(int roomId)
+    {
+        return new FindRoomByIdQuery
+        {
+            RoomId = roomId
+        };
+    }
+
+    public IFindRoomsByIdQuery FindByIds(IEnumerable<int> roomIds)
+    {
+        return new FindRoomsByIdQuery
+        {
+            RoomIds = roomIds
+        };
+    }
+
+    public IFindRoomByNameQuery FindByName(string name)
+    {
+        return new FindRoomByNameQuery
+        {
+            Name = name
+        };
+    }
+}

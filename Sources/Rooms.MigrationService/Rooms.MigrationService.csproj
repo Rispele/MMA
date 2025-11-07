@@ -28,7 +28,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
-        <ProjectReference Include="..\Rooms.Persistence\Rooms.Persistence.csproj"/>
+        <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
         <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj"/>
     </ItemGroup>
 </Project>

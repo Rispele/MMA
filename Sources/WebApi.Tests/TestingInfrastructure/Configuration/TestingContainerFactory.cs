@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Persistence;
-using Rooms.Persistence.Configuration;
+using Rooms.Infrastructure;
+using Rooms.Infrastructure.Configuration;
 using Sources.ServiceDefaults;
 using WebApi.Startup.ConfigurationExtensions;
 

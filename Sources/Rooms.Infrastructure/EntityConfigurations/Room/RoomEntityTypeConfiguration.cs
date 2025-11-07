@@ -1,0 +1,52 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Rooms.Domain.Models.Room;
+
+namespace Rooms.Infrastructure.EntityConfigurations.Room;
+
+public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.Room.Room>
+{
+    public void Configure(EntityTypeBuilder<Domain.Models.Room.Room> builder)
+    {
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(64);
+        builder.Property(x => x.Description).HasMaxLength(256);
+
+        builder.OwnsOne(
+            navigationExpression: t => t.ScheduleAddress,
+            buildAction: b =>
+            {
+                b.Property(x => x.Address).HasMaxLength(64);
+                b.Property(x => x.RoomNumber).HasMaxLength(32);
+            });
+
+        builder.OwnsOne(
+            navigationExpression: t => t.Parameters,
+            buildAction: b =>
+            {
+                b.Property(t => t.Type).IsRequired();
+                b.Property(t => t.Layout).IsRequired();
+                b.Property(t => t.NetType).IsRequired();
+                b.Property(t => t.Seats);
+                b.Property(t => t.ComputerSeats);
+                b.Property(t => t.HasConditioning);
+            });
+
+        builder.Property(t => t.Attachments).HasColumnType("jsonb");
+        builder.Property(t => t.Owner).HasMaxLength(64);
+        builder.OwnsOne(
+            navigationExpression: t => t.FixInfo,
+            buildAction: b =>
+            {
+                b.Property(t => t.Status).IsRequired();
+                b.Property(t => t.Comment).HasMaxLength(256);
+                b.Property(t => t.FixDeadline).HasColumnType("timestamptz");
+            });
+        builder.Property(t => t.AllowBooking).IsRequired();
+
+        builder.Ignore(x => x.Equipments);
+        builder.HasMany<Domain.Models.Equipments.Equipment>(RoomFieldNames.Equipments).WithOne().HasForeignKey(t => t.RoomId);
+    }
+}
