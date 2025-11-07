@@ -3,6 +3,7 @@
 namespace WebApi.Tests.IntegrationTests;
 
 [SetUpFixture]
+[Parallelizable(ParallelScope.None)]
 public class WebApiTestsContext : SimpleSuiteBase
 {
     protected override void Configure(ISetupBuilder suite)

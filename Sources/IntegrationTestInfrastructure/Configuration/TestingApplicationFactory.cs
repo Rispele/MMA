@@ -16,16 +16,25 @@ public class TestingApplicationFactory(string testingProfile) : DistributedAppli
     {
         hostOptions.Configuration ??= new ConfigurationManager();
         hostOptions.Configuration["environment"] = "Development";
-        hostOptions.Configuration["testing_profile"] = testingProfile;
 
         applicationOptions.AllowUnsecuredTransport = true;
         applicationOptions.DisableDashboard = false;
+        
+        base.OnBuilderCreating(applicationOptions, hostOptions);
+    }
+
+    protected override void OnBuilderCreated(DistributedApplicationBuilder applicationBuilder)
+    {
+        applicationBuilder.Configuration["testing_profile"] = testingProfile;
+        
+        base.OnBuilderCreated(applicationBuilder);
     }
 
     protected override void OnBuilding(DistributedApplicationBuilder applicationBuilder)
     {
         applicationBuilder.Services.AddLogging(logging => logging
-            .AddConsole()
+            .ClearProviders()
+            .AddProvider(new TestingLoggerProvider())
             .AddFilter(category: "Default", LogLevel.Information)
             .AddFilter(category: "Microsoft.AspNetCore", LogLevel.Warning)
             .AddFilter(category: "Aspire.Hosting.Dcp", LogLevel.Warning));

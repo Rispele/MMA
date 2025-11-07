@@ -16,6 +16,7 @@ using WebApi.Tests.SDK;
 
 namespace WebApi.Tests.IntegrationTests;
 
+[Parallelizable(ParallelScope.Fixtures)]
 public class RoomServiceTests : ContainerTestBase
 {
     [Inject]

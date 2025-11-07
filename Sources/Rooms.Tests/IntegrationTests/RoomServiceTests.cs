@@ -12,6 +12,7 @@ using WebApi.Tests.SDK;
 
 namespace Rooms.Tests.IntegrationTests;
 
+[Parallelizable(ParallelScope.Fixtures)]
 public class RoomServiceTests : ContainerTestBase
 {
     [Inject]
@@ -118,7 +119,7 @@ public class RoomServiceTests : ContainerTestBase
                 Owner = "new owner",
                 RoomStatus = RoomStatusDto.Ready,
                 Comment = "new comment",
-                FixDeadline = DateTime.Now,
+                // FixDeadline = DateTime.UtcNow,
                 AllowBooking = false
             },
             CancellationToken.None);
