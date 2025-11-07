@@ -14,13 +14,13 @@ public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipme
         GetEquipmentsModel model,
         CancellationToken cancellationToken)
     {
-        var getEquipmentsRequest = EquipmentModelMapper.Convert(model);
+        var getEquipmentsRequest = EquipmentModelsMapper.MapGetEquipmentFromModel(model);
 
         var batch = await equipmentService.FilterEquipments(getEquipmentsRequest, cancellationToken);
 
         return new EquipmentsResponseModel
         {
-            Equipments = batch.Equipments.Select(EquipmentModelMapper.MapEquipmentToModel).ToArray(),
+            Equipments = batch.Equipments.Select(EquipmentModelsMapper.MapEquipmentToModel).ToArray(),
             Count = batch.Count
         };
     }
@@ -29,25 +29,25 @@ public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipme
     {
         var equipment = await equipmentService.GetEquipmentById(id, cancellationToken);
 
-        return EquipmentModelMapper.MapEquipmentToModel(equipment);
+        return EquipmentModelsMapper.MapEquipmentToModel(equipment);
     }
 
     public async Task<EquipmentModel> CreateEquipmentAsync(
         CreateEquipmentModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = EquipmentModelMapper.MapCreateEquipmentFromModel(model);
+        var innerRequest = EquipmentModelsMapper.MapCreateEquipmentFromModel(model);
 
         var equipment = await equipmentService.CreateEquipment(innerRequest, cancellationToken);
 
-        return EquipmentModelMapper.MapEquipmentToModel(equipment);
+        return EquipmentModelsMapper.MapEquipmentToModel(equipment);
     }
 
     public async Task<PatchEquipmentModel> GetEquipmentPatchModel(int equipmentId, CancellationToken cancellationToken)
     {
         var equipment = await equipmentService.GetEquipmentById(equipmentId, cancellationToken);
 
-        return EquipmentModelMapper.MapEquipmentToPatchModel(equipment);
+        return EquipmentModelsMapper.MapEquipmentToPatchModel(equipment);
     }
 
     public async Task<EquipmentModel> PatchEquipmentAsync(
@@ -55,11 +55,11 @@ public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipme
         PatchEquipmentModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = EquipmentModelMapper.MapPatchEquipmentTypeFromModel(patchModel);
+        var patchRequest = EquipmentModelsMapper.MapPatchEquipmentFromModel(patchModel);
 
         var patched = await equipmentService.PatchEquipment(equipmentId, patchRequest, cancellationToken);
 
-        return EquipmentModelMapper.MapEquipmentToModel(patched);
+        return EquipmentModelsMapper.MapEquipmentToModel(patched);
     }
 
     public async Task<FileExportModel> ExportEquipmentRegistry(CancellationToken cancellationToken)

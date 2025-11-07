@@ -12,27 +12,27 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
 {
     public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {
-        var getRoomsRequest = RoomsModelsConverter.Map(model);
+        var getRoomsRequest = RoomModelsMapper.Map(model);
 
         var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
 
-        return RoomsModelsConverter.Map(batch);
+        return RoomModelsMapper.Map(batch);
     }
 
     public async Task<RoomModel> GetRoomByIdAsync(int id, CancellationToken cancellationToken)
     {
         var room = await roomService.GetRoomById(id, cancellationToken);
 
-        return RoomsModelsConverter.Map(room);
+        return RoomModelsMapper.Map(room);
     }
 
     public async Task<RoomModel> CreateRoom(CreateRoomModel model, CancellationToken cancellationToken)
     {
-        var innerRequest = RoomsModelsConverter.Map(model);
+        var innerRequest = RoomModelsMapper.Map(model);
 
         var room = await roomService.CreateRoom(innerRequest, cancellationToken);
 
-        return RoomsModelsConverter.Map(room);
+        return RoomModelsMapper.Map(room);
     }
 
     public async Task<(RoomModel? result, bool isOk)> PatchRoomAsync(
@@ -54,7 +54,7 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
     {
         var room = await roomService.GetRoomById(roomId, cancellationToken);
 
-        return RoomsModelsConverter.MapToPatchRoomModel(room);
+        return RoomModelsMapper.MapToPatchRoomModel(room);
     }
 
     private async Task<RoomModel> PatchRoomAsync(
@@ -62,10 +62,10 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         PatchRoomModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = RoomsModelsConverter.Map(patchModel);
+        var patchRequest = RoomModelsMapper.Map(patchModel);
 
         var patched = await roomService.PatchRoom(roomId, patchRequest, cancellationToken);
 
-        return RoomsModelsConverter.Map(patched);
+        return RoomModelsMapper.Map(patched);
     }
 }

@@ -14,13 +14,13 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         GetEquipmentSchemasModel model,
         CancellationToken cancellationToken)
     {
-        var getEquipmentSchemasRequest = EquipmentSchemaModelMapper.Convert(model);
+        var getEquipmentSchemasRequest = EquipmentSchemaModelsMapper.MapGetEquipmentSchemaFromModel(model);
 
         var batch = await equipmentSchemaService.FilterEquipmentSchemas(getEquipmentSchemasRequest, cancellationToken);
 
         return new EquipmentSchemasResponseModel
         {
-            EquipmentSchemas = batch.EquipmentSchemas.Select(EquipmentSchemaModelMapper.MapEquipmentSchemaToModel).ToArray(),
+            EquipmentSchemas = batch.EquipmentSchemas.Select(EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel).ToArray(),
             Count = batch.Count
         };
     }
@@ -29,25 +29,25 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
     {
         var equipmentSchema = await equipmentSchemaService.GetEquipmentSchemaById(id, cancellationToken);
 
-        return EquipmentSchemaModelMapper.MapEquipmentSchemaToModel(equipmentSchema);
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(equipmentSchema);
     }
 
     public async Task<EquipmentSchemaModel> CreateEquipmentSchemaAsync(
         CreateEquipmentSchemaModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = EquipmentSchemaModelMapper.MapCreateEquipmentSchemaFromModel(model);
+        var innerRequest = EquipmentSchemaModelsMapper.MapCreateEquipmentSchemaFromModel(model);
 
         var equipmentSchema = await equipmentSchemaService.CreateEquipmentSchema(innerRequest, cancellationToken);
 
-        return EquipmentSchemaModelMapper.MapEquipmentSchemaToModel(equipmentSchema);
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(equipmentSchema);
     }
 
     public async Task<PatchEquipmentSchemaModel> GetEquipmentSchemaPatchModel(int equipmentSchemaId, CancellationToken cancellationToken)
     {
         var equipmentSchema = await equipmentSchemaService.GetEquipmentSchemaById(equipmentSchemaId, cancellationToken);
 
-        return EquipmentSchemaModelMapper.MapEquipmentSchemaToPatchModel(equipmentSchema);
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToPatchModel(equipmentSchema);
     }
 
     public async Task<EquipmentSchemaModel> PatchEquipmentSchemaAsync(
@@ -55,11 +55,11 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         PatchEquipmentSchemaModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = EquipmentSchemaModelMapper.MapPatchEquipmentTypeFromModel(patchModel);
+        var patchRequest = EquipmentSchemaModelsMapper.MapPatchEquipmentSchemaFromModel(patchModel);
 
         var patched = await equipmentSchemaService.PatchEquipmentSchema(equipmentSchemaId, patchRequest, cancellationToken);
 
-        return EquipmentSchemaModelMapper.MapEquipmentSchemaToModel(patched);
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(patched);
     }
 
     public async Task<FileExportModel> ExportEquipmentSchemaRegistry(CancellationToken cancellationToken)

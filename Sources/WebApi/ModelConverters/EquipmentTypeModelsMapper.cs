@@ -7,7 +7,7 @@ using WebApi.Models.Requests.EquipmentTypes;
 namespace WebApi.ModelConverters;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
-public static partial class EquipmentTypeModelMapper
+public static partial class EquipmentTypeModelsMapper
 {
     public static partial EquipmentTypeModel MapEquipmentTypeToModel(EquipmentTypeDto equipmentType);
 
@@ -24,5 +24,5 @@ public static partial class EquipmentTypeModelMapper
         source: nameof(GetEquipmentTypesModel.Page),
         target: nameof(GetEquipmentTypesDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetEquipmentTypesDto Map(GetEquipmentTypesModel model);
+    public static partial GetEquipmentTypesDto MapGetEquipmentTypesFromModel(GetEquipmentTypesModel model);
 }

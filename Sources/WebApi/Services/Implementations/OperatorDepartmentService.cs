@@ -12,13 +12,13 @@ public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorD
         GetOperatorDepartmentsModel model,
         CancellationToken cancellationToken)
     {
-        var getOperatorDepartmentsRequest = OperatorDepartmentsModelsConverter.Convert(model);
+        var getOperatorDepartmentsRequest = OperatorDepartmentsModelsMapper.Convert(model);
 
         var batch = await operatorDepartmentService.FilterOperatorDepartments(getOperatorDepartmentsRequest, cancellationToken);
 
         return new OperatorDepartmentsResponseModel
         {
-            OperatorDepartments = batch.OperatorDepartments.Select(OperatorDepartmentsModelsConverter.Convert).ToArray(),
+            OperatorDepartments = batch.OperatorDepartments.Select(OperatorDepartmentsModelsMapper.Convert).ToArray(),
             Count = batch.Count
         };
     }
@@ -27,7 +27,7 @@ public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorD
     {
         var operatorDepartment = await operatorDepartmentService.GetOperatorDepartmentById(id, cancellationToken);
 
-        return OperatorDepartmentsModelsConverter.Convert(operatorDepartment);
+        return OperatorDepartmentsModelsMapper.Convert(operatorDepartment);
     }
 
     public async Task<Dictionary<Guid, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken)
@@ -41,18 +41,18 @@ public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorD
         CreateOperatorDepartmentModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = OperatorDepartmentsModelsConverter.Convert(model);
+        var innerRequest = OperatorDepartmentsModelsMapper.Convert(model);
 
         var operatorDepartment = await operatorDepartmentService.CreateOperatorDepartment(innerRequest, cancellationToken);
 
-        return OperatorDepartmentsModelsConverter.Convert(operatorDepartment);
+        return OperatorDepartmentsModelsMapper.Convert(operatorDepartment);
     }
 
     public async Task<PatchOperatorDepartmentModel> GetOperatorDepartmentPatchModel(int operatorDepartmentId, CancellationToken cancellationToken)
     {
         var operatorDepartment = await operatorDepartmentService.GetOperatorDepartmentById(operatorDepartmentId, cancellationToken);
 
-        return OperatorDepartmentsModelsConverter.ConvertToPatchModel(operatorDepartment);
+        return OperatorDepartmentsModelsMapper.ConvertToPatchModel(operatorDepartment);
     }
 
     public async Task<OperatorDepartmentModel> PatchOperatorDepartmentAsync(
@@ -60,10 +60,10 @@ public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorD
         PatchOperatorDepartmentModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = OperatorDepartmentsModelsConverter.Convert(patchModel);
+        var patchRequest = OperatorDepartmentsModelsMapper.Convert(patchModel);
 
         var patched = await operatorDepartmentService.PatchOperatorDepartment(operatorDepartmentId, patchRequest, cancellationToken);
 
-        return OperatorDepartmentsModelsConverter.Convert(patched);
+        return OperatorDepartmentsModelsMapper.Convert(patched);
     }
 }

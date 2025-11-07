@@ -7,7 +7,7 @@ using WebApi.Models.Requests.OperatorDepartments;
 namespace WebApi.ModelConverters;
 
 [Mapper]
-public static partial class OperatorDepartmentsModelsConverter
+public static partial class OperatorDepartmentsModelsMapper
 {
     [MapProperty(nameof(GetOperatorDepartmentsModel.AfterOperatorDepartmentId), nameof(GetOperatorDepartmentsDto.AfterOperatorDepartmentId))]
     [MapProperty(nameof(GetOperatorDepartmentsModel.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]

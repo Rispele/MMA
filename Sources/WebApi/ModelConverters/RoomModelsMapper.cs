@@ -9,7 +9,7 @@ using WebApi.Models.Room;
 namespace WebApi.ModelConverters;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
-public static partial class RoomsModelsConverter
+public static partial class RoomModelsMapper
 {
     [MapProperty(nameof(GetRoomsModel.AfterRoomId), nameof(GetRoomsRequestDto.AfterRoomId))]
     [MapProperty(nameof(GetRoomsModel.PageSize), nameof(GetRoomsRequestDto.BatchSize))]

@@ -4,7 +4,7 @@ using WebApi.ModelConverters;
 namespace WebApi.Tests.UnitTests;
 
 [TestFixture]
-public class MapperTests
+public class RoomModelsMapperTests
 {
     [Test]
     public void Map_RoomDto_To_RoomModel_ShouldCorrectlyMap()
@@ -12,7 +12,7 @@ public class MapperTests
         var dto = RoomMapperTestHelper.CreateRoomDto();
         var model = RoomMapperTestHelper.CreateRoomModel();
 
-        var mapped = RoomsModelsConverter.Map(dto);
+        var mapped = RoomModelsMapper.Map(dto);
         mapped.Should().BeEquivalentTo(model);
     }
 
@@ -22,7 +22,7 @@ public class MapperTests
         var dto = RoomMapperTestHelper.CreateRoomDto();
         var model = RoomMapperTestHelper.CreatePatchRoomModel();
 
-        var mapped = RoomsModelsConverter.MapToPatchRoomModel(dto);
+        var mapped = RoomModelsMapper.MapToPatchRoomModel(dto);
         mapped.Should().BeEquivalentTo(model);
     }
 
@@ -32,7 +32,7 @@ public class MapperTests
         var dto = RoomMapperTestHelper.CreatePatchRoomDto();
         var model = RoomMapperTestHelper.CreatePatchRoomModel();
 
-        var mapped = RoomsModelsConverter.Map(model);
+        var mapped = RoomModelsMapper.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 
@@ -42,7 +42,7 @@ public class MapperTests
         var dto = RoomMapperTestHelper.CreateCreateRoomDto();
         var model = RoomMapperTestHelper.CreateCreateRoomModel();
 
-        var mapped = RoomsModelsConverter.Map(model);
+        var mapped = RoomModelsMapper.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 
@@ -52,34 +52,7 @@ public class MapperTests
         var dto = RoomMapperTestHelper.CreateGetRoomsRequestDto();
         var model = RoomMapperTestHelper.CreateGetRoomsModel();
 
-        var mapped = RoomsModelsConverter.Map(model);
+        var mapped = RoomModelsMapper.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 }
-
-// [
-//     new EquipmentDto()
-//     {
-//         Comment = "comment",
-//         Id = 1,
-//         InventoryNumber = "123",
-//         NetworkEquipmentIp = "123",
-//         Room = null!,
-//         SchemaDto = new EquipmentSchemaDto()
-//         {
-//             Equipments = [],
-//             EquipmentType = new EquipmentTypeDto()
-//             {
-//                 Id = 1,
-//                 Name = "EquipmentTypeName",
-//                 Parameters = [new EquipmentParameterDescriptorDto() { Name = "Parameter", Required = true }]
-//             },
-//             Id = 3,
-//             Name = "EquipmentSchemaName",
-//             ParameterValues = new Dictionary<string, string>()
-//             {
-//                 ["key"] = "value"
-//             }
-//         }
-//     }
-// ]

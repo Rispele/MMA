@@ -14,13 +14,13 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         GetEquipmentTypesModel model,
         CancellationToken cancellationToken)
     {
-        var getEquipmentTypesRequest = EquipmentTypeModelMapper.Map(model);
+        var getEquipmentTypesRequest = EquipmentTypeModelsMapper.MapGetEquipmentTypesFromModel(model);
 
         var batch = await equipmentTypeService.FilterEquipmentTypes(getEquipmentTypesRequest, cancellationToken);
 
         return new EquipmentTypesResponseModel
         {
-            EquipmentTypes = batch.EquipmentTypes.Select(EquipmentTypeModelMapper.MapEquipmentTypeToModel).ToArray(),
+            EquipmentTypes = batch.EquipmentTypes.Select(EquipmentTypeModelsMapper.MapEquipmentTypeToModel).ToArray(),
             Count = batch.Count
         };
     }
@@ -29,25 +29,25 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
     {
         var equipmentType = await equipmentTypeService.GetEquipmentTypeById(id, cancellationToken);
 
-        return EquipmentTypeModelMapper.MapEquipmentTypeToModel(equipmentType);
+        return EquipmentTypeModelsMapper.MapEquipmentTypeToModel(equipmentType);
     }
 
     public async Task<EquipmentTypeModel> CreateEquipmentTypeAsync(
         CreateEquipmentTypeModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = EquipmentTypeModelMapper.MapCreateEquipmentTypeFromModel(model);
+        var innerRequest = EquipmentTypeModelsMapper.MapCreateEquipmentTypeFromModel(model);
 
         var equipmentType = await equipmentTypeService.CreateEquipmentType(innerRequest, cancellationToken);
 
-        return EquipmentTypeModelMapper.MapEquipmentTypeToModel(equipmentType);
+        return EquipmentTypeModelsMapper.MapEquipmentTypeToModel(equipmentType);
     }
 
     public async Task<PatchEquipmentTypeModel> GetEquipmentTypePatchModel(int equipmentTypeId, CancellationToken cancellationToken)
     {
         var equipmentType = await equipmentTypeService.GetEquipmentTypeById(equipmentTypeId, cancellationToken);
 
-        return EquipmentTypeModelMapper.MapEquipmentTypeToPatchModel(equipmentType);
+        return EquipmentTypeModelsMapper.MapEquipmentTypeToPatchModel(equipmentType);
     }
 
     public async Task<EquipmentTypeModel> PatchEquipmentTypeAsync(
@@ -55,11 +55,11 @@ public class EquipmentTypeService(ICoreEquipmentTypeService equipmentTypeService
         PatchEquipmentTypeModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = EquipmentTypeModelMapper.MapPatchEquipmentTypeFromModel(patchModel);
+        var patchRequest = EquipmentTypeModelsMapper.MapPatchEquipmentTypeFromModel(patchModel);
 
         var patched = await equipmentTypeService.PatchEquipmentType(equipmentTypeId, patchRequest, cancellationToken);
 
-        return EquipmentTypeModelMapper.MapEquipmentTypeToModel(patched);
+        return EquipmentTypeModelsMapper.MapEquipmentTypeToModel(patched);
     }
 
     public async Task<FileExportModel> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)

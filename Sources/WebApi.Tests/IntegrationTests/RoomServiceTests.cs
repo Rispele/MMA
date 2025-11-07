@@ -71,9 +71,9 @@ public class RoomServiceTests : ContainerTestBase
         var room3 = await roomsSdk.CreateRoom(room3Name, createRoomOfParameter2);
 
         var response = await roomService.GetRoomsAsync(roomsRequest, CancellationToken.None);
-        var room1Model = RoomsModelsConverter.Map(room1);
-        var room2Model = RoomsModelsConverter.Map(room2);
-        var room3Model = RoomsModelsConverter.Map(room3);
+        var room1Model = RoomModelsMapper.Map(room1);
+        var room2Model = RoomModelsMapper.Map(room2);
+        var room3Model = RoomModelsMapper.Map(room3);
 
         response.Rooms.Should().HaveCount(2);
         response.Rooms[0].Should().BeEquivalentTo(room1Model);

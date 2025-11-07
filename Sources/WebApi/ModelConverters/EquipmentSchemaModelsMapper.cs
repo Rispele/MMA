@@ -7,8 +7,9 @@ using WebApi.Models.Requests.EquipmentSchemas;
 namespace WebApi.ModelConverters;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
-public static partial class EquipmentSchemaModelMapper
+public static partial class EquipmentSchemaModelsMapper
 {
+    [MapProperty(nameof(EquipmentSchemaDto.Type), nameof(EquipmentSchemaModel.Type), Use = nameof(@EquipmentTypeModelsMapper.MapEquipmentTypeToModel))]
     public static partial EquipmentSchemaModel MapEquipmentSchemaToModel(EquipmentSchemaDto equipmentSchema);
 
     [MapProperty(nameof(EquipmentSchemaDto.Type.Id), nameof(PatchEquipmentSchemaModel.EquipmentTypeId))]
@@ -17,7 +18,7 @@ public static partial class EquipmentSchemaModelMapper
 
     public static partial CreateEquipmentSchemaDto MapCreateEquipmentSchemaFromModel(CreateEquipmentSchemaModel equipmentSchema);
 
-    public static partial PatchEquipmentSchemaDto MapPatchEquipmentTypeFromModel(PatchEquipmentSchemaModel equipmentSchema);
+    public static partial PatchEquipmentSchemaDto MapPatchEquipmentSchemaFromModel(PatchEquipmentSchemaModel equipmentSchema);
 
     [MapProperty(nameof(GetEquipmentSchemasModel.AfterEquipmentSchemaId), nameof(GetEquipmentSchemasDto.AfterEquipmentSchemaId))]
     [MapProperty(nameof(GetEquipmentSchemasModel.PageSize), nameof(GetEquipmentSchemasDto.BatchSize))]
@@ -25,5 +26,5 @@ public static partial class EquipmentSchemaModelMapper
         nameof(GetEquipmentSchemasModel.Page),
         nameof(GetEquipmentSchemasDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetEquipmentSchemasDto Convert(GetEquipmentSchemasModel model);
+    public static partial GetEquipmentSchemasDto MapGetEquipmentSchemaFromModel(GetEquipmentSchemasModel model);
 }
