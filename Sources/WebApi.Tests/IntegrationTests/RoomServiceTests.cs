@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using IntegrationTestInfrastructure;
+using IntegrationTestInfrastructure.ContainerBasedTests;
 using Microsoft.AspNetCore.JsonPatch;
 using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
@@ -11,7 +13,6 @@ using WebApi.Models.Room.Fix;
 using WebApi.Models.Room.Parameters;
 using WebApi.Services.Interfaces;
 using WebApi.Tests.SDK;
-using WebApi.Tests.TestingInfrastructure;
 
 namespace WebApi.Tests.IntegrationTests;
 

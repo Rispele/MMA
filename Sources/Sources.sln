@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateFieldNamesExposingGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateFieldNamesExposingGenerator.Tests", "PrivateFieldNamesExposingGenerator\PrivateFieldNamesExposingGenerator.Tests\PrivateFieldNamesExposingGenerator.Tests.csproj", "{036201A0-EE62-4335-83E2-B8094B76F262}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTestInfrastructure", "IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj", "{44AF6792-035C-49E5-8E1A-E2618C31A462}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{036201A0-EE62-4335-83E2-B8094B76F262}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{036201A0-EE62-4335-83E2-B8094B76F262}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{036201A0-EE62-4335-83E2-B8094B76F262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44AF6792-035C-49E5-8E1A-E2618C31A462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44AF6792-035C-49E5-8E1A-E2618C31A462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44AF6792-035C-49E5-8E1A-E2618C31A462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44AF6792-035C-49E5-8E1A-E2618C31A462}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7A43D864-8DEE-49C3-895B-2C525D1C8897} = {0D7C31F9-67CC-43FC-96A2-12C423C75513}
@@ -98,5 +104,6 @@ Global
 		{0AF0D4BC-0C74-4751-A64D-D645FB06CC92} = {6D0CA4CB-2948-4EC5-A209-82DCE7923337}
 		{2BB8FC31-3838-44BF-9287-896DEBEFBD1A} = {48AF1A7E-3154-4907-8313-44DB2598DD5F}
 		{036201A0-EE62-4335-83E2-B8094B76F262} = {48AF1A7E-3154-4907-8313-44DB2598DD5F}
+		{44AF6792-035C-49E5-8E1A-E2618C31A462} = {33E046A6-443D-4B79-9D42-6C43A10ACF5C}
 	EndGlobalSection
 EndGlobal

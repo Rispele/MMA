@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Aspire.Hosting.Testing" Version="9.5.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+      <PackageReference Include="NUnit" Version="4.4.0" />
+      <PackageReference Include="SkbKontur.NUnit.Middlewares" Version="0.1.11" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
+      <ProjectReference Include="..\Sources.AppHost\Sources.AppHost.csproj" />
+      <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
+    </ItemGroup>
+
+</Project>

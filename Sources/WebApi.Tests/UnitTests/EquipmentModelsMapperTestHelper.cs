@@ -369,7 +369,7 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new PatchEquipmentTypeDto
         {
-            Name = SchemaName,
+            Name = TypeName,
             Parameters = [new EquipmentParameterDescriptorDto { Name = TypeParameterName, Required = IsTypeParameterRequired }]
         };
     }

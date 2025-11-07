@@ -2,9 +2,8 @@
 using Rooms.Infrastructure;
 using Rooms.Infrastructure.Configuration;
 using Sources.ServiceDefaults;
-using WebApi.Startup.ConfigurationExtensions;
 
-namespace WebApi.Tests.TestingInfrastructure.Configuration;
+namespace IntegrationTestInfrastructure.Configuration;
 
 public class TestingContainerFactory
 {
@@ -15,13 +14,6 @@ public class TestingContainerFactory
         serviceCollection.ConfigurePostgresDbContext<RoomsDbContext>(
             roomsDbContextConnectionString,
             npgsqlOptionsAction: builder => builder.ConfigureNpgsqlRoomsDbContextOptions());
-
-        return this;
-    }
-
-    public TestingContainerFactory ConfigureWebApiServices()
-    {
-        serviceCollection.ConfigureServices();
 
         return this;
     }
