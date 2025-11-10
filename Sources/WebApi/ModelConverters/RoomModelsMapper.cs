@@ -19,7 +19,7 @@ public static partial class RoomModelsMapper
     public static partial PatchRoomDto Map(PatchRoomModel model);
 
     public static partial CreateRoomDto Map(CreateRoomModel model);
-    
+
     [MapProperty(nameof(RoomDto.Parameters.Type), nameof(PatchRoomModel.Type))]
     [MapProperty(nameof(RoomDto.Parameters.NetType), nameof(PatchRoomModel.NetType))]
     [MapProperty(nameof(RoomDto.Parameters.Layout), nameof(PatchRoomModel.Layout))]
@@ -37,6 +37,6 @@ public static partial class RoomModelsMapper
     public static partial PatchRoomModel MapToPatchRoomModel(RoomDto dto);
 
     public static partial RoomsResponseModel Map(RoomsResponseDto dto);
-    
+
     public static partial RoomModel Map(RoomDto dto);
 }

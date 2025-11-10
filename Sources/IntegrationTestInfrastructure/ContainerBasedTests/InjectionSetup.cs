@@ -15,19 +15,19 @@ public class InjectionSetup : ISetup
         var scope = serviceProvider.CreateScope();
 
         test.Properties.Set(scope);
-        
+
         var testFixture = test.Fixture ?? throw new InvalidOperationException("Test fixture is null");
         InjectObjects(scope, testFixture);
-        
+
         return Task.CompletedTask;
     }
 
     public Task TearDownAsync(ITest test)
     {
         var scope = test.GetFromThisOrParentContext<IServiceScope>();
-        
+
         scope.Dispose();
-        
+
         return Task.CompletedTask;
     }
 

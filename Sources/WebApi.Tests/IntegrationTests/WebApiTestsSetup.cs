@@ -3,10 +3,10 @@ using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework.Interfaces;
+using Rooms.Tests.Helpers.SDK;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
 using WebApi.Startup.ConfigurationExtensions;
-using WebApi.Tests.SDK;
 
 namespace WebApi.Tests.IntegrationTests;
 
@@ -17,7 +17,7 @@ public class WebApiTestsSetup : ISetup
     {
         var testingApplicationFactory = await BuildApplication();
         var container = await BuildServiceProvider(testingApplicationFactory);
-        
+
         test.Properties.Set(container);
     }
 
@@ -29,10 +29,10 @@ public class WebApiTestsSetup : ISetup
         {
             disposable.Dispose();
         }
-        
+
         return Task.CompletedTask;
     }
-    
+
     private static async Task<TestingApplicationFactory> BuildApplication()
     {
         var testingApplicationFactory = new TestingApplicationFactory(testingProfile: "Testing.WebApi");
@@ -42,10 +42,10 @@ public class WebApiTestsSetup : ISetup
 
         await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(KnownResources.RoomsMigrationService.Name, KnownResourceStates.Finished, cts.Token);
         await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.WebApiService.Name, cts.Token);
-        
+
         return testingApplicationFactory;
     }
-   
+
     private static async Task<IServiceProvider> BuildServiceProvider(TestingApplicationFactory testingApplicationFactory)
     {
         var roomsDbContextConnectionString = await testingApplicationFactory

@@ -24,7 +24,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     }
 
     [HttpGet("{equipmentId:int}")]
-    public async Task<ActionResult<EquipmentSchema>> GetEquipmentById(
+    public async Task<ActionResult<Equipment>> GetEquipmentById(
         int equipmentId,
         CancellationToken cancellationToken)
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Clients;
+using Rooms.Core.Clients.Implementations;
+using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Queries.Factories;
 using Rooms.Domain.Services;
 using Rooms.Infrastructure.Factories;

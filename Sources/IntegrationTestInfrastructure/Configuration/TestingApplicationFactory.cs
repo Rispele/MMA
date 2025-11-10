@@ -19,14 +19,14 @@ public class TestingApplicationFactory(string testingProfile) : DistributedAppli
 
         applicationOptions.AllowUnsecuredTransport = true;
         applicationOptions.DisableDashboard = false;
-        
+
         base.OnBuilderCreating(applicationOptions, hostOptions);
     }
 
     protected override void OnBuilderCreated(DistributedApplicationBuilder applicationBuilder)
     {
         applicationBuilder.Configuration["testing_profile"] = testingProfile;
-        
+
         base.OnBuilderCreated(applicationBuilder);
     }
 

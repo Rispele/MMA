@@ -5,6 +5,6 @@ public class OperatorDepartmentDto
     public int Id { get; set; }
     public required string Name { get; set; }
     public required OperatorDepartmentRoomInfoDto[] Rooms { get; set; }
-    public Dictionary<Guid, string> Operators { get; set; } = new();
+    public Dictionary<string, string> Operators { get; set; } = new();
     public string Contacts { get; set; } = null!;
 }

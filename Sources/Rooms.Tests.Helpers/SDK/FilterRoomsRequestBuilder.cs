@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.Requests.Rooms;
 
-namespace WebApi.Tests.SDK;
+namespace Rooms.Tests.Helpers.SDK;
 
 public class FilterRoomsRequestBuilder
 {

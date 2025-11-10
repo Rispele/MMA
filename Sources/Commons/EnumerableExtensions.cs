@@ -9,10 +9,10 @@ public static class EnumerableExtensions
         {
             result.Add(value);
         }
-        
+
         return result;
     }
-    
+
     public static string JoinStrings<TValue>(this IEnumerable<TValue> enumerable, string delimiter)
     {
         return string.Join(delimiter, enumerable);

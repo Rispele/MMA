@@ -4,6 +4,6 @@ public record PatchOperatorDepartmentModel
 {
     public required string Name { get; set; }
     public IEnumerable<int> RoomIds { get; set; } = [];
-    public Dictionary<Guid, string> Operators { get; set; } = new();
+    public Dictionary<string, string> Operators { get; set; } = new();
     public string Contacts { get; set; } = null!;
 }

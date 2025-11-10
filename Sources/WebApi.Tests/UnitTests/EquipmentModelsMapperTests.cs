@@ -71,7 +71,7 @@ public class EquipmentModelsMapperTests
         var mapped = EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(dto);
         mapped.Should().BeEquivalentTo(model);
     }
-    
+
     [Test]
     public void Map_EquipmentSchemaDto_To_PatchModel_ShouldCorrectlyMap()
     {
@@ -125,7 +125,7 @@ public class EquipmentModelsMapperTests
         var mapped = EquipmentTypeModelsMapper.MapEquipmentTypeToModel(dto);
         mapped.Should().BeEquivalentTo(model);
     }
-    
+
     [Test]
     public void Map_EquipmentTypeDto_To_PatchModel_ShouldCorrectlyMap()
     {

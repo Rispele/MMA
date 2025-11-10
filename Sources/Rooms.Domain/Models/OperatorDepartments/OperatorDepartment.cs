@@ -5,12 +5,12 @@ public class OperatorDepartment
     public int Id { get; set; }
     public required string Name { get; set; }
     public List<Room.Room> Rooms { get; } = [];
-    public Dictionary<Guid, string> Operators { get; set; } = new();
+    public Dictionary<string, string> Operators { get; set; } = new();
     public string Contacts { get; set; } = null!;
 
     public void Update(
         string name,
-        Dictionary<Guid, string> operators,
+        Dictionary<string, string> operators,
         string contacts)
     {
         Name = name;
@@ -24,10 +24,10 @@ public class OperatorDepartment
         {
             return;
         }
-        
+
         Rooms.Add(room);
     }
-    
+
     public void RemoveRoom(int roomId)
     {
         Rooms.RemoveAll(t => t.Id == roomId);

@@ -8,7 +8,7 @@ namespace Rooms.Core.DtoConverters;
 public static partial class FileDtoConverter
 {
     public static partial FileDescriptorDto Convert(FileDescriptor fileDescriptor);
-    
+
     public static partial FileDescriptor? Convert(FileDescriptorDto? fileMetadata);
 
     public static partial FileLocation Convert(FileLocationDto fileLocation);

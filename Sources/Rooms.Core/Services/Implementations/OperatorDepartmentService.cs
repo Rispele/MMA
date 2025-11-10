@@ -1,5 +1,5 @@
 ﻿using Commons;
-using Rooms.Core.Clients;
+using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.OperatorDepartments;
 using Rooms.Core.Dtos.Requests.OperatorDepartments;

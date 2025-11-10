@@ -6,15 +6,15 @@ namespace Rooms.Core.ExcelExporters.Exporters;
 
 public abstract class ExcelExporterBase<TExportValue>
 {
-    protected virtual string SheetName { get; }
+    protected abstract string SheetName { get; }
 
-    protected virtual string FileName { get; }
+    protected abstract string FileName { get; }
 
-    protected virtual ExcelWriterBase<TExportValue> Writer { get; }
+    protected abstract ExcelWriterBase<TExportValue> Writer { get; }
 
-    protected string ContentType => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-    public virtual FileExportDto Export(TExportValue[] data, CancellationToken cancellationToken = default)
+    internal FileExportDto Export(TExportValue[] data, CancellationToken cancellationToken = default)
     {
         var workbook = new XSSFWorkbook();
         var worksheet = workbook.CreateSheet(SheetName);

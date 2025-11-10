@@ -8,7 +8,7 @@ using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using WebApi.Tests.SDK;
+using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests;
 

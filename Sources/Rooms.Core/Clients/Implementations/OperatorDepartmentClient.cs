@@ -1,6 +1,7 @@
-﻿using Rooms.Core.Dtos.Responses;
+﻿using Rooms.Core.Clients.Interfaces;
+using Rooms.Core.Dtos.Responses;
 
-namespace Rooms.Core.Clients;
+namespace Rooms.Core.Clients.Implementations;
 
 public class OperatorDepartmentClient : IOperatorDepartmentClient
 {

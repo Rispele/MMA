@@ -4,8 +4,8 @@ namespace Rooms.Core.Dtos.Responses;
 
 public class OperatorUserResponseDto
 {
-    [UsedImplicitly] public string Id { get; set; } = null!;
-    public Guid Guid { get; [UsedImplicitly] private set; }
+    public string Id { get; [UsedImplicitly] private set; } = null!; // required
+    [UsedImplicitly] public Guid Guid { get; [UsedImplicitly] private set; }
     public string FullName { get; [UsedImplicitly] private set; } = null!;
     [UsedImplicitly] public string Category { get; set; } = null!;
     [UsedImplicitly] public string Type { get; set; } = null!;

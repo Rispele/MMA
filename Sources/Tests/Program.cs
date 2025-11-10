@@ -269,14 +269,14 @@ public class Program
         {
             Name = "Операторская",
             RoomIds = [room.Id],
-            Operators = new Dictionary<Guid, string> { { operatorId, "Иван" } },
+            Operators = new Dictionary<string, string> { { operatorId.ToString(), "Иван" } },
             Contacts = "123",
         };
         var expectedOperatorDepartment = new OperatorDepartmentModel
         {
             Name = "Операторская",
             Rooms = [new OperatorDepartmentRoomInfoModel(1, new ScheduleAddressModel() { Address = "1", RoomNumber = "2" })],
-            Operators = new Dictionary<Guid, string>() { { operatorId, "Иван" } },
+            Operators = new Dictionary<string, string>() { { operatorId.ToString(), "Иван" } },
             Contacts = "123",
         };
 

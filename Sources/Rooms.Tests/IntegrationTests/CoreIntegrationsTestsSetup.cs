@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework.Interfaces;
 using Rooms.Core.ServicesConfiguration;
 using Rooms.Infrastructure.ServicesConfiguration;
+using Rooms.Tests.Helpers.SDK;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
-using WebApi.Tests.SDK;
 
 namespace Rooms.Tests.IntegrationTests;
 

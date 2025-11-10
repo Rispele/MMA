@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Clients;
+﻿namespace Rooms.Core.Clients.Interfaces;
 
 public interface IOperatorDepartmentClient
 {

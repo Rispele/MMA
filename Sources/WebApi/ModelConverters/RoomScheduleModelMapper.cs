@@ -1,0 +1,11 @@
+﻿using Riok.Mapperly.Abstractions;
+using Rooms.Core.Dtos.Requests.RoomSchedule;
+using WebApi.Models.Requests.RoomSchedule;
+
+namespace WebApi.ModelConverters;
+
+[Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
+public static partial class RoomScheduleModelMapper
+{
+    public static partial GetRoomScheduleDto MapGetRoomScheduleFromModel(GetRoomScheduleModel model);
+}
