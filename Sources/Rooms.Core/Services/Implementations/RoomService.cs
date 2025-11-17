@@ -1,5 +1,4 @@
 ﻿using Commons;
-using Commons.Optional;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
@@ -92,7 +91,6 @@ public class RoomService(
         roomToPatch.Update(
             dto.Name,
             dto.Description,
-            dto.ScheduleAddress.AsOptional().Map(t => new RoomScheduleAddress(t.RoomNumber, t.Address)),
             new RoomParameters
             {
                 Type = RoomDtoConverter.Convert(dto.Type),
@@ -115,6 +113,13 @@ public class RoomService(
                 Comment = dto.Comment
             },
             dto.AllowBooking);
+
+        if (dto.ScheduleAddress is not null)
+        {
+            roomToPatch.SetScheduleAddress(
+                dto.ScheduleAddress.RoomNumber,
+                dto.ScheduleAddress.Address);
+        }
 
         await unitOfWork.Commit(cancellationToken);
 

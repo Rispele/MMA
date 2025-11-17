@@ -37,7 +37,7 @@ public class Room
         equipments = [];
     }
 
-    public int Id => id ?? throw new InvalidOperationException();
+    public int Id => id ?? throw new InvalidOperationException("Not initialized yet");
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
     public RoomScheduleAddress? ScheduleAddress { get; private set; }
@@ -52,7 +52,6 @@ public class Room
     public void Update(
         string name,
         string? description,
-        RoomScheduleAddress? scheduleAddress,
         RoomParameters parameters,
         RoomAttachments attachments,
         string? owner,
@@ -61,11 +60,20 @@ public class Room
     {
         Name = name;
         Description = description;
-        ScheduleAddress = scheduleAddress;
         Parameters = parameters;
         Attachments = attachments;
         Owner = owner;
         FixInfo = fixInfo;
         AllowBooking = allowBooking;
+    }
+
+    public void SetScheduleAddress(string number, string address)
+    {
+        ScheduleAddress = new RoomScheduleAddress(number, address);
+    }
+    
+    internal void SetId(int idToSet)
+    {
+        id = idToSet;
     }
 }
