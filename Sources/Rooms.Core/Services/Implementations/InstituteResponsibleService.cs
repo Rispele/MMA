@@ -6,6 +6,7 @@ using Rooms.Core.Dtos.Requests.InstituteResponsible;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.InstituteResponsible;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.InstituteResponsible;
@@ -14,7 +15,6 @@ namespace Rooms.Core.Services.Implementations;
 
 public class InstituteResponsibleService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IInstituteResponsibleQueryFactory instituteResponsibleQueryFactory,
     IInstituteResponsibleClient instituteResponsibleClient,
     IInstituteDepartmentClient instituteDepartmentClient) : IInstituteResponsibleService
 {
@@ -45,11 +45,9 @@ public class InstituteResponsibleService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = instituteResponsibleQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterInstituteResponsibleId, dto.Filter);
+        var query = new FilterInstituteResponsibleQuery(dto.BatchSize, dto.BatchNumber, dto.AfterInstituteResponsibleId, dto.Filter);
 
-        var instituteResponsible = await context
-            .ApplyQuery(query)
-            .ToListAsync(cancellationToken);
+        var instituteResponsible = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
         var convertedInstituteResponsible = instituteResponsible.Select(InstituteResponsibleDtoMapper.MapInstituteResponsibleToDto).ToArray();
         int? lastInstituteResponsibleId = convertedInstituteResponsible.Length == 0 ? null : convertedInstituteResponsible.Select(t => t.Id).Max();
@@ -97,7 +95,7 @@ public class InstituteResponsibleService(
         CancellationToken cancellationToken,
         IUnitOfWork context)
     {
-        var query = instituteResponsibleQueryFactory.FindById(instituteResponsibleId);
+        var query = new FindInstituteResponsibleByIdQuery(instituteResponsibleId);
 
         return await context.ApplyQuery(query, cancellationToken) ??
                throw new InstituteResponsibleNotFoundException($"InstituteResponsible [{instituteResponsibleId}] not found");

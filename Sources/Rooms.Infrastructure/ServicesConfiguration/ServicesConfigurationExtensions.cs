@@ -5,6 +5,7 @@ using Rooms.Core.Queries.Factories;
 using Rooms.Domain.Services;
 using Rooms.Infrastructure.Factories;
 using Rooms.Infrastructure.ObjectStorageService;
+using Rooms.Infrastructure.QueryHandlers.Rooms;
 
 namespace Rooms.Infrastructure.ServicesConfiguration;
 
@@ -13,13 +14,12 @@ public static class ServicesConfigurationExtensions
     public static IServiceCollection ConfigureServicesForRoomsInfrastructure(this IServiceCollection serviceCollection)
     {
         return serviceCollection
+            .AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>();
+            })
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()
             .AddScoped<IOperatorDepartmentClient, OperatorDepartmentClient>()
-            .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory<RoomsDbContext>>()
-            .AddScoped<IRoomQueriesFactory, RoomQueriesFactory>()
-            .AddScoped<IEquipmentQueryFactory, EquipmentQueryFactory>()
-            .AddScoped<IEquipmentTypeQueryFactory, EquipmentTypeQueryFactory>()
-            .AddScoped<IEquipmentSchemaQueryFactory, EquipmentSchemaQueryFactory>()
-            .AddScoped<IOperatorDepartmentQueryFactory, OperatorDepartmentQueryFactory>();
+            .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory>();
     }
 }

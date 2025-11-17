@@ -7,6 +7,7 @@ using Rooms.Core.Dtos.Responses;
 using Rooms.Core.ExcelExporters.Exporters;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipments;
@@ -15,7 +16,6 @@ namespace Rooms.Core.Services.Implementations;
 
 public class EquipmentTypeService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IEquipmentTypeQueryFactory equipmentTypeQueryFactory,
     IRoomService roomService) : IEquipmentTypeService
 {
     public async Task<EquipmentTypeDto> GetEquipmentTypeById(int equipmentTypeId, CancellationToken cancellationToken)
@@ -31,11 +31,9 @@ public class EquipmentTypeService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = equipmentTypeQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentTypeId, dto.Filter);
+        var query = new FilterEquipmentTypesQuery(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentTypeId, dto.Filter);
 
-        var equipmentTypes = await context
-            .ApplyQuery(query)
-            .ToListAsync(cancellationToken);
+        var equipmentTypes = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
         var convertedEquipmentTypes = equipmentTypes.Select(EquipmentTypeDtoMapper.MapEquipmentTypeToDto).ToArray();
         int? lastEquipmentTypeId = convertedEquipmentTypes.Length == 0 ? null : convertedEquipmentTypes.Select(t => t.Id).Max();
@@ -106,7 +104,7 @@ public class EquipmentTypeService(
         CancellationToken cancellationToken,
         IUnitOfWork context)
     {
-        var query = equipmentTypeQueryFactory.FindById(equipmentTypeId);
+        var query = new FindEquipmentTypeByIdQuery(equipmentTypeId);
 
         return await context.ApplyQuery(query, cancellationToken) ??
                throw new EquipmentTypeNotFoundException($"EquipmentType [{equipmentTypeId}] not found");

@@ -4,6 +4,7 @@ using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Room;
@@ -14,9 +15,7 @@ using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
-public class RoomService(
-    IUnitOfWorkFactory unitOfWorkFactory,
-    IRoomQueriesFactory queriesFactory) : IRoomService
+public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
@@ -31,11 +30,9 @@ public class RoomService(
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = queriesFactory.Filter(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterRoomId, requestDto.Filter);
+        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterRoomId, requestDto.Filter);
 
-        var rooms = await unitOfWork
-            .ApplyQuery(query)
-            .ToListAsync(cancellationToken);
+        var rooms = await (await unitOfWork.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
         var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
@@ -128,7 +125,7 @@ public class RoomService(
 
     private async Task<Room> GetRoomByIdInner(IUnitOfWork unitOfWork, int roomId, CancellationToken cancellationToken)
     {
-        var query = queriesFactory.FindById(roomId);
+        var query = new FindRoomByIdQuery(roomId);
 
         return await unitOfWork.ApplyQuery(query, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
@@ -136,7 +133,7 @@ public class RoomService(
 
     private async Task Validate(IUnitOfWork unitOfWork, CreateRoomDto dto, CancellationToken cancellationToken)
     {
-        var query = queriesFactory.FindByName(dto.Name);
+        var query = new FindRoomByNameQuery(dto.Name);
         var room = await unitOfWork.ApplyQuery(query, cancellationToken);
 
         if (room is not null)

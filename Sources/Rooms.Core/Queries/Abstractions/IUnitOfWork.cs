@@ -2,12 +2,15 @@
 
 public interface IUnitOfWork : IAsyncDisposable
 {
-    public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(
-        IQuerySpecification<TEntity> querySpecification);
+    public Task<IAsyncEnumerable<TEntity>> ApplyQuery<TQuery, TEntity>(
+        IQuerySpecification<TQuery, TEntity> querySpecification,
+        CancellationToken cancellationToken)
+        where TQuery : class, IQuerySpecification<TQuery, TEntity>;
 
-    public Task<TEntity> ApplyQuery<TEntity>(
-        ISingleQuerySpecification<TEntity> querySpecification,
-        CancellationToken cancellationToken);
+    public Task<TEntity> ApplyQuery<TQuery, TEntity>(
+        ISingleQuerySpecification<TQuery, TEntity> querySpecification,
+        CancellationToken cancellationToken)
+        where TQuery : class, ISingleQuerySpecification<TQuery, TEntity>;
 
     public void Add<TEntity>(TEntity entity)
         where TEntity : class;

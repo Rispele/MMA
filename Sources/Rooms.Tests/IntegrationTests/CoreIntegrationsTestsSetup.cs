@@ -2,6 +2,7 @@
 using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework.Interfaces;
 using Rooms.Core.ServicesConfiguration;
 using Rooms.Infrastructure.ServicesConfiguration;
@@ -57,6 +58,7 @@ public class CoreIntegrationsTestsSetup : ISetup
         return new TestingContainerFactory()
             .ConfigureRoomsDbContext(roomsDbContextConnectionString)
             .ConfigureServices(t => t
+                .AddLogging(builder => builder.AddConsole())
                 .ConfigureServicesForRoomsInfrastructure()
                 .ConfigureServicesForRoomsCore()
                 .AddScoped<RoomsSdk>())

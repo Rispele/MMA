@@ -6,6 +6,8 @@ using Rooms.Core.Dtos.Requests.OperatorDepartments;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.OperatorDepartments;
+using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.OperatorDepartments;
@@ -14,8 +16,6 @@ namespace Rooms.Core.Services.Implementations;
 
 public class OperatorDepartmentService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IOperatorDepartmentQueryFactory operatorDepartmentQueryFactory,
-    IRoomQueriesFactory roomQueriesFactory,
     IOperatorDepartmentClient operatorDepartmentClient) : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentDto> GetOperatorDepartmentById(int operatorDepartmentId, CancellationToken cancellationToken)
@@ -38,11 +38,9 @@ public class OperatorDepartmentService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = operatorDepartmentQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterOperatorDepartmentId, dto.Filter);
+        var query = new FilterOperatorDepartmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterOperatorDepartmentId, dto.Filter);
 
-        var operatorDepartments = await context
-            .ApplyQuery(query)
-            .ToListAsync(cancellationToken);
+        var operatorDepartments = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
         var convertedOperatorDepartments = operatorDepartments.Select(OperatorDepartmentsDtoConverter.Convert).ToArray();
         int? lastOperatorDepartmentId = convertedOperatorDepartments.Length == 0 ? null : convertedOperatorDepartments.Select(t => t.Id).Max();
@@ -62,7 +60,8 @@ public class OperatorDepartmentService(
             Contacts = dto.Contacts
         };
 
-        await foreach (var room in context.ApplyQuery(roomQueriesFactory.FindByIds(dto.RoomIds)).WithCancellation(cancellationToken))
+        var enumerable = await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds), cancellationToken);
+        await foreach (var room in enumerable.WithCancellation(cancellationToken))
         {
             operatorDepartment.AddRoom(room);
         }
@@ -91,7 +90,8 @@ public class OperatorDepartmentService(
             dto.Contacts);
 
         roomsToRemove.ForEach(room => operatorDepartmentToPatch.RemoveRoom(room.Id));
-        await foreach (var room in context.ApplyQuery(roomQueriesFactory.FindByIds(roomIdsToAdd)).WithCancellation(cancellationToken))
+        var enumerable = await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds), cancellationToken);
+        await foreach (var room in enumerable.WithCancellation(cancellationToken))
         {
             operatorDepartmentToPatch.AddRoom(room);
         }
@@ -106,7 +106,7 @@ public class OperatorDepartmentService(
         CancellationToken cancellationToken,
         IUnitOfWork context)
     {
-        var query = operatorDepartmentQueryFactory.FindById(operatorDepartmentId);
+        var query = new FindOperatorDepartmentByIdQuery(operatorDepartmentId);
 
         return await context.ApplyQuery(query, cancellationToken) ??
                throw new OperatorDepartmentNotFoundException($"Operator department [{operatorDepartmentId}] not found");

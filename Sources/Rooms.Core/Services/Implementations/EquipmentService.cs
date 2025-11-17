@@ -7,17 +7,14 @@ using Rooms.Core.Dtos.Responses;
 using Rooms.Core.ExcelExporters.Exporters;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
+using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Services.Implementations;
 
-public class EquipmentService(
-    IUnitOfWorkFactory unitOfWorkFactory,
-    IEquipmentQueryFactory equipmentQueryFactory,
-    IEquipmentSchemaQueryFactory equipmentSchemaQueryFactory,
-    IRoomService roomService) : IEquipmentService
+public class EquipmentService(IUnitOfWorkFactory unitOfWorkFactory, IRoomService roomService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {
@@ -32,11 +29,9 @@ public class EquipmentService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = equipmentQueryFactory.Filter(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentId, dto.Filter);
+        var query = new FilterEquipmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentId, dto.Filter);
 
-        var equipments = await context
-            .ApplyQuery(query)
-            .ToListAsync(cancellationToken);
+        var equipments = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
         var convertedEquipments = equipments.Select(EquipmentDtoMapper.MapEquipmentToDto).ToArray();
         int? lastEquipmentId = convertedEquipments.Length == 0 ? null : convertedEquipments.Select(t => t.Id).Max();
@@ -49,7 +44,7 @@ public class EquipmentService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
-        var equipmentSchema = await context.ApplyQuery(equipmentSchemaQueryFactory.FindById(dto.SchemaId), cancellationToken);
+        var equipmentSchema = await context.ApplyQuery(new FindEquipmentSchemaByIdQuery(dto.SchemaId), cancellationToken);
 
         var equipment = new Equipment
         {
@@ -77,7 +72,7 @@ public class EquipmentService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipmentToPatch = await GetEquipmentByIdInner(equipmentId, cancellationToken, context);
-        var equipmentSchema = await context.ApplyQuery(equipmentSchemaQueryFactory.FindById(dto.SchemaId), cancellationToken);
+        var equipmentSchema = await context.ApplyQuery(new FindEquipmentSchemaByIdQuery(dto.SchemaId), cancellationToken);
 
         equipmentToPatch.Update(
             equipmentToPatch.RoomId,
@@ -113,7 +108,7 @@ public class EquipmentService(
         CancellationToken cancellationToken,
         IUnitOfWork context)
     {
-        var query = equipmentQueryFactory.FindById(equipmentId);
+        var query = new FindEquipmentByIdQuery(equipmentId);
 
         return await context.ApplyQuery(query, cancellationToken) ??
                throw new EquipmentNotFoundException($"Equipment [{equipmentId}] not found");
