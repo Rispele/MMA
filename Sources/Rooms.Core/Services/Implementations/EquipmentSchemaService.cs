@@ -89,9 +89,9 @@ public class EquipmentSchemaService(
         {
             new EquipmentSchemaRegistryExcelExportDto
             {
-                EquipmentName = string.Empty,
-                EquipmentType = string.Empty,
-                Parameters = string.Empty,
+                EquipmentName = Guid.NewGuid().ToString(),
+                EquipmentType = Guid.NewGuid().ToString(),
+                Parameters = Guid.NewGuid().ToString(),
             }
         };
         var exporter = new EquipmentSchemaRegistryExcelExporter();

@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models;
+﻿namespace WebApi.Models.Files;
 
 public class FileExportModel
 {

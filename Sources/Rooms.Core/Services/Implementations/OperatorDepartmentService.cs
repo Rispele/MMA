@@ -27,7 +27,7 @@ public class OperatorDepartmentService(
         return operatorDepartment.Map(OperatorDepartmentsDtoConverter.Convert);
     }
 
-    public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
+    public async Task<Dictionary<string, string>> GetAvailableOperators(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentClient.GetAvailableOperators();
 

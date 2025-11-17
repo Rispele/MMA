@@ -94,7 +94,7 @@ public class EquipmentTypeService(
         {
             new EquipmentTypeRegistryExcelExportDto
             {
-                Name = string.Empty,
+                Name = Guid.NewGuid().ToString(),
             }
         };
         var exporter = new EquipmentTypeRegistryExcelExporter();

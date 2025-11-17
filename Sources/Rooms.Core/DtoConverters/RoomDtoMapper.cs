@@ -9,11 +9,12 @@ using Rooms.Domain.Models.Room.Parameters;
 namespace Rooms.Core.DtoConverters;
 
 [Mapper]
-public static partial class RoomDtoConverter
+public static partial class RoomDtoMapper
 {
     public static partial RoomDto Convert(Room room);
     public static partial RoomType Convert(RoomTypeDto roomType);
     public static partial RoomLayout Convert(RoomLayoutDto roomLayout);
     public static partial RoomNetType Convert(RoomNetTypeDto roomNetType);
     public static partial RoomStatus Convert(RoomStatusDto roomStatus);
+    public static partial Room Convert(RoomDto room);
 }

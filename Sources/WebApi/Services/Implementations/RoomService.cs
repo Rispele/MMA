@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using WebApi.ModelConverters;
+using WebApi.Models.Files;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -48,6 +49,17 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         return !validate(patchModel)
             ? (null, isOk: false)
             : (await PatchRoomAsync(roomId, patchModel, cancellationToken), isOk: true);
+    }
+
+    public async Task<FileExportModel> ExportRoomRegistry(CancellationToken cancellationToken)
+    {
+        var fileData = await roomService.ExportRoomRegistry(cancellationToken);
+        return new FileExportModel
+        {
+            FileName = fileData.FileName,
+            Content = fileData.Content,
+            ContentType = fileData.ContentType,
+        };
     }
 
     private async Task<PatchRoomModel> GetPatchModel(int roomId, CancellationToken cancellationToken)

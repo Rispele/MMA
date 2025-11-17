@@ -2,6 +2,6 @@
 
 public class GetRoomScheduleDto
 {
-    public string Room { get; set; } = null!;
+    public int RoomId { get; set; }
     public DateOnly Date { get; set; }
 }

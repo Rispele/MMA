@@ -1,3 +1,17 @@
 ﻿namespace Rooms.Domain.Models.Room;
 
-public record RoomScheduleAddress(string RoomNumber, string Address);
+/// <summary>
+/// Расположение аудитории
+/// </summary>
+public record RoomScheduleAddress
+{
+    /// <summary>
+    /// Номер аудитории
+    /// </summary>
+    public string RoomNumber { get; init; } = null!;
+
+    /// <summary>
+    /// Адрес аудитории
+    /// </summary>
+    public string Address { get; init; } = null!;
+}

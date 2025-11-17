@@ -13,6 +13,12 @@ namespace WebApi.Controllers;
 [Route("webapi/equipments")]
 public class EquipmentsController(IEquipmentService equipmentService) : ControllerBase
 {
+    /// <summary>
+    /// Получить записи о единицах оборудования
+    /// </summary>
+    /// <param name="model">Модель поиска страницы с записями</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список записей о единицах оборудования</returns>
     [HttpGet]
     public async Task<ActionResult<EquipmentsResponseModel>> GetEquipments(
         [ModelBinder(BinderType = typeof(GetEquipmentsRequestModelBinder))]
@@ -23,6 +29,12 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         return Ok(result);
     }
 
+    /// <summary>
+    /// Получить единицу оборудования
+    /// </summary>
+    /// <param name="equipmentId">Идентификатор единицы оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Единица оборудования</returns>
     [HttpGet("{equipmentId:int}")]
     public async Task<ActionResult<Equipment>> GetEquipmentById(
         int equipmentId,
@@ -32,6 +44,12 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         return Ok(equipment);
     }
 
+    /// <summary>
+    /// Создать единицу оборудования
+    /// </summary>
+    /// <param name="model">Модель создания единицы оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданная единица оборудования</returns>
     [HttpPost]
     public async Task<IActionResult> CreateEquipment(
         [FromBody] CreateEquipmentModel model,
@@ -41,6 +59,14 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         return Ok(created);
     }
 
+    /// <summary>
+    /// Изменить единицу оборудования
+    /// </summary>
+    /// <param name="equipmentId">Идентификатор изменяемой единицы оборудования</param>
+    /// <param name="patch">Модель изменений единицы оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Измененная единица оборудования</returns>
+    /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{equipmentId:int}")]
     [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchEquipment(
@@ -69,6 +95,11 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         return Ok(updated);
     }
 
+    /// <summary>
+    /// Экспортировать реестр единиц оборудования
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Файл экспортированного реестра</returns>
     [HttpGet("export")]
     public async Task<FileStreamResult> ExportRegistry(CancellationToken cancellationToken)
     {

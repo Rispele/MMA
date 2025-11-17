@@ -1,8 +1,11 @@
 ﻿using Commons;
 using Commons.Optional;
+using Rooms.Core.DtoConverters;
+using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.ExcelExporters.Exporters;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Interfaces;
@@ -11,7 +14,6 @@ using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
 using FileDtoConverter = Rooms.Core.DtoConverters.FileDtoConverter;
-using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -25,7 +27,16 @@ public class RoomService(
 
         var room = await GetRoomByIdInner(unitOfWork, roomId, cancellationToken);
 
-        return room.Map(RoomDtoConverter.Convert);
+        return room.Map(RoomDtoMapper.Convert);
+    }
+
+    public async Task<IEnumerable<RoomDto>> GetRoomsById(IEnumerable<int> roomIds, CancellationToken cancellationToken)
+    {
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
+
+        var room = await GetRoomsByIdInner(unitOfWork, roomIds, cancellationToken);
+
+        return room.Select(x => x.Map(RoomDtoMapper.Convert));
     }
 
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
@@ -38,7 +49,7 @@ public class RoomService(
             .ApplyQuery(query)
             .ToListAsync(cancellationToken);
 
-        var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
+        var convertedRooms = rooms.Select(RoomDtoMapper.Convert).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
 
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
@@ -55,9 +66,9 @@ public class RoomService(
             dto.Description,
             new RoomParameters
             {
-                Type = RoomDtoConverter.Convert(dto.Type),
-                Layout = RoomDtoConverter.Convert(dto.Layout),
-                NetType = RoomDtoConverter.Convert(dto.NetType),
+                Type = RoomDtoMapper.Convert(dto.Type),
+                Layout = RoomDtoMapper.Convert(dto.Layout),
+                NetType = RoomDtoMapper.Convert(dto.NetType),
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
                 HasConditioning = dto.HasConditioning,
@@ -70,7 +81,7 @@ public class RoomService(
             dto.Owner,
             new RoomFixInfo
             {
-                Status = RoomDtoConverter.Convert(dto.RoomStatus),
+                Status = RoomDtoMapper.Convert(dto.RoomStatus),
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment,
             },
@@ -80,7 +91,7 @@ public class RoomService(
 
         await unitOfWork.Commit(cancellationToken);
 
-        return RoomDtoConverter.Convert(room);
+        return RoomDtoMapper.Convert(room);
     }
 
     public async Task<RoomDto> PatchRoom(int roomId, PatchRoomDto dto, CancellationToken cancellationToken)
@@ -92,12 +103,16 @@ public class RoomService(
         roomToPatch.Update(
             dto.Name,
             dto.Description,
-            dto.ScheduleAddress.AsOptional().Map(t => new RoomScheduleAddress(t.RoomNumber, t.Address)),
+            dto.ScheduleAddress.AsOptional().Map(t => new RoomScheduleAddress
+            {
+                RoomNumber = t.RoomNumber,
+                Address = t.Address,
+            }),
             new RoomParameters
             {
-                Type = RoomDtoConverter.Convert(dto.Type),
-                Layout = RoomDtoConverter.Convert(dto.Layout),
-                NetType = RoomDtoConverter.Convert(dto.NetType),
+                Type = RoomDtoMapper.Convert(dto.Type),
+                Layout = RoomDtoMapper.Convert(dto.Layout),
+                NetType = RoomDtoMapper.Convert(dto.NetType),
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
                 HasConditioning = dto.HasConditioning
@@ -110,7 +125,7 @@ public class RoomService(
             dto.Owner,
             new RoomFixInfo
             {
-                Status = RoomDtoConverter.Convert(dto.RoomStatus),
+                Status = RoomDtoMapper.Convert(dto.RoomStatus),
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },
@@ -118,7 +133,20 @@ public class RoomService(
 
         await unitOfWork.Commit(cancellationToken);
 
-        return RoomDtoConverter.Convert(roomToPatch);
+        return RoomDtoMapper.Convert(roomToPatch);
+    }
+
+    public async Task<FileExportDto> ExportRoomRegistry(CancellationToken cancellationToken)
+    {
+        var exportDtos = new[]
+        {
+            new RoomRegistryExcelExportDto
+            {
+                Name = Guid.NewGuid().ToString()
+            }
+        };
+        var exporter = new RoomRegistryExcelExporter();
+        return exporter.Export(exportDtos, cancellationToken);
     }
 
     private async Task<Room> GetRoomByIdInner(IUnitOfWork unitOfWork, int roomId, CancellationToken cancellationToken)
@@ -127,6 +155,20 @@ public class RoomService(
 
         return await unitOfWork.ApplyQuery(query, cancellationToken)
                ?? throw new RoomNotFoundException($"Room [{roomId}] not found");
+    }
+
+    private async Task<IEnumerable<Room>> GetRoomsByIdInner(IUnitOfWork unitOfWork, IEnumerable<int> roomIds, CancellationToken cancellationToken)
+    {
+        var query = queriesFactory.FindByIds(roomIds);
+
+        var rooms = unitOfWork.ApplyQuery(query).WithCancellation(cancellationToken);
+        var result = new List<Room>();
+
+        await foreach (var room in rooms)
+        {
+            result.Add(room);
+        }
+        return result;
     }
 
     private async Task Validate(IUnitOfWork unitOfWork, CreateRoomDto dto, CancellationToken cancellationToken)

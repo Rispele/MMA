@@ -52,7 +52,7 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Convert);
                     return queryable.Where(t => values.Contains(t.Parameters.Type));
                 });
 
@@ -61,7 +61,7 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Convert);
                     return queryable.Where(t => values.Contains(t.Parameters.Layout));
                 });
 
@@ -79,7 +79,7 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Convert);
                     return queryable.Where(t => values.Contains(t.Parameters.NetType));
                 });
 
@@ -98,7 +98,7 @@ public class FilterRoomsQuery :
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Convert);
                     return queryable.Where(t => values.Contains(t.FixInfo.Status));
                 });
 

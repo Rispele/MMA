@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
+using WebApi.Models.Files;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -16,4 +17,5 @@ public interface IRoomService
         JsonPatchDocument<PatchRoomModel> request,
         Func<PatchRoomModel, bool> validate,
         CancellationToken cancellationToken);
+    Task<FileExportModel> ExportRoomRegistry(CancellationToken cancellationToken);
 }

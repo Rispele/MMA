@@ -99,9 +99,9 @@ public class EquipmentService(
         {
             new EquipmentRegistryExcelExportDto
             {
-                RoomName = string.Empty,
-                EquipmentType = string.Empty,
-                EquipmentSchemaName = string.Empty,
+                RoomName = Guid.NewGuid().ToString(),
+                EquipmentType = Guid.NewGuid().ToString(),
+                EquipmentSchemaName = Guid.NewGuid().ToString(),
             }
         };
         var exporter = new EquipmentRegistryExcelExporter();

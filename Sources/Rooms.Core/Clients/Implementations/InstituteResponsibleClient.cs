@@ -7,7 +7,7 @@ public class InstituteResponsibleClient : IInstituteResponsibleClient
 {
     public Task<Dictionary<string, string>> GetAvailableInstituteResponsible()
     {
-        var response = new[] { new InstituteResponsibleUserResponseDto() };
-        return Task.FromResult(response.ToDictionary(x => x.Guid.ToString(), x => x.FullName));
+        var response = new[] { new InstituteResponsibleUserResponseDto { Id = Guid.NewGuid().ToString(), FullName = Guid.NewGuid().ToString() } };
+        return Task.FromResult(response.ToDictionary(x => x.Id, x => x.FullName));
     }
 }

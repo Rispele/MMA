@@ -1,5 +1,5 @@
-﻿using WebApi.Models;
-using WebApi.Models.Equipment;
+﻿using WebApi.Models.Equipment;
+using WebApi.Models.Files;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Responses;
 

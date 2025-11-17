@@ -5,5 +5,5 @@ namespace WebApi.Services.Interfaces;
 
 public interface IRoomScheduleService
 {
-    Task<RoomScheduleResponseModel> GetRoomSchedule(GetRoomScheduleModel model);
+    Task<RoomScheduleResponseModel> GetRoomSchedule(GetRoomScheduleModel model, CancellationToken cancellationToken);
 }

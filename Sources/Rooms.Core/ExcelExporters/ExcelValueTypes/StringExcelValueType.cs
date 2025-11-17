@@ -4,7 +4,7 @@ namespace Rooms.Core.ExcelExporters.ExcelValueTypes;
 
 public class StringExcelValueType(string? value) : IExcelValueType
 {
-    private string? Value { get; set; } = value;
+    private string? Value { get; set; } = string.IsNullOrEmpty(value) ? string.Empty : value;
 
     public void WriteToExcel(IRow row, int colNumber)
     {

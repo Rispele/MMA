@@ -1,19 +1,27 @@
-﻿namespace Rooms.Domain.Models.Equipments;
+﻿using System.ComponentModel;
 
+namespace Rooms.Domain.Models.Equipments;
+
+/// <summary>
+/// Статус оборудования
+/// </summary>
 public enum EquipmentStatus
 {
     /// <summary>
     /// Исправно
     /// </summary>
+    [Description("Исправно")]
     Ok = 1,
 
     /// <summary>
     /// Неисправно
     /// </summary>
+    [Description("Неисправно")]
     Malfunction = 2,
 
     /// <summary>
     /// Сообщение об ошибке
     /// </summary>
+    [Description("Сообщение об ошибке")]
     Error = 3
 }

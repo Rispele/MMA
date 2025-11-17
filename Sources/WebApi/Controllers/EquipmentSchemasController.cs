@@ -13,6 +13,12 @@ namespace WebApi.Controllers;
 [Route("webapi/equipment-schemas")]
 public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaService) : ControllerBase
 {
+    /// <summary>
+    /// Получить записи о моделях оборудования
+    /// </summary>
+    /// <param name="model">Модель поиска страницы с записями</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список записей о моделях оборудования</returns>
     [HttpGet]
     public async Task<ActionResult<EquipmentSchemasResponseModel>> GetEquipmentSchemas(
         [ModelBinder(BinderType = typeof(GetEquipmentSchemasRequestModelBinder))]
@@ -23,6 +29,12 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         return Ok(result);
     }
 
+    /// <summary>
+    /// Получить модель оборудования
+    /// </summary>
+    /// <param name="equipmentSchemaId">Идентификатор модели</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Модлель оборудования</returns>
     [HttpGet("{equipmentSchemaId:int}")]
     public async Task<ActionResult<EquipmentSchemaModel>> GetEquipmentSchemaById(
         int equipmentSchemaId,
@@ -32,6 +44,12 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         return Ok(equipmentSchema);
     }
 
+    /// <summary>
+    /// Создать модель оборудования
+    /// </summary>
+    /// <param name="model">Модель создания модели оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданная модель оборудования</returns>
     [HttpPost]
     public async Task<IActionResult> CreateEquipmentSchema(
         [FromBody] CreateEquipmentSchemaModel model,
@@ -41,6 +59,14 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         return Ok(created);
     }
 
+    /// <summary>
+    /// Изменить модель оборудования
+    /// </summary>
+    /// <param name="equipmentSchemaId">Идентификатор изменяемой модели оборудования</param>
+    /// <param name="patch">Модель изменений модели оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Измененная модель оборудования</returns>
+    /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{equipmentSchemaId:int}")]
     [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchEquipmentSchema(
@@ -69,6 +95,11 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         return Ok(updated);
     }
 
+    /// <summary>
+    /// Экспортировать реестр моделей оборудования
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Файл экспортированного реестра</returns>
     [HttpGet("export")]
     public async Task<FileStreamResult> ExportRegistry(CancellationToken cancellationToken)
     {

@@ -30,7 +30,7 @@ public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorD
         return OperatorDepartmentsModelsMapper.Convert(operatorDepartment);
     }
 
-    public async Task<Dictionary<Guid, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken)
+    public async Task<Dictionary<string, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentService.GetAvailableOperators(cancellationToken);
 

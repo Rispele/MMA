@@ -2,5 +2,5 @@
 
 public interface IOperatorDepartmentClient
 {
-    Task<Dictionary<Guid, string>> GetAvailableOperators();
+    Task<Dictionary<string, string>> GetAvailableOperators();
 }

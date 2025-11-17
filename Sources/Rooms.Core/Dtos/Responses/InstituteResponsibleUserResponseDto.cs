@@ -4,9 +4,9 @@ namespace Rooms.Core.Dtos.Responses;
 
 public class InstituteResponsibleUserResponseDto
 {
-    public string Id { get; [UsedImplicitly] private set; } = null!; // required
+    public string Id { get; set; } = null!; // required
     [UsedImplicitly] public Guid Guid { get; [UsedImplicitly] private set; }
-    public string FullName { get; [UsedImplicitly] private set; } = null!;
+    public string FullName { get; set; } = null!;
     [UsedImplicitly] public string Category { get; set; } = null!;
     [UsedImplicitly] public string Type { get; set; } = null!;
     [UsedImplicitly] public string DivisionTitle { get; set; } = null!;

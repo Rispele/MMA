@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using WebApi.ModelBinders;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
@@ -12,6 +13,12 @@ namespace WebApi.Controllers;
 [Route("webapi/rooms")]
 public class RoomsController(IRoomService roomService) : ControllerBase
 {
+    /// <summary>
+    /// Получить записи об аудиториях
+    /// </summary>
+    /// <param name="model">Модель поиска страницы с записями</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список записей об аудиториях</returns>
     [HttpGet]
     public async Task<ActionResult<RoomsResponseModel>> GetRooms(
         [ModelBinder(BinderType = typeof(GetRoomsRequestModelBinder))]
@@ -23,6 +30,12 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Получить аудиторию
+    /// </summary>
+    /// <param name="roomId">Идентификатор аудитории</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Аудитория</returns>
     [HttpGet("{roomId:int}")]
     public async Task<ActionResult<RoomModel>> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
@@ -30,6 +43,12 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         return Ok(room);
     }
 
+    /// <summary>
+    /// Создать аудиторию
+    /// </summary>
+    /// <param name="model">Модель создания аудитории</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданная аудитория</returns>
     [HttpPost]
     public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
@@ -37,6 +56,14 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         return Ok(created);
     }
 
+    /// <summary>
+    /// Изменить аудиторию
+    /// </summary>
+    /// <param name="roomId">Идентификатор изменяемой аудитории</param>
+    /// <param name="patch">Модель изменений аудитории</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Измененная модель аудитории</returns>
+    /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{roomId:int}")]
     [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchRoom(
@@ -56,5 +83,20 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         return isOk
             ? ValidationProblem(ModelState)
             : Ok(model);
+    }
+
+    /// <summary>
+    /// Экспортировать реестр аудиторий
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Файл экспортированного реестра</returns>
+    [HttpGet("export")]
+    public async Task<FileStreamResult> ExportRegistry(CancellationToken cancellationToken)
+    {
+        var model = await roomService.ExportRoomRegistry(cancellationToken);
+        return new FileStreamResult(model.Content, new MediaTypeHeaderValue(model.ContentType))
+        {
+            FileDownloadName = model.FileName,
+        };
     }
 }

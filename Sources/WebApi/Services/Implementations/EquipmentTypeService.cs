@@ -1,6 +1,6 @@
 ﻿using WebApi.ModelConverters;
-using WebApi.Models;
 using WebApi.Models.Equipment;
+using WebApi.Models.Files;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;

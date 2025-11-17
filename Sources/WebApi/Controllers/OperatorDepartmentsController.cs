@@ -12,6 +12,12 @@ namespace WebApi.Controllers;
 [Route("webapi/operator-departments")]
 public class OperatorDepartmentsController(IOperatorDepartmentService operatorDepartmentService) : ControllerBase
 {
+    /// <summary>
+    /// Получить записи об операторских
+    /// </summary>
+    /// <param name="model">Модель поиска страницы с записями</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список записей об операторских</returns>
     [HttpGet]
     public async Task<ActionResult<OperatorDepartmentsResponseModel>> GetOperatorDepartments(
         [ModelBinder(BinderType = typeof(GetOperatorDepartmentsRequestModelBinder))]
@@ -22,6 +28,12 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
         return Ok(result);
     }
 
+    /// <summary>
+    /// Получить операторскую
+    /// </summary>
+    /// <param name="id">Идентификатор операторской</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Операторская</returns>
     [HttpGet("{id:int}")]
     public async Task<ActionResult<OperatorDepartmentModel>> GetOperatorDepartmentById(
         int id,
@@ -31,13 +43,24 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
         return Ok(operatorDepartments);
     }
 
+    /// <summary>
+    /// Получить список доступных для выбора оперторов
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список доступных для выбора оперторов</returns>
     [HttpGet("operators")]
-    public async Task<ActionResult<Dictionary<Guid, string>>> GetAvailableOperators(CancellationToken cancellationToken)
+    public async Task<ActionResult<Dictionary<string, string>>> GetAvailableOperators(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentService.GetAvailableOperatorsAsync(cancellationToken);
         return Ok(operators);
     }
 
+    /// <summary>
+    /// Создать операторскую
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданная операторская</returns>
     [HttpPost]
     public async Task<IActionResult> CreateOperatorDepartment(
         [FromBody] CreateOperatorDepartmentModel model,
@@ -47,6 +70,14 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
         return Ok(created);
     }
 
+    /// <summary>
+    /// Изменить операторскую
+    /// </summary>
+    /// <param name="id">Идентификатор изменяемой операторской</param>
+    /// <param name="patch">Модель изменений операторской</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Измененная операторская</returns>
+    /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{id:int}")]
     [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchOperatorDepartment(
