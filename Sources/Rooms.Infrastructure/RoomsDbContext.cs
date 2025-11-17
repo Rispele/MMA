@@ -1,9 +1,12 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Queries.Abstractions;
+using Rooms.Domain.Models.BookingRequests;
 using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Models.InstituteResponsible;
 using Rooms.Domain.Models.OperatorDepartments;
 using Rooms.Domain.Models.Room;
+using Rooms.Infrastructure.EntityConfigurations.BookingRequest;
 using Rooms.Infrastructure.EntityConfigurations.Equipment;
 using Rooms.Infrastructure.EntityConfigurations.OperatorDepartments;
 using Rooms.Infrastructure.EntityConfigurations.Room;
@@ -22,6 +25,10 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
     public DbSet<EquipmentType> EquipmentTypes { get; [UsedImplicitly] private set; }
 
     public DbSet<OperatorDepartment> OperatorDepartments { get; [UsedImplicitly] private set; }
+
+    public DbSet<InstituteResponsible> InstituteResponsible { get; [UsedImplicitly] private set; }
+
+    public DbSet<BookingRequest> BookingRequests { get; [UsedImplicitly] private set; }
 
     public IAsyncEnumerable<TEntity> ApplyQuery<TEntity>(IQuerySpecification<TEntity> querySpecification)
     {
@@ -75,6 +82,7 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         modelBuilder.ApplyConfiguration(new EquipmentTypeEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RoomEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OperatorDepartmentEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new BookingRequestEntityTypeConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

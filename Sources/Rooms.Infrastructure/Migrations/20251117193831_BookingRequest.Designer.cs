@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rooms.Domain.Models.BookingRequests;
@@ -17,9 +18,11 @@ using Rooms.Infrastructure;
 namespace Rooms.Infrastructure.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    partial class RoomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251117193831_BookingRequest")]
+    partial class BookingRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

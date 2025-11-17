@@ -9,6 +9,14 @@ using IEquipmentTypeService = WebApi.Services.Interfaces.IEquipmentTypeService;
 using EquipmentTypeService = WebApi.Services.Implementations.EquipmentTypeService;
 using IEquipmentSchemaService = WebApi.Services.Interfaces.IEquipmentSchemaService;
 using EquipmentSchemaService = WebApi.Services.Implementations.EquipmentSchemaService;
+using IOperatorDepartmentService = WebApi.Services.Interfaces.IOperatorDepartmentService;
+using OperatorDepartmentService = WebApi.Services.Implementations.OperatorDepartmentService;
+using IInstituteResponsibleService = WebApi.Services.Interfaces.IInstituteResponsibleService;
+using InstituteResponsibleService = WebApi.Services.Implementations.InstituteResponsibleService;
+using IRoomScheduleService = WebApi.Services.Interfaces.IRoomScheduleService;
+using RoomScheduleService = WebApi.Services.Implementations.RoomScheduleService;
+using IBookingRequestService = WebApi.Services.Interfaces.IBookingRequestService;
+using BookingRequestService = WebApi.Services.Implementations.BookingRequestService;
 
 
 namespace WebApi.Startup.ConfigurationExtensions;
@@ -45,7 +53,10 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentService, EquipmentService>()
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
-            .AddScoped<Services.Interfaces.IOperatorDepartmentService, Services.Implementations.OperatorDepartmentService>();
+            .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>()
+            .AddScoped<IInstituteResponsibleService, InstituteResponsibleService>()
+            .AddScoped<IRoomScheduleService, RoomScheduleService>()
+            .AddScoped<IBookingRequestService, BookingRequestService>();
 
         return serviceCollection;
     }
