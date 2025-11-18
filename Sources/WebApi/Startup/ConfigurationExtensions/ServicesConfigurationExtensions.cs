@@ -1,4 +1,5 @@
-﻿using Rooms.Core.ServicesConfiguration;
+﻿using System.Reflection;
+using Rooms.Core.ServicesConfiguration;
 using Rooms.Infrastructure.ServicesConfiguration;
 using WebApi.Startup.InputFormatters;
 using IRoomService = WebApi.Services.Interfaces.IRoomService;
@@ -25,13 +26,19 @@ public static class ServicesConfigurationExtensions
 {
     public static IServiceCollection ConfigureServicesForWebApi(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddOpenApi();
-        serviceCollection.AddEndpointsApiExplorer();
+        // serviceCollection.AddOpenApi();
 
         serviceCollection.AddControllers(options =>
         {
             options.InputFormatters.Insert(index: 0, new StreamInputFormatter());
             options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
+        });
+
+        serviceCollection.AddEndpointsApiExplorer();
+        serviceCollection.AddSwaggerGen(opt =>
+        {
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
         serviceCollection.WithServices();

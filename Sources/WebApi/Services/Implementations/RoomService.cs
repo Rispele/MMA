@@ -20,6 +20,13 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         return RoomModelsMapper.Map(batch);
     }
 
+    public async Task<IEnumerable<AutocompleteRoomResponseModel>> AutocompleteRoomAsync(string roomName, CancellationToken cancellationToken)
+    {
+        var rooms = await roomService.AutocompleteRoom(roomName, cancellationToken);
+
+        return rooms.Select(RoomModelsMapper.Map);
+    }
+
     public async Task<RoomModel> GetRoomByIdAsync(int id, CancellationToken cancellationToken)
     {
         var room = await roomService.GetRoomById(id, cancellationToken);

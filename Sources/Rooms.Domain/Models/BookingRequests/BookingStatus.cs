@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Rooms.Domain.Models.BookingRequests;
 
 /// <summary>
 /// Статус заявки
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum BookingStatus
 {
     /// <summary>

@@ -7,7 +7,7 @@ namespace Rooms.Domain.Models.BookingRequests;
 public class BookingRequest
 {
     private int? id = null;
-    private readonly List<Room.Room> rooms = null!;
+    private readonly List<Room.Room> rooms = [];
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()

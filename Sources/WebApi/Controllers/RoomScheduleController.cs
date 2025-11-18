@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Requests.RoomSchedule;
+using WebApi.Models.Responses;
 using WebApi.Models.RoomSchedule;
 using WebApi.Services.Interfaces;
 
@@ -7,8 +8,18 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/room-schedule")]
-public class RoomScheduleController(IRoomScheduleService roomScheduleService) : ControllerBase
+public class RoomScheduleController(IRoomScheduleService roomScheduleService,
+    IRoomService roomService) : ControllerBase
 {
+    [HttpGet("autocomplete")]
+    public async Task<ActionResult<IEnumerable<AutocompleteRoomResponseModel>>> AutocompleteRoom(
+        [FromQuery] string roomName,
+        CancellationToken cancellationToken)
+    {
+        var result = await roomService.AutocompleteRoomAsync(roomName, cancellationToken);
+        return Ok(result);
+    }
+
     /// <summary>
     /// Получить расписание для данной аудитории на дату
     /// </summary>
@@ -17,7 +28,7 @@ public class RoomScheduleController(IRoomScheduleService roomScheduleService) : 
     /// <param name="cancellationToken"></param>
     /// <returns>Список занятий в выбранной аудитории на дату</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RoomScheduleModel>>> GetInstituteResponsible(
+    public async Task<ActionResult<IEnumerable<RoomScheduleModel>>> GetRoomSchedule(
         [FromQuery] int roomId,
         [FromQuery] DateOnly date,
         CancellationToken cancellationToken)

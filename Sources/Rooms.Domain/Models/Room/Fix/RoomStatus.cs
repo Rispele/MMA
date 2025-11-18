@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Rooms.Domain.Models.Room.Fix;
 
 /// <summary>
 /// Степень готовности аудитории
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomStatus
 {
     Unspecified = 0,

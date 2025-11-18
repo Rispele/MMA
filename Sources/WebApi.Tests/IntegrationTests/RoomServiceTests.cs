@@ -213,7 +213,7 @@ public class RoomServiceTests : ContainerTestBase
             .SetName("FixStatus.Comment");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.NotReady)),
+                (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.Malfunction)),
                 new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.RoomStatus, RoomStatusModel.Ready),
                 (Action<RoomDto>)(b => b.FixInfo.Status.Should().Be(RoomStatusDto.Ready)))
             .SetName("FixStatus.Status");

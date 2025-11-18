@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Dtos.Requests.BookingRequests;
 using Rooms.Core.Dtos.Requests.Filtering;
@@ -37,6 +38,34 @@ public class FilterBookingRequestsQuery :
             return bookingRequests;
         }
 
+        bookingRequests = Filter.CreatedAt
+            .AsOptional()
+            .Apply(bookingRequests, apply: (queryable, parameter) => queryable.Where(t => t.CreatedAt.ToString("dd.MM.yyyy, h:mm").StartsWith(parameter.Value)));
+
+        bookingRequests = Filter.EventName
+            .AsOptional()
+            .Apply(bookingRequests,
+                apply: (queryable, parameter) =>
+                    queryable.Where(t => t.EventName.StartsWith(parameter.Value, StringComparison.CurrentCultureIgnoreCase)));
+
+        bookingRequests = Filter.Status
+            .AsOptional()
+            .Apply(bookingRequests,
+                apply: (queryable, parameter) =>
+                    queryable.Where(t => parameter.Values.Contains(t.Status)));
+
+        bookingRequests = Filter.ModeratorComment
+            .AsOptional()
+            .Apply(bookingRequests,
+                apply: (queryable, parameter) =>
+                    queryable.Where(t => t.ModeratorComment != null && t.ModeratorComment.StartsWith(parameter.Value, StringComparison.CurrentCultureIgnoreCase)));
+
+        bookingRequests = Filter.BookingScheduleStatus
+            .AsOptional()
+            .Apply(bookingRequests,
+                apply: (queryable, parameter) =>
+                    queryable.Where(t => t.BookingScheduleStatus != null && parameter.Values.Contains(t.BookingScheduleStatus.Value)));
+
         return bookingRequests;
     }
 
@@ -51,6 +80,11 @@ public class FilterBookingRequestsQuery :
         (SortDirectionDto? direction, Expression<Func<BookingRequest, object?>> parameter)[]
             sorts =
             [
+                BuildSort(Filter.CreatedAt?.SortDirection, parameter: t => t.CreatedAt),
+                BuildSort(Filter.EventName?.SortDirection, parameter: t => t.EventName),
+                BuildSort(Filter.Status?.SortDirection, parameter: t => t.Status),
+                BuildSort(Filter.ModeratorComment?.SortDirection, parameter: t => t.ModeratorComment),
+                BuildSort(Filter.BookingScheduleStatus?.SortDirection, parameter: t => t.BookingScheduleStatus),
             ];
 
         var sortsToApply = sorts.Where(t => t.direction is not (null or SortDirectionDto.None)).ToArray();

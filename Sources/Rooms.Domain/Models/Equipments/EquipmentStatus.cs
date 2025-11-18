@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Rooms.Domain.Models.Equipments;
 
 /// <summary>
 /// Статус оборудования
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum EquipmentStatus
 {
     /// <summary>

@@ -31,6 +31,13 @@ public class BookingRequestService(ICoreBookingRequestService bookingRequestServ
         return BookingRequestModelsMapper.MapBookingRequestToModel(bookingRequest);
     }
 
+    public async Task<IEnumerable<AutocompleteEventHostResponseModel>> AutocompleteEventHostNameAsync(string name, CancellationToken cancellationToken)
+    {
+        var autocompleteNames = await bookingRequestService.AutocompleteEventHostName(name, cancellationToken);
+
+        return autocompleteNames.Select(BookingRequestModelsMapper.MapEventHostToDto);
+    }
+
     public async Task<BookingRequestModel> CreateBookingRequestAsync(
         CreateBookingRequestModel model,
         CancellationToken cancellationToken)

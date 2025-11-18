@@ -1,8 +1,11 @@
-﻿namespace Rooms.Domain.Models.BookingRequests;
+﻿using System.Text.Json.Serialization;
+
+namespace Rooms.Domain.Models.BookingRequests;
 
 /// <summary>
 /// Тип мероприятия
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum BookingEventType
 {
     /// <summary>

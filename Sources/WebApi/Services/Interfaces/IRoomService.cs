@@ -9,9 +9,9 @@ namespace WebApi.Services.Interfaces;
 public interface IRoomService
 {
     Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken);
+    Task<IEnumerable<AutocompleteRoomResponseModel>> AutocompleteRoomAsync(string roomName, CancellationToken cancellationToken);
     Task<RoomModel> GetRoomByIdAsync(int id, CancellationToken cancellationToken);
     Task<RoomModel> CreateRoom(CreateRoomModel model, CancellationToken cancellationToken);
-
     Task<(RoomModel? result, bool isOk)> PatchRoomAsync(
         int roomId,
         JsonPatchDocument<PatchRoomModel> request,

@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Rooms.Domain.Models.Room.Parameters;
 
 /// <summary>
 /// Тип аудитории
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomType
 {
     Unspecified = 0,

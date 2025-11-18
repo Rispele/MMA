@@ -18,7 +18,10 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IInstituteDepartmentClient, InstituteDepartmentClient>()
             .AddScoped<IInstituteResponsibleClient, InstituteResponsibleClient>()
             .AddScoped<IRoomScheduleClient, RoomScheduleClient>()
+            .AddScoped<IEventHostClient, EventHostClient>()
+
             .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory<RoomsDbContext>>()
+
             .AddScoped<IRoomQueriesFactory, RoomQueriesFactory>()
             .AddScoped<IEquipmentQueryFactory, EquipmentQueryFactory>()
             .AddScoped<IEquipmentTypeQueryFactory, EquipmentTypeQueryFactory>()

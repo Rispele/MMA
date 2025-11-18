@@ -30,12 +30,13 @@ public static class ApplicationRunner
 
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
-            app.UseSwaggerUI(b => { b.SwaggerEndpoint(url: "/openapi/v1.json", name: "My API V1"); });
+            // app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI(b => { b.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "My API V1"); });
         }
 
-        app.MapControllers();
         app.UseHttpsRedirection();
+        app.MapControllers();
 
         return app;
     }

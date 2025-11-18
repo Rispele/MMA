@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Rooms.Domain.Models.BookingRequests;
 using WebApi.ModelBinders;
+using WebApi.Models.BookingRequest;
 using WebApi.Models.Requests.BookingRequests;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -35,12 +35,27 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <param name="cancellationToken"></param>
     /// <returns>Заявка на бронирование аудиторий</returns>
     [HttpGet("{bookingRequestId:int}")]
-    public async Task<ActionResult<BookingRequest>> GetBookingRequestById(
+    public async Task<ActionResult<BookingRequestModel>> GetBookingRequestById(
         int bookingRequestId,
         CancellationToken cancellationToken)
     {
         var bookingRequest = await bookingRequestService.GetBookingRequestByIdAsync(bookingRequestId, cancellationToken);
         return Ok(bookingRequest);
+    }
+
+    /// <summary>
+    /// Выполнить автокомплит имени ведущего мероприятия
+    /// </summary>
+    /// <param name="name">Подпоследовательность полного имени ведущего</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список пользователей, чье полное имя дополняет входную строку</returns>
+    [HttpGet("autocomplete")]
+    public async Task<ActionResult<IEnumerable<AutocompleteEventHostResponseModel>>> AutocompleteEventHostName(
+        [FromQuery] string name,
+        CancellationToken cancellationToken)
+    {
+        var autocompleteNames = await bookingRequestService.AutocompleteEventHostNameAsync(name, cancellationToken);
+        return Ok(autocompleteNames);
     }
 
     /// <summary>

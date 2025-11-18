@@ -1,4 +1,5 @@
 ﻿using Commons;
+using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.DtoConverters;
 using Rooms.Core.Dtos.BookingRequest;
 using Rooms.Core.Dtos.Requests.BookingRequests;
@@ -14,7 +15,8 @@ namespace Rooms.Core.Services.Implementations;
 public class BookingRequestService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IBookingRequestQueryFactory bookingRequestQueryFactory,
-    IRoomService roomService) : IBookingRequestService
+    IRoomService roomService,
+    IEventHostClient eventHostClient) : IBookingRequestService
 {
     public async Task<BookingRequestDto> GetBookingRequestById(int bookingRequestId, CancellationToken cancellationToken)
     {
@@ -23,6 +25,13 @@ public class BookingRequestService(
         var bookingRequest = await GetBookingRequestByIdInner(bookingRequestId, cancellationToken, context);
 
         return BookingRequestDtoMapper.MapBookingRequestToDto(bookingRequest);
+    }
+
+    public async Task<IEnumerable<AutocompleteEventHostResponseDto>> AutocompleteEventHostName(string name, CancellationToken cancellationToken)
+    {
+        var autocompleteNames = await eventHostClient.AutocompleteEventHostName(name, cancellationToken);
+
+        return autocompleteNames;
     }
 
     public async Task<BookingRequestsResponseDto> FilterBookingRequests(GetBookingRequestsDto dto, CancellationToken cancellationToken)

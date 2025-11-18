@@ -16,5 +16,4 @@ public static partial class RoomDtoMapper
     public static partial RoomLayout Convert(RoomLayoutDto roomLayout);
     public static partial RoomNetType Convert(RoomNetTypeDto roomNetType);
     public static partial RoomStatus Convert(RoomStatusDto roomStatus);
-    public static partial Room Convert(RoomDto room);
 }

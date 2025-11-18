@@ -34,9 +34,9 @@ public class RoomService(
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var room = await GetRoomsByIdInner(unitOfWork, roomIds, cancellationToken);
+        var rooms = await GetRoomsByIdInner(unitOfWork, roomIds, cancellationToken);
 
-        return room.Select(x => x.Map(RoomDtoMapper.Convert));
+        return rooms.Select(x => x.Map(RoomDtoMapper.Convert));
     }
 
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
@@ -53,6 +53,12 @@ public class RoomService(
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
 
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
+    }
+
+    public async Task<IEnumerable<AutocompleteRoomResponseDto>> AutocompleteRoom(string roomName, CancellationToken cancellationToken)
+    {
+        // todo
+        return [new AutocompleteRoomResponseDto { RoomId = 1, ViewRoomName = Guid.NewGuid().ToString() }];
     }
 
     public async Task<RoomDto> CreateRoom(CreateRoomDto dto, CancellationToken cancellationToken)
