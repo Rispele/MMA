@@ -1,4 +1,4 @@
-﻿using Rooms.Core.DtoConverters;
+﻿using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.Files;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Services;
@@ -13,7 +13,7 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
     public async Task<TempFileUrlDto?> Load(FileLocationDto fileLocation)
     {
         var data = await objectStorageService.FindObject(
-            FileDtoConverter.Convert(fileLocation),
+            FileDtoMapper.Convert(fileLocation),
             AttachmentsExpirationInSeconds);
 
         return new TempFileUrlDto { Url = data.Url };
@@ -34,11 +34,11 @@ public class RoomAttachmentsService(IObjectStorageService objectStorageService) 
             length,
             cancellationToken);
 
-        return FileDtoConverter.Convert(fileDescriptor);
+        return FileDtoMapper.Convert(fileDescriptor);
     }
 
     public Task Remove(FileLocationDto fileLocation, CancellationToken cancellationToken)
     {
-        return objectStorageService.Remove(FileDtoConverter.Convert(fileLocation), cancellationToken);
+        return objectStorageService.Remove(FileDtoMapper.Convert(fileLocation), cancellationToken);
     }
 }

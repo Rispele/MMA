@@ -1,6 +1,6 @@
 ﻿using Commons;
 using Rooms.Core.Clients.Interfaces;
-using Rooms.Core.DtoConverters;
+using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.InstituteResponsible;
 using Rooms.Core.Dtos.Requests.InstituteResponsible;
 using Rooms.Core.Dtos.Responses;

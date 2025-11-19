@@ -1,4 +1,5 @@
 ﻿using Commons;
+using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
@@ -10,8 +11,6 @@ using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
-using FileDtoConverter = Rooms.Core.DtoConverters.FileDtoConverter;
-using RoomDtoConverter = Rooms.Core.DtoConverters.RoomDtoConverter;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -23,7 +22,7 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 
         var room = await GetRoomByIdInner(unitOfWork, roomId, cancellationToken);
 
-        return room.Map(RoomDtoConverter.Convert);
+        return room.Map(RoomDtoMapper.Map);
     }
 
     public async Task<RoomDto[]> FindRoomByIds(int[] roomIds, CancellationToken cancellationToken)
@@ -33,7 +32,7 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
         var request = new FindRoomsByIdQuery(roomIds);
         var rooms = await unitOfWork.ApplyQuery(request, cancellationToken);
 
-        return rooms.ToBlockingEnumerable(cancellationToken: cancellationToken).Select(RoomDtoConverter.Convert).ToArray();
+        return rooms.ToBlockingEnumerable(cancellationToken: cancellationToken).Select(RoomDtoMapper.Map).ToArray();
     }
 
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
@@ -44,7 +43,7 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 
         var rooms = await (await unitOfWork.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
-        var convertedRooms = rooms.Select(RoomDtoConverter.Convert).ToArray();
+        var convertedRooms = rooms.Select(RoomDtoMapper.Map).ToArray();
         int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
 
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
@@ -61,22 +60,22 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
             dto.Description,
             new RoomParameters
             {
-                Type = RoomDtoConverter.Convert(dto.Type),
-                Layout = RoomDtoConverter.Convert(dto.Layout),
-                NetType = RoomDtoConverter.Convert(dto.NetType),
+                Type = RoomDtoMapper.Map(dto.Type),
+                Layout = RoomDtoMapper.Map(dto.Layout),
+                NetType = RoomDtoMapper.Map(dto.NetType),
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
                 HasConditioning = dto.HasConditioning
             },
             new RoomAttachments
             {
-                PdfRoomScheme = FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
-                Photo = FileDtoConverter.Convert(dto.PhotoFile)
+                PdfRoomScheme = FileDtoMapper.Convert(dto.PdfRoomSchemeFile),
+                Photo = FileDtoMapper.Convert(dto.PhotoFile)
             },
             dto.Owner,
             new RoomFixInfo
             {
-                Status = RoomDtoConverter.Convert(dto.RoomStatus),
+                Status = RoomDtoMapper.Map(dto.RoomStatus),
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },
@@ -86,7 +85,7 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 
         await unitOfWork.Commit(cancellationToken);
 
-        return RoomDtoConverter.Convert(room);
+        return RoomDtoMapper.Map(room);
     }
 
     public async Task<RoomDto> PatchRoom(int roomId, PatchRoomDto dto, CancellationToken cancellationToken)
@@ -100,22 +99,22 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
             dto.Description,
             new RoomParameters
             {
-                Type = RoomDtoConverter.Convert(dto.Type),
-                Layout = RoomDtoConverter.Convert(dto.Layout),
-                NetType = RoomDtoConverter.Convert(dto.NetType),
+                Type = RoomDtoMapper.Map(dto.Type),
+                Layout = RoomDtoMapper.Map(dto.Layout),
+                NetType = RoomDtoMapper.Map(dto.NetType),
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
                 HasConditioning = dto.HasConditioning
             },
             new RoomAttachments
             {
-                PdfRoomScheme = FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
-                Photo = FileDtoConverter.Convert(dto.PhotoFile)
+                PdfRoomScheme = FileDtoMapper.Convert(dto.PdfRoomSchemeFile),
+                Photo = FileDtoMapper.Convert(dto.PhotoFile)
             },
             dto.Owner,
             new RoomFixInfo
             {
-                Status = RoomDtoConverter.Convert(dto.RoomStatus),
+                Status = RoomDtoMapper.Map(dto.RoomStatus),
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },
@@ -130,7 +129,7 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 
         await unitOfWork.Commit(cancellationToken);
 
-        return RoomDtoConverter.Convert(roomToPatch);
+        return RoomDtoMapper.Map(roomToPatch);
     }
 
     private async Task<Room> GetRoomByIdInner(IUnitOfWork unitOfWork, int roomId, CancellationToken cancellationToken)

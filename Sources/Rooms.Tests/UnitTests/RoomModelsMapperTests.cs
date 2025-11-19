@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Rooms.Core.DtoConverters;
+using Rooms.Core.DtoMappers;
 
 namespace Rooms.Tests.UnitTests;
 
@@ -12,7 +12,7 @@ public class RoomModelsMapperTests
         var dto = RoomMapperTestHelper.CreateRoomDto();
         var domain = RoomMapperTestHelper.CreateRoom();
 
-        var mapped = RoomDtoConverter.Convert(domain);
+        var mapped = RoomDtoMapper.Map(domain);
         mapped.Should().BeEquivalentTo(dto);
     }
 }

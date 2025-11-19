@@ -2,7 +2,7 @@
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Domain.Models.Equipments;
 
-namespace Rooms.Core.DtoConverters;
+namespace Rooms.Core.DtoMappers;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class EquipmentSchemaDtoMapper

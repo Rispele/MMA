@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.DtoConverters;
+using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Queries.Implementations.Room;
@@ -46,7 +46,7 @@ public class FilterRoomsQueryHandler : IQueryHandler<FilterRoomsQuery, Room>
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Map);
                     return queryable.Where(t => values.Contains(t.Parameters.Type));
                 });
 
@@ -55,7 +55,7 @@ public class FilterRoomsQueryHandler : IQueryHandler<FilterRoomsQuery, Room>
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Map);
                     return queryable.Where(t => values.Contains(t.Parameters.Layout));
                 });
 
@@ -73,7 +73,7 @@ public class FilterRoomsQueryHandler : IQueryHandler<FilterRoomsQuery, Room>
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Map);
                     return queryable.Where(t => values.Contains(t.Parameters.NetType));
                 });
 
@@ -92,7 +92,7 @@ public class FilterRoomsQueryHandler : IQueryHandler<FilterRoomsQuery, Room>
             .Apply(rooms,
                 apply: (queryable, parameter) =>
                 {
-                    var values = parameter.Values.Select(RoomDtoConverter.Convert);
+                    var values = parameter.Values.Select(RoomDtoMapper.Map);
                     return queryable.Where(t => values.Contains(t.FixInfo.Status));
                 });
 

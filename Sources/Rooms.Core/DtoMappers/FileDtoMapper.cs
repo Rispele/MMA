@@ -2,10 +2,10 @@
 using Rooms.Core.Dtos.Files;
 using Rooms.Domain.Models.File;
 
-namespace Rooms.Core.DtoConverters;
+namespace Rooms.Core.DtoMappers;
 
 [Mapper]
-public static partial class FileDtoConverter
+public static partial class FileDtoMapper
 {
     public static partial FileDescriptorDto Convert(FileDescriptor fileDescriptor);
 

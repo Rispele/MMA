@@ -1,6 +1,6 @@
 ﻿using Commons;
 using Rooms.Core.Clients.Interfaces;
-using Rooms.Core.DtoConverters;
+using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.OperatorDepartments;
 using Rooms.Core.Dtos.Requests.OperatorDepartments;
 using Rooms.Core.Dtos.Responses;
@@ -24,7 +24,7 @@ public class OperatorDepartmentService(
 
         var operatorDepartment = await GetOperatorDepartmentByIdInner(operatorDepartmentId, cancellationToken, context);
 
-        return operatorDepartment.Map(OperatorDepartmentsDtoConverter.Convert);
+        return operatorDepartment.Map(OperatorDepartmentsDtoMapper.Map);
     }
 
     public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public class OperatorDepartmentService(
 
         var operatorDepartments = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
-        var convertedOperatorDepartments = operatorDepartments.Select(OperatorDepartmentsDtoConverter.Convert).ToArray();
+        var convertedOperatorDepartments = operatorDepartments.Select(OperatorDepartmentsDtoMapper.Map).ToArray();
         int? lastOperatorDepartmentId = convertedOperatorDepartments.Length == 0 ? null : convertedOperatorDepartments.Select(t => t.Id).Max();
 
         return new OperatorDepartmentsResponseDto(convertedOperatorDepartments, convertedOperatorDepartments.Length, lastOperatorDepartmentId);
@@ -70,7 +70,7 @@ public class OperatorDepartmentService(
 
         await context.Commit(cancellationToken);
 
-        return OperatorDepartmentsDtoConverter.Convert(operatorDepartment);
+        return OperatorDepartmentsDtoMapper.Map(operatorDepartment);
     }
 
     public async Task<OperatorDepartmentDto> PatchOperatorDepartment(
@@ -98,7 +98,7 @@ public class OperatorDepartmentService(
 
         await context.Commit(cancellationToken);
 
-        return OperatorDepartmentsDtoConverter.Convert(operatorDepartmentToPatch);
+        return OperatorDepartmentsDtoMapper.Map(operatorDepartmentToPatch);
     }
 
     private async Task<OperatorDepartment> GetOperatorDepartmentByIdInner(

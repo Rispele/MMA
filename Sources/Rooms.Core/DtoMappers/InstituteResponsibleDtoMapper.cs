@@ -2,7 +2,7 @@
 using Rooms.Core.Dtos.InstituteResponsible;
 using Rooms.Domain.Models.InstituteResponsible;
 
-namespace Rooms.Core.DtoConverters;
+namespace Rooms.Core.DtoMappers;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class InstituteResponsibleDtoMapper

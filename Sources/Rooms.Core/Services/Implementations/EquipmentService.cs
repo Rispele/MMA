@@ -1,5 +1,5 @@
 ﻿using Commons;
-using Rooms.Core.DtoConverters;
+using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Responses;

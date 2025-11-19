@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Rooms.Core.DtoConverters;
+using Rooms.Core.DtoMappers;
 
 namespace Rooms.Tests.UnitTests;
 

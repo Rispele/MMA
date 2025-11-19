@@ -3,11 +3,11 @@ using Rooms.Core.Dtos.OperatorDepartments;
 using Rooms.Core.Dtos.Room;
 using Rooms.Domain.Models.OperatorDepartments;
 
-namespace Rooms.Core.DtoConverters;
+namespace Rooms.Core.DtoMappers;
 
-public static class OperatorDepartmentsDtoConverter
+public static class OperatorDepartmentsDtoMapper
 {
-    public static OperatorDepartmentDto Convert(OperatorDepartment entity)
+    public static OperatorDepartmentDto Map(OperatorDepartment entity)
     {
         return new OperatorDepartmentDto
         {
