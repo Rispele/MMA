@@ -3,7 +3,7 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Tests.UnitTests;
 
-public static class EquipmentsMapperTestHelper
+public static class EquipmentsTestHelper
 {
     private const int EquipmentId = 1;
     private const int RoomId = 2;

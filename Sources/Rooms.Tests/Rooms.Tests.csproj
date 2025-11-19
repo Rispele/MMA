@@ -30,4 +30,8 @@
         <ProjectReference Include="..\Rooms.Tests.Helpers\Rooms.Tests.Helpers.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="UnitTests\Spreadsheets\TestCases\*.xlsx" />
+    </ItemGroup>
+
 </Project>

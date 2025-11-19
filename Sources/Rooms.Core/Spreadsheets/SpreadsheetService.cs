@@ -58,7 +58,7 @@ public class SpreadsheetService(
             })
             .ToArray();
 
-        return exporter.Export<EquipmentSchemaRegistrySpreadsheetWriterSpecification, EquipmentSchemaRegistryExcelExportDto>(
+        return exporter.Export<EquipmentSchemaRegistrySpreadsheetSpecification, EquipmentSchemaRegistryExcelExportDto>(
             dataToExport,
             cancellationToken);
     }
@@ -75,7 +75,7 @@ public class SpreadsheetService(
             })
             .ToArray();
 
-        return exporter.Export<EquipmentTypeRegistrySpreadsheetWriterSpecification, EquipmentTypeRegistryExcelExportDto>(
+        return exporter.Export<EquipmentTypeRegistrySpreadsheetSpecification, EquipmentTypeRegistryExcelExportDto>(
             dataToExport,
             cancellationToken);
     }

@@ -1,16 +1,16 @@
 ﻿using FluentAssertions;
 using Rooms.Core.DtoMappers;
 
-namespace Rooms.Tests.UnitTests;
+namespace Rooms.Tests.UnitTests.DtoMappers;
 
 [TestFixture]
-public class RoomModelsMapperTests
+public class RoomDtoMapperTests
 {
     [Test]
     public void Map_Room_To_RoomDto_ShouldCorrectlyMap()
     {
-        var dto = RoomMapperTestHelper.CreateRoomDto();
-        var domain = RoomMapperTestHelper.CreateRoom();
+        var dto = RoomTestHelper.CreateRoomDto();
+        var domain = RoomTestHelper.CreateRoom();
 
         var mapped = RoomDtoMapper.Map(domain);
         mapped.Should().BeEquivalentTo(dto);

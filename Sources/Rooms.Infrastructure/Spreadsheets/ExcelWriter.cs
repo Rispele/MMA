@@ -7,14 +7,11 @@ namespace Rooms.Infrastructure.Spreadsheets;
 
 public static class ExcelWriter
 {
-    public static void Write<TSpecification, TData>(ISheet worksheet, TData[] data)
-        where TSpecification : struct, ISpreadsheetWriterSpecification<TData>
+    public static void Write<TData>(ISpreadsheetWriterSpecification<TData> specification, ISheet worksheet, TData[] data)
     {
         var style = worksheet.Workbook.CreateCellStyle();
         style.FillBackgroundColor = HSSFColor.Yellow.Index;
         style.FillPattern = FillPattern.SolidForeground;
-
-        var specification = new TSpecification();
 
         var nextRow = FillHeader(specification, worksheet, rowNumber: 0);
         FillBody(specification, worksheet, data, nextRow);

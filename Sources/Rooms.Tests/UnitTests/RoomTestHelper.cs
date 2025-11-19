@@ -9,7 +9,7 @@ using Rooms.Domain.Models.Room.Parameters;
 
 namespace Rooms.Tests.UnitTests;
 
-public static class RoomMapperTestHelper
+public static class RoomTestHelper
 {
     private const int RoomId = 1;
     private const string RoomName = "Room";

@@ -4,7 +4,7 @@ using Rooms.Core.Spreadsheets.ExcelValueTypes;
 
 namespace Rooms.Core.Spreadsheets.Specifications;
 
-public struct EquipmentSchemaRegistrySpreadsheetWriterSpecification
+public struct EquipmentSchemaRegistrySpreadsheetSpecification
     : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<EquipmentSchemaRegistryExcelExportDto>
 {
     private static readonly IReadOnlyList<string> ColumnNamesSpecification =
