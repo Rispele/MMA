@@ -27,6 +27,16 @@ public class OperatorDepartmentService(
         return operatorDepartment.Map(OperatorDepartmentsDtoMapper.Map);
     }
 
+    public async Task<OperatorDepartmentDto[]> GetOperatorDepartmentsById(int[] operatorDepartmentIds, CancellationToken cancellationToken)
+    {
+        await using var context = await unitOfWorkFactory.Create(cancellationToken);
+
+        var request = new FindOperatorDepartmentByIdsQuery(operatorDepartmentIds);
+        var response = await context.ApplyQuery(request, cancellationToken);
+
+        return response.ToBlockingEnumerable(cancellationToken).Select(OperatorDepartmentsDtoMapper.Map).ToArray();
+    }
+
     public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentClient.GetAvailableOperators();

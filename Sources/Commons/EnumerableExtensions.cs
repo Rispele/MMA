@@ -38,4 +38,15 @@ public static class EnumerableExtensions
     {
         return enumerable != null! && enumerable.Any();
     }
+
+    public static IEnumerable<TValue> NotNull<TValue>(this IEnumerable<TValue> enumerable)
+    {
+        return enumerable.Where(t => t is not null);
+    }
+    
+    public static IEnumerable<TValue> NotNull<TValue>(this IEnumerable<TValue?> enumerable)
+        where TValue : struct
+    {
+        return enumerable.Where(t => t is not null).Select(t => t!.Value);
+    }
 }

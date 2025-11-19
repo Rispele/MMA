@@ -1,11 +1,13 @@
 ﻿using Commons;
-using Rooms.Core.Dtos.Equipment;
+using Commons.Optional;
 using Rooms.Core.Dtos.Files;
 using Rooms.Core.Dtos.Requests.Equipments;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
+using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Core.Spreadsheets.Abstractions;
+using Rooms.Core.Spreadsheets.ExportModels;
 using Rooms.Core.Spreadsheets.Specifications;
 
 namespace Rooms.Core.Spreadsheets;
@@ -15,22 +17,53 @@ public class SpreadsheetService(
     IEquipmentTypeService equipmentTypeService,
     IEquipmentSchemaService equipmentSchemaService,
     IEquipmentService equipmentService,
-    IRoomService roomService)
+    IRoomService roomService,
+    IOperatorDepartmentService operatorDepartmentService)
 {
     private const int ExportLimit = 10_000;
+
+    public async Task<FileExportDto> ExportRoomRegistry(CancellationToken cancellationToken)
+    {
+        var request = new GetRoomsRequestDto
+        {
+            AfterRoomId = -1,
+            BatchNumber = 0,
+            BatchSize = ExportLimit,
+            Filter = null
+        };
+        
+        var rooms = await roomService.FilterRooms(request, cancellationToken);
+
+        var departmentsToFetch = rooms.Rooms.Select(t => t.OperatorDepartmentId).NotNull().ToArray();
+        var operatorDepartments = await operatorDepartmentService.GetOperatorDepartmentsById(departmentsToFetch, cancellationToken);
+        
+        var operatorDepartmentById = operatorDepartments.ToDictionary(t => t.Id);
+        
+        var dataToExport = rooms.Rooms
+            .Select(room => new RoomRegistrySpreadsheetExportDto
+            {
+                Room = room,
+                OperatorDepartment = room.OperatorDepartmentId.AsOptional().Map(t => operatorDepartmentById[t]),
+            })
+            .ToArray();
+        
+        return exporter.Export<RoomRegistrySpreadsheetSpecification, RoomRegistrySpreadsheetExportDto>(dataToExport, cancellationToken);
+    }
 
     public async Task<FileExportDto> ExportEquipmentRegistry(CancellationToken cancellationToken)
     {
         var request = new GetEquipmentsDto(BatchNumber: 0, ExportLimit, AfterEquipmentId: -1, Filter: null);
         var equipments = await equipmentService.FilterEquipments(request, cancellationToken);
-        var rooms = await roomService.FindRoomByIds(equipments.Equipments.Select(t => t.RoomId).Distinct().ToArray(), cancellationToken);
+
+        var roomsToFetch = equipments.Equipments.Select(t => t.RoomId).Distinct().ToArray();
+        var rooms = await roomService.FindRoomByIds(roomsToFetch, cancellationToken);
 
         var roomsById = rooms.ToDictionary(t => t.Id);
 
         var dataToExport = equipments.Equipments
-            .Select(equipment => new EquipmentRegistryExcelExportDto
+            .Select(equipment => new EquipmentRegistrySpreadsheetExportDto
             {
-                RoomName = roomsById.GetValueOrDefault(equipment.RoomId)?.Name ?? string.Empty,
+                RoomName = roomsById[equipment.RoomId].Name,
                 TypeName = equipment.Schema.Type.Name,
                 SchemaName = equipment.Schema.Name,
                 Comment = equipment.Comment,
@@ -40,7 +73,7 @@ public class SpreadsheetService(
             })
             .ToArray();
 
-        return exporter.Export<EquipmentRegistrySpreadsheetSpecification, EquipmentRegistryExcelExportDto>(
+        return exporter.Export<EquipmentRegistrySpreadsheetSpecification, EquipmentRegistrySpreadsheetExportDto>(
             dataToExport,
             cancellationToken);
     }
@@ -50,7 +83,7 @@ public class SpreadsheetService(
         var request = new GetEquipmentSchemasDto(BatchNumber: 0, ExportLimit, AfterEquipmentSchemaId: -1, Filter: null);
         var types = await equipmentSchemaService.FilterEquipmentSchemas(request, cancellationToken);
         var dataToExport = types.EquipmentSchemas
-            .Select(schema => new EquipmentSchemaRegistryExcelExportDto
+            .Select(schema => new EquipmentSchemaRegistrySpreadsheetExportDto
             {
                 Name = schema.Name,
                 TypeName = schema.Type.Name,
@@ -58,24 +91,23 @@ public class SpreadsheetService(
             })
             .ToArray();
 
-        return exporter.Export<EquipmentSchemaRegistrySpreadsheetSpecification, EquipmentSchemaRegistryExcelExportDto>(
+        return exporter.Export<EquipmentSchemaRegistrySpreadsheetSpecification, EquipmentSchemaRegistrySpreadsheetExportDto>(
             dataToExport,
             cancellationToken);
     }
-
 
     public async Task<FileExportDto> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)
     {
         var request = new GetEquipmentTypesDto(BatchNumber: 0, ExportLimit, AfterEquipmentTypeId: -1, Filter: null);
         var types = await equipmentTypeService.FilterEquipmentTypes(request, cancellationToken);
         var dataToExport = types.EquipmentTypes
-            .Select(type => new EquipmentTypeRegistryExcelExportDto
+            .Select(type => new EquipmentTypeRegistrySpreadsheetExportDto
             {
                 Name = type.Name
             })
             .ToArray();
 
-        return exporter.Export<EquipmentTypeRegistrySpreadsheetSpecification, EquipmentTypeRegistryExcelExportDto>(
+        return exporter.Export<EquipmentTypeRegistrySpreadsheetSpecification, EquipmentTypeRegistrySpreadsheetExportDto>(
             dataToExport,
             cancellationToken);
     }

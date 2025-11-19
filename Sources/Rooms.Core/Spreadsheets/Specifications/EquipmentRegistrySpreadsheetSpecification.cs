@@ -1,13 +1,13 @@
-﻿using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Spreadsheets.Abstractions;
+﻿using Rooms.Core.Spreadsheets.Abstractions;
 using Rooms.Core.Spreadsheets.ExcelValueTypes;
+using Rooms.Core.Spreadsheets.ExportModels;
 
 namespace Rooms.Core.Spreadsheets.Specifications;
 
 public struct EquipmentRegistrySpreadsheetSpecification
-    : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<EquipmentRegistryExcelExportDto>
+    : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<EquipmentRegistrySpreadsheetExportDto>
 {
-    private static readonly IReadOnlyList<ColumnSpecification<EquipmentRegistryExcelExportDto>> Specifications =
+    private static readonly IReadOnlyList<ColumnSpecification<EquipmentRegistrySpreadsheetExportDto>> Specifications =
     [
         new(Name: "Аудитория", data => new StringSpreadsheetValueType(data.RoomName)),
         new(Name: "Тип оборудования", data => new StringSpreadsheetValueType(data.TypeName)),
@@ -20,5 +20,5 @@ public struct EquipmentRegistrySpreadsheetSpecification
 
     public string SheetName => "Оборудование";
     public string FileName => "Реестр оборудования.xlsx";
-    public IReadOnlyList<ColumnSpecification<EquipmentRegistryExcelExportDto>> ColumnSpecifications => Specifications;
+    public IReadOnlyList<ColumnSpecification<EquipmentRegistrySpreadsheetExportDto>> ColumnSpecifications => Specifications;
 }

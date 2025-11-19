@@ -7,6 +7,7 @@ namespace Rooms.Core.Services.Interfaces;
 public interface IOperatorDepartmentService
 {
     Task<OperatorDepartmentDto> GetOperatorDepartmentById(int operatorDepartmentId, CancellationToken cancellationToken);
+    Task<OperatorDepartmentDto[]> GetOperatorDepartmentsById(int[] operatorDepartmentIds, CancellationToken cancellationToken);
     Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken);
     Task<OperatorDepartmentsResponseDto> FilterOperatorDepartments(GetOperatorDepartmentsDto dto, CancellationToken cancellationToken);
     Task<OperatorDepartmentDto> CreateOperatorDepartment(CreateOperatorDepartmentDto dto, CancellationToken cancellationToken);

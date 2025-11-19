@@ -1,19 +1,19 @@
 ﻿namespace Commons.Optional;
 
-public record Optional<TValue>(TValue? Value)
-    where TValue : class
+public record OptionalStruct<TValue>(TValue? Value)
+    where TValue : struct
 {
     public Optional<TResult> Map<TResult>(Func<TValue, TResult> map)
         where TResult : class
     {
-        return Value is null
+        return !Value.HasValue
             ? ((TResult?)null).AsOptional()
-            : map(Value).AsOptional();
+            : map(Value.Value).AsOptional();
     }
 
     public TApplicable Apply<TApplicable>(TApplicable applicable, Func<TApplicable, TValue, TApplicable> apply)
     {
-        return Value is not null ? apply(applicable, Value) : applicable;
+        return Value is not null ? apply(applicable, Value.Value) : applicable;
     }
 
     public TValue OrElse(Func<TValue> provider)
@@ -26,7 +26,7 @@ public record Optional<TValue>(TValue? Value)
         return Value ?? throw exception;
     }
 
-    public static implicit operator TValue?(Optional<TValue> optional)
+    public static implicit operator TValue?(OptionalStruct<TValue> optional)
     {
         return optional.Value;
     }

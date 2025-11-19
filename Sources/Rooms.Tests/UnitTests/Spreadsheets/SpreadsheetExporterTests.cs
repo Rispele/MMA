@@ -1,8 +1,13 @@
 ﻿using Commons;
 using FluentAssertions;
+using MathNet.Numerics.Random;
 using NPOI.XSSF.UserModel;
-using Rooms.Core.Dtos.Equipment;
+using Rooms.Core.Dtos.OperatorDepartments;
+using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Core.Spreadsheets.Abstractions;
+using Rooms.Core.Spreadsheets.ExportModels;
 using Rooms.Core.Spreadsheets.Specifications;
 using Rooms.Infrastructure.Spreadsheets;
 using Rooms.Tests.Helpers;
@@ -24,18 +29,16 @@ public class SpreadsheetExporterTests
         var result = exporter.Export(exporterSpecification, writerSpecification, data);
 
         result.FileName.Should().Be(exporterSpecification.FileName);
-        
+
         var expectedContent = EmbeddedResourceProvider.GetEmbeddedResourceStream(expectedContentResourceName);
         SpreadsheetsAssertionHelper.AssertWorkbooks(
-            exporterSpecification.SheetName, 
+            exporterSpecification.SheetName,
             actualSpreadsheet: new XSSFWorkbook(result.Content),
             expectedSpreadsheet: new XSSFWorkbook(expectedContent));
 
-        // resultContent.Should().BeEquivalentTo(expectedContent);
-
         // For tests case creation
-        // await using var stream = File.OpenWrite(path: @"E:\Education\MMA\backend\Sources\Rooms.Tests\UnitTests\Spreadsheets\TestCases\" + expectedContentResourceName);
-        // await result.Content.CopyToAsync(stream);
+        // using var stream = File.OpenWrite(path: @"E:\Education\MMA\backend\Sources\Rooms.Tests\UnitTests\Spreadsheets\TestCases\" + expectedContentResourceName);
+        // result.Content.CopyTo(stream);
         // stream.Close();
     }
 
@@ -75,11 +78,22 @@ public class SpreadsheetExporterTests
                 GenerateEquipmentTypeRegistryExcelExportDto(random)
             },
             "equipment-types-verified.xlsx");
+
+        yield return new TestCaseData(
+            new RoomRegistrySpreadsheetSpecification(),
+            new RoomRegistrySpreadsheetSpecification(),
+            new[]
+            {
+                GenerateRoomRegistryExcelExportDto(random),
+                GenerateRoomRegistryExcelExportDto(random),
+                GenerateRoomRegistryExcelExportDto(random)
+            },
+            "rooms-verified.xlsx");
     }
 
-    private static EquipmentRegistryExcelExportDto GenerateEquipmentRegistryExcelExportDto(Random random)
+    private static EquipmentRegistrySpreadsheetExportDto GenerateEquipmentRegistryExcelExportDto(Random random)
     {
-        return new EquipmentRegistryExcelExportDto
+        return new EquipmentRegistrySpreadsheetExportDto
         {
             RoomName = random.NextString(),
             SchemaName = random.NextString(),
@@ -91,9 +105,9 @@ public class SpreadsheetExporterTests
         };
     }
 
-    private static EquipmentSchemaRegistryExcelExportDto GenerateEquipmentSchemaRegistryExcelExportDto(Random random)
+    private static EquipmentSchemaRegistrySpreadsheetExportDto GenerateEquipmentSchemaRegistryExcelExportDto(Random random)
     {
-        return new EquipmentSchemaRegistryExcelExportDto
+        return new EquipmentSchemaRegistrySpreadsheetExportDto
         {
             Name = random.NextString(),
             TypeName = random.NextString(),
@@ -101,11 +115,50 @@ public class SpreadsheetExporterTests
         };
     }
 
-    private static EquipmentTypeRegistryExcelExportDto GenerateEquipmentTypeRegistryExcelExportDto(Random random)
+    private static EquipmentTypeRegistrySpreadsheetExportDto GenerateEquipmentTypeRegistryExcelExportDto(Random random)
     {
-        return new EquipmentTypeRegistryExcelExportDto()
+        return new EquipmentTypeRegistrySpreadsheetExportDto
         {
             Name = random.NextString()
+        };
+    }
+
+    private static RoomRegistrySpreadsheetExportDto GenerateRoomRegistryExcelExportDto(Random random)
+    {
+        return new RoomRegistrySpreadsheetExportDto
+        {
+            Room = new RoomDto
+            {
+                AllowBooking = random.NextBoolean(),
+                Attachments = new RoomAttachmentsDto(null, null),
+                Description = random.NextString(),
+                Equipments = [],
+                FixInfo = new RoomFixStatusDto((RoomStatusDto)random.Next(4), new DateTime(random.NextInt64(DateTime.MinValue.Ticks, DateTime.MaxValue.Ticks)), random.NextString()),
+                Id = random.Next(),
+                Name = random.NextString(),
+                OperatorDepartmentId = 0,
+                Owner = random.NextString(),
+                Parameters = new RoomParametersDto(
+                    (RoomTypeDto)random.Next(5),
+                    (RoomLayoutDto)random.Next(3),
+                    (RoomNetTypeDto)random.Next(5),
+                    random.Next(),
+                    random.Next(),
+                    random.NextBoolean())
+            },
+            OperatorDepartment = new OperatorDepartmentDto
+            {
+                Contacts = random.NextString(),
+                Id = random.Next(),
+                Name = random.NextString(),
+                Operators = new Dictionary<string, string>
+                {
+                    [random.NextString()] = random.NextString(),
+                    [random.NextString()] = random.NextString(),
+                    [random.NextString()] = random.NextString(),
+                },
+                Rooms = []
+            }
         };
     }
 }
