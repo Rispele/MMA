@@ -3,6 +3,7 @@ using Rooms.Core.Dtos.InstituteResponsible;
 using Rooms.Core.Dtos.Requests.InstituteResponsible;
 using WebApi.Models.InstituteResponsible;
 using WebApi.Models.Requests.InstituteResponsible;
+// ReSharper disable RedundantVerbatimPrefix
 
 namespace WebApi.ModelConverters;
 
@@ -25,6 +26,6 @@ public static partial class InstituteResponsibleModelMapper
     [MapProperty(
         nameof(GetInstituteResponsibleModel.Page),
         nameof(GetInstituteResponsibleDto.BatchNumber),
-        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
+        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetInstituteResponsibleDto MapGetInstituteResponsibleFromModel(GetInstituteResponsibleModel model);
 }

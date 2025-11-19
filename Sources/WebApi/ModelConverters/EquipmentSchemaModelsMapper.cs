@@ -3,13 +3,14 @@ using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentSchemas;
+// ReSharper disable RedundantVerbatimPrefix
 
 namespace WebApi.ModelConverters;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class EquipmentSchemaModelsMapper
 {
-    [MapProperty(nameof(EquipmentSchemaDto.Type), nameof(EquipmentSchemaModel.Type), Use = nameof(EquipmentTypeModelsMapper.MapEquipmentTypeToModel))]
+    [MapProperty(nameof(EquipmentSchemaDto.Type), nameof(EquipmentSchemaModel.Type), Use = nameof(@EquipmentTypeModelsMapper.MapEquipmentTypeToModel))]
     public static partial EquipmentSchemaModel MapEquipmentSchemaToModel(EquipmentSchemaDto equipmentSchema);
 
     [MapProperty(nameof(EquipmentSchemaDto.Type.Id), nameof(PatchEquipmentSchemaModel.EquipmentTypeId))]
@@ -25,6 +26,6 @@ public static partial class EquipmentSchemaModelsMapper
     [MapProperty(
         nameof(GetEquipmentSchemasModel.Page),
         nameof(GetEquipmentSchemasDto.BatchNumber),
-        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
+        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetEquipmentSchemasDto MapGetEquipmentSchemaFromModel(GetEquipmentSchemasModel model);
 }

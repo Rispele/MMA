@@ -12,7 +12,7 @@ public static partial class OperatorDepartmentsModelsMapper
     [MapProperty(nameof(GetOperatorDepartmentsModel.AfterOperatorDepartmentId), nameof(GetOperatorDepartmentsDto.AfterOperatorDepartmentId))]
     [MapProperty(nameof(GetOperatorDepartmentsModel.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]
     [MapProperty(nameof(GetOperatorDepartmentsModel.Page), nameof(GetOperatorDepartmentsDto.BatchNumber),
-        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
+        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetOperatorDepartmentsDto Convert(GetOperatorDepartmentsModel model);
 
     public static partial OperatorDepartmentModel Convert(OperatorDepartmentDto entity);

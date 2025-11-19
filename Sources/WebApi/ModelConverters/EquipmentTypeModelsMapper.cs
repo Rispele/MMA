@@ -3,6 +3,7 @@ using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentTypes;
+// ReSharper disable RedundantVerbatimPrefix
 
 namespace WebApi.ModelConverters;
 
@@ -23,6 +24,6 @@ public static partial class EquipmentTypeModelsMapper
     [MapProperty(
         nameof(GetEquipmentTypesModel.Page),
         nameof(GetEquipmentTypesDto.BatchNumber),
-        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
+        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetEquipmentTypesDto MapGetEquipmentTypesFromModel(GetEquipmentTypesModel model);
 }
