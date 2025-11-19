@@ -9,7 +9,7 @@ namespace Rooms.Domain.Models.Room;
 [GenerateFieldNames]
 public class Room
 {
-    private int? id = null;
+    private int? id;
     private readonly List<Equipment> equipments = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]

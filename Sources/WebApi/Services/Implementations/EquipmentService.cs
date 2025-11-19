@@ -1,4 +1,5 @@
-﻿using WebApi.ModelConverters;
+﻿using Rooms.Core.Spreadsheets;
+using WebApi.ModelConverters;
 using WebApi.Models;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
@@ -8,7 +9,9 @@ using ICoreEquipmentService = Rooms.Core.Services.Interfaces.IEquipmentService;
 
 namespace WebApi.Services.Implementations;
 
-public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipmentService
+public class EquipmentService(
+    ICoreEquipmentService equipmentService,
+    SpreadsheetService spreadsheetService) : IEquipmentService
 {
     public async Task<EquipmentsResponseModel> GetEquipmentsAsync(
         GetEquipmentsModel model,
@@ -64,7 +67,7 @@ public class EquipmentService(ICoreEquipmentService equipmentService) : IEquipme
 
     public async Task<FileExportModel> ExportEquipmentRegistry(CancellationToken cancellationToken)
     {
-        var fileData = await equipmentService.ExportEquipmentRegistry(cancellationToken);
+        var fileData = await spreadsheetService.ExportEquipmentRegistry(cancellationToken);
         return new FileExportModel
         {
             FileName = fileData.FileName,

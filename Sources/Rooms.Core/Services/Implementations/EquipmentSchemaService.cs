@@ -1,10 +1,8 @@
 ﻿using Commons;
 using Rooms.Core.DtoConverters;
-using Rooms.Core.Dtos;
 using Rooms.Core.Dtos.Equipment;
 using Rooms.Core.Dtos.Requests.EquipmentSchemas;
 using Rooms.Core.Dtos.Responses;
-using Rooms.Core.ExcelExporters.Exporters;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.Equipment;
@@ -77,21 +75,6 @@ public class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEqu
         await context.Commit(cancellationToken);
 
         return EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto(equipmentSchemaToPatch);
-    }
-
-    public async Task<FileExportDto> ExportEquipmentSchemaRegistry(CancellationToken cancellationToken)
-    {
-        var exportDtos = new[]
-        {
-            new EquipmentSchemaRegistryExcelExportDto
-            {
-                EquipmentName = string.Empty,
-                EquipmentType = string.Empty,
-                Parameters = string.Empty,
-            }
-        };
-        var exporter = new EquipmentSchemaRegistryExcelExporter();
-        return exporter.Export(exportDtos, cancellationToken);
     }
 
     private async Task<EquipmentSchema> GetEquipmentSchemaByIdInner(

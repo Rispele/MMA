@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Dtos;
+﻿namespace Rooms.Core.Dtos.Files;
 
 public class FileExportDto
 {

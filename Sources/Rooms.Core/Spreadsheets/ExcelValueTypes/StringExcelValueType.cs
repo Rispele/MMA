@@ -1,6 +1,6 @@
 ﻿using NPOI.SS.UserModel;
 
-namespace Rooms.Core.ExcelExporters.ExcelValueTypes;
+namespace Rooms.Core.Spreadsheets.ExcelValueTypes;
 
 public class StringExcelValueType(string? value) : IExcelValueType
 {

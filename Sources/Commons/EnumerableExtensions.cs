@@ -13,6 +13,22 @@ public static class EnumerableExtensions
         return result;
     }
 
+    public static void ForEach<TValue>(this IEnumerable<TValue> enumerable, Action<TValue> action)
+    {
+        foreach (var value in enumerable)
+        {
+            action(value);
+        }
+    }
+
+    public static void ForEach<TValue>(this IEnumerable<TValue> enumerable, Action<TValue, int> action)
+    {
+        foreach (var (value, index) in enumerable.Select((value, index) => (value, index)))
+        {
+            action(value, index);
+        }
+    }
+
     public static string JoinStrings<TValue>(this IEnumerable<TValue> enumerable, string delimiter)
     {
         return string.Join(delimiter, enumerable);
