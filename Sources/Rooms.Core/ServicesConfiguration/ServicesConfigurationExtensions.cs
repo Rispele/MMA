@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Rooms.Core.Services.Implementations;
 using Rooms.Core.Services.Interfaces;
+using Rooms.Core.Spreadsheets;
 
 namespace Rooms.Core.ServicesConfiguration;
 
@@ -13,6 +14,7 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentService, EquipmentService>()
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
-            .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>();
+            .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>()
+            .AddScoped<SpreadsheetService>();
     }
 }
