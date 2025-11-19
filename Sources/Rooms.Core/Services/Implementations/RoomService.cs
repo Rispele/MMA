@@ -26,6 +26,16 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
         return room.Map(RoomDtoConverter.Convert);
     }
 
+    public async Task<RoomDto[]> FindRoomByIds(int[] roomIds, CancellationToken cancellationToken)
+    {
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
+
+        var request = new FindRoomsByIdQuery(roomIds);
+        var rooms = await unitOfWork.ApplyQuery(request, cancellationToken);
+
+        return rooms.ToBlockingEnumerable(cancellationToken: cancellationToken).Select(RoomDtoConverter.Convert).ToArray();
+    }
+
     public async Task<RoomsResponseDto> FilterRooms(GetRoomsRequestDto requestDto, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);

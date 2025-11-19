@@ -26,8 +26,8 @@ public struct EquipmentRegistrySpreadsheetSpecification
     public IEnumerable<ColumnCellData> GetValuesToWrite(EquipmentRegistryExcelExportDto data)
     {
         yield return new ColumnCellData(ColumnNumber: 0, new StringExcelValueType(data.RoomName));
-        yield return new ColumnCellData(ColumnNumber: 1, new StringExcelValueType(data.EquipmentType));
-        yield return new ColumnCellData(ColumnNumber: 2, new StringExcelValueType(data.EquipmentSchemaName));
+        yield return new ColumnCellData(ColumnNumber: 1, new StringExcelValueType(data.TypeName));
+        yield return new ColumnCellData(ColumnNumber: 2, new StringExcelValueType(data.SchemaName));
         yield return new ColumnCellData(ColumnNumber: 3, new StringExcelValueType(data.InventoryNumber));
         yield return new ColumnCellData(ColumnNumber: 4, new StringExcelValueType(data.SerialNumber));
         yield return new ColumnCellData(ColumnNumber: 5, new StringExcelValueType(data.Comment));
