@@ -8,6 +8,6 @@ public class OperatorDepartmentClient : IOperatorDepartmentClient
     public Task<Dictionary<Guid, string>> GetAvailableOperators()
     {
         var response = new[] { new OperatorUserResponseDto() };
-        return Task.FromResult(response.ToDictionary(x => x.Guid, x => x.FullName));
+        return Task.FromResult(response.ToDictionary(keySelector: x => x.Guid, elementSelector: x => x.FullName));
     }
 }

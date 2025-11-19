@@ -6,7 +6,8 @@ using IOperatorDepartmentService = WebApi.Services.Interfaces.IOperatorDepartmen
 
 namespace WebApi.Services.Implementations;
 
-public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorDepartmentService operatorDepartmentService) : IOperatorDepartmentService
+public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorDepartmentService operatorDepartmentService)
+    : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentsResponseModel> GetOperatorDepartmentsAsync(
         GetOperatorDepartmentsModel model,

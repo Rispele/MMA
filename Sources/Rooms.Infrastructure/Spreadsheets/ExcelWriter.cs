@@ -15,7 +15,7 @@ public static class ExcelWriter
         style.FillPattern = FillPattern.SolidForeground;
 
         var specification = new TSpecification();
-        
+
         var nextRow = FillHeader(specification, worksheet, rowNumber: 0);
         FillBody(specification, worksheet, data, nextRow);
     }
@@ -38,7 +38,7 @@ public static class ExcelWriter
         TData[] dataToExport,
         int nextRow)
     {
-        _ = dataToExport.Aggregate(nextRow, (index, data) => FillDataRow(specification, worksheet, data, index));
+        _ = dataToExport.Aggregate(nextRow, func: (index, data) => FillDataRow(specification, worksheet, data, index));
     }
 
     private static int FillDataRow<TData>(

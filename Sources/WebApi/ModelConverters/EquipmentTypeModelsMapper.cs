@@ -21,8 +21,8 @@ public static partial class EquipmentTypeModelsMapper
     [MapProperty(nameof(GetEquipmentTypesModel.AfterEquipmentTypeId), nameof(GetEquipmentTypesDto.AfterEquipmentTypeId))]
     [MapProperty(nameof(GetEquipmentTypesModel.PageSize), nameof(GetEquipmentTypesDto.BatchSize))]
     [MapProperty(
-        source: nameof(GetEquipmentTypesModel.Page),
-        target: nameof(GetEquipmentTypesDto.BatchNumber),
-        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+        nameof(GetEquipmentTypesModel.Page),
+        nameof(GetEquipmentTypesDto.BatchNumber),
+        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetEquipmentTypesDto MapGetEquipmentTypesFromModel(GetEquipmentTypesModel model);
 }

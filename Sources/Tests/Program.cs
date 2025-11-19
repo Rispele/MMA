@@ -65,7 +65,7 @@ public class Program
         {
             Name = "Первое оборудование",
             EquipmentTypeId = actualType.Id,
-            ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } },
+            ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } }
         };
         var expectedSchema = new EquipmentSchemaModel
         {
@@ -157,7 +157,7 @@ public class Program
         {
             Name = "Первое оборудование",
             EquipmentTypeId = equipmentType.Id,
-            ParameterValues = new Dictionary<string, string>() { { "Разрешение", "1920x1080" } },
+            ParameterValues = new Dictionary<string, string> { { "Разрешение", "1920x1080" } }
         };
         var equipmentSchema = await _httpClient.CreateEquipmentSchema(createEquipmentSchemaModel);
 
@@ -177,7 +177,7 @@ public class Program
             RoomStatus = RoomStatusModel.Ready,
             Comment = null,
             FixDeadline = null,
-            AllowBooking = true,
+            AllowBooking = true
         };
         var room = await _httpClient.CreateRoom(createRoomModel);
 
@@ -189,7 +189,7 @@ public class Program
             SerialNumber = "5678",
             NetworkEquipmentIp = "127.0.0.1",
             Comment = null,
-            Status = EquipmentStatus.Ok,
+            Status = EquipmentStatus.Ok
         };
         var equipment = await _httpClient.CreateEquipment(createEquipmentModel);
 
@@ -212,9 +212,9 @@ public class Program
                 ComputerSeats = 10,
                 HasConditioning = true
             },
-            Attachments = new RoomAttachmentsModel(null, null),
+            Attachments = new RoomAttachmentsModel(PdfRoomScheme: null, Photo: null),
             Owner = null,
-            FixInfo = new RoomFixStatusModel(RoomStatusModel.Ready, null, null),
+            FixInfo = new RoomFixStatusModel(RoomStatusModel.Ready, FixDeadline: null, Comment: null),
             AllowBooking = true,
             Equipments =
             [
@@ -228,16 +228,16 @@ public class Program
                     SerialNumber = "5678",
                     NetworkEquipmentIp = "127.0.0.1",
                     Comment = null,
-                    Status = EquipmentStatus.Ok,
+                    Status = EquipmentStatus.Ok
                 }
-            ],
+            ]
         };
 
         // Act
         var actualRoom = await _httpClient.GetRoomById(room.Id);
 
         // Assert
-        actualRoom.Should().BeEquivalentTo(expectedRoom, opt => opt.Excluding(x => x.Id));
+        actualRoom.Should().BeEquivalentTo(expectedRoom, config: opt => opt.Excluding(x => x.Id));
     }
 
     [Test]
@@ -261,7 +261,7 @@ public class Program
             RoomStatus = RoomStatusModel.Ready,
             Comment = null,
             FixDeadline = null,
-            AllowBooking = true,
+            AllowBooking = true
         };
         var room = await _httpClient.CreateRoom(createRoomModel);
 
@@ -270,20 +270,20 @@ public class Program
             Name = "Операторская",
             RoomIds = [room.Id],
             Operators = new Dictionary<string, string> { { operatorId.ToString(), "Иван" } },
-            Contacts = "123",
+            Contacts = "123"
         };
         var expectedOperatorDepartment = new OperatorDepartmentModel
         {
             Name = "Операторская",
-            Rooms = [new OperatorDepartmentRoomInfoModel(1, new ScheduleAddressModel() { Address = "1", RoomNumber = "2" })],
-            Operators = new Dictionary<string, string>() { { operatorId.ToString(), "Иван" } },
-            Contacts = "123",
+            Rooms = [new OperatorDepartmentRoomInfoModel(RoomId: 1, new ScheduleAddressModel { Address = "1", RoomNumber = "2" })],
+            Operators = new Dictionary<string, string> { { operatorId.ToString(), "Иван" } },
+            Contacts = "123"
         };
 
         // Act
         var actualOperatorDepartment = await _httpClient.CreateOperatorDepartment(inputOperatorDepartment);
 
         // Assert
-        actualOperatorDepartment.Should().BeEquivalentTo(expectedOperatorDepartment, opt => opt.Excluding(x => x.Id));
+        actualOperatorDepartment.Should().BeEquivalentTo(expectedOperatorDepartment, config: opt => opt.Excluding(x => x.Id));
     }
 }

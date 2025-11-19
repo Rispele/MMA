@@ -23,8 +23,8 @@ public static partial class InstituteResponsibleModelMapper
     [MapProperty(nameof(GetInstituteResponsibleModel.AfterInstituteResponsibleId), nameof(GetInstituteResponsibleDto.AfterInstituteResponsibleId))]
     [MapProperty(nameof(GetInstituteResponsibleModel.PageSize), nameof(GetInstituteResponsibleDto.BatchSize))]
     [MapProperty(
-        source: nameof(GetInstituteResponsibleModel.Page),
-        target: nameof(GetInstituteResponsibleDto.BatchNumber),
-        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+        nameof(GetInstituteResponsibleModel.Page),
+        nameof(GetInstituteResponsibleDto.BatchNumber),
+        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetInstituteResponsibleDto MapGetInstituteResponsibleFromModel(GetInstituteResponsibleModel model);
 }

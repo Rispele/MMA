@@ -12,6 +12,7 @@ public interface IInstituteResponsibleService
     Task<Dictionary<string, string>> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken);
     Task<InstituteResponsibleModel> CreateInstituteResponsibleAsync(CreateInstituteResponsibleModel model, CancellationToken cancellationToken);
     Task<PatchInstituteResponsibleModel> GetInstituteResponsiblePatchModel(int instituteResponsibleId, CancellationToken cancellationToken);
+
     Task<InstituteResponsibleModel> PatchInstituteResponsibleAsync(
         int instituteResponsibleId,
         PatchInstituteResponsibleModel request,

@@ -9,7 +9,7 @@ namespace WebApi.ModelConverters;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class EquipmentModelsMapper
 {
-    [MapProperty(nameof(EquipmentDto.Schema), nameof(EquipmentModel.Schema), Use = nameof(@EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel))]
+    [MapProperty(nameof(EquipmentDto.Schema), nameof(EquipmentModel.Schema), Use = nameof(EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel))]
     public static partial EquipmentModel MapEquipmentToModel(EquipmentDto equipment);
 
     [MapperIgnoreSource(nameof(EquipmentDto.Id))]
@@ -20,7 +20,7 @@ public static partial class EquipmentModelsMapper
     [MapProperty(
         nameof(GetEquipmentsModel.Page),
         nameof(GetEquipmentsDto.BatchNumber),
-        Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetEquipmentsDto MapGetEquipmentFromModel(GetEquipmentsModel model);
 
     public static partial CreateEquipmentDto MapCreateEquipmentFromModel(CreateEquipmentModel equipment);

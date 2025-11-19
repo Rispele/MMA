@@ -62,7 +62,7 @@ public class InstituteResponsibleService(
         var instituteResponsible = new InstituteResponsible
         {
             Institute = dto.Institute,
-            Responsible = dto.Responsible,
+            Responsible = dto.Responsible
         };
 
         context.Add(instituteResponsible);

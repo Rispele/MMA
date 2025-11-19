@@ -18,4 +18,3 @@ public class RoomScheduleController(IRoomScheduleService roomScheduleService) : 
         return Ok(result);
     }
 }
-    

@@ -75,7 +75,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
         var model = await equipmentService.ExportEquipmentRegistry(cancellationToken);
         return new FileStreamResult(model.Content, new MediaTypeHeaderValue(model.ContentType))
         {
-            FileDownloadName = model.FileName,
+            FileDownloadName = model.FileName
         };
     }
 }

@@ -19,7 +19,7 @@ public static class OperatorDepartmentsDtoConverter
                     t.ScheduleAddress.Map(a => new ScheduleAddressDto(a.RoomNumber, a.Address))))
                 .ToArray(),
             Operators = entity.Operators,
-            Contacts = entity.Contacts,
+            Contacts = entity.Contacts
         };
     }
 }

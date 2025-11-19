@@ -1,5 +1,7 @@
 ﻿using Rooms.Core.ServicesConfiguration;
 using Rooms.Infrastructure.ServicesConfiguration;
+using WebApi.Services.Implementations;
+using WebApi.Services.Interfaces;
 using WebApi.Startup.InputFormatters;
 using IRoomService = WebApi.Services.Interfaces.IRoomService;
 using RoomService = WebApi.Services.Implementations.RoomService;
@@ -45,7 +47,7 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentService, EquipmentService>()
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
-            .AddScoped<Services.Interfaces.IOperatorDepartmentService, Services.Implementations.OperatorDepartmentService>();
+            .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>();
 
         return serviceCollection;
     }

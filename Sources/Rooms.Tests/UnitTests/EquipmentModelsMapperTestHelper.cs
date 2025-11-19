@@ -68,7 +68,7 @@ public static class EquipmentsMapperTestHelper
             Type = CreateEquipmentType(),
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
+                [TypeParameterValue] = TypeParameterValue
             }
         };
     }
@@ -82,7 +82,7 @@ public static class EquipmentsMapperTestHelper
             Type = CreateEquipmentTypeDto(),
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
+                [TypeParameterValue] = TypeParameterValue
             }
         };
     }

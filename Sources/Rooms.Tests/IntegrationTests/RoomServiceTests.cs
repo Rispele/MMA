@@ -107,7 +107,7 @@ public class RoomServiceTests : ContainerTestBase
             {
                 Name = "new name",
                 Description = "new description",
-                ScheduleAddress = new ScheduleAddressDto("123", "123"),
+                ScheduleAddress = new ScheduleAddressDto(RoomNumber: "123", Address: "123"),
                 Type = RoomTypeDto.Multimedia,
                 Layout = RoomLayoutDto.Amphitheater,
                 Seats = 12,
@@ -146,7 +146,7 @@ public class RoomServiceTests : ContainerTestBase
                         Comment = new FilterParameterDto<string>(
                             comment11,
                             SortDirectionDto.Ascending)
-                    },
+                    }
                 })
             .SetName("String: Full match");
 
@@ -165,7 +165,7 @@ public class RoomServiceTests : ContainerTestBase
                         Comment = new FilterParameterDto<string>(
                             comment21[3..^3],
                             SortDirectionDto.Ascending)
-                    },
+                    }
                 })
             .SetName("String: Substring match");
 
@@ -182,7 +182,7 @@ public class RoomServiceTests : ContainerTestBase
                         RoomTypes = new FilterMultiParameterDto<RoomTypeDto>(
                             [RoomTypeDto.Computer],
                             SortDirectionDto.Ascending)
-                    },
+                    }
                 })
             .SetName("Enum: Room type");
 
@@ -199,7 +199,7 @@ public class RoomServiceTests : ContainerTestBase
                         NetTypes = new FilterMultiParameterDto<RoomNetTypeDto>(
                             [RoomNetTypeDto.Wired],
                             SortDirectionDto.Ascending)
-                    },
+                    }
                 })
             .SetName("Enum: Net type");
 
@@ -216,7 +216,7 @@ public class RoomServiceTests : ContainerTestBase
                         RoomLayout = new FilterMultiParameterDto<RoomLayoutDto>(
                             [RoomLayoutDto.Amphitheater],
                             SortDirectionDto.Ascending)
-                    },
+                    }
                 })
             .SetName("Enum: Layout type");
     }

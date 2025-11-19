@@ -8,6 +8,6 @@ public class InstituteResponsibleClient : IInstituteResponsibleClient
     public Task<Dictionary<string, string>> GetAvailableInstituteResponsible()
     {
         var response = new[] { new InstituteResponsibleUserResponseDto() };
-        return Task.FromResult(response.ToDictionary(x => x.Guid.ToString(), x => x.FullName));
+        return Task.FromResult(response.ToDictionary(keySelector: x => x.Guid.ToString(), elementSelector: x => x.FullName));
     }
 }

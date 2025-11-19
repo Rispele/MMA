@@ -1,5 +1,5 @@
-﻿using Rooms.Infrastructure;
-using Rooms.Infrastructure.Configuration;
+﻿using Rooms.Infrastructure.Configuration;
+using Rooms.Infrastructure.EFCore;
 using Sources.ServiceDefaults;
 
 namespace WebApi.Startup.ConfigurationExtensions;

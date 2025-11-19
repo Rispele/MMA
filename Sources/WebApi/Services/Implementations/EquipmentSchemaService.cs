@@ -72,7 +72,7 @@ public class EquipmentSchemaService(
         {
             FileName = fileData.FileName,
             Content = fileData.Content,
-            ContentType = fileData.ContentType,
+            ContentType = fileData.ContentType
         };
     }
 }

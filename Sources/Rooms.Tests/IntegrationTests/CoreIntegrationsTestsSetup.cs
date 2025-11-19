@@ -44,7 +44,7 @@ public class CoreIntegrationsTestsSetup : ISetup
 
         await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(
             KnownResources.RoomsMigrationService.Name,
-            targetState: KnownResourceStates.Finished,
+            KnownResourceStates.Finished,
             cts.Token);
 
         return testingApplicationFactory;

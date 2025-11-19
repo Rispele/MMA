@@ -28,7 +28,7 @@ public class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEqu
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var query = new FilterEquipmentSchemasQuery(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentSchemaId, dto.Filter);
-        
+
         var equipmentSchemas = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
         var convertedEquipmentSchemas = equipmentSchemas.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto).ToArray();
@@ -47,7 +47,7 @@ public class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEqu
         {
             Name = dto.Name,
             ParameterValues = dto.ParameterValues,
-            Type = equipmentType,
+            Type = equipmentType
         };
 
         context.Add(equipmentSchema);

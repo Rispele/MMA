@@ -56,7 +56,9 @@ public class InstituteResponsibleService(ICoreInstituteResponsibleService instit
         return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(instituteResponsible);
     }
 
-    public async Task<PatchInstituteResponsibleModel> GetInstituteResponsiblePatchModel(int instituteResponsibleId, CancellationToken cancellationToken)
+    public async Task<PatchInstituteResponsibleModel> GetInstituteResponsiblePatchModel(
+        int instituteResponsibleId,
+        CancellationToken cancellationToken)
     {
         var instituteResponsible = await instituteResponsibleService.GetInstituteResponsibleById(instituteResponsibleId, cancellationToken);
 

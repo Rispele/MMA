@@ -22,7 +22,7 @@ public class RoomScheduleService(ICoreRoomScheduleService roomScheduleService) :
                 ClassTime = x.ClassTime,
                 ClassEvent = x.ClassEvent,
                 Teacher = x.Teacher,
-                ClassGroup = x.ClassGroup,
+                ClassGroup = x.ClassGroup
             }).ToArray(),
             Count = scheduleResponseDtos.Count()
         };

@@ -23,20 +23,20 @@ public class ExcelExporter : ISpreadsheetExporter
         {
             FileName = exporterSpecification.FileName,
             Content = ToMemoryStreamAsync(workbook),
-            ContentType = ContentType,
+            ContentType = ContentType
         };
     }
 
     private static MemoryStream ToMemoryStreamAsync(XSSFWorkbook workbook)
     {
         var memoryStream = new MemoryStream();
-        
+
         workbook.Write(memoryStream, leaveOpen: true);
         if (memoryStream.CanSeek)
         {
-            memoryStream.Seek(0, SeekOrigin.Begin);
+            memoryStream.Seek(offset: 0, SeekOrigin.Begin);
         }
-        
+
         return memoryStream;
     }
 }

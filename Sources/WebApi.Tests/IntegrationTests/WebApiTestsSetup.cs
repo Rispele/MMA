@@ -40,7 +40,8 @@ public class WebApiTestsSetup : ISetup
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(KnownResources.RoomsMigrationService.Name, KnownResourceStates.Finished, cts.Token);
+        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(KnownResources.RoomsMigrationService.Name,
+            KnownResourceStates.Finished, cts.Token);
         await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.WebApiService.Name, cts.Token);
 
         return testingApplicationFactory;

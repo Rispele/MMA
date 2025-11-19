@@ -66,19 +66,19 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
                 NetType = RoomDtoConverter.Convert(dto.NetType),
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
-                HasConditioning = dto.HasConditioning,
+                HasConditioning = dto.HasConditioning
             },
             new RoomAttachments
             {
                 PdfRoomScheme = FileDtoConverter.Convert(dto.PdfRoomSchemeFile),
-                Photo = FileDtoConverter.Convert(dto.PhotoFile),
+                Photo = FileDtoConverter.Convert(dto.PhotoFile)
             },
             dto.Owner,
             new RoomFixInfo
             {
                 Status = RoomDtoConverter.Convert(dto.RoomStatus),
                 FixDeadline = dto.FixDeadline,
-                Comment = dto.Comment,
+                Comment = dto.Comment
             },
             dto.AllowBooking);
 

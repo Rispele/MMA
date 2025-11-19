@@ -6,7 +6,6 @@ public class TestingLoggerProvider : ILoggerProvider
 {
     public void Dispose()
     {
-
     }
 
     public ILogger CreateLogger(string categoryName)

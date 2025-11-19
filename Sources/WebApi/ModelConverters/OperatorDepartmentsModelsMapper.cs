@@ -11,7 +11,8 @@ public static partial class OperatorDepartmentsModelsMapper
 {
     [MapProperty(nameof(GetOperatorDepartmentsModel.AfterOperatorDepartmentId), nameof(GetOperatorDepartmentsDto.AfterOperatorDepartmentId))]
     [MapProperty(nameof(GetOperatorDepartmentsModel.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]
-    [MapProperty(nameof(GetOperatorDepartmentsModel.Page), nameof(GetOperatorDepartmentsDto.BatchNumber), Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+    [MapProperty(nameof(GetOperatorDepartmentsModel.Page), nameof(GetOperatorDepartmentsDto.BatchNumber),
+        Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetOperatorDepartmentsDto Convert(GetOperatorDepartmentsModel model);
 
     public static partial OperatorDepartmentModel Convert(OperatorDepartmentDto entity);
@@ -25,7 +26,7 @@ public static partial class OperatorDepartmentsModelsMapper
             Name = model.Name,
             RoomIds = model.RoomIds,
             Operators = model.Operators,
-            Contacts = model.Contacts,
+            Contacts = model.Contacts
         };
     }
 
@@ -36,7 +37,7 @@ public static partial class OperatorDepartmentsModelsMapper
             Name = entity.Name,
             RoomIds = entity.Rooms.Select(t => t.RoomId).ToArray(),
             Operators = entity.Operators,
-            Contacts = entity.Contacts,
+            Contacts = entity.Contacts
         };
     }
 }

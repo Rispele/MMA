@@ -6,8 +6,6 @@ namespace WebApi.Tests.UnitTests;
 [TestFixture]
 public class EquipmentModelsMapperTests
 {
-    #region Equipments
-
     [Test]
     public void Map_EquipmentDto_To_EquipmentModel_ShouldCorrectlyMap()
     {
@@ -57,10 +55,6 @@ public class EquipmentModelsMapperTests
         var mapped = EquipmentModelsMapper.MapPatchEquipmentFromModel(model);
         mapped.Should().BeEquivalentTo(dto);
     }
-
-    #endregion
-
-    #region EquipmentSchemas
 
     [Test]
     public void Map_EquipmentSchemaDto_To_EquipmentSchemaModel_ShouldCorrectlyMap()
@@ -112,10 +106,6 @@ public class EquipmentModelsMapperTests
         mapped.Should().BeEquivalentTo(dto);
     }
 
-    #endregion
-
-    #region EquipmentType
-
     [Test]
     public void Map_EquipmentTypeDto_To_EquipmentTypeModel_ShouldCorrectlyMap()
     {
@@ -165,6 +155,4 @@ public class EquipmentModelsMapperTests
         var mapped = EquipmentTypeModelsMapper.MapPatchEquipmentTypeFromModel(model);
         mapped.Should().BeEquivalentTo(dto);
     }
-
-    #endregion
 }

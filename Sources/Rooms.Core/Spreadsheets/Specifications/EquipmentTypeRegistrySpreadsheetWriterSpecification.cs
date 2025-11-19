@@ -9,12 +9,12 @@ public struct EquipmentTypeRegistrySpreadsheetWriterSpecification
 {
     private static readonly IReadOnlyList<string> ColumnNamesSpecification =
     [
-        "Наименование",
+        "Наименование"
     ];
 
     public string SheetName => "Типы оборудования";
     public string FileName => "Типы оборудования.xlsx";
-    
+
     public IReadOnlyList<string> ColumnNames => ColumnNamesSpecification;
 
     public IEnumerable<ColumnCellData> GetValuesToWrite(EquipmentTypeRegistryExcelExportDto data)

@@ -11,9 +11,11 @@ public interface IEquipmentTypeService
     Task<EquipmentTypeModel> GetEquipmentTypeByIdAsync(int id, CancellationToken cancellationToken);
     Task<EquipmentTypeModel> CreateEquipmentTypeAsync(CreateEquipmentTypeModel model, CancellationToken cancellationToken);
     Task<PatchEquipmentTypeModel> GetEquipmentTypePatchModel(int equipmentTypeId, CancellationToken cancellationToken);
+
     Task<EquipmentTypeModel> PatchEquipmentTypeAsync(
         int equipmentTypeId,
         PatchEquipmentTypeModel request,
         CancellationToken cancellationToken);
+
     Task<FileExportModel> ExportEquipmentTypeRegistry(CancellationToken cancellationToken);
 }

@@ -17,8 +17,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -29,7 +29,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
-        <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
+        <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj"/>
         <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj"/>
     </ItemGroup>
 </Project>

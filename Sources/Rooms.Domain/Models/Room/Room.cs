@@ -9,8 +9,8 @@ namespace Rooms.Domain.Models.Room;
 [GenerateFieldNames]
 public class Room
 {
-    private int? id;
     private readonly List<Equipment> equipments = null!;
+    private int? id;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private Room()
@@ -71,7 +71,7 @@ public class Room
     {
         ScheduleAddress = new RoomScheduleAddress(number, address);
     }
-    
+
     internal void SetId(int idToSet)
     {
         id = idToSet;

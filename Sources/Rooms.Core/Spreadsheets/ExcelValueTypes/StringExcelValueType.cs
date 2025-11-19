@@ -4,7 +4,7 @@ namespace Rooms.Core.Spreadsheets.ExcelValueTypes;
 
 public class StringExcelValueType(string? value) : IExcelValueType
 {
-    private string? Value { get; set; } = value;
+    private string? Value { get; } = value;
 
     public void WriteToExcel(IRow row, int colNumber)
     {

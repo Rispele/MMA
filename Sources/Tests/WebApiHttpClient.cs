@@ -12,6 +12,16 @@ namespace Tests;
 
 public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 {
+    #region EquipmentController
+
+    public async Task<EquipmentModel> CreateEquipment(CreateEquipmentModel model)
+    {
+        var response = await httpClient.PostAsJsonAsync($"{baseUrl}/webapi/equipments", model);
+        return (await response.Content.ReadFromJsonAsync<EquipmentModel>())!;
+    }
+
+    #endregion
+
     #region EquipmentTypesController
 
     public async Task<EquipmentTypeModel> CreateEquipmentType(CreateEquipmentTypeModel model)
@@ -44,16 +54,6 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 
     #endregion
 
-    #region EquipmentController
-
-    public async Task<EquipmentModel> CreateEquipment(CreateEquipmentModel model)
-    {
-        var response = await httpClient.PostAsJsonAsync($"{baseUrl}/webapi/equipments", model);
-        return (await response.Content.ReadFromJsonAsync<EquipmentModel>())!;
-    }
-
-    #endregion
-
     #region RoomsController
 
     public async Task<RoomModel> CreateRoom(CreateRoomModel model)
@@ -79,7 +79,8 @@ public class WebApiHttpClient(HttpClient httpClient, string baseUrl)
 
     public async Task<OperatorDepartmentModel> GetOperatorDepartmentById(int operatorDepartmentId)
     {
-        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/operator-rooms/{operatorDepartmentId}", typeof(OperatorDepartmentModel)) as OperatorDepartmentModel)!;
+        return (await httpClient.GetFromJsonAsync($"{baseUrl}/webapi/operator-rooms/{operatorDepartmentId}", typeof(OperatorDepartmentModel)) as
+            OperatorDepartmentModel)!;
     }
 
     #endregion

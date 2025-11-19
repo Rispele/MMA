@@ -11,7 +11,7 @@ public struct EquipmentSchemaRegistrySpreadsheetWriterSpecification
     [
         "Наименование",
         "Тип оборудования",
-        "Параметры",
+        "Параметры"
     ];
 
     public string SheetName => "Модели оборудования";

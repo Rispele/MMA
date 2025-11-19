@@ -13,7 +13,7 @@ public static partial class RoomModelsMapper
 {
     [MapProperty(nameof(GetRoomsModel.AfterRoomId), nameof(GetRoomsRequestDto.AfterRoomId))]
     [MapProperty(nameof(GetRoomsModel.PageSize), nameof(GetRoomsRequestDto.BatchSize))]
-    [MapProperty(nameof(GetRoomsModel.Page), nameof(GetRoomsRequestDto.BatchNumber), Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+    [MapProperty(nameof(GetRoomsModel.Page), nameof(GetRoomsRequestDto.BatchNumber), Use = nameof(PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetRoomsRequestDto Map(GetRoomsModel dto);
 
     public static partial PatchRoomDto Map(PatchRoomModel model);

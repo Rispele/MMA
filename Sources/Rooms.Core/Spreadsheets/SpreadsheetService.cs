@@ -21,12 +21,12 @@ public class SpreadsheetService(
 
     public async Task<FileExportDto> ExportEquipmentRegistry(CancellationToken cancellationToken)
     {
-        var request = new GetEquipmentsDto(BatchNumber: 0, BatchSize: ExportLimit, AfterEquipmentId: -1, Filter: null);
+        var request = new GetEquipmentsDto(BatchNumber: 0, ExportLimit, AfterEquipmentId: -1, Filter: null);
         var equipments = await equipmentService.FilterEquipments(request, cancellationToken);
         var rooms = await roomService.FindRoomByIds(equipments.Equipments.Select(t => t.RoomId).Distinct().ToArray(), cancellationToken);
 
         var roomsById = rooms.ToDictionary(t => t.Id);
-        
+
         var dataToExport = equipments.Equipments
             .Select(equipment => new EquipmentRegistryExcelExportDto
             {
@@ -36,7 +36,7 @@ public class SpreadsheetService(
                 Comment = equipment.Comment,
                 InventoryNumber = equipment.InventoryNumber,
                 SerialNumber = equipment.SerialNumber,
-                Status = equipment.Status.ToString(),
+                Status = equipment.Status.ToString()
             })
             .ToArray();
 
@@ -47,14 +47,14 @@ public class SpreadsheetService(
 
     public async Task<FileExportDto> ExportEquipmentSchemaRegistry(CancellationToken cancellationToken)
     {
-        var request = new GetEquipmentSchemasDto(BatchNumber: 0, BatchSize: ExportLimit, AfterEquipmentSchemaId: -1, Filter: null);
+        var request = new GetEquipmentSchemasDto(BatchNumber: 0, ExportLimit, AfterEquipmentSchemaId: -1, Filter: null);
         var types = await equipmentSchemaService.FilterEquipmentSchemas(request, cancellationToken);
         var dataToExport = types.EquipmentSchemas
             .Select(schema => new EquipmentSchemaRegistryExcelExportDto
             {
                 Name = schema.Name,
                 TypeName = schema.Type.Name,
-                Parameters = schema.ParameterValues.Select(t => $"{t.Key} = {t.Value}").JoinStrings(Environment.NewLine),
+                Parameters = schema.ParameterValues.Select(t => $"{t.Key} = {t.Value}").JoinStrings(Environment.NewLine)
             })
             .ToArray();
 
@@ -66,12 +66,12 @@ public class SpreadsheetService(
 
     public async Task<FileExportDto> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)
     {
-        var request = new GetEquipmentTypesDto(BatchNumber: 0, BatchSize: ExportLimit, AfterEquipmentTypeId: -1, Filter: null);
+        var request = new GetEquipmentTypesDto(BatchNumber: 0, ExportLimit, AfterEquipmentTypeId: -1, Filter: null);
         var types = await equipmentTypeService.FilterEquipmentTypes(request, cancellationToken);
         var dataToExport = types.EquipmentTypes
             .Select(type => new EquipmentTypeRegistryExcelExportDto
             {
-                Name = type.Name,
+                Name = type.Name
             })
             .ToArray();
 

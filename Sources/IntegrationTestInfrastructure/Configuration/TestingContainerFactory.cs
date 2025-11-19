@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Infrastructure;
 using Rooms.Infrastructure.Configuration;
+using Rooms.Infrastructure.EFCore;
 using Sources.ServiceDefaults;
 
 namespace IntegrationTestInfrastructure.Configuration;

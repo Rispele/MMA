@@ -38,8 +38,8 @@ public class SourceGeneratorWithAttributesTests
         var generator = new FieldNameGenerator();
         var driver = CSharpGeneratorDriver.Create(generator);
         var compilation = CSharpCompilation.Create(nameof(FieldNameGenerator),
-            syntaxTrees: [CSharpSyntaxTree.ParseText(VectorClassText)],
-            references: [MetadataReference.CreateFromFile(typeof(object).Assembly.Location)]);
+            [CSharpSyntaxTree.ParseText(VectorClassText)],
+            [MetadataReference.CreateFromFile(typeof(object).Assembly.Location)]);
 
         var runResult = driver.RunGenerators(compilation).GetRunResult();
 

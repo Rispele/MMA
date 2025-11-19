@@ -1,6 +1,6 @@
-using Rooms.MigrationService;
-using Rooms.Infrastructure;
 using Rooms.Infrastructure.Configuration;
+using Rooms.Infrastructure.EFCore;
+using Rooms.MigrationService;
 using Sources.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);

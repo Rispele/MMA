@@ -15,7 +15,7 @@ public struct EquipmentRegistrySpreadsheetSpecification
         "Инвентарный номер",
         "Серийный номер",
         "Комментарий",
-        "Статус",
+        "Статус"
     ];
 
     public string SheetName => "Оборудование";

@@ -180,7 +180,7 @@ public static class EquipmentModelsMapperTestHelper
             Type = CreateEquipmentTypeModel(),
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
+                [TypeParameterValue] = TypeParameterValue
             }
         };
     }
@@ -193,7 +193,7 @@ public static class EquipmentModelsMapperTestHelper
             EquipmentTypeId = TypeId,
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
+                [TypeParameterValue] = TypeParameterValue
             }
         };
     }
@@ -222,8 +222,8 @@ public static class EquipmentModelsMapperTestHelper
             EquipmentTypeId = TypeId,
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
-            },
+                [TypeParameterValue] = TypeParameterValue
+            }
         };
     }
 
@@ -236,7 +236,7 @@ public static class EquipmentModelsMapperTestHelper
             Type = CreateEquipmentTypeDto(),
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
+                [TypeParameterValue] = TypeParameterValue
             }
         };
     }
@@ -249,8 +249,8 @@ public static class EquipmentModelsMapperTestHelper
             EquipmentTypeId = TypeId,
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
-            },
+                [TypeParameterValue] = TypeParameterValue
+            }
         };
     }
 
@@ -264,7 +264,7 @@ public static class EquipmentModelsMapperTestHelper
             {
                 Name = new FilterParameterDto<string>(SchemaName, SortDirectionDto.None),
                 EquipmentTypeName = new FilterParameterDto<string>(TypeName, SortDirectionDto.None),
-                EquipmentParameters = new FilterParameterDto<string>(TypeParameterValue, SortDirectionDto.None),
+                EquipmentParameters = new FilterParameterDto<string>(TypeParameterValue, SortDirectionDto.None)
             });
     }
 
@@ -276,8 +276,8 @@ public static class EquipmentModelsMapperTestHelper
             EquipmentTypeId = TypeId,
             ParameterValues = new Dictionary<string, string>
             {
-                [TypeParameterValue] = TypeParameterValue,
-            },
+                [TypeParameterValue] = TypeParameterValue
+            }
         };
     }
 

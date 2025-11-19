@@ -21,18 +21,9 @@ public static class RoomMapperTestHelper
     private const bool HasConditioning = true;
     private const string File1Name = "File1";
     private const string File2Name = "File2";
-    private static readonly Guid File1Id = Guid.NewGuid();
-    private static readonly Guid File2Id = Guid.NewGuid();
     private const string File1Bucket = "file1Bucket";
     private const string File2Bucket = "file2Bucket";
     private const string Owner = "Owner";
-    // private const int OperatorDepartmentId = 1;
-    // private const string DepartmentName = "Department";
-    // private const string Contacts = "Contacts";
-    // private const int OperatorId = 2;
-    // private const string OperatorName = "Operator";
-    // private const string OperatorUserId = "OperatorUserId";
-    private static readonly DateTime FixDeadline = DateTime.Now;
     private const string FixComment = "Fix comment";
     private const bool AllowBooking = true;
 
@@ -45,6 +36,17 @@ public static class RoomMapperTestHelper
     private const RoomLayout FromRoomLayout = RoomLayout.Amphitheater;
     private const RoomNetType FromRoomNetType = RoomNetType.WiredAndWireless;
     private const RoomStatus FromRoomStatus = RoomStatus.Ready;
+    private static readonly Guid File1Id = Guid.NewGuid();
+
+    private static readonly Guid File2Id = Guid.NewGuid();
+
+    // private const int OperatorDepartmentId = 1;
+    // private const string DepartmentName = "Department";
+    // private const string Contacts = "Contacts";
+    // private const int OperatorId = 2;
+    // private const string OperatorName = "Operator";
+    // private const string OperatorUserId = "OperatorUserId";
+    private static readonly DateTime FixDeadline = DateTime.Now;
 
     public static RoomDto CreateRoomDto()
     {
@@ -61,7 +63,7 @@ public static class RoomMapperTestHelper
             FixInfo = new RoomFixStatusDto(ToRoomStatus, FixDeadline, FixComment),
             Equipments = [],
             Parameters = new RoomParametersDto(ToRoomType, ToRoomLayout, ToRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress)
         };
     }
 
@@ -89,13 +91,13 @@ public static class RoomMapperTestHelper
             {
                 Comment = FixComment,
                 FixDeadline = FixDeadline,
-                Status = FromRoomStatus,
+                Status = FromRoomStatus
             },
             AllowBooking);
-        
+
         room.SetId(RoomId);
         room.SetScheduleAddress(RoomNumber, RoomAddress);
-        
+
         return room;
     }
 }

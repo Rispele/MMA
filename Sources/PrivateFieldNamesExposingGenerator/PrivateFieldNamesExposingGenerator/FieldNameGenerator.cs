@@ -14,28 +14,28 @@ public sealed class FieldNameGenerator : IIncrementalGenerator
         // Добавляем исходник с атрибутом
         context.RegisterPostInitializationOutput(static ctx =>
         {
-            ctx.AddSource("GenerateFieldNamesAttribute.g.cs", """
-                using System;
-                namespace PrivateFieldNamesExposingGenerator.Attributes
-                {
-                    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-                    public sealed class GenerateFieldNamesAttribute : Attribute { }
-                }
-                """);
+            ctx.AddSource(hintName: "GenerateFieldNamesAttribute.g.cs", source: """
+                                                                                using System;
+                                                                                namespace PrivateFieldNamesExposingGenerator.Attributes
+                                                                                {
+                                                                                    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+                                                                                    public sealed class GenerateFieldNamesAttribute : Attribute { }
+                                                                                }
+                                                                                """);
         });
 
         // Отбираем классы, помеченные [GenerateFieldNames]
         var classDeclarations = context.SyntaxProvider
             .CreateSyntaxProvider(
-                static (node, _) => node is ClassDeclarationSyntax cds && HasAttribute(cds),
-                static (ctx, _) => (ClassDeclarationSyntax)ctx.Node
+                predicate: static (node, _) => node is ClassDeclarationSyntax cds && HasAttribute(cds),
+                transform: static (ctx, _) => (ClassDeclarationSyntax)ctx.Node
             )
             .Where(static c => c is not null);
 
         // Комбинируем с Compilation
         var compilationAndClasses = context.CompilationProvider.Combine(classDeclarations.Collect());
 
-        context.RegisterSourceOutput(compilationAndClasses, static (spc, source) =>
+        context.RegisterSourceOutput(compilationAndClasses, action: static (spc, source) =>
         {
             var (compilation, classDecls) = source;
 
@@ -43,13 +43,17 @@ public sealed class FieldNameGenerator : IIncrementalGenerator
             {
                 var model = compilation.GetSemanticModel(classDecl.SyntaxTree);
                 if (model.GetDeclaredSymbol(classDecl) is not INamedTypeSymbol classSymbol)
+                {
                     continue;
+                }
 
                 var hasAttribute = classSymbol
                     .GetAttributes()
                     .Any(a => a.AttributeClass?.ToDisplayString() == "PrivateFieldNamesExposingGenerator.Attributes.GenerateFieldNamesAttribute");
                 if (!hasAttribute)
+                {
                     continue;
+                }
 
                 var privateFields = classSymbol.GetMembers()
                     .OfType<IFieldSymbol>()
@@ -58,7 +62,9 @@ public sealed class FieldNameGenerator : IIncrementalGenerator
                     .ToImmutableArray();
 
                 if (privateFields.IsDefaultOrEmpty)
+                {
                     continue;
+                }
 
                 var ns = classSymbol.ContainingNamespace.IsGlobalNamespace
                     ? null
@@ -66,7 +72,10 @@ public sealed class FieldNameGenerator : IIncrementalGenerator
 
                 var sb = new StringBuilder();
                 if (!string.IsNullOrEmpty(ns))
+                {
                     sb.AppendLine($"namespace {ns};");
+                }
+
                 sb.AppendLine();
                 sb.AppendLine($"public static class {classSymbol.Name}FieldNames");
                 sb.AppendLine("{");

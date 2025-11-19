@@ -75,7 +75,7 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
         var model = await equipmentSchemaService.ExportEquipmentSchemaRegistry(cancellationToken);
         return new FileStreamResult(model.Content, new MediaTypeHeaderValue(model.ContentType))
         {
-            FileDownloadName = model.FileName,
+            FileDownloadName = model.FileName
         };
     }
 }

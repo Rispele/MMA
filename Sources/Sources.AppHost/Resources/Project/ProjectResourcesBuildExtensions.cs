@@ -46,7 +46,6 @@ public static class ProjectResourcesBuildExtensions
             // .WithReference(testDoubleLkUserApiParameters.Name)
             //
             // #endregion
-
             .WithReference(postgresResource2)
             .WaitForCompletion(roomsMigrationService2);
     }

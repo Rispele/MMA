@@ -49,7 +49,7 @@ public class EquipmentTypeService(
             Parameters = dto.Parameters.Select(x => new EquipmentParameterDescriptor
             {
                 Name = x.Name,
-                Required = x.Required,
+                Required = x.Required
             }).ToList()
         };
 
@@ -73,7 +73,7 @@ public class EquipmentTypeService(
             .Select(x => new EquipmentParameterDescriptor
             {
                 Name = x.Name,
-                Required = x.Required,
+                Required = x.Required
             })
             .ToList();
 

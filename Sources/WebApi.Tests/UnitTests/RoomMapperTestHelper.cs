@@ -25,8 +25,6 @@ public static class RoomMapperTestHelper
     private const bool HasConditioning = true;
     private const string File1Name = "File1";
     private const string File2Name = "File2";
-    private static readonly Guid File1Id = Guid.NewGuid();
-    private static readonly Guid File2Id = Guid.NewGuid();
     private const string File1Bucket = "file1Bucket";
     private const string File2Bucket = "file2Bucket";
     private const string Owner = "Owner";
@@ -36,7 +34,6 @@ public static class RoomMapperTestHelper
     private const int OperatorId = 2;
     private const string OperatorName = "Operator";
     private const string OperatorUserId = "OperatorUserId";
-    private static readonly DateTime FixDeadline = DateTime.Now;
     private const string FixComment = "Fix comment";
     private const bool AllowBooking = true;
 
@@ -59,6 +56,9 @@ public static class RoomMapperTestHelper
 
     private const SortDirectionModel AscendingSortDirectionModel = SortDirectionModel.Ascending;
     private const SortDirectionModel DescendingSortDirectionModel = SortDirectionModel.Descending;
+    private static readonly Guid File1Id = Guid.NewGuid();
+    private static readonly Guid File2Id = Guid.NewGuid();
+    private static readonly DateTime FixDeadline = DateTime.Now;
 
     public static RoomDto CreateRoomDto()
     {
@@ -80,7 +80,7 @@ public static class RoomMapperTestHelper
             //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
             Equipments = [],
             Parameters = new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress)
         };
     }
 
@@ -114,7 +114,7 @@ public static class RoomMapperTestHelper
             ScheduleAddress = new ScheduleAddressModel
             {
                 Address = RoomAddress,
-                RoomNumber = RoomNumber,
+                RoomNumber = RoomNumber
             }
         };
     }
@@ -174,7 +174,7 @@ public static class RoomMapperTestHelper
             ScheduleAddress = new ScheduleAddressModel
             {
                 Address = RoomAddress,
-                RoomNumber = RoomNumber,
+                RoomNumber = RoomNumber
             },
             Layout = ToRoomLayout,
             NetType = ToRoomNetType,
@@ -236,7 +236,7 @@ public static class RoomMapperTestHelper
                 Owner = CreateFilterParameterDto(AscendingSortDirectionDto, Owner),
                 RoomStatuses = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomStatus),
                 FixDeadline = CreateFilterParameterDto(AscendingSortDirectionDto, FixDeadline),
-                Comment = CreateFilterParameterDto(AscendingSortDirectionDto, FixComment),
+                Comment = CreateFilterParameterDto(AscendingSortDirectionDto, FixComment)
                 // AllowBooking = CreateFilterParameterDto(DescendingSortDirectionDto, AllowBooking),
             }
         };
@@ -264,7 +264,7 @@ public static class RoomMapperTestHelper
                 Owner = CreateFilterParameterModel(AscendingSortDirectionModel, Owner),
                 RoomStatuses = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomStatus),
                 FixDeadline = CreateFilterParameterModel(AscendingSortDirectionModel, FixDeadline),
-                Comment = CreateFilterParameterModel(AscendingSortDirectionModel, FixComment),
+                Comment = CreateFilterParameterModel(AscendingSortDirectionModel, FixComment)
             }
         };
     }
