@@ -2,7 +2,7 @@
 
 namespace Rooms.Core.Spreadsheets.ExcelValueTypes;
 
-public interface IExcelValueType
+public interface ISpreadsheetValueType
 {
     void WriteToExcel(IRow row, int colNumber);
 }

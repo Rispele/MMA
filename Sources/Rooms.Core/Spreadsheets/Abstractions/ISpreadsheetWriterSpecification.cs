@@ -1,7 +1,14 @@
-﻿namespace Rooms.Core.Spreadsheets.Abstractions;
+﻿using Rooms.Core.Spreadsheets.ExcelValueTypes;
+using Rooms.Core.Spreadsheets.Specifications;
 
-public interface ISpreadsheetWriterSpecification<in TData>
+namespace Rooms.Core.Spreadsheets.Abstractions;
+
+public interface ISpreadsheetWriterSpecification<TData>
 {
-    public IReadOnlyList<string> ColumnNames { get; }
-    public IEnumerable<ColumnCellData> GetValuesToWrite(TData data);
+    public IReadOnlyList<ColumnSpecification<TData>> ColumnSpecifications { get; }
+    
+    public IEnumerable<ISpreadsheetValueType> GetValuesToWrite(TData data)
+    {
+        return ColumnSpecifications.Select(specification => specification.ValueExtractor(data));
+    }
 }

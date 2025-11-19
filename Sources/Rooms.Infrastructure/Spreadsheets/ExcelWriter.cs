@@ -24,7 +24,7 @@ public static class ExcelWriter
     {
         var row = worksheet.CreateRow(rowNumber);
 
-        specification.ColumnNames.ForEach((name, index) => row.CreateCell(index).SetCellValue(name));
+        specification.ColumnSpecifications.ForEach((columnSpecification, index) => row.CreateCell(index).SetCellValue(columnSpecification.Name));
 
         return NextRow(rowNumber);
     }
@@ -48,7 +48,7 @@ public static class ExcelWriter
 
         writerSpecification
             .GetValuesToWrite(data)
-            .ForEach(mapped => mapped.Value.WriteToExcel(row, mapped.ColumnNumber));
+            .ForEach((mapped, columnNumber) => mapped.WriteToExcel(row, columnNumber));
 
         return NextRow(rowNumber);
     }

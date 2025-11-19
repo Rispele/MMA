@@ -2,4 +2,4 @@
 
 namespace Rooms.Core.Spreadsheets.Abstractions;
 
-public record ColumnCellData(int ColumnNumber, IExcelValueType Value);
+public record ColumnCellData(int ColumnNumber, ISpreadsheetValueType Value);

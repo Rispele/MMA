@@ -7,30 +7,18 @@ namespace Rooms.Core.Spreadsheets.Specifications;
 public struct EquipmentRegistrySpreadsheetSpecification
     : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<EquipmentRegistryExcelExportDto>
 {
-    private static readonly IReadOnlyList<string> ColumnNamesSpecification =
+    private static readonly IReadOnlyList<ColumnSpecification<EquipmentRegistryExcelExportDto>> Specifications =
     [
-        "Аудитория",
-        "Тип оборудования",
-        "Модель оборудования",
-        "Инвентарный номер",
-        "Серийный номер",
-        "Комментарий",
-        "Статус"
+        new(Name: "Аудитория", data => new StringSpreadsheetValueType(data.RoomName)),
+        new(Name: "Тип оборудования", data => new StringSpreadsheetValueType(data.TypeName)),
+        new(Name: "Модель оборудования", data => new StringSpreadsheetValueType(data.SchemaName)),
+        new(Name: "Инвентарный номер", data => new StringSpreadsheetValueType(data.InventoryNumber)),
+        new(Name: "Серийный номер", data => new StringSpreadsheetValueType(data.SerialNumber)),
+        new(Name: "Комментарий", data => new StringSpreadsheetValueType(data.Comment)),
+        new(Name: "Статус", data => new StringSpreadsheetValueType(data.Status))
     ];
 
     public string SheetName => "Оборудование";
     public string FileName => "Реестр оборудования.xlsx";
-
-    public IReadOnlyList<string> ColumnNames => ColumnNamesSpecification;
-
-    public IEnumerable<ColumnCellData> GetValuesToWrite(EquipmentRegistryExcelExportDto data)
-    {
-        yield return new ColumnCellData(ColumnNumber: 0, new StringExcelValueType(data.RoomName));
-        yield return new ColumnCellData(ColumnNumber: 1, new StringExcelValueType(data.TypeName));
-        yield return new ColumnCellData(ColumnNumber: 2, new StringExcelValueType(data.SchemaName));
-        yield return new ColumnCellData(ColumnNumber: 3, new StringExcelValueType(data.InventoryNumber));
-        yield return new ColumnCellData(ColumnNumber: 4, new StringExcelValueType(data.SerialNumber));
-        yield return new ColumnCellData(ColumnNumber: 5, new StringExcelValueType(data.Comment));
-        yield return new ColumnCellData(ColumnNumber: 6, new StringExcelValueType(data.Status));
-    }
+    public IReadOnlyList<ColumnSpecification<EquipmentRegistryExcelExportDto>> ColumnSpecifications => Specifications;
 }

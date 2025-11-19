@@ -7,22 +7,15 @@ namespace Rooms.Core.Spreadsheets.Specifications;
 public struct EquipmentSchemaRegistrySpreadsheetSpecification
     : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<EquipmentSchemaRegistryExcelExportDto>
 {
-    private static readonly IReadOnlyList<string> ColumnNamesSpecification =
+    private static readonly IReadOnlyList<ColumnSpecification<EquipmentSchemaRegistryExcelExportDto>> Specifications =
     [
-        "Наименование",
-        "Тип оборудования",
-        "Параметры"
+        new(Name: "Наименование", data => new StringSpreadsheetValueType(data.Name)),
+        new(Name: "Тип оборудования", data => new StringSpreadsheetValueType(data.TypeName)),
+        new(Name: "Параметры", data => new StringSpreadsheetValueType(data.Parameters)),
     ];
 
     public string SheetName => "Модели оборудования";
     public string FileName => "Модели оборудования.xlsx";
 
-    public IReadOnlyList<string> ColumnNames => ColumnNamesSpecification;
-
-    public IEnumerable<ColumnCellData> GetValuesToWrite(EquipmentSchemaRegistryExcelExportDto data)
-    {
-        yield return new ColumnCellData(ColumnNumber: 0, new StringExcelValueType(data.Name));
-        yield return new ColumnCellData(ColumnNumber: 1, new StringExcelValueType(data.TypeName));
-        yield return new ColumnCellData(ColumnNumber: 2, new StringExcelValueType(data.Parameters));
-    }
+    public IReadOnlyList<ColumnSpecification<EquipmentSchemaRegistryExcelExportDto>> ColumnSpecifications => Specifications;
 }

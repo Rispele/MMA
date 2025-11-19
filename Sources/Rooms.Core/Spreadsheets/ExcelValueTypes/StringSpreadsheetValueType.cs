@@ -2,7 +2,7 @@
 
 namespace Rooms.Core.Spreadsheets.ExcelValueTypes;
 
-public class StringExcelValueType(string? value) : IExcelValueType
+public class StringSpreadsheetValueType(string? value) : ISpreadsheetValueType
 {
     private string? Value { get; } = value;
 
