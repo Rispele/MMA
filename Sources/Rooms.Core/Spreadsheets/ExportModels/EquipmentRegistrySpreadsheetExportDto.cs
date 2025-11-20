@@ -1,6 +1,6 @@
 ﻿namespace Rooms.Core.Spreadsheets.ExportModels;
 
-public class EquipmentRegistrySpreadsheetExportDto
+public record EquipmentRegistrySpreadsheetExportDto
 {
     public required string RoomName { get; set; } = null!;
     public required string TypeName { get; set; } = null!;

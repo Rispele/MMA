@@ -20,7 +20,7 @@ public class SpreadsheetService(
     IRoomService roomService,
     IOperatorDepartmentService operatorDepartmentService)
 {
-    private const int ExportLimit = 10_000;
+    public const int ExportLimit = 10_000;
 
     public async Task<FileExportDto> ExportRoomRegistry(CancellationToken cancellationToken)
     {

@@ -48,11 +48,11 @@ public static class RoomTestHelper
     // private const string OperatorUserId = "OperatorUserId";
     private static readonly DateTime FixDeadline = DateTime.Now;
 
-    public static RoomDto CreateRoomDto()
+    public static RoomDto CreateRoomDto(int roomId = RoomId, int? operatorDepartmentId = null)
     {
         return new RoomDto
         {
-            Id = RoomId,
+            Id = roomId,
             Name = RoomName,
             Description = RoomDescription,
             AllowBooking = AllowBooking,
@@ -63,7 +63,8 @@ public static class RoomTestHelper
             FixInfo = new RoomFixStatusDto(ToRoomStatus, FixDeadline, FixComment),
             Equipments = [],
             Parameters = new RoomParametersDto(ToRoomType, ToRoomLayout, ToRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress)
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
+            OperatorDepartmentId = operatorDepartmentId
         };
     }
 
