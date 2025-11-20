@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rooms.Domain.Models.Equipments;
@@ -16,9 +17,11 @@ using Rooms.Infrastructure.EFCore;
 namespace Rooms.Infrastructure.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    partial class RoomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251120120549_Index")]
+    partial class Index
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

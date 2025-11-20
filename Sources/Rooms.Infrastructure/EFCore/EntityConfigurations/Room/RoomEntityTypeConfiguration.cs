@@ -32,6 +32,9 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
                 b.Property(t => t.Seats);
                 b.Property(t => t.ComputerSeats);
                 b.Property(t => t.HasConditioning);
+
+                b.HasIndex(t => t.Seats);
+                b.HasIndex(t => t.ComputerSeats);
             });
 
         builder.Property(t => t.Attachments).HasColumnType("jsonb");
@@ -48,5 +51,7 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
 
         builder.Ignore(x => x.Equipments);
         builder.HasMany<Domain.Models.Equipments.Equipment>(RoomFieldNames.Equipments).WithOne().HasForeignKey(t => t.RoomId);
+
+        builder.HasIndex(t => t.Name).IsUnique();
     }
 }
