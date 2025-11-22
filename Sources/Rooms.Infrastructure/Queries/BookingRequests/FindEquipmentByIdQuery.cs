@@ -18,7 +18,6 @@ public readonly struct FindBookingRequestByIdQuery :
         var id = BookingRequestId;
 
         return source.BookingRequests
-            .Include(x => x.Rooms)
             .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

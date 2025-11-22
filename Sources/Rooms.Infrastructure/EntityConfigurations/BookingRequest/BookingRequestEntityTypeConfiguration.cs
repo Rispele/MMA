@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Rooms.Domain.Models.BookingRequests;
 
 namespace Rooms.Infrastructure.EntityConfigurations.BookingRequest;
 
@@ -29,9 +28,6 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Do
         builder.Property(x => x.CoordinatorFullName);
         builder.Property(x => x.CreatedAt).HasColumnType("timestamptz");
         builder.Property(x => x.EventName).IsRequired().HasMaxLength(500);
-
-        builder.Ignore(x => x.Rooms);
-        builder.HasMany<Domain.Models.Room.Room>(BookingRequestFieldNames.Rooms).WithOne();
 
         builder.Property(x => x.BookingSchedule).IsRequired().HasColumnType("jsonb");
         builder.Property(x => x.Status).IsRequired();

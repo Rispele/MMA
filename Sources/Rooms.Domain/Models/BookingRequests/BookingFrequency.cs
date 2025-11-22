@@ -8,6 +8,8 @@ namespace Rooms.Domain.Models.BookingRequests;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum BookingFrequency
 {
+    Undefined = 0,
+
     /// <summary>
     /// Ежедневно
     /// </summary>

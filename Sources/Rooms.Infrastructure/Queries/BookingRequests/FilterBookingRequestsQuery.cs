@@ -20,8 +20,7 @@ public class FilterBookingRequestsQuery :
 
     public IAsyncEnumerable<BookingRequest> Apply(RoomsDbContext source)
     {
-        IQueryable<BookingRequest> bookingRequests = source.BookingRequests
-            .Include(x => x.Rooms);
+        IQueryable<BookingRequest> bookingRequests = source.BookingRequests;
 
         bookingRequests = Filters(bookingRequests);
         bookingRequests = Sort(bookingRequests);
