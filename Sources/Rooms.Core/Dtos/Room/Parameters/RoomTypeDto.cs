@@ -2,7 +2,7 @@
 
 namespace Rooms.Core.Dtos.Room.Parameters;
 
-[Newtonsoft.Json.JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomTypeDto
 {
     Unspecified = 0,

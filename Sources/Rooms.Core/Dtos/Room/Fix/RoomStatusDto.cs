@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Rooms.Core.Dtos.Room.Fix;
 
@@ -6,7 +7,13 @@ namespace Rooms.Core.Dtos.Room.Fix;
 public enum RoomStatusDto
 {
     Unspecified = 0,
+
+    [Description("Готова")]
     Ready = 1,
+
+    [Description("Частично готова")]
     PartiallyReady = 2,
-    NotReady = 3
+
+    [Description("Ничего не работает")]
+    Malfunction = 3,
 }

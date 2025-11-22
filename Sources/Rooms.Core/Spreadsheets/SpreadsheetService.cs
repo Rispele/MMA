@@ -31,14 +31,14 @@ public class SpreadsheetService(
             BatchSize = ExportLimit,
             Filter = null
         };
-        
+
         var rooms = await roomService.FilterRooms(request, cancellationToken);
 
         var departmentsToFetch = rooms.Rooms.Select(t => t.OperatorDepartmentId).NotNull().ToArray();
         var operatorDepartments = await operatorDepartmentService.GetOperatorDepartmentsById(departmentsToFetch, cancellationToken);
-        
+
         var operatorDepartmentById = operatorDepartments.ToDictionary(t => t.Id);
-        
+
         var dataToExport = rooms.Rooms
             .Select(room => new RoomRegistrySpreadsheetExportDto
             {
@@ -46,7 +46,7 @@ public class SpreadsheetService(
                 OperatorDepartment = room.OperatorDepartmentId.AsOptional().Map(t => operatorDepartmentById[t]),
             })
             .ToArray();
-        
+
         return exporter.Export<RoomRegistrySpreadsheetSpecification, RoomRegistrySpreadsheetExportDto>(dataToExport, cancellationToken);
     }
 

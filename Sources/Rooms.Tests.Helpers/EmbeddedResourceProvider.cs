@@ -19,7 +19,7 @@ public static class EmbeddedResourceProvider
         var assembly = Assembly.GetCallingAssembly();
 
         var actualResourceName = GetResourceName(assembly, resourceName);
-        
+
         return GetEmbeddedResourceStreamInner(assembly, actualResourceName);
     }
 

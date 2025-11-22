@@ -9,6 +9,15 @@ namespace WebApi.Controllers;
 [Route("webapi/attachments")]
 public class AttachmentsController(IRoomAttachmentsService roomAttachmentsService) : ControllerBase
 {
+    /// <summary>
+    /// Сохранить файл в хранилище
+    /// </summary>
+    /// <param name="id">Идентификатор файла (внутреннее название)</param>
+    /// <param name="fileName">Название файла</param>
+    /// <param name="contentLength">Длина содержимого (заголовок)</param>
+    /// <param name="content">Содержимое файла</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Модель сохраненного файла</returns>
     [HttpPost]
     [Consumes("application/octet-stream")]
     [Produces("application/json")]
@@ -35,6 +44,12 @@ public class AttachmentsController(IRoomAttachmentsService roomAttachmentsServic
         return Ok(response);
     }
 
+    /// <summary>
+    /// Получить временную ссылку на файл-вложение
+    /// </summary>
+    /// <param name="id">Идентификатор файла (внутреннее название)</param>
+    /// <param name="bucket">Название бакета в хранилище</param>
+    /// <returns>Временная ссылка на файл</returns>
     [HttpGet]
     [Produces("application/json")]
     public async Task<IActionResult> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket)

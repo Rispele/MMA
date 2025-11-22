@@ -40,4 +40,6 @@ public static partial class RoomModelsMapper
     public static partial RoomsResponseModel Map(RoomsResponseDto dto);
 
     public static partial RoomModel Map(RoomDto dto);
+
+    public static partial AutocompleteRoomResponseModel Map(AutocompleteRoomResponseDto dto);
 }

@@ -43,7 +43,7 @@ public static class EnumerableExtensions
     {
         return enumerable.Where(t => t is not null);
     }
-    
+
     public static IEnumerable<TValue> NotNull<TValue>(this IEnumerable<TValue?> enumerable)
         where TValue : struct
     {

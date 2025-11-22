@@ -16,7 +16,7 @@ public class SpreadsheetsAssertionHelper
 
         actualSheet.Should().NotBeNull();
         expectedSheet.Should().NotBeNull();
-        
+
         AssertSheets(actualSheet, expectedSheet);
     }
 
@@ -25,7 +25,7 @@ public class SpreadsheetsAssertionHelper
         foreach (var (expectedRow, rowIndex) in expectedSheet.AsEnumerable().Select((row, index) => (row, index)))
         {
             var actualRow = actualSheet.GetRow(rowIndex);
-            
+
             actualRow.Should().NotBeNull();
 
             AssertRows(actualRow, expectedRow);
@@ -37,7 +37,7 @@ public class SpreadsheetsAssertionHelper
         foreach (var (expectedCell, cellIndex) in expectedRow.AsEnumerable().Select((column, index) => (column, index: index)))
         {
             var actualCell = actualRow.GetCell(cellIndex);
-            
+
             actualCell.Should().NotBeNull();
 
             actualCell.StringCellValue.Should().Be(expectedCell.StringCellValue);

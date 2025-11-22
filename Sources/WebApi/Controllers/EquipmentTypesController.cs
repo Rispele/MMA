@@ -13,6 +13,12 @@ namespace WebApi.Controllers;
 [Route("webapi/equipment-types")]
 public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService) : ControllerBase
 {
+    /// <summary>
+    /// Получить записи о типах оборудования
+    /// </summary>
+    /// <param name="model">Модель поиска страницы с записями</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список записей о типах оборудования</returns>
     [HttpGet]
     public async Task<ActionResult<EquipmentTypesResponseModel>> GetEquipmentTypes(
         [ModelBinder(BinderType = typeof(GetEquipmentTypesRequestModelBinder))]
@@ -23,6 +29,12 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
         return Ok(result);
     }
 
+    /// <summary>
+    /// Получить тип оборудования
+    /// </summary>
+    /// <param name="equipmentTypeId">Идентификатор типа оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Тип оборудования</returns>
     [HttpGet("{equipmentTypeId:int}")]
     public async Task<ActionResult<EquipmentTypeModel>> GetEquipmentTypeById(
         int equipmentTypeId,
@@ -32,6 +44,12 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
         return Ok(equipmentType);
     }
 
+    /// <summary>
+    /// Создать тип оборудования
+    /// </summary>
+    /// <param name="model">Модель создания типа оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданный тип оборудования</returns>
     [HttpPost]
     public async Task<IActionResult> CreateEquipmentType(
         [FromBody] CreateEquipmentTypeModel model,
@@ -41,6 +59,14 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
         return Ok(created);
     }
 
+    /// <summary>
+    /// Изменить тип оборудования
+    /// </summary>
+    /// <param name="equipmentTypeId">Идентификатор изменяемого типа оборудования</param>
+    /// <param name="patch">Модель изменений типа оборудования</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Измененный тип оборудования</returns>
+    /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{equipmentTypeId:int}")]
     [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchEquipmentType(
@@ -69,6 +95,11 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
         return Ok(updated);
     }
 
+    /// <summary>
+    /// Экспортировать реестр типов оборудования
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Файл экспортированного реестра</returns>
     [HttpGet("export")]
     public async Task<FileStreamResult> ExportRegistry(CancellationToken cancellationToken)
     {

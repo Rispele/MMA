@@ -49,6 +49,12 @@ public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
     }
 
+    public async Task<IEnumerable<AutocompleteRoomResponseDto>> AutocompleteRoom(string roomName, CancellationToken cancellationToken)
+    {
+        // todo
+        return [new AutocompleteRoomResponseDto { RoomId = 1, ViewRoomName = Guid.NewGuid().ToString() }];
+    }
+
     public async Task<RoomDto> CreateRoom(CreateRoomDto dto, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);

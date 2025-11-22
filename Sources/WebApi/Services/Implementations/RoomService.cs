@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
+using Rooms.Core.Spreadsheets;
 using WebApi.ModelConverters;
+using WebApi.Models.Files;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -8,7 +10,7 @@ using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomService(ICoreRoomService roomService) : IRoomService
+public class RoomService(ICoreRoomService roomService, SpreadsheetService spreadsheetService) : IRoomService
 {
     public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {
@@ -17,6 +19,13 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         var batch = await roomService.FilterRooms(getRoomsRequest, cancellationToken);
 
         return RoomModelsMapper.Map(batch);
+    }
+
+    public async Task<IEnumerable<AutocompleteRoomResponseModel>> AutocompleteRoomAsync(string roomName, CancellationToken cancellationToken)
+    {
+        var rooms = await roomService.AutocompleteRoom(roomName, cancellationToken);
+
+        return rooms.Select(RoomModelsMapper.Map);
     }
 
     public async Task<RoomModel> GetRoomByIdAsync(int id, CancellationToken cancellationToken)
@@ -67,5 +76,16 @@ public class RoomService(ICoreRoomService roomService) : IRoomService
         var patched = await roomService.PatchRoom(roomId, patchRequest, cancellationToken);
 
         return RoomModelsMapper.Map(patched);
+    }
+
+    public async Task<FileExportModel> ExportRoomRegistry(CancellationToken cancellationToken)
+    {
+        var fileData = await spreadsheetService.ExportRoomRegistry(cancellationToken);
+        return new FileExportModel
+        {
+            FileName = fileData.FileName,
+            Content = fileData.Content,
+            ContentType = fileData.ContentType,
+        };
     }
 }

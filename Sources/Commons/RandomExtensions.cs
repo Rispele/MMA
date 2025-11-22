@@ -9,8 +9,8 @@ public static class RandomExtensions
         .Concat(Enumerable.Range('A', 'Z' - 'A' + 1))
         .Concat(Enumerable.Range('0', '9' - '0' + 1))
         .Select(t => (char)t)
-        .ToArray(); 
-    
+        .ToArray();
+
     public static string NextString(this Random random, int length = 10)
     {
         var sb = new StringBuilder();
@@ -18,7 +18,7 @@ public static class RandomExtensions
         {
             sb.Append(Alphabet[random.Next(Alphabet.Length)]);
         }
-        
-        return sb.ToString();   
+
+        return sb.ToString();
     }
 }

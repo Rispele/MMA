@@ -7,7 +7,7 @@ public static class NullableExtensions
     {
         return new Optional<TValue>(value);
     }
-    
+
     public static OptionalStruct<TValue> AsOptional<TValue>(this TValue? value)
         where TValue : struct
     {

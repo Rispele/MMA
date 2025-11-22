@@ -9,11 +9,11 @@ namespace WebApi.Services.Implementations;
 
 public class RoomScheduleService(ICoreRoomScheduleService roomScheduleService) : IRoomScheduleService
 {
-    public async Task<RoomScheduleResponseModel> GetRoomSchedule(GetRoomScheduleModel model)
+    public async Task<RoomScheduleResponseModel> GetRoomSchedule(GetRoomScheduleModel model, CancellationToken cancellationToken)
     {
         var dto = RoomScheduleModelMapper.MapGetRoomScheduleFromModel(model);
 
-        var scheduleResponseDtos = await roomScheduleService.GetRoomScheduleAsync(dto);
+        var scheduleResponseDtos = await roomScheduleService.GetRoomScheduleAsync(dto, cancellationToken);
 
         return new RoomScheduleResponseModel
         {

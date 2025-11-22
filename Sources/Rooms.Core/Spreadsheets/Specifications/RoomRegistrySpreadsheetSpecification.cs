@@ -22,13 +22,12 @@ public struct RoomRegistrySpreadsheetSpecification
         new(Name: "Кондиционирование", data => new StringSpreadsheetValueType(data.Room.Parameters.HasConditioning is true ? "Есть" : "Нет")),
         new(Name: "Операторская", data => new StringSpreadsheetValueType(data.OperatorDepartment?.Name)),
         new(Name: "Операторы", data => new StringSpreadsheetValueType(data.OperatorDepartment?.Operators.Keys.JoinStrings(", "))),
-        new(Name: "Владелец", data => new StringSpreadsheetValueType(data.Room.Owner)), 
+        new(Name: "Владелец", data => new StringSpreadsheetValueType(data.Room.Owner)),
         new(Name: "Степень готовности", data => new StringSpreadsheetValueType(MapFixStatus(data.Room.FixInfo.Status))),
         new(Name: "Комментарий", data => new StringSpreadsheetValueType(data.Room.FixInfo.Comment)),
         new(Name: "Крайний срок исправлений", data => new StringSpreadsheetValueType(data.Room.FixInfo.FixDeadline.ToString())),
-        
     ];
-    
+
     public string SheetName => "Аудитории";
     public string FileName => "Реестр аудиторий.xlsx";
     public IReadOnlyList<ColumnSpecification<RoomRegistrySpreadsheetExportDto>> ColumnSpecifications => Specifications;
@@ -39,7 +38,7 @@ public struct RoomRegistrySpreadsheetSpecification
             RoomStatusDto.Unspecified => "Не указано",
             RoomStatusDto.Ready => "Готова",
             RoomStatusDto.PartiallyReady => "Частично готова",
-            RoomStatusDto.NotReady => "Не готова",
+            RoomStatusDto.Malfunction => "Ничего не работает",
             _ => throw new ArgumentOutOfRangeException(nameof(fixStatus), fixStatus, null)
         };
     }

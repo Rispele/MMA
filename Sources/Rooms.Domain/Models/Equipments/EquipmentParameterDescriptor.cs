@@ -2,6 +2,6 @@
 
 public class EquipmentParameterDescriptor
 {
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
     public bool Required { get; set; }
 }

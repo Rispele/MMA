@@ -7,24 +7,24 @@ namespace Rooms.Infrastructure.Spreadsheets;
 public class ExcelExporter : ISpreadsheetExporter
 {
     private const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    
+
     public FileExportDto Export<TExporterSpecification, TWriterSpecification, TData>(TData[] data, CancellationToken cancellationToken)
         where TExporterSpecification : struct, ISpreadsheetExporterSpecification
         where TWriterSpecification : struct, ISpreadsheetWriterSpecification<TData>
     {
         var exporterSpecification = new TExporterSpecification();
         var writerSpecification = new TWriterSpecification();
-        
+
         return Export(exporterSpecification, writerSpecification, data);
     }
-    
+
     public FileExportDto Export<TData>(
         ISpreadsheetExporterSpecification exporterSpecification,
         ISpreadsheetWriterSpecification<TData> writerSpecification,
         TData[] data)
     {
         var workbook = new XSSFWorkbook();
-        
+
         var worksheet = workbook.CreateSheet(exporterSpecification.SheetName);
 
         ExcelWriter.Write(writerSpecification, worksheet, data);

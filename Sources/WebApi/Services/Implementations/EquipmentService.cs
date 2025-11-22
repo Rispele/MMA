@@ -1,7 +1,7 @@
 ﻿using Rooms.Core.Spreadsheets;
 using WebApi.ModelConverters;
-using WebApi.Models;
 using WebApi.Models.Equipment;
+using WebApi.Models.Files;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
