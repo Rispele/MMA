@@ -43,12 +43,7 @@ public class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEqu
 
         var equipmentType = await context.ApplyQuery(new FindEquipmentTypeByIdQuery(dto.EquipmentTypeId), cancellationToken);
 
-        var equipmentSchema = new EquipmentSchema
-        {
-            Name = dto.Name,
-            ParameterValues = dto.ParameterValues,
-            Type = equipmentType
-        };
+        var equipmentSchema = new EquipmentSchema(dto.Name, equipmentType, dto.ParameterValues);
 
         context.Add(equipmentSchema);
 

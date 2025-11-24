@@ -59,16 +59,14 @@ public static class EquipmentsTestHelper
 
     public static EquipmentSchema CreateEquipmentSchema()
     {
-        return new EquipmentSchema
-        {
-            Id = SchemaId,
-            Name = SchemaName,
-            Type = CreateEquipmentType(),
-            ParameterValues = new Dictionary<string, string>
+        return new EquipmentSchema(
+            SchemaId,
+            SchemaName,
+            CreateEquipmentType(),
+            new Dictionary<string, string>
             {
                 [TypeParameterValue] = TypeParameterValue
-            }
-        };
+            });
     }
 
     public static EquipmentSchemaDto CreateEquipmentSchemaDto()
