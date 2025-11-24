@@ -1,16 +1,51 @@
-﻿namespace Rooms.Domain.Models.Equipments;
+﻿using JetBrains.Annotations;
+using PrivateFieldNamesExposingGenerator.Attributes;
 
+namespace Rooms.Domain.Models.Equipments;
+
+[GenerateFieldNames]
 public class EquipmentType
 {
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public List<EquipmentParameterDescriptor> Parameters { get; set; } = [];
+    private readonly int? id;
+    private List<EquipmentParameterDescriptor> parameters = null!;
 
-    public void Update(
+    [UsedImplicitly(Reason = "For EF Core reasons")]
+    private EquipmentType()
+    {
+    }
+
+    public EquipmentType(
         string name,
         List<EquipmentParameterDescriptor> parameters)
     {
         Name = name;
-        Parameters = parameters;
+        this.parameters = parameters;
     }
+
+    public int Id => id ?? throw new InvalidOperationException("Equipment Type id is not initialized yet");
+    public IReadOnlyList<EquipmentParameterDescriptor> Parameters => parameters;
+    public string Name { get; private set; } = null!;
+
+    public void Update(
+        string name,
+        List<EquipmentParameterDescriptor> parametersToSet)
+    {
+        Name = name;
+        parameters = parametersToSet;
+    }
+
+    #region For Tests
+
+    /// <summary>
+    /// Use only for tests, ORM handles id initialization
+    /// </summary>
+    internal EquipmentType(
+        int id,
+        string name,
+        List<EquipmentParameterDescriptor> parameters) : this(name, parameters)
+    {
+        this.id = id;
+    }
+
+    #endregion
 }

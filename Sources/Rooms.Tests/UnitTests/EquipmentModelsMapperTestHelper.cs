@@ -89,19 +89,12 @@ public static class EquipmentsTestHelper
 
     public static EquipmentType CreateEquipmentType()
     {
-        return new EquipmentType
-        {
-            Id = TypeId,
-            Name = TypeName,
-            Parameters =
+        return new EquipmentType(
+            TypeId,
+            TypeName,
             [
-                new EquipmentParameterDescriptor
-                {
-                    Name = TypeParameterName,
-                    Required = IsTypeParameterRequired
-                }
-            ]
-        };
+                new EquipmentParameterDescriptor(TypeParameterName, IsTypeParameterRequired)
+            ]);
     }
 
     public static EquipmentTypeDto CreateEquipmentTypeDto()

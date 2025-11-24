@@ -43,15 +43,9 @@ public class EquipmentTypeService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var equipmentType = new EquipmentType
-        {
-            Name = dto.Name,
-            Parameters = dto.Parameters.Select(x => new EquipmentParameterDescriptor
-            {
-                Name = x.Name,
-                Required = x.Required
-            }).ToList()
-        };
+        var equipmentType = new EquipmentType(
+            dto.Name,
+            dto.Parameters.Select(descriptor => new EquipmentParameterDescriptor(descriptor.Name, descriptor.Required)).ToList());
 
         context.Add(equipmentType);
 
@@ -70,11 +64,7 @@ public class EquipmentTypeService(
         var equipmentTypeToPatch = await GetEquipmentTypeByIdInner(equipmentTypeId, cancellationToken, context);
 
         var updatedParameters = dto.Parameters
-            .Select(x => new EquipmentParameterDescriptor
-            {
-                Name = x.Name,
-                Required = x.Required
-            })
+            .Select(descriptor => new EquipmentParameterDescriptor(descriptor.Name, descriptor.Required))
             .ToList();
 
         equipmentTypeToPatch.Update(dto.Name, updatedParameters);

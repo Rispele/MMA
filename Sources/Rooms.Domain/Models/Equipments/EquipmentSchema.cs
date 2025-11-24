@@ -7,6 +7,7 @@ namespace Rooms.Domain.Models.Equipments;
 public class EquipmentSchema
 {
     private readonly int? id;
+    private Dictionary<string, string> parameterValues = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private EquipmentSchema()
@@ -20,22 +21,22 @@ public class EquipmentSchema
     {
         Name = name;
         Type = equipmentType;
-        ParameterValues = parameterValues;
+        this.parameterValues = parameterValues;
     }
 
     public int Id => id ?? throw new InvalidOperationException("Equipment id not initialized yet");
-    public string Name { get; private set; }
+    public IReadOnlyDictionary<string, string> ParameterValues => parameterValues;
+    public string Name { get; private set; } = null!;
     public EquipmentType Type { get; private set; } = null!;
-    public Dictionary<string, string> ParameterValues { get; private set; }
 
     public void Update(
         string name,
         EquipmentType equipmentType,
-        Dictionary<string, string> parameterValues)
+        Dictionary<string, string> parameterValuesToSet)
     {
         Name = name;
         Type = equipmentType;
-        ParameterValues = parameterValues;
+        parameterValues = parameterValuesToSet;
     }
 
     #region For Tests

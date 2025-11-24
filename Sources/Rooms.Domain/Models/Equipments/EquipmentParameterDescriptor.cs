@@ -1,7 +1,3 @@
 ﻿namespace Rooms.Domain.Models.Equipments;
 
-public class EquipmentParameterDescriptor
-{
-    public string Name { get; set; } = null!;
-    public bool Required { get; set; }
-}
+public record EquipmentParameterDescriptor(string Name, bool Required);

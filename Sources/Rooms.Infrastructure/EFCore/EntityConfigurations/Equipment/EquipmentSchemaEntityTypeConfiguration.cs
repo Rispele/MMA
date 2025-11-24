@@ -13,6 +13,6 @@ public class EquipmentSchemaEntityTypeConfiguration : IEntityTypeConfiguration<E
         
         builder.Property(x => x.Name).HasMaxLength(50);
         builder.HasOne(x => x.Type).WithMany();
-        builder.Property(x => x.ParameterValues).HasColumnType("jsonb");
+        builder.Property(x => x.ParameterValues).HasField(EquipmentSchemaFieldNames.ParameterValues).HasColumnType("jsonb");
     }
 }
