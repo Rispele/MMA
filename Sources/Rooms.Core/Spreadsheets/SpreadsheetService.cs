@@ -87,7 +87,7 @@ public class SpreadsheetService(
             {
                 Name = schema.Name,
                 TypeName = schema.Type.Name,
-                Parameters = schema.ParameterValues.Select(t => $"{t.Key} = {t.Value}").JoinStrings(Environment.NewLine)
+                Parameters = schema.ParameterValues.Select(pair => $"{pair.Key} = {pair.Value}").JoinStrings(Environment.NewLine)
             })
             .ToArray();
 

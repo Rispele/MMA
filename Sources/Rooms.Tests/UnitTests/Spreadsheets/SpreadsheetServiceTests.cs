@@ -1,9 +1,12 @@
-﻿using FluentAssertions;
+﻿using Commons;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 using Rooms.Core.Dtos.Files;
 using Rooms.Core.Dtos.OperatorDepartments;
 using Rooms.Core.Dtos.Requests.Equipments;
+using Rooms.Core.Dtos.Requests.EquipmentSchemas;
+using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
@@ -113,6 +116,64 @@ public class SpreadsheetServiceTests
         await action.Should().NotThrowAsync();
     }
 
+    [Test]
+    public async Task ExportEquipmentSchemaRegistry_ShouldSuccessfullyExport()
+    {
+        using var spreadsheetServiceContext = SetupSpreadsheetService();
+        var spreadsheetService = spreadsheetServiceContext.SpreadsheetService;
+
+        var equipmentSchema = EquipmentsTestHelper.CreateEquipmentSchemaDto();
+        spreadsheetServiceContext.EquipmentSchemaService
+            .Setup(t => t.FilterEquipmentSchemas(
+                new GetEquipmentSchemasDto(0, SpreadsheetService.ExportLimit, -1, null),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new EquipmentSchemasResponseDto([equipmentSchema], 1, 1));
+
+        var exportModel = new EquipmentSchemaRegistrySpreadsheetExportDto
+        {
+            Name = equipmentSchema.Name,
+            TypeName = equipmentSchema.Type.Name,
+            Parameters = equipmentSchema.ParameterValues.Select(pair => $"{pair.Key} = {pair.Value}").JoinStrings(Environment.NewLine),
+        };
+
+        spreadsheetServiceContext.SetupExporter<
+            EquipmentSchemaRegistrySpreadsheetSpecification,
+            EquipmentSchemaRegistrySpreadsheetSpecification,
+            EquipmentSchemaRegistrySpreadsheetExportDto>([exportModel]);
+
+        var action = () => spreadsheetService.ExportEquipmentSchemaRegistry(CancellationToken.None);
+
+        await action.Should().NotThrowAsync();
+    }
+    
+    [Test]
+    public async Task ExportEquipmentTypeRegistry_ShouldSuccessfullyExport()
+    {
+        using var spreadsheetServiceContext = SetupSpreadsheetService();
+        var spreadsheetService = spreadsheetServiceContext.SpreadsheetService;
+
+        var equipmentType = EquipmentsTestHelper.CreateEquipmentTypeDto();
+        spreadsheetServiceContext.EquipmentTypeService
+            .Setup(t => t.FilterEquipmentTypes(
+                new GetEquipmentTypesDto(0, SpreadsheetService.ExportLimit, -1, null),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new EquipmentTypesResponseDto([equipmentType], 1, 1));
+
+        var exportModel = new EquipmentTypeRegistrySpreadsheetExportDto
+        {
+            Name = equipmentType.Name,
+        };
+
+        spreadsheetServiceContext.SetupExporter<
+            EquipmentTypeRegistrySpreadsheetSpecification,
+            EquipmentTypeRegistrySpreadsheetSpecification,
+            EquipmentTypeRegistrySpreadsheetExportDto>([exportModel]);
+
+        var action = () => spreadsheetService.ExportEquipmentTypeRegistry(CancellationToken.None);
+
+        await action.Should().NotThrowAsync();
+    }
+    
     private static SpreadsheetServiceContext SetupSpreadsheetService()
     {
         var mockRepository = new MockRepository(MockBehavior.Strict);

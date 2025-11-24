@@ -1,8 +1,8 @@
 ﻿namespace Rooms.Core.Dtos.Files;
 
-public class FileExportDto
+public record FileExportDto
 {
-    public required string FileName { get; set; }
-    public required MemoryStream Content { get; set; }
-    public required string ContentType { get; set; }
+    public required string FileName { get; init; }
+    public required Stream Content { get; init; }
+    public required string ContentType { get; init; }
 }
