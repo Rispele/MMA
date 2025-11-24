@@ -3,6 +3,7 @@
 public record FileExportDto
 {
     public required string FileName { get; init; }
-    public required Stream Content { get; init; }
     public required string ContentType { get; init; }
+
+    public required Action Flush { get; init; }
 }

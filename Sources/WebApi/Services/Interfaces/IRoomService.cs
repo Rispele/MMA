@@ -18,5 +18,5 @@ public interface IRoomService
         JsonPatchDocument<PatchRoomModel> request,
         Func<PatchRoomModel, bool> validate,
         CancellationToken cancellationToken);
-    Task<FileExportModel> ExportRoomRegistry(CancellationToken cancellationToken);
+    Task<FileExportModel> ExportRoomRegistry(Stream outputStream, CancellationToken cancellationToken);
 }

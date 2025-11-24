@@ -5,9 +5,13 @@ namespace Rooms.Core.Spreadsheets;
 
 public static class SpreadsheetsExporterExtensions
 {
-    public static FileExportDto Export<TSpecification, TData>(this ISpreadsheetExporter exporter, TData[] data, CancellationToken cancellationToken)
+    public static FileExportDto Export<TSpecification, TData>(
+        this ISpreadsheetExporter exporter, 
+        TData[] data,
+        Stream outputStream,
+        CancellationToken cancellationToken)
         where TSpecification : struct, ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<TData>
     {
-        return exporter.Export<TSpecification, TSpecification, TData>(data, cancellationToken);
+        return exporter.Export<TSpecification, TSpecification, TData>(data, outputStream, cancellationToken);
     }
 }

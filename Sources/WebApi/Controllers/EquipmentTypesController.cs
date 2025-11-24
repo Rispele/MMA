@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using WebApi.ModelBinders;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.EquipmentTypes;
@@ -101,12 +100,11 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
     /// <param name="cancellationToken"></param>
     /// <returns>Файл экспортированного реестра</returns>
     [HttpGet("export")]
-    public async Task<FileStreamResult> ExportRegistry(CancellationToken cancellationToken)
+    public async Task ExportRegistry(CancellationToken cancellationToken)
     {
-        var model = await equipmentTypeService.ExportEquipmentTypeRegistry(cancellationToken);
-        return new FileStreamResult(model.Content, new MediaTypeHeaderValue(model.ContentType))
-        {
-            FileDownloadName = model.FileName
-        };
+        var model = await equipmentTypeService.ExportEquipmentTypeRegistry(Response.BodyWriter.AsStream(), cancellationToken);
+        Response.ContentType = model.ContentType;
+        Response.Headers.Append("Content-Disposition", "attachment; filename=" + Uri.EscapeDataString(model.FileName));
+        model.Flush();
     }
 }

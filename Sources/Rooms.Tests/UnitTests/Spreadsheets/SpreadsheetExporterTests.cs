@@ -26,14 +26,18 @@ public class SpreadsheetExporterTests
     {
         var exporter = new ExcelExporter();
 
-        var result = exporter.Export(exporterSpecification, writerSpecification, data);
+        var outputStream = new MemoryStream();
+        var result = exporter.Export(exporterSpecification, writerSpecification, data, outputStream);
+
+        result.Flush();
+        outputStream.Seek(offset: 0, SeekOrigin.Begin);
 
         result.FileName.Should().Be(exporterSpecification.FileName);
 
         var expectedContent = EmbeddedResourceProvider.GetEmbeddedResourceStream(expectedContentResourceName);
         SpreadsheetsAssertionHelper.AssertWorkbooks(
             exporterSpecification.SheetName,
-            actualSpreadsheet: new XSSFWorkbook(result.Content),
+            actualSpreadsheet: new XSSFWorkbook(outputStream),
             expectedSpreadsheet: new XSSFWorkbook(expectedContent));
 
         // For tests case creation

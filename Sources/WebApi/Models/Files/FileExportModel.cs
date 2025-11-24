@@ -1,8 +1,8 @@
 ﻿namespace WebApi.Models.Files;
 
-public class FileExportModel
+public record FileExportModel
 {
-    public required string FileName { get; set; }
-    public required Stream Content { get; set; }
-    public required string ContentType { get; set; }
+    public required string FileName { get; init; }
+    public required string ContentType { get; init; }
+    public required Action Flush { get; init; }
 }

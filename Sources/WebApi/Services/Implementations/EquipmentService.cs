@@ -65,14 +65,14 @@ public class EquipmentService(
         return EquipmentModelsMapper.MapEquipmentToModel(patched);
     }
 
-    public async Task<FileExportModel> ExportEquipmentRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportModel> ExportEquipmentRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
-        var fileData = await spreadsheetService.ExportEquipmentRegistry(cancellationToken);
+        var fileData = await spreadsheetService.ExportEquipmentRegistry(outputStream, cancellationToken);
         return new FileExportModel
         {
             FileName = fileData.FileName,
-            Content = fileData.Content,
-            ContentType = fileData.ContentType
+            ContentType = fileData.ContentType,
+            Flush = fileData.Flush,
         };
     }
 }

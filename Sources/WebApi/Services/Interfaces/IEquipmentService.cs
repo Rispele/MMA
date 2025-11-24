@@ -17,5 +17,5 @@ public interface IEquipmentService
         PatchEquipmentModel request,
         CancellationToken cancellationToken);
 
-    Task<FileExportModel> ExportEquipmentRegistry(CancellationToken cancellationToken);
+    Task<FileExportModel> ExportEquipmentRegistry(Stream outputStream, CancellationToken cancellationToken);
 }

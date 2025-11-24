@@ -22,7 +22,7 @@ public class SpreadsheetService(
 {
     public const int ExportLimit = 10_000;
 
-    public async Task<FileExportDto> ExportRoomRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportDto> ExportRoomRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
         var request = new GetRoomsRequestDto
         {
@@ -47,10 +47,10 @@ public class SpreadsheetService(
             })
             .ToArray();
 
-        return exporter.Export<RoomRegistrySpreadsheetSpecification, RoomRegistrySpreadsheetExportDto>(dataToExport, cancellationToken);
+        return exporter.Export<RoomRegistrySpreadsheetSpecification, RoomRegistrySpreadsheetExportDto>(dataToExport, outputStream, cancellationToken);
     }
 
-    public async Task<FileExportDto> ExportEquipmentRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportDto> ExportEquipmentRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
         var request = new GetEquipmentsDto(BatchNumber: 0, ExportLimit, AfterEquipmentId: -1, Filter: null);
         var equipments = await equipmentService.FilterEquipments(request, cancellationToken);
@@ -75,10 +75,11 @@ public class SpreadsheetService(
 
         return exporter.Export<EquipmentRegistrySpreadsheetSpecification, EquipmentRegistrySpreadsheetExportDto>(
             dataToExport,
+            outputStream,
             cancellationToken);
     }
 
-    public async Task<FileExportDto> ExportEquipmentSchemaRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportDto> ExportEquipmentSchemaRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
         var request = new GetEquipmentSchemasDto(BatchNumber: 0, ExportLimit, AfterEquipmentSchemaId: -1, Filter: null);
         var types = await equipmentSchemaService.FilterEquipmentSchemas(request, cancellationToken);
@@ -93,10 +94,11 @@ public class SpreadsheetService(
 
         return exporter.Export<EquipmentSchemaRegistrySpreadsheetSpecification, EquipmentSchemaRegistrySpreadsheetExportDto>(
             dataToExport,
+            outputStream,
             cancellationToken);
     }
 
-    public async Task<FileExportDto> ExportEquipmentTypeRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportDto> ExportEquipmentTypeRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
         var request = new GetEquipmentTypesDto(BatchNumber: 0, ExportLimit, AfterEquipmentTypeId: -1, Filter: null);
         var types = await equipmentTypeService.FilterEquipmentTypes(request, cancellationToken);
@@ -109,6 +111,7 @@ public class SpreadsheetService(
 
         return exporter.Export<EquipmentTypeRegistrySpreadsheetSpecification, EquipmentTypeRegistrySpreadsheetExportDto>(
             dataToExport,
+            outputStream,
             cancellationToken);
     }
 }

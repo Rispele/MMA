@@ -78,14 +78,14 @@ public class RoomService(ICoreRoomService roomService, SpreadsheetService spread
         return RoomModelsMapper.Map(patched);
     }
 
-    public async Task<FileExportModel> ExportRoomRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportModel> ExportRoomRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
-        var fileData = await spreadsheetService.ExportRoomRegistry(cancellationToken);
+        var fileData = await spreadsheetService.ExportRoomRegistry(outputStream, cancellationToken);
         return new FileExportModel
         {
             FileName = fileData.FileName,
-            Content = fileData.Content,
             ContentType = fileData.ContentType,
+            Flush = fileData.Flush,
         };
     }
 }

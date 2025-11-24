@@ -69,7 +69,7 @@ public class SpreadsheetServiceTests
             RoomRegistrySpreadsheetSpecification,
             RoomRegistrySpreadsheetExportDto>([exportModel]);
 
-        var action = () => spreadsheetService.ExportRoomRegistry(CancellationToken.None);
+        var action = () => spreadsheetService.ExportRoomRegistry(new MemoryStream(), CancellationToken.None);
 
         await action.Should().NotThrowAsync();
     }
@@ -111,7 +111,7 @@ public class SpreadsheetServiceTests
             EquipmentRegistrySpreadsheetSpecification,
             EquipmentRegistrySpreadsheetExportDto>([exportModel]);
 
-        var action = () => spreadsheetService.ExportEquipmentRegistry(CancellationToken.None);
+        var action = () => spreadsheetService.ExportEquipmentRegistry(new MemoryStream(), CancellationToken.None);
 
         await action.Should().NotThrowAsync();
     }
@@ -141,7 +141,7 @@ public class SpreadsheetServiceTests
             EquipmentSchemaRegistrySpreadsheetSpecification,
             EquipmentSchemaRegistrySpreadsheetExportDto>([exportModel]);
 
-        var action = () => spreadsheetService.ExportEquipmentSchemaRegistry(CancellationToken.None);
+        var action = () => spreadsheetService.ExportEquipmentSchemaRegistry(new MemoryStream(), CancellationToken.None);
 
         await action.Should().NotThrowAsync();
     }
@@ -169,7 +169,7 @@ public class SpreadsheetServiceTests
             EquipmentTypeRegistrySpreadsheetSpecification,
             EquipmentTypeRegistrySpreadsheetExportDto>([exportModel]);
 
-        var action = () => spreadsheetService.ExportEquipmentTypeRegistry(CancellationToken.None);
+        var action = () => spreadsheetService.ExportEquipmentTypeRegistry(new MemoryStream(), CancellationToken.None);
 
         await action.Should().NotThrowAsync();
     }
@@ -227,12 +227,13 @@ public class SpreadsheetServiceTests
                 .Setup(exporter => exporter
                     .Export<TExporterSpecification, TWriterSpecification, TData>(
                         It.Is(data, new ArrayStructuralComparer<TData>()),
+                        It.IsAny<Stream>(),
                         It.IsAny<CancellationToken>()))
                 .Returns(new FileExportDto
                 {
                     FileName = "123",
-                    Content = new MemoryStream(),
-                    ContentType = "123"
+                    ContentType = "123",
+                    Flush = () => {}
                 });
         }
     }

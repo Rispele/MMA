@@ -8,20 +8,24 @@ public class ExcelExporter : ISpreadsheetExporter
 {
     private const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-    public FileExportDto Export<TExporterSpecification, TWriterSpecification, TData>(TData[] data, CancellationToken cancellationToken)
+    public FileExportDto Export<TExporterSpecification, TWriterSpecification, TData>(
+        TData[] data,
+        Stream outputStream,
+        CancellationToken cancellationToken)
         where TExporterSpecification : struct, ISpreadsheetExporterSpecification
         where TWriterSpecification : struct, ISpreadsheetWriterSpecification<TData>
     {
         var exporterSpecification = new TExporterSpecification();
         var writerSpecification = new TWriterSpecification();
 
-        return Export(exporterSpecification, writerSpecification, data);
+        return Export(exporterSpecification, writerSpecification, data, outputStream);
     }
 
     public FileExportDto Export<TData>(
         ISpreadsheetExporterSpecification exporterSpecification,
         ISpreadsheetWriterSpecification<TData> writerSpecification,
-        TData[] data)
+        TData[] data,
+        Stream outputStream)
     {
         var workbook = new XSSFWorkbook();
 
@@ -32,21 +36,8 @@ public class ExcelExporter : ISpreadsheetExporter
         return new FileExportDto
         {
             FileName = exporterSpecification.FileName,
-            Content = ToMemoryStreamAsync(workbook),
-            ContentType = ContentType
+            ContentType = ContentType,
+            Flush = () => workbook.Write(outputStream, leaveOpen: true)
         };
-    }
-
-    private static MemoryStream ToMemoryStreamAsync(XSSFWorkbook workbook)
-    {
-        var memoryStream = new MemoryStream();
-
-        workbook.Write(memoryStream, leaveOpen: true);
-        if (memoryStream.CanSeek)
-        {
-            memoryStream.Seek(offset: 0, SeekOrigin.Begin);
-        }
-
-        return memoryStream;
     }
 }

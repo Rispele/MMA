@@ -64,14 +64,14 @@ public class EquipmentSchemaService(ICoreEquipmentSchemaService equipmentSchemaS
         return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(patched);
     }
 
-    public async Task<FileExportModel> ExportEquipmentSchemaRegistry(CancellationToken cancellationToken)
+    public async Task<FileExportModel> ExportEquipmentSchemaRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
-        var fileData = await spreadsheetService.ExportEquipmentSchemaRegistry(cancellationToken);
+        var fileData = await spreadsheetService.ExportEquipmentSchemaRegistry(outputStream, cancellationToken);
         return new FileExportModel
         {
             FileName = fileData.FileName,
-            Content = fileData.Content,
-            ContentType = fileData.ContentType
+            ContentType = fileData.ContentType,
+            Flush = fileData.Flush,
         };
     }
 }

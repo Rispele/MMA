@@ -10,7 +10,6 @@ using Rooms.Domain.Models.Equipments;
 using Rooms.Domain.Models.Room;
 using Rooms.Domain.Models.Room.Fix;
 using Rooms.Domain.Models.Room.Parameters;
-using Rooms.Infrastructure;
 using Rooms.Infrastructure.EFCore;
 
 #nullable disable
@@ -18,7 +17,7 @@ using Rooms.Infrastructure.EFCore;
 namespace Rooms.Infrastructure.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    [Migration("20251117202655_Initial")]
+    [Migration("20251124133404_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -31,7 +30,7 @@ namespace Rooms.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_layout", new[] { "amphitheater", "flat", "unspecified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_net_type", new[] { "none", "unspecified", "wired", "wired_and_wireless", "wireless" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_status", new[] { "not_ready", "partially_ready", "ready", "unspecified" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_status", new[] { "malfunction", "partially_ready", "ready", "unspecified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "room_type", new[] { "computer", "mixed", "multimedia", "special", "unspecified" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
@@ -220,6 +219,10 @@ namespace Rooms.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_rooms");
 
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_rooms_name");
+
                     b.HasIndex("OperatorDepartmentId")
                         .HasDatabaseName("ix_rooms_operator_department_id");
 
@@ -323,6 +326,12 @@ namespace Rooms.Infrastructure.Migrations
                                 .HasColumnName("parameters_type");
 
                             b1.HasKey("RoomId");
+
+                            b1.HasIndex("ComputerSeats")
+                                .HasDatabaseName("ix_rooms_parameters_computer_seats");
+
+                            b1.HasIndex("Seats")
+                                .HasDatabaseName("ix_rooms_parameters_seats");
 
                             b1.ToTable("rooms");
 

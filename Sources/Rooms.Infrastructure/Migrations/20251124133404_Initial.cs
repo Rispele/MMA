@@ -20,7 +20,7 @@ namespace Rooms.Infrastructure.Migrations
             migrationBuilder.AlterDatabase()
                 .Annotation("Npgsql:Enum:room_layout", "amphitheater,flat,unspecified")
                 .Annotation("Npgsql:Enum:room_net_type", "none,unspecified,wired,wired_and_wireless,wireless")
-                .Annotation("Npgsql:Enum:room_status", "not_ready,partially_ready,ready,unspecified")
+                .Annotation("Npgsql:Enum:room_status", "malfunction,partially_ready,ready,unspecified")
                 .Annotation("Npgsql:Enum:room_type", "computer,mixed,multimedia,special,unspecified");
 
             migrationBuilder.CreateTable(
@@ -154,9 +154,25 @@ namespace Rooms.Infrastructure.Migrations
                 column: "schema_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_rooms_name",
+                table: "rooms",
+                column: "name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "ix_rooms_operator_department_id",
                 table: "rooms",
                 column: "operator_department_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_rooms_parameters_computer_seats",
+                table: "rooms",
+                column: "parameters_computer_seats");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_rooms_parameters_seats",
+                table: "rooms",
+                column: "parameters_seats");
         }
 
         /// <inheritdoc />
