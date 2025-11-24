@@ -62,13 +62,7 @@ public class OperatorDepartmentService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-
-        var operatorDepartment = new OperatorDepartment
-        {
-            Name = dto.Name,
-            Operators = dto.Operators,
-            Contacts = dto.Contacts
-        };
+        var operatorDepartment = new OperatorDepartment(dto.Name, dto.Contacts, dto.Operators);
 
         var enumerable = await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds), cancellationToken);
         await foreach (var room in enumerable.WithCancellation(cancellationToken))

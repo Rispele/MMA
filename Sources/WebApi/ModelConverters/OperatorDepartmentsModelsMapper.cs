@@ -36,7 +36,7 @@ public static partial class OperatorDepartmentsModelsMapper
         {
             Name = entity.Name,
             RoomIds = entity.Rooms.Select(t => t.RoomId).ToArray(),
-            Operators = entity.Operators,
+            Operators = entity.Operators.ToDictionary(),
             Contacts = entity.Contacts
         };
     }

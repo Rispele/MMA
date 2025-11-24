@@ -8,12 +8,21 @@ public class OperatorDepartmentEntityTypeConfiguration : IEntityTypeConfiguratio
 {
     public void Configure(EntityTypeBuilder<OperatorDepartment> builder)
     {
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder.HasKey(department => department.Id);
+        builder.Property(department => department.Id).ValueGeneratedOnAdd();
 
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-        builder.HasMany(x => x.Rooms).WithOne().HasForeignKey(x => x.OperatorDepartmentId);
-        builder.Property(x => x.Operators).HasColumnType("jsonb");
-        builder.Property(x => x.Contacts).HasMaxLength(50);
+        builder.Property(department => department.Name).IsRequired().HasMaxLength(50);
+        builder.Property(department => department.Contacts).HasMaxLength(50);
+
+        builder.Ignore(department => department.Operators);
+        builder.Property(OperatorDepartmentFieldNames.Operators).HasColumnType("jsonb");
+
+        builder
+            .HasMany(department => department.Rooms)
+            .WithOne()
+            .HasForeignKey(department => department.OperatorDepartmentId);
+        builder
+            .Navigation(department => department.Rooms)
+            .HasField(OperatorDepartmentFieldNames.Rooms);
     }
 }

@@ -10,6 +10,8 @@ public class FindRoomByNameQueryHandler : ISingleQueryHandler<FindRoomByNameQuer
     {
         var name = request.Query.Name;
 
-        return request.Context.Rooms.FirstOrDefaultAsync(predicate: t => t.Name == name, cancellationToken);
+        return request.Context.Rooms
+            .Include(room => room.Equipments)
+            .FirstOrDefaultAsync(predicate: t => t.Name == name, cancellationToken);
     }
 }

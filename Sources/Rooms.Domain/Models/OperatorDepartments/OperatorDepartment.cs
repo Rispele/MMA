@@ -1,21 +1,43 @@
-﻿namespace Rooms.Domain.Models.OperatorDepartments;
+﻿using JetBrains.Annotations;
+using PrivateFieldNamesExposingGenerator.Attributes;
 
+namespace Rooms.Domain.Models.OperatorDepartments;
+
+[GenerateFieldNames]
 public class OperatorDepartment
 {
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public List<Room.Room> Rooms { get; } = [];
-    public Dictionary<string, string> Operators { get; set; } = new();
-    public string Contacts { get; set; } = null!;
+    private int? id;
+    private Dictionary<string, string> operators = null!;
+    private readonly List<Room.Room> rooms = null!;
+
+    public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
+    public string Name { get; private set; } = null!;
+    public string Contacts { get; private set; } = null!;
+
+    public IEnumerable<Room.Room> Rooms => rooms;
+    public IReadOnlyDictionary<string, string> Operators => operators;
+
+    [UsedImplicitly(Reason = "For EF Core reasons")]
+    private OperatorDepartment()
+    {
+    }
+
+    public OperatorDepartment(string name, string contacts, Dictionary<string, string> operators)
+    {
+        Name = name;
+        Contacts = contacts;
+        this.operators = operators;
+    }
 
     public void Update(
         string name,
-        Dictionary<string, string> operators,
+        Dictionary<string, string> operatorsToSet,
         string contacts)
     {
         Name = name;
-        Operators = operators;
         Contacts = contacts;
+
+        operators = operatorsToSet;
     }
 
     public void AddRoom(Room.Room room)
@@ -25,11 +47,16 @@ public class OperatorDepartment
             return;
         }
 
-        Rooms.Add(room);
+        rooms.Add(room);
     }
 
     public void RemoveRoom(int roomId)
     {
-        Rooms.RemoveAll(t => t.Id == roomId);
+        rooms.RemoveAll(t => t.Id == roomId);
+    }
+    
+    internal void SetId(int idToSet)
+    {
+        id = idToSet;
     }
 }

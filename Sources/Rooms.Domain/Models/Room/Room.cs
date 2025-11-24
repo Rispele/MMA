@@ -46,7 +46,9 @@ public class Room
     public string? Owner { get; private set; }
     public RoomFixInfo FixInfo { get; private set; } = null!;
     public bool AllowBooking { get; private set; }
-    public IReadOnlyList<Equipment> Equipments => equipments;
+
+    public IEnumerable<Equipment> Equipments => equipments;
+
     public int? OperatorDepartmentId { get; [UsedImplicitly] private set; }
 
     public void Update(

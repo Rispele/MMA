@@ -11,6 +11,7 @@ public class FindRoomsByIdQueryHandler : IQueryHandler<FindRoomsByIdQuery, Room>
         var ids = request.Query.RoomIds;
 
         var response = request.Context.Rooms
+            .Include(room => room.Equipments)
             .Where(predicate: t => ids.Contains(t.Id))
             .AsAsyncEnumerable();
 

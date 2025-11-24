@@ -49,8 +49,11 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
             });
         builder.Property(t => t.AllowBooking).IsRequired();
 
-        builder.Ignore(x => x.Equipments);
-        builder.HasMany<Domain.Models.Equipments.Equipment>(RoomFieldNames.Equipments).WithOne().HasForeignKey(t => t.RoomId);
+        builder
+            .HasMany(t => t.Equipments)
+            .WithOne()
+            .HasForeignKey(t => t.RoomId);
+        builder.Navigation(t => t.Equipments).HasField(RoomFieldNames.Equipments);
 
         builder.HasIndex(t => t.Name).IsUnique();
     }

@@ -1,10 +1,10 @@
 ﻿namespace Rooms.Core.Dtos.OperatorDepartments;
 
-public class OperatorDepartmentDto
+public record OperatorDepartmentDto
 {
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public required OperatorDepartmentRoomInfoDto[] Rooms { get; set; }
-    public Dictionary<string, string> Operators { get; set; } = new();
-    public string Contacts { get; set; } = null!;
+    public required int Id { get; init; }
+    public required string Name { get; init; }
+    public required OperatorDepartmentRoomInfoDto[] Rooms { get; init; }
+    public required IReadOnlyDictionary<string, string> Operators { get; init; }
+    public required string Contacts { get; init; } = null!;
 }
