@@ -71,6 +71,7 @@ public static class RoomTestHelper
     public static Room CreateRoom()
     {
         var room = new Room(
+            RoomId,
             RoomName,
             RoomDescription,
             new RoomParameters
@@ -96,7 +97,6 @@ public static class RoomTestHelper
             },
             AllowBooking);
 
-        room.SetId(RoomId);
         room.SetScheduleAddress(RoomNumber, RoomAddress);
 
         return room;

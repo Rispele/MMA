@@ -6,7 +6,8 @@ namespace Rooms.Domain.Models.OperatorDepartments;
 [GenerateFieldNames]
 public class OperatorDepartment
 {
-    private int? id;
+    private readonly int? id;
+    
     private Dictionary<string, string> operators = null!;
     private readonly List<Room.Room> rooms = null!;
 
@@ -54,9 +55,20 @@ public class OperatorDepartment
     {
         rooms.RemoveAll(t => t.Id == roomId);
     }
-    
-    internal void SetId(int idToSet)
+
+    #region For Tests
+
+    /// <summary>
+    /// Use only for tests, ORM handles id initialization
+    /// </summary>
+    public OperatorDepartment(
+        int id,
+        string name,
+        string contacts,
+        Dictionary<string, string> operators) : this(name, contacts, operators)
     {
-        id = idToSet;
+        this.id = id;
     }
+
+    #endregion
 }

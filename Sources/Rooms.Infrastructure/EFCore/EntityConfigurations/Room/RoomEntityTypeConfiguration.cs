@@ -9,7 +9,10 @@ public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Model
     public void Configure(EntityTypeBuilder<Domain.Models.Room.Room> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder
+            .Property(x => x.Id)
+            .HasField(RoomFieldNames.Id)
+            .ValueGeneratedOnAdd();
 
         builder.Property(x => x.Name).IsRequired().HasMaxLength(64);
         builder.Property(x => x.Description).HasMaxLength(256);

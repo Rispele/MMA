@@ -9,7 +9,7 @@ public class OperatorDepartmentEntityTypeConfiguration : IEntityTypeConfiguratio
     public void Configure(EntityTypeBuilder<OperatorDepartment> builder)
     {
         builder.HasKey(department => department.Id);
-        builder.Property(department => department.Id).ValueGeneratedOnAdd();
+        builder.Property(department => department.Id).HasField(OperatorDepartmentFieldNames.Id).ValueGeneratedOnAdd();
 
         builder.Property(department => department.Name).IsRequired().HasMaxLength(50);
         builder.Property(department => department.Contacts).HasMaxLength(50);

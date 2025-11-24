@@ -10,7 +10,7 @@ namespace Rooms.Domain.Models.Room;
 public class Room
 {
     private readonly List<Equipment> equipments = null!;
-    private int? id;
+    private readonly int? id;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private Room()
@@ -74,8 +74,23 @@ public class Room
         ScheduleAddress = new RoomScheduleAddress(number, address);
     }
 
-    internal void SetId(int idToSet)
+    #region For Tests
+
+    /// <summary>
+    /// Use only for tests, ORM handles id initialization
+    /// </summary>
+    internal Room(
+        int id,
+        string name,
+        string? description,
+        RoomParameters parameters,
+        RoomAttachments attachments,
+        string? owner,
+        RoomFixInfo fixInfo,
+        bool allowBooking) : this(name, description, parameters, attachments, owner, fixInfo, allowBooking)
     {
-        id = idToSet;
+        this.id = id;
     }
+
+    #endregion
 }
