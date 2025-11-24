@@ -10,7 +10,7 @@ using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Tests.Helpers.SDK;
 
-namespace Rooms.Tests.IntegrationTests;
+namespace Rooms.Tests.IntegrationTests.Rooms;
 
 [Parallelizable(ParallelScope.Fixtures)]
 public class RoomServiceTests : ContainerTestBase
