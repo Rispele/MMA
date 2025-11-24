@@ -1,15 +1,44 @@
-﻿namespace Rooms.Domain.Models.Equipments;
+﻿using JetBrains.Annotations;
+using PrivateFieldNamesExposingGenerator.Attributes;
 
+namespace Rooms.Domain.Models.Equipments;
+
+[GenerateFieldNames]
 public class Equipment
 {
-    public int Id { get; set; }
-    public required int RoomId { get; set; }
-    public required EquipmentSchema Schema { get; set; } = null!;
-    public string? InventoryNumber { get; set; }
-    public string? SerialNumber { get; set; }
-    public string? NetworkEquipmentIp { get; set; }
-    public string? Comment { get; set; }
-    public EquipmentStatus? Status { get; set; }
+    private readonly int? id;
+
+    [UsedImplicitly(Reason = "For EF Core reasons")]
+    private Equipment()
+    {
+    }
+
+    public Equipment(
+        int roomId,
+        EquipmentSchema schema,
+        string? inventoryNumber,
+        string? serialNumber,
+        string? networkEquipmentIp,
+        string? comment,
+        EquipmentStatus? status)
+    {
+        RoomId = roomId;
+        Schema = schema;
+        InventoryNumber = inventoryNumber;
+        SerialNumber = serialNumber;
+        NetworkEquipmentIp = networkEquipmentIp;
+        Comment = comment;
+        Status = status;
+    }
+
+    public int Id => id ?? throw new InvalidOperationException("Equipment id not initialized yet");
+    public int RoomId { get; private set; }
+    public EquipmentSchema Schema { get; private set; } = null!;
+    public string? InventoryNumber { get; private set; }
+    public string? SerialNumber { get; private set; }
+    public string? NetworkEquipmentIp { get; private set; }
+    public string? Comment { get; private set; }
+    public EquipmentStatus? Status { get; private set; }
 
     public void Update(
         int roomId,
@@ -28,4 +57,24 @@ public class Equipment
         Comment = comment;
         Status = status;
     }
+
+    #region For Tests
+
+    /// <summary>
+    /// Use only for tests, ORM handles id initialization
+    /// </summary>
+    internal Equipment(
+        int id,
+        int roomId,
+        EquipmentSchema schema,
+        string? inventoryNumber,
+        string? serialNumber,
+        string? networkEquipmentIp,
+        string? comment,
+        EquipmentStatus? status) : this(roomId, schema, inventoryNumber, serialNumber, networkEquipmentIp, comment, status)
+    {
+        this.id = id;
+    }
+
+    #endregion
 }

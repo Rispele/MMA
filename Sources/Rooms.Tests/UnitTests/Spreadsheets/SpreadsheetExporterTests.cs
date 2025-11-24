@@ -42,7 +42,7 @@ public class SpreadsheetExporterTests
 
         // For tests case creation
         // using var stream = File.OpenWrite(path: @"E:\Education\MMA\backend\Sources\Rooms.Tests\UnitTests\Spreadsheets\TestCases\" + expectedContentResourceName);
-        // result.Content.CopyTo(stream);
+        // outputStream.CopyTo(stream);
         // stream.Close();
     }
 
@@ -137,7 +137,8 @@ public class SpreadsheetExporterTests
                 Attachments = new RoomAttachmentsDto(null, null),
                 Description = random.NextString(),
                 Equipments = [],
-                FixInfo = new RoomFixStatusDto((RoomStatusDto)random.Next(4), new DateTime(random.NextInt64(DateTime.MinValue.Ticks, DateTime.MaxValue.Ticks)), random.NextString()),
+                FixInfo = new RoomFixStatusDto((RoomStatusDto)random.Next(4),
+                    new DateTime(random.NextInt64(DateTime.MinValue.Ticks, DateTime.MaxValue.Ticks)), random.NextString()),
                 Id = random.Next(),
                 Name = random.NextString(),
                 OperatorDepartmentId = 0,

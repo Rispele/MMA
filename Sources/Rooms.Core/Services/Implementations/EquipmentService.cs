@@ -44,16 +44,14 @@ public class EquipmentService(IUnitOfWorkFactory unitOfWorkFactory, IRoomService
         var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
         var equipmentSchema = await context.ApplyQuery(new FindEquipmentSchemaByIdQuery(dto.SchemaId), cancellationToken);
 
-        var equipment = new Equipment
-        {
-            RoomId = room.Id,
-            Schema = equipmentSchema,
-            InventoryNumber = dto.InventoryNumber,
-            SerialNumber = dto.SerialNumber,
-            NetworkEquipmentIp = dto.NetworkEquipmentIp,
-            Comment = dto.Comment,
-            Status = dto.Status
-        };
+        var equipment = new Equipment(
+            room.Id,
+            equipmentSchema,
+            dto.InventoryNumber,
+            dto.SerialNumber,
+            dto.NetworkEquipmentIp,
+            dto.Comment,
+            dto.Status);
 
         context.Add(equipment);
 

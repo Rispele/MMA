@@ -26,17 +26,15 @@ public static class EquipmentsTestHelper
 
     public static Equipment CreateEquipment()
     {
-        return new Equipment
-        {
-            Id = EquipmentId,
-            RoomId = RoomId,
-            Schema = CreateEquipmentSchema(),
-            InventoryNumber = InventoryNumber,
-            SerialNumber = SerialNumber,
-            NetworkEquipmentIp = NetworkEquipmentIp,
-            Comment = Comment,
-            Status = Status
-        };
+        return new Equipment(
+            EquipmentId,
+            RoomId,
+            CreateEquipmentSchema(),
+            InventoryNumber,
+            SerialNumber,
+            NetworkEquipmentIp,
+            Comment,
+            Status);
     }
 
 

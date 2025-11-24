@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.EntityConfigurations.Equipment;
 
@@ -8,7 +9,7 @@ public class EquipmentEntityTypeConfiguration : IEntityTypeConfiguration<Domain.
     public void Configure(EntityTypeBuilder<Domain.Models.Equipments.Equipment> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder.Property(x => x.Id).HasField(EquipmentFieldNames.Id).ValueGeneratedOnAdd();
 
         builder.HasOne(x => x.Schema).WithMany();
 
