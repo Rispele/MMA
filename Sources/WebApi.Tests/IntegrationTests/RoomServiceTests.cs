@@ -6,7 +6,7 @@ using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Domain.Exceptions;
-using Rooms.Tests.Helpers.SDK;
+using Rooms.Tests.Helpers.SDK.Rooms;
 using WebApi.ModelConverters;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;

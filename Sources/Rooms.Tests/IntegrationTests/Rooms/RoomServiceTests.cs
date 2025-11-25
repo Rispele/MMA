@@ -8,7 +8,7 @@ using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Tests.Helpers.SDK;
+using Rooms.Tests.Helpers.SDK.Rooms;
 
 namespace Rooms.Tests.IntegrationTests.Rooms;
 

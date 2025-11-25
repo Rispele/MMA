@@ -61,7 +61,7 @@ public class CoreIntegrationsTestsSetup : ISetup
                 .AddLogging(builder => builder.AddConsole())
                 .ConfigureServicesForRoomsInfrastructure()
                 .ConfigureServicesForRoomsCore()
-                .AddScoped<RoomsSdk>())
+                .AddSdkServices())
             .BuildServiceProvider();
     }
 }

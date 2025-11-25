@@ -3,7 +3,7 @@ using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework.Interfaces;
-using Rooms.Tests.Helpers.SDK;
+using Rooms.Tests.Helpers.SDK.Rooms;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
 using WebApi.Startup.ConfigurationExtensions;

@@ -3,7 +3,7 @@ using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
 
-namespace Rooms.Tests.Helpers.SDK;
+namespace Rooms.Tests.Helpers.SDK.Rooms;
 
 public class PatchRoomRequestBuilder
 {

@@ -10,4 +10,13 @@
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="SDK\Equipments\Bindings\" />
+      <Folder Include="SDK\Equipments\Schemas\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoFixture.NUnit3" Version="4.18.1" />
+    </ItemGroup>
+
 </Project>

@@ -32,28 +32,30 @@ public class FilterEquipmentsQueryHandler : IQueryHandler<FilterEquipmentsQuery,
             return equipments;
         }
 
-        // equipments = Filter.RoomName
-        // .AsOptional()
-        // .Apply(equipments,
-        // apply: (queryable, parameter) => { return queryable.Where(t => parameter.Values.Contains(t.Room.Name)); });
+        equipments = filter.Rooms
+            .AsOptional()
+            .Apply(
+                equipments,
+                apply: (queryable, parameter) =>
+                {
+                    return queryable.Where(t => parameter.Values.Contains(t.RoomId));
+                });
 
-        // equipments = Filter.Types
-        // .AsOptional()
-        // .Apply(equipments,
-        // apply: (queryable, parameter) =>
-        // {
-        // var types = parameter.Values.Select(EquipmentTypeDtoMapper.MapEquipmentTypeFromDto);
-        // return queryable.Where(t => types.Contains(t.Schema.Type));
-        // });
+        equipments = filter.Types
+            .AsOptional()
+            .Apply(equipments,
+                apply: (queryable, parameter) =>
+                {
+                    return queryable.Where(t => parameter.Values.Contains(t.Schema.Type.Id));
+                });
 
-        // equipments = Filter.Schemas
-        // .AsOptional()
-        // .Apply(equipments,
-        // apply: (queryable, parameter) =>
-        // {
-        // var types = parameter.Values.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaFromDto);
-        // return queryable.Where(t => types.Contains(t.Schema));
-        // });
+        equipments = filter.Schemas
+            .AsOptional()
+            .Apply(equipments,
+                apply: (queryable, parameter) =>
+                {
+                    return queryable.Where(t => parameter.Values.Contains(t.Schema.Id));
+                });
 
         equipments = filter.InventoryNumber
             .AsOptional()
@@ -97,9 +99,9 @@ public class FilterEquipmentsQueryHandler : IQueryHandler<FilterEquipmentsQuery,
         (SortDirectionDto? direction, Expression<Func<Equipment, object?>> parameter)[]
             sorts =
             [
-                // BuildSort(Filter.RoomName?.SortDirection, parameter: t => t.Room.Name),
-                // BuildSort(Filter.Types?.SortDirection, parameter: t => t.Room.Name),
-                // BuildSort(Filter.Schemas?.SortDirection, parameter: t => t.Room.Name),
+                BuildSort(filter.Rooms?.SortDirection, parameter: t => t.RoomId), // todo: поменять а имя
+                BuildSort(filter.Types?.SortDirection, parameter: t => t.Schema.Type.Name),
+                BuildSort(filter.Schemas?.SortDirection, parameter: t => t.Schema.Name),
                 BuildSort(filter.InventoryNumber?.SortDirection, parameter: t => t.InventoryNumber),
                 BuildSort(filter.SerialNumber?.SortDirection, parameter: t => t.SerialNumber),
                 BuildSort(filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.NetworkEquipmentIp),

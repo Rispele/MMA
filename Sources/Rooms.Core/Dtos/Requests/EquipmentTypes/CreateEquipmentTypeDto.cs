@@ -5,5 +5,5 @@ namespace Rooms.Core.Dtos.Requests.EquipmentTypes;
 public record CreateEquipmentTypeDto
 {
     public required string Name { get; init; }
-    public IEnumerable<EquipmentParameterDescriptorDto> Parameters { get; init; }
+    public EquipmentParameterDescriptorDto[] Parameters { get; init; }
 }

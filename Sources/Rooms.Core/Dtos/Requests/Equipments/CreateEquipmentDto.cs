@@ -6,10 +6,10 @@ namespace Rooms.Core.Dtos.Requests.Equipments;
 public record CreateEquipmentDto
 {
     [Required]
-    public int RoomId { get; set; }
+    public required int RoomId { get; set; }
 
     [Required]
-    public int SchemaId { get; set; }
+    public required int SchemaId { get; set; }
 
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина инвентарного номера должна быть от 1 до 256 символов включительно")]
     public string? InventoryNumber { get; set; }
