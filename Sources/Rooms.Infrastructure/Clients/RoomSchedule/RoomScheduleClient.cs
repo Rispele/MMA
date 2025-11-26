@@ -9,16 +9,14 @@ namespace Rooms.Infrastructure.Clients.RoomSchedule;
 public class RoomScheduleClient : IRoomScheduleClient
 {
     private readonly HttpClient httpClient;
-    private readonly Uri apiGateway;
 
     public RoomScheduleClient(
         HttpClient httpClient,
         RoomScheduleClientSettings settings)
     {
         this.httpClient = httpClient;
-        apiGateway = new Uri(settings.ApiGateway);
         
-        httpClient.BaseAddress = apiGateway;
+        httpClient.BaseAddress = new Uri(settings.ApiGateway);
     }
 
 
