@@ -10,7 +10,7 @@ public record EquipmentsFilterModel
     public FilterMultiParameterModel<int>? Schemas { get; init; }
     public FilterParameterModel<string>? InventoryNumber { get; init; }
     public FilterParameterModel<string>? SerialNumber { get; init; }
-    public FilterParameterModel<string>? NetworkEquipmentIp { get; init; }
-    public FilterParameterModel<string>? Comment { get; init; }
+    // public FilterParameterModel<string>? NetworkEquipmentIp { get; init; }
+    // public FilterParameterModel<string>? Comment { get; init; }
     public FilterMultiParameterModel<EquipmentStatus>? Statuses { get; init; }
 }

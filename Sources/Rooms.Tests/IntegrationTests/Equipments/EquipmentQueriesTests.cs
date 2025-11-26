@@ -10,6 +10,7 @@ using Rooms.Core.Dtos.Room;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.Equipment;
+using Rooms.Domain.Models.Equipments;
 using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests.Equipments;
@@ -81,20 +82,45 @@ public class EquipmentQueriesTests : ContainerTestBase
             });
     }
 
+    [Test]
+    public async Task FilterEquipment_ByStatus_ShouldReturnCorrectly()
+    {
+        var fixture = new Fixture();
+    
+        var context = await GenerateContext(fixture);
+    
+        var expected = fixture.Create<EquipmentStatus>();
+        var notExpected = fixture.Create<EquipmentStatus>();
+        var (expected1, expected2) = await CreateEquipments(
+            fixture,
+            context,
+            expected1EquipmentBuild: composer => composer.With(t => t.Status, expected),
+            expected2EquipmentBuild: composer => composer.With(t => t.Status, expected),
+            notExpectedEquipmentBuilder: composer => composer.With(t => t.Status, notExpected));
+    
+        await Test(
+            expected1.Id,
+            expected2.Id,
+            filterEquipmentsQuery: sortDirection => new EquipmentsFilterDto
+            {
+                Statuses = new FilterMultiParameterDto<EquipmentStatus>([expected], sortDirection)
+            });
+    }
+
     // [Test]
-    // public async Task FilterEquipment_ByStatus_ShouldReturnCorrectly()
+    // public async Task FilterEquipment_ByComment_ShouldReturnCorrectly()
     // {
     //     var fixture = new Fixture();
     //
     //     var context = await GenerateContext(fixture);
     //
-    //     var commentExpected = fixture.Create<string>();
+    //     var expected = fixture.Create<string>();
     //     var commentNotExpected = fixture.Create<string>();
     //     var (expected1, expected2) = await CreateEquipments(
     //         fixture,
     //         context,
-    //         expected1EquipmentBuild: composer => composer.With(t => t., commentExpected),
-    //         expected2EquipmentBuild: composer => composer.With(t => t.InventoryNumber, commentExpected),
+    //         expected1EquipmentBuild: composer => composer.With(t => t.Comment, expected + "1"),
+    //         expected2EquipmentBuild: composer => composer.With(t => t.Comment, expected + "2"),
     //         notExpectedEquipmentBuilder: composer => composer.With(t => t.Comment, commentNotExpected));
     //
     //     await Test(
@@ -102,34 +128,9 @@ public class EquipmentQueriesTests : ContainerTestBase
     //         expected2.Id,
     //         filterEquipmentsQuery: sortDirection => new EquipmentsFilterDto
     //         {
-    //             Comment = new FilterParameterDto<string>(commentExpected, sortDirection)
+    //             Comment = new FilterParameterDto<string>(expected, sortDirection)
     //         });
     // }
-
-    [Test]
-    public async Task FilterEquipment_ByComment_ShouldReturnCorrectly()
-    {
-        var fixture = new Fixture();
-
-        var context = await GenerateContext(fixture);
-
-        var expected = fixture.Create<string>();
-        var commentNotExpected = fixture.Create<string>();
-        var (expected1, expected2) = await CreateEquipments(
-            fixture,
-            context,
-            expected1EquipmentBuild: composer => composer.With(t => t.Comment, expected + "1"),
-            expected2EquipmentBuild: composer => composer.With(t => t.Comment, expected + "2"),
-            notExpectedEquipmentBuilder: composer => composer.With(t => t.Comment, commentNotExpected));
-
-        await Test(
-            expected1.Id,
-            expected2.Id,
-            filterEquipmentsQuery: sortDirection => new EquipmentsFilterDto
-            {
-                Comment = new FilterParameterDto<string>(expected, sortDirection)
-            });
-    }
 
     private async Task<(EquipmentDto expected1, EquipmentDto expected2)> CreateEquipments(
         Fixture fixture,

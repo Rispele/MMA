@@ -83,8 +83,8 @@ public static class EquipmentModelsMapperTestHelper
                 Schemas = new FilterMultiParameterModel<int> { Values = [SchemaId] },
                 InventoryNumber = new FilterParameterModel<string> { Value = InventoryNumber },
                 SerialNumber = new FilterParameterModel<string> { Value = SerialNumber },
-                NetworkEquipmentIp = new FilterParameterModel<string> { Value = NetworkEquipmentIp },
-                Comment = new FilterParameterModel<string> { Value = Comment },
+                // NetworkEquipmentIp = new FilterParameterModel<string> { Value = NetworkEquipmentIp },
+                // Comment = new FilterParameterModel<string> { Value = Comment },
                 Statuses = new FilterMultiParameterModel<EquipmentStatus> { Values = [Status] }
             }
         };
@@ -146,8 +146,8 @@ public static class EquipmentModelsMapperTestHelper
                 Schemas = new FilterMultiParameterDto<int>([SchemaId], SortDirectionDto.None),
                 InventoryNumber = new FilterParameterDto<string>(InventoryNumber, SortDirectionDto.None),
                 SerialNumber = new FilterParameterDto<string>(SerialNumber, SortDirectionDto.None),
-                NetworkEquipmentIp = new FilterParameterDto<string>(NetworkEquipmentIp, SortDirectionDto.None),
-                Comment = new FilterParameterDto<string>(Comment, SortDirectionDto.None),
+                // NetworkEquipmentIp = new FilterParameterDto<string>(NetworkEquipmentIp, SortDirectionDto.None),
+                // Comment = new FilterParameterDto<string>(Comment, SortDirectionDto.None),
                 Statuses = new FilterMultiParameterDto<EquipmentStatus>([Status], SortDirectionDto.None)
             });
     }
