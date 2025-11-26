@@ -24,8 +24,4 @@
         <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj"/>
     </ItemGroup>
 
-    <PropertyGroup>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
-
 </Project>
