@@ -6,7 +6,7 @@ using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
-using Rooms.Core.Services.Interfaces;
+using Rooms.Core.Services.Rooms.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Tests.Helpers.SDK.Rooms;
 

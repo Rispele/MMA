@@ -10,11 +10,13 @@ using Rooms.Core.Dtos.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
-using Rooms.Core.Services.Interfaces;
-using Rooms.Core.Spreadsheets;
-using Rooms.Core.Spreadsheets.Abstractions;
-using Rooms.Core.Spreadsheets.ExportModels;
-using Rooms.Core.Spreadsheets.Specifications;
+using Rooms.Core.Services.Equipments.Interfaces;
+using Rooms.Core.Services.OperatorDepartments.Interfaces;
+using Rooms.Core.Services.Rooms.Interfaces;
+using Rooms.Core.Services.Spreadsheets;
+using Rooms.Core.Services.Spreadsheets.Abstractions;
+using Rooms.Core.Services.Spreadsheets.ExportModels;
+using Rooms.Core.Services.Spreadsheets.Specifications;
 
 namespace Rooms.Tests.UnitTests.Spreadsheets;
 

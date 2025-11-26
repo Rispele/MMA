@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
-using Rooms.Core.Spreadsheets;
+using Rooms.Core.Services.Spreadsheets;
 using WebApi.ModelConverters;
 using WebApi.Models.Files;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
 using WebApi.Services.Interfaces;
-using ICoreRoomService = Rooms.Core.Services.Interfaces.IRoomService;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomService(ICoreRoomService roomService, SpreadsheetService spreadsheetService) : IRoomService
+public class RoomService(Rooms.Core.Services.Rooms.Interfaces.IRoomService roomService, SpreadsheetService spreadsheetService) : IRoomService
 {
     public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {

@@ -3,11 +3,10 @@ using WebApi.Models.InstituteResponsible;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
-using ICoreInstituteResponsibleService = Rooms.Core.Services.Interfaces.IInstituteResponsibleService;
 
 namespace WebApi.Services.Implementations;
 
-public class InstituteResponsibleService(ICoreInstituteResponsibleService instituteResponsibleService) : IInstituteResponsibleService
+public class InstituteResponsibleService(Rooms.Core.Services.InstituteResponsibles.Interfaces.IInstituteResponsibleService instituteResponsibleService) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(
         GetInstituteResponsibleModel model,

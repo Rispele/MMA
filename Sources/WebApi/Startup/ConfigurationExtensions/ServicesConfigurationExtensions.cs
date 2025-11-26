@@ -1,23 +1,9 @@
 ﻿using System.Reflection;
 using Rooms.Core.ServicesConfiguration;
 using Rooms.Infrastructure.ServicesConfiguration;
+using WebApi.Services.Implementations;
+using WebApi.Services.Interfaces;
 using WebApi.Startup.InputFormatters;
-using IRoomService = WebApi.Services.Interfaces.IRoomService;
-using RoomService = WebApi.Services.Implementations.RoomService;
-using IEquipmentService = WebApi.Services.Interfaces.IEquipmentService;
-using EquipmentService = WebApi.Services.Implementations.EquipmentService;
-using IEquipmentTypeService = WebApi.Services.Interfaces.IEquipmentTypeService;
-using EquipmentTypeService = WebApi.Services.Implementations.EquipmentTypeService;
-using IEquipmentSchemaService = WebApi.Services.Interfaces.IEquipmentSchemaService;
-using EquipmentSchemaService = WebApi.Services.Implementations.EquipmentSchemaService;
-using IOperatorDepartmentService = WebApi.Services.Interfaces.IOperatorDepartmentService;
-using OperatorDepartmentService = WebApi.Services.Implementations.OperatorDepartmentService;
-using IInstituteResponsibleService = WebApi.Services.Interfaces.IInstituteResponsibleService;
-using InstituteResponsibleService = WebApi.Services.Implementations.InstituteResponsibleService;
-using IRoomScheduleService = WebApi.Services.Interfaces.IRoomScheduleService;
-using RoomScheduleService = WebApi.Services.Implementations.RoomScheduleService;
-using IBookingRequestService = WebApi.Services.Interfaces.IBookingRequestService;
-using BookingRequestService = WebApi.Services.Implementations.BookingRequestService;
 
 
 namespace WebApi.Startup.ConfigurationExtensions;

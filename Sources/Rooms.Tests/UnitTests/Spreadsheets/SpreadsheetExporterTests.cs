@@ -6,9 +6,9 @@ using Rooms.Core.Dtos.OperatorDepartments;
 using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
-using Rooms.Core.Spreadsheets.Abstractions;
-using Rooms.Core.Spreadsheets.ExportModels;
-using Rooms.Core.Spreadsheets.Specifications;
+using Rooms.Core.Services.Spreadsheets.Abstractions;
+using Rooms.Core.Services.Spreadsheets.ExportModels;
+using Rooms.Core.Services.Spreadsheets.Specifications;
 using Rooms.Infrastructure.Spreadsheets;
 using Rooms.Tests.Helpers;
 

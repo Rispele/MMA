@@ -3,11 +3,10 @@ using WebApi.Models.Requests.RoomSchedule;
 using WebApi.Models.Responses;
 using WebApi.Models.RoomSchedule;
 using WebApi.Services.Interfaces;
-using ICoreRoomScheduleService = Rooms.Core.Services.Interfaces.IRoomScheduleService;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomScheduleService(ICoreRoomScheduleService roomScheduleService) : IRoomScheduleService
+public class RoomScheduleService(Rooms.Core.Services.Rooms.Interfaces.IRoomScheduleService roomScheduleService) : IRoomScheduleService
 {
     public async Task<RoomScheduleResponseModel> GetRoomSchedule(GetRoomScheduleModel model, CancellationToken cancellationToken)
     {

@@ -1,7 +1,7 @@
 ﻿using Commons;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
-using Rooms.Core.Spreadsheets.Abstractions;
+using Rooms.Core.Services.Spreadsheets.Abstractions;
 
 namespace Rooms.Infrastructure.Spreadsheets;
 

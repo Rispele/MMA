@@ -3,11 +3,10 @@ using WebApi.Models.BookingRequest;
 using WebApi.Models.Requests.BookingRequests;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
-using ICoreBookingRequestService = Rooms.Core.Services.Interfaces.IBookingRequestService;
 
 namespace WebApi.Services.Implementations;
 
-public class BookingRequestService(ICoreBookingRequestService bookingRequestService) : IBookingRequestService
+public class BookingRequestService(Rooms.Core.Services.BookingRequests.Interfaces.IBookingRequestService bookingRequestService) : IBookingRequestService
 {
     public async Task<BookingRequestsResponseModel> GetBookingRequestsAsync(
         GetBookingRequestsModel model,

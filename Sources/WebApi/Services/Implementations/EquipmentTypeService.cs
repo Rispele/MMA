@@ -1,16 +1,15 @@
-﻿using Rooms.Core.Spreadsheets;
+﻿using Rooms.Core.Services.Spreadsheets;
 using WebApi.ModelConverters;
 using WebApi.Models.Equipment;
 using WebApi.Models.Files;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
-using ICoreEquipmentTypeService = Rooms.Core.Services.Interfaces.IEquipmentTypeService;
 
 namespace WebApi.Services.Implementations;
 
 public class EquipmentTypeService(
-    ICoreEquipmentTypeService equipmentTypeService,
+    Rooms.Core.Services.Equipments.Interfaces.IEquipmentTypeService equipmentTypeService,
     SpreadsheetService spreadsheetService) : IEquipmentTypeService
 {
     public async Task<EquipmentTypesResponseModel> GetEquipmentTypesAsync(

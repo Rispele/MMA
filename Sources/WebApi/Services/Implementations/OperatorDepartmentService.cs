@@ -2,11 +2,11 @@
 using WebApi.Models.OperatorDepartments;
 using WebApi.Models.Requests.OperatorDepartments;
 using WebApi.Models.Responses;
-using IOperatorDepartmentService = WebApi.Services.Interfaces.IOperatorDepartmentService;
+using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class OperatorDepartmentService(Rooms.Core.Services.Interfaces.IOperatorDepartmentService operatorDepartmentService)
+public class OperatorDepartmentService(Rooms.Core.Services.OperatorDepartments.Interfaces.IOperatorDepartmentService operatorDepartmentService)
     : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentsResponseModel> GetOperatorDepartmentsAsync(

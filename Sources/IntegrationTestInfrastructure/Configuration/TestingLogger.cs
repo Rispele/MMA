@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using NUnit.Framework.Internal;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace IntegrationTestInfrastructure.Configuration;
 
-public class TestingLogger : ILogger
+public class TestingLogger : Microsoft.Extensions.Logging.ILogger
 {
     public void Log<TState>(
         LogLevel logLevel,
