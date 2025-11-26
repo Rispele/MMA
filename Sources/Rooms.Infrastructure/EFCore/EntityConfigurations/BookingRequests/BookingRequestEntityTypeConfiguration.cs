@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Rooms.Domain.Models.BookingRequests;
 
-namespace Rooms.Infrastructure.EFCore.EntityConfigurations.BookingRequest;
+namespace Rooms.Infrastructure.EFCore.EntityConfigurations.BookingRequests;
 
-public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.BookingRequests.BookingRequest>
+public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<BookingRequest>
 {
-    public void Configure(EntityTypeBuilder<Domain.Models.BookingRequests.BookingRequest> builder)
+    public void Configure(EntityTypeBuilder<BookingRequest> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -33,5 +34,8 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Do
         builder.Property(x => x.Status).IsRequired();
         builder.Property(x => x.ModeratorComment).HasMaxLength(500);
         builder.Property(x => x.BookingScheduleStatus);
+
+        builder.HasMany(t => t.Rooms).WithMany();
+        builder.Navigation(t => t.Rooms).HasField(BookingRequestFieldNames.Rooms);
     }
 }

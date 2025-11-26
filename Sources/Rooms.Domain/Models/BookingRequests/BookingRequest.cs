@@ -6,30 +6,13 @@ namespace Rooms.Domain.Models.BookingRequests;
 [GenerateFieldNames]
 public class BookingRequest
 {
-    private int? id = null;
+    private readonly int? id = null;
     private readonly List<Rooms.Room> rooms = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()
     {
     }
-
-    public int Id => id ?? throw new InvalidOperationException();
-    public BookingCreator Creator { get; set; } = null!;
-    public string Reason { get; set; } = null!;
-    public int ParticipantsCount { get; set; }
-    public bool TechEmployeeRequired { get; set; }
-    public string EventHostFullName { get; set; } = null!;
-    public BookingEventType EventType { get; set; }
-    public string? CoordinatorInstitute { get; set; }
-    public string? CoordinatorFullName { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public string EventName { get; set; } = null!;
-    public IReadOnlyList<Rooms.Room> Rooms => rooms;
-    public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
-    public BookingStatus Status { get; set; }
-    public string? ModeratorComment { get; set; } = null!;
-    public BookingScheduleStatus? BookingScheduleStatus { get; set; }
 
     public BookingRequest(
         BookingCreator creator,
@@ -62,6 +45,23 @@ public class BookingRequest
         ModeratorComment = moderatorComment;
         BookingScheduleStatus = bookingScheduleStatus;
     }
+
+    public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
+    public BookingCreator Creator { get; set; } = null!;
+    public string Reason { get; set; } = null!;
+    public int ParticipantsCount { get; set; }
+    public bool TechEmployeeRequired { get; set; }
+    public string EventHostFullName { get; set; } = null!;
+    public BookingEventType EventType { get; set; }
+    public string? CoordinatorInstitute { get; set; }
+    public string? CoordinatorFullName { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public string EventName { get; set; } = null!;
+    public IEnumerable<Rooms.Room> Rooms => rooms;
+    public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
+    public BookingStatus Status { get; set; }
+    public string? ModeratorComment { get; set; } = null!;
+    public BookingScheduleStatus? BookingScheduleStatus { get; set; }
 
     public void Update(
         BookingCreator creator,
