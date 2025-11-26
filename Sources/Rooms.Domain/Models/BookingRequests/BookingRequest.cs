@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
+using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Domain.Models.BookingRequests;
 
@@ -7,7 +8,7 @@ namespace Rooms.Domain.Models.BookingRequests;
 public class BookingRequest
 {
     private readonly int? id = null;
-    private readonly List<Rooms.Room> rooms = null!;
+    private readonly List<Room> rooms = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()
@@ -28,7 +29,8 @@ public class BookingRequest
         IEnumerable<BookingTime> bookingSchedule,
         BookingStatus status,
         string? moderatorComment,
-        BookingScheduleStatus? bookingScheduleStatus)
+        BookingScheduleStatus? bookingScheduleStatus,
+        List<Room> rooms)
     {
         Creator = creator;
         Reason = reason;
@@ -44,6 +46,7 @@ public class BookingRequest
         Status = status;
         ModeratorComment = moderatorComment;
         BookingScheduleStatus = bookingScheduleStatus;
+        this.rooms = rooms;
     }
 
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
@@ -57,7 +60,7 @@ public class BookingRequest
     public string? CoordinatorFullName { get; set; }
     public DateTime CreatedAt { get; set; }
     public string EventName { get; set; } = null!;
-    public IEnumerable<Rooms.Room> Rooms => rooms;
+    public IEnumerable<Room> Rooms => rooms;
     public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
     public BookingStatus Status { get; set; }
     public string? ModeratorComment { get; set; } = null!;

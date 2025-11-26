@@ -6,6 +6,7 @@ using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.BookingRequest;
+using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.BookingRequests;
@@ -52,7 +53,7 @@ public class BookingRequestService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var rooms = await roomService.FindRoomByIds(dto.RoomIds.ToArray(), cancellationToken);
+        var rooms = await (await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds.ToArray()), cancellationToken)).ToListAsync(cancellationToken);
 
         var bookingRequest = new BookingRequest(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
@@ -68,7 +69,8 @@ public class BookingRequestService(
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
             dto.Status,
             dto.ModeratorComment,
-            dto.BookingScheduleStatus);
+            dto.BookingScheduleStatus,
+            rooms);
 
         context.Add(bookingRequest);
 
