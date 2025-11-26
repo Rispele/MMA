@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Rooms.Domain.Models.Room.Parameters;
+namespace Rooms.Domain.Models.Rooms.Parameters;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomNetType

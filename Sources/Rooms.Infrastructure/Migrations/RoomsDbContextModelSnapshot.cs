@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rooms.Domain.Models.Equipments;
-using Rooms.Domain.Models.Room;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
+using Rooms.Domain.Models.Rooms;
+using Rooms.Domain.Models.Rooms.Fix;
+using Rooms.Domain.Models.Rooms.Parameters;
 using Rooms.Infrastructure.EFCore;
 
 #nullable disable

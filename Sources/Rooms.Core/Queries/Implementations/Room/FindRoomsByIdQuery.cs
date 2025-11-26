@@ -2,4 +2,4 @@
 
 namespace Rooms.Core.Queries.Implementations.Room;
 
-public sealed record FindRoomsByIdQuery(IEnumerable<int> RoomIds) : IQuerySpecification<FindRoomsByIdQuery, Domain.Models.Room.Room>;
+public sealed record FindRoomsByIdQuery(IEnumerable<int> RoomIds) : IQuerySpecification<FindRoomsByIdQuery, Domain.Models.Rooms.Room>;

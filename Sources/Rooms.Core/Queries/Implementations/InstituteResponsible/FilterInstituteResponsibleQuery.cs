@@ -8,4 +8,4 @@ public sealed record FilterInstituteResponsibleQuery(
     int BatchNumber,
     int AfterInstituteResponsibleId,
     InstituteResponsibleFilterDto? Filter)
-    : IQuerySpecification<FilterInstituteResponsibleQuery, Domain.Models.InstituteResponsible.InstituteResponsible>;
+    : IQuerySpecification<FilterInstituteResponsibleQuery, Domain.Models.InstituteResponsibles.InstituteResponsible>;

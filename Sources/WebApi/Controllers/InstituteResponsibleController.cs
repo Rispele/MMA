@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Rooms.Domain.Models.InstituteResponsible;
+using Rooms.Domain.Models.InstituteResponsibles;
 using WebApi.ModelBinders;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Queries.Implementations.Room;
-using Rooms.Domain.Models.Room;
+using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 

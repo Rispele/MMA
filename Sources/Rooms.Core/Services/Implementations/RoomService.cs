@@ -8,9 +8,9 @@ using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.Room;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
+using Rooms.Domain.Models.Rooms;
+using Rooms.Domain.Models.Rooms.Fix;
+using Rooms.Domain.Models.Rooms.Parameters;
 
 namespace Rooms.Core.Services.Implementations;
 

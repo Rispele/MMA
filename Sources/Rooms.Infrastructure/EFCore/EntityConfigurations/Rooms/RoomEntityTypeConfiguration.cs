@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Rooms.Domain.Models.Room;
+using Rooms.Domain.Models.Rooms;
 
-namespace Rooms.Infrastructure.EFCore.EntityConfigurations.Room;
+namespace Rooms.Infrastructure.EFCore.EntityConfigurations.Rooms;
 
-public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Models.Room.Room>
+public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
 {
-    public void Configure(EntityTypeBuilder<Domain.Models.Room.Room> builder)
+    public void Configure(EntityTypeBuilder<Room> builder)
     {
         builder.HasKey(x => x.Id);
         builder

@@ -9,7 +9,7 @@ using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.InstituteResponsible;
 using Rooms.Core.Services.Interfaces;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.InstituteResponsible;
+using Rooms.Domain.Models.InstituteResponsibles;
 
 namespace Rooms.Core.Services.Implementations;
 
@@ -59,11 +59,9 @@ public class InstituteResponsibleService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var instituteResponsible = new InstituteResponsible
-        {
-            Institute = dto.Institute,
-            Responsible = dto.Responsible
-        };
+        var instituteResponsible = new InstituteResponsible(
+            dto.Institute,
+            dto.Responsible);
 
         context.Add(instituteResponsible);
 

@@ -9,13 +9,13 @@ public class OperatorDepartment
     private readonly int? id;
     
     private Dictionary<string, string> operators = null!;
-    private readonly List<Room.Room> rooms = null!;
+    private readonly List<Rooms.Room> rooms = null!;
 
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
     public string Name { get; private set; } = null!;
     public string Contacts { get; private set; } = null!;
 
-    public IEnumerable<Room.Room> Rooms => rooms;
+    public IEnumerable<Rooms.Room> Rooms => rooms;
     public IReadOnlyDictionary<string, string> Operators => operators;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
@@ -41,7 +41,7 @@ public class OperatorDepartment
         operators = operatorsToSet;
     }
 
-    public void AddRoom(Room.Room room)
+    public void AddRoom(Rooms.Room room)
     {
         if (Rooms.Any(r => r.Id == room.Id))
         {

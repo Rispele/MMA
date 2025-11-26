@@ -1,6 +1,6 @@
 ﻿using Rooms.Domain.Models.File;
 
-namespace Rooms.Domain.Models.Room;
+namespace Rooms.Domain.Models.Rooms;
 
 public class RoomAttachments
 {

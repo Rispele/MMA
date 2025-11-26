@@ -1,3 +1,3 @@
-﻿namespace Rooms.Domain.Models.Room;
+﻿namespace Rooms.Domain.Models.Rooms;
 
 public record RoomScheduleAddress(string RoomNumber, string Address);

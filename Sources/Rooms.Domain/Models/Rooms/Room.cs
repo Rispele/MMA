@@ -1,10 +1,10 @@
 ﻿using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 using Rooms.Domain.Models.Equipments;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
+using Rooms.Domain.Models.Rooms.Fix;
+using Rooms.Domain.Models.Rooms.Parameters;
 
-namespace Rooms.Domain.Models.Room;
+namespace Rooms.Domain.Models.Rooms;
 
 [GenerateFieldNames]
 public class Room

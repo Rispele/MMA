@@ -1,6 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
 using Rooms.Core.Dtos.InstituteResponsible;
-using Rooms.Domain.Models.InstituteResponsible;
+using Rooms.Domain.Models.InstituteResponsibles;
 
 namespace Rooms.Core.DtoMappers;
 

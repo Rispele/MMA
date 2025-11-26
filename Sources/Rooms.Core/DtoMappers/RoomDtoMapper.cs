@@ -2,9 +2,9 @@
 using Rooms.Core.Dtos.Room;
 using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
-using Rooms.Domain.Models.Room;
-using Rooms.Domain.Models.Room.Fix;
-using Rooms.Domain.Models.Room.Parameters;
+using Rooms.Domain.Models.Rooms;
+using Rooms.Domain.Models.Rooms.Fix;
+using Rooms.Domain.Models.Rooms.Parameters;
 
 namespace Rooms.Core.DtoMappers;
 

@@ -5,7 +5,7 @@ using Rooms.Core.DtoMappers;
 using Rooms.Core.Dtos.Requests.Filtering;
 using Rooms.Core.Dtos.Requests.Rooms;
 using Rooms.Core.Queries.Implementations.Room;
-using Rooms.Domain.Models.Room;
+using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 

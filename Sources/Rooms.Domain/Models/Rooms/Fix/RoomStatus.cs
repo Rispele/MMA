@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Rooms.Domain.Models.Room.Fix;
+namespace Rooms.Domain.Models.Rooms.Fix;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomStatus
