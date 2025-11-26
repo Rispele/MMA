@@ -69,17 +69,17 @@ public class FilterEquipmentsQueryHandler : IQueryHandler<FilterEquipmentsQuery,
                 apply: (queryable, parameter) =>
                     queryable.Where(t => t.SerialNumber != null && t.SerialNumber.Contains(parameter.Value)));
 
-        equipments = filter.NetworkEquipmentIp
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) => queryable.Where(t =>
-                    t.NetworkEquipmentIp != null && t.NetworkEquipmentIp.Contains(parameter.Value)));
-
-        equipments = filter.Comment
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                    queryable.Where(t => t.Comment != null && t.Comment.Contains(parameter.Value)));
+        // equipments = filter.NetworkEquipmentIp
+        //     .AsOptional()
+        //     .Apply(equipments,
+        //         apply: (queryable, parameter) => queryable.Where(t =>
+        //             t.NetworkEquipmentIp != null && t.NetworkEquipmentIp.Contains(parameter.Value)));
+        //
+        // equipments = filter.Comment
+        //     .AsOptional()
+        //     .Apply(equipments,
+        //         apply: (queryable, parameter) =>
+        //             queryable.Where(t => t.Comment != null && t.Comment.Contains(parameter.Value)));
 
         equipments = filter.Statuses
             .AsOptional()
@@ -104,8 +104,8 @@ public class FilterEquipmentsQueryHandler : IQueryHandler<FilterEquipmentsQuery,
                 BuildSort(filter.Schemas?.SortDirection, parameter: t => t.Schema.Name),
                 BuildSort(filter.InventoryNumber?.SortDirection, parameter: t => t.InventoryNumber),
                 BuildSort(filter.SerialNumber?.SortDirection, parameter: t => t.SerialNumber),
-                BuildSort(filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.NetworkEquipmentIp),
-                BuildSort(filter.Comment?.SortDirection, parameter: t => t.Comment),
+                // BuildSort(filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.NetworkEquipmentIp),
+                // BuildSort(filter.Comment?.SortDirection, parameter: t => t.Comment),
                 BuildSort(filter.Statuses?.SortDirection, parameter: t => t.Status)
             ];
 
