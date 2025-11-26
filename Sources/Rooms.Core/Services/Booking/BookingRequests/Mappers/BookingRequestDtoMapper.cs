@@ -2,7 +2,7 @@
 using Rooms.Core.Dtos.BookingRequest;
 using Rooms.Domain.Models.BookingRequests;
 
-namespace Rooms.Core.Services.BookingRequests.Mappers;
+namespace Rooms.Core.Services.Booking.BookingRequests.Mappers;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class BookingRequestDtoMapper

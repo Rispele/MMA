@@ -1,25 +1,24 @@
 ﻿using Commons;
-using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Dtos.BookingRequest;
 using Rooms.Core.Dtos.BookingRequest.Requests;
 using Rooms.Core.Dtos.BookingRequest.Responses;
-using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.BookingRequest;
 using Rooms.Core.Queries.Implementations.Room;
-using Rooms.Core.Services.BookingRequests.Interfaces;
-using Rooms.Core.Services.BookingRequests.Mappers;
+using Rooms.Core.Services.Booking.BookingRequests.Interfaces;
+using Rooms.Core.Services.Booking.BookingRequests.Mappers;
+using Rooms.Core.Services.LkUser;
 using Rooms.Core.Services.Rooms.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.BookingRequests;
 
-namespace Rooms.Core.Services.BookingRequests;
+namespace Rooms.Core.Services.Booking.BookingRequests;
 
 public class BookingRequestService(
     IUnitOfWorkFactory unitOfWorkFactory,
     IRoomService roomService,
-    IEventHostClient eventHostClient) : IBookingRequestService
+    ILkUserService lkUserService) : IBookingRequestService
 {
     public async Task<BookingRequestDto> GetBookingRequestById(int bookingRequestId, CancellationToken cancellationToken)
     {
@@ -32,9 +31,9 @@ public class BookingRequestService(
 
     public async Task<IEnumerable<AutocompleteEventHostResponseDto>> AutocompleteEventHostName(string name, CancellationToken cancellationToken)
     {
-        var autocompleteNames = await eventHostClient.AutocompleteEventHostName(name, cancellationToken);
+        var employees = await lkUserService.GetTeachers(cancellationToken);
 
-        return autocompleteNames;
+        return employees.Select(employee => new AutocompleteEventHostResponseDto(employee.UserId, employee.FullName));
     }
 
     public async Task<BookingRequestsResponseDto> FilterBookingRequests(GetBookingRequestsDto dto, CancellationToken cancellationToken)

@@ -1,7 +1,7 @@
 ﻿using Riok.Mapperly.Abstractions;
 using Rooms.Core.Dtos.BookingRequest;
 using Rooms.Core.Dtos.BookingRequest.Requests;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.BookingRequest.Responses;
 using Rooms.Core.Dtos.Room;
 using WebApi.Models.BookingRequest;
 using WebApi.Models.Requests.BookingRequests;

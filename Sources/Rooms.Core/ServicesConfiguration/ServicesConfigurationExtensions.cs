@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Services.BookingRequests;
-using Rooms.Core.Services.BookingRequests.Interfaces;
+using Rooms.Core.Services.Booking.BookingRequests;
+using Rooms.Core.Services.Booking.BookingRequests.Interfaces;
 using Rooms.Core.Services.Equipments;
 using Rooms.Core.Services.Equipments.Interfaces;
 using Rooms.Core.Services.InstituteResponsibles;

@@ -1,5 +1,6 @@
 ﻿using Commons;
 using Rooms.Core.Clients.Interfaces;
+using Rooms.Core.Clients.LkUsers;
 using Rooms.Core.Dtos.InstituteResponsible;
 using Rooms.Core.Dtos.InstituteResponsible.Requests;
 using Rooms.Core.Dtos.InstituteResponsible.Responses;
@@ -15,7 +16,7 @@ namespace Rooms.Core.Services.InstituteResponsibles;
 
 public class InstituteResponsibleService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IInstituteResponsibleClient instituteResponsibleClient,
+    ILkUsersClient lkUsersClient,
     IInstituteDepartmentClient instituteDepartmentClient) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleDto> GetInstituteResponsibleById(int instituteResponsibleId, CancellationToken cancellationToken)
@@ -27,9 +28,9 @@ public class InstituteResponsibleService(
         return InstituteResponsibleDtoMapper.MapInstituteResponsibleToDto(instituteResponsible);
     }
 
-    public async Task<Dictionary<string, string>> GetAvailableInstituteResponsible(CancellationToken cancellationToken)
+    public async Task<LkEmployeeDto[]> GetAvailableInstituteResponsible(CancellationToken cancellationToken)
     {
-        var responsible = await instituteResponsibleClient.GetAvailableInstituteResponsible();
+        var responsible = await lkUsersClient.GetEmployees(cancellationToken);
 
         return responsible;
     }
