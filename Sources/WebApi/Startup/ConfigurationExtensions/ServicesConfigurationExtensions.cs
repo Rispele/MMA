@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Rooms.Core.ServicesConfiguration;
-using Rooms.Infrastructure.ServicesConfiguration;
+using Rooms.Infrastructure.Configuration;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
 using WebApi.Startup.InputFormatters;

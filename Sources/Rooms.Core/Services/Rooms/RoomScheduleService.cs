@@ -1,21 +1,40 @@
-﻿using Rooms.Core.Clients.Interfaces;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
+using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Dtos.Requests.RoomSchedule;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Services.Rooms.Interfaces;
-using Rooms.Domain.Exceptions;
 
 namespace Rooms.Core.Services.Rooms;
 
-public class RoomScheduleService(IRoomScheduleClient roomScheduleClient,
-    IRoomService roomService) : IRoomScheduleService
+public class RoomScheduleService(
+    IRoomScheduleClient roomScheduleClient,
+    IRoomService roomService,
+    ILogger<RoomScheduleService> logger) : IRoomScheduleService
 {
-    public async Task<IEnumerable<RoomScheduleResponseDto>> GetRoomScheduleAsync(GetRoomScheduleDto dto, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<RoomScheduleResponseItemDto> GetRoomSchedule(
+        GetRoomScheduleDto dto,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var existRoom = await roomService.GetRoomById(dto.RoomId, cancellationToken);
-        if (existRoom == null)
+        var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
+
+        if (room.ScheduleAddress is null)
         {
-            throw new RoomNotFoundException("Room Not Found");
+            throw new InvalidOperationException("Room address and number is not initialized");
         }
-        return await roomScheduleClient.GetRoomSchedule(dto);
+
+        var request = new GetRoomScheduleRequest(room.ScheduleAddress, dto.From, dto.To);
+        var response = roomScheduleClient.GetRoomSchedule(request, cancellationToken);
+
+        await foreach (var item in response)
+        {
+            if (item is null)
+            {
+                logger.LogError("Room Schedule returned null for room id {RoomId}", dto.RoomId);
+                continue;
+            }
+            
+            yield return item;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using WebApi.ModelConverters;
+﻿using Commons;
+using WebApi.ModelConverters;
 using WebApi.Models.Requests.RoomSchedule;
 using WebApi.Models.Responses;
 using WebApi.Models.RoomSchedule;
@@ -12,18 +13,22 @@ public class RoomScheduleService(Rooms.Core.Services.Rooms.Interfaces.IRoomSched
     {
         var dto = RoomScheduleModelMapper.MapGetRoomScheduleFromModel(model);
 
-        var scheduleResponseDtos = await roomScheduleService.GetRoomScheduleAsync(dto, cancellationToken);
+        var scheduleResponseDtos = await roomScheduleService
+            .GetRoomSchedule(dto, cancellationToken)
+            .ToListAsync(cancellationToken);
 
         return new RoomScheduleResponseModel
         {
-            ScheduleModels = scheduleResponseDtos.Select(x => new RoomScheduleModel
+            ScheduleModels = scheduleResponseDtos.Select(item => new RoomScheduleModel
             {
-                ClassTime = x.ClassTime,
-                ClassEvent = x.ClassEvent,
-                Teacher = x.Teacher,
-                ClassGroup = x.ClassGroup
+                Date = item.Date,
+                From = item.From,
+                To = item.To,
+                Teacher = item.Teacher,
+                GroupTitle = item.GroupTitle,
+                Title = item.Title
             }).ToArray(),
-            Count = scheduleResponseDtos.Count()
+            Count = scheduleResponseDtos.Count
         };
     }
 }

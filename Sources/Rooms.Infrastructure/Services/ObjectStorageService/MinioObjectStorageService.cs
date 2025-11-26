@@ -4,7 +4,7 @@ using Minio.DataModel.Args;
 using Rooms.Domain.Models.File;
 using Rooms.Domain.Services;
 
-namespace Rooms.Infrastructure.ObjectStorageService;
+namespace Rooms.Infrastructure.Services.ObjectStorageService;
 
 public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorageService
 {

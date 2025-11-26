@@ -1,9 +1,11 @@
 ﻿namespace WebApi.Models.RoomSchedule;
 
-public class RoomScheduleModel
+public record RoomScheduleModel
 {
-    public string ClassTime { get; set; } = null!;
-    public string ClassEvent { get; set; } = null!;
-    public string Teacher { get; set; } = null!;
-    public string ClassGroup { get; set; } = null!;
+    public required DateOnly Date { get; init; }
+    public required TimeOnly From { get; init; }
+    public required TimeOnly To { get; init; }
+    public required string Title { get; init; }
+    public required string Teacher { get; init; }
+    public required string GroupTitle { get; init; }
 }

@@ -8,7 +8,8 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/room-schedule")]
-public class RoomScheduleController(IRoomScheduleService roomScheduleService,
+public class RoomScheduleController(
+    IRoomScheduleService roomScheduleService,
     IRoomService roomService) : ControllerBase
 {
     /// <summary>
@@ -39,11 +40,7 @@ public class RoomScheduleController(IRoomScheduleService roomScheduleService,
         [FromQuery] DateOnly date,
         CancellationToken cancellationToken)
     {
-        var model = new GetRoomScheduleModel
-        {
-            RoomId = roomId,
-            Date = date,
-        };
+        var model = new GetRoomScheduleModel(roomId, From: date, To: date.AddDays(1));
         var result = await roomScheduleService.GetRoomSchedule(model, cancellationToken);
         return Ok(result);
     }

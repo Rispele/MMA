@@ -3,7 +3,7 @@ using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 
-namespace Rooms.Infrastructure.Spreadsheets;
+namespace Rooms.Infrastructure.Services.Spreadsheets;
 
 public static class ExcelWriter
 {

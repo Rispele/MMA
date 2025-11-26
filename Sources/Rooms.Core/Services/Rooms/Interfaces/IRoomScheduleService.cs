@@ -5,5 +5,5 @@ namespace Rooms.Core.Services.Rooms.Interfaces;
 
 public interface IRoomScheduleService
 {
-    Task<IEnumerable<RoomScheduleResponseDto>> GetRoomScheduleAsync(GetRoomScheduleDto dto, CancellationToken cancellationToken);
+    IAsyncEnumerable<RoomScheduleResponseItemDto> GetRoomSchedule(GetRoomScheduleDto dto, CancellationToken cancellationToken);
 }

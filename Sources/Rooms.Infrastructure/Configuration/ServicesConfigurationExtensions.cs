@@ -1,15 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Clients.Implementations;
 using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Domain.Services;
+using Rooms.Infrastructure.Clients.Implementations;
+using Rooms.Infrastructure.Clients.RoomSchedule;
 using Rooms.Infrastructure.EFCore;
 using Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
-using Rooms.Infrastructure.ObjectStorageService;
-using Rooms.Infrastructure.Spreadsheets;
+using Rooms.Infrastructure.Services.ObjectStorageService;
+using Rooms.Infrastructure.Services.Spreadsheets;
 
-namespace Rooms.Infrastructure.ServicesConfiguration;
+namespace Rooms.Infrastructure.Configuration;
 
 public static class ServicesConfigurationExtensions
 {

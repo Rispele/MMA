@@ -9,7 +9,7 @@ using Rooms.Core.Dtos.Room.Parameters;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExportModels;
 using Rooms.Core.Services.Spreadsheets.Specifications;
-using Rooms.Infrastructure.Spreadsheets;
+using Rooms.Infrastructure.Services.Spreadsheets;
 using Rooms.Tests.Helpers;
 
 namespace Rooms.Tests.UnitTests.Spreadsheets;

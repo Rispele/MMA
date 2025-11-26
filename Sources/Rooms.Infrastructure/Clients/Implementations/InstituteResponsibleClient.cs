@@ -1,7 +1,7 @@
 ﻿using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Dtos.Responses;
 
-namespace Rooms.Core.Clients.Implementations;
+namespace Rooms.Infrastructure.Clients.Implementations;
 
 public class InstituteResponsibleClient : IInstituteResponsibleClient
 {

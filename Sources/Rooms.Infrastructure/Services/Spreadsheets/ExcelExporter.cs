@@ -2,7 +2,7 @@
 using Rooms.Core.Dtos.Files;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 
-namespace Rooms.Infrastructure.Spreadsheets;
+namespace Rooms.Infrastructure.Services.Spreadsheets;
 
 public class ExcelExporter : ISpreadsheetExporter
 {
