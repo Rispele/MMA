@@ -1,7 +1,8 @@
 ﻿using Commons;
 using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Dtos.BookingRequest;
-using Rooms.Core.Dtos.Requests.BookingRequests;
+using Rooms.Core.Dtos.BookingRequest.Requests;
+using Rooms.Core.Dtos.BookingRequest.Responses;
 using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;

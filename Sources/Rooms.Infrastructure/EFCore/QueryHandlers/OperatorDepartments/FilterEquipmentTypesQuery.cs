@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Dtos.Requests.Filtering;
-using Rooms.Core.Dtos.Requests.OperatorDepartments;
+using Rooms.Core.Dtos.Filtering;
+using Rooms.Core.Dtos.OperatorDepartments.Requests;
 using Rooms.Core.Queries.Implementations.OperatorDepartments;
 using Rooms.Domain.Models.OperatorDepartments;
 

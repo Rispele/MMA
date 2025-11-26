@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Dtos.Requests.EquipmentSchemas;
-using Rooms.Core.Dtos.Requests.Filtering;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentSchemas;
+using Rooms.Core.Dtos.Filtering;
 using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Domain.Models.Equipments;
 

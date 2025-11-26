@@ -1,4 +1,4 @@
-﻿using Rooms.Core.Dtos.Requests.Equipments;
+﻿using Rooms.Core.Dtos.Equipment.Requests.Equipments;
 using Rooms.Core.Queries.Abstractions;
 
 namespace Rooms.Core.Queries.Implementations.Equipment;

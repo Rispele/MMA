@@ -1,10 +1,10 @@
 ﻿using Commons;
 using Commons.Optional;
+using Rooms.Core.Dtos.Equipment.Requests.Equipments;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentSchemas;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentTypes;
 using Rooms.Core.Dtos.Files;
-using Rooms.Core.Dtos.Requests.Equipments;
-using Rooms.Core.Dtos.Requests.EquipmentSchemas;
-using Rooms.Core.Dtos.Requests.EquipmentTypes;
-using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Core.Dtos.Room.Requests;
 using Rooms.Core.Services.Equipments.Interfaces;
 using Rooms.Core.Services.OperatorDepartments.Interfaces;
 using Rooms.Core.Services.Rooms.Interfaces;

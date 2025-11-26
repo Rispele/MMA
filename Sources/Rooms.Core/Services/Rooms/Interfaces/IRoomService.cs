@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Core.Dtos.Responses;
-using Rooms.Core.Dtos.Room;
+﻿using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Requests;
+using Rooms.Core.Dtos.Room.Responses;
 
 namespace Rooms.Core.Services.Rooms.Interfaces;
 

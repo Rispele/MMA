@@ -1,8 +1,8 @@
 ﻿using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Requests.Equipments;
-using Rooms.Core.Dtos.Requests.EquipmentSchemas;
-using Rooms.Core.Dtos.Requests.EquipmentTypes;
-using Rooms.Core.Dtos.Requests.Filtering;
+using Rooms.Core.Dtos.Equipment.Requests.Equipments;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentSchemas;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentTypes;
+using Rooms.Core.Dtos.Filtering;
 using Rooms.Domain.Models.Equipments;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;

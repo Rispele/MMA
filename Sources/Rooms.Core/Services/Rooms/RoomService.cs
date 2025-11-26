@@ -1,7 +1,7 @@
 ﻿using Commons;
-using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Requests;
+using Rooms.Core.Dtos.Room.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.Room;

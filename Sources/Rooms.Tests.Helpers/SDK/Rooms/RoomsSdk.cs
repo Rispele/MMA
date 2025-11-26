@@ -1,5 +1,5 @@
-﻿using Rooms.Core.Dtos.Responses;
-using Rooms.Core.Dtos.Room;
+﻿using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Responses;
 using Rooms.Core.Services.Rooms.Interfaces;
 
 namespace Rooms.Tests.Helpers.SDK.Rooms;

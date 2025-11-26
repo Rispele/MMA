@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Rooms.Core.Clients.Interfaces;
+using Rooms.Core.Clients.RoomSchedule;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Domain.Services;

@@ -1,4 +1,4 @@
-﻿using Rooms.Core.Dtos.Requests.Rooms;
+﻿using Rooms.Core.Dtos.Room.Requests;
 
 namespace Rooms.Tests.Helpers.SDK.Rooms;
 

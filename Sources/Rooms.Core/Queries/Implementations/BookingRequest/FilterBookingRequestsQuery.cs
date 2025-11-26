@@ -1,4 +1,4 @@
-﻿using Rooms.Core.Dtos.Requests.BookingRequests;
+﻿using Rooms.Core.Dtos.BookingRequest.Requests;
 using Rooms.Core.Queries.Abstractions;
 
 namespace Rooms.Core.Queries.Implementations.BookingRequest;

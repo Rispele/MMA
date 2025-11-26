@@ -1,8 +1,8 @@
 ﻿using Commons;
 using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Dtos.OperatorDepartments;
-using Rooms.Core.Dtos.Requests.OperatorDepartments;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.OperatorDepartments.Requests;
+using Rooms.Core.Dtos.OperatorDepartments.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.OperatorDepartments;

@@ -1,8 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
-using Rooms.Core.Clients.Interfaces;
-using Rooms.Core.Dtos.Requests.RoomSchedule;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Clients.RoomSchedule;
 
 namespace Rooms.Infrastructure.Clients.RoomSchedule;
 

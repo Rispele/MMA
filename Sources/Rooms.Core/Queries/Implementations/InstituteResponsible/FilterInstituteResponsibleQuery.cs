@@ -1,4 +1,4 @@
-﻿using Rooms.Core.Dtos.Requests.InstituteResponsible;
+﻿using Rooms.Core.Dtos.InstituteResponsible.Requests;
 using Rooms.Core.Queries.Abstractions;
 
 namespace Rooms.Core.Queries.Implementations.InstituteResponsible;

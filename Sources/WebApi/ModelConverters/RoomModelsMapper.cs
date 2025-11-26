@@ -1,7 +1,7 @@
 ﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Core.Dtos.Responses;
 using Rooms.Core.Dtos.Room;
+using Rooms.Core.Dtos.Room.Requests;
+using Rooms.Core.Dtos.Room.Responses;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;

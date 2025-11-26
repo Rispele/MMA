@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.OperatorDepartments;
-using Rooms.Core.Dtos.Requests.OperatorDepartments;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.OperatorDepartments.Requests;
+using Rooms.Core.Dtos.OperatorDepartments.Responses;
 
 namespace Rooms.Core.Services.OperatorDepartments.Interfaces;
 

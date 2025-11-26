@@ -1,6 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
 using Rooms.Core.Dtos.OperatorDepartments;
-using Rooms.Core.Dtos.Requests.OperatorDepartments;
+using Rooms.Core.Dtos.OperatorDepartments.Requests;
 using WebApi.Models.OperatorDepartments;
 using WebApi.Models.Requests.OperatorDepartments;
 

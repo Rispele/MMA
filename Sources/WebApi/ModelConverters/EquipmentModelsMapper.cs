@@ -1,6 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
 using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Requests.Equipments;
+using Rooms.Core.Dtos.Equipment.Requests.Equipments;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
 // ReSharper disable RedundantVerbatimPrefix

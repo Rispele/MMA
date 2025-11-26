@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.InstituteResponsible;
-using Rooms.Core.Dtos.Requests.InstituteResponsible;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.InstituteResponsible.Requests;
+using Rooms.Core.Dtos.InstituteResponsible.Responses;
 
 namespace Rooms.Core.Services.InstituteResponsibles.Interfaces;
 

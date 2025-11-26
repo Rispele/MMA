@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Dtos.Requests.Filtering;
-using Rooms.Core.Dtos.Requests.Rooms;
+using Rooms.Core.Dtos.Filtering;
+using Rooms.Core.Dtos.Room.Requests;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Rooms.Mappers;
 using Rooms.Domain.Models.Rooms;

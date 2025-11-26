@@ -1,8 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
-using Rooms.Core.Clients.Interfaces;
-using Rooms.Core.Dtos.Requests.RoomSchedule;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Clients.RoomSchedule;
+using Rooms.Core.Dtos.Room.Requests;
 using Rooms.Core.Services.Rooms.Interfaces;
 
 namespace Rooms.Core.Services.Rooms;

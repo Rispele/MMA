@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Rooms.Core.Dtos.Requests.RoomSchedule;
+using Rooms.Core.Clients.RoomSchedule;
 using Rooms.Core.Dtos.Room;
 using Rooms.Infrastructure.Clients.RoomSchedule;
 

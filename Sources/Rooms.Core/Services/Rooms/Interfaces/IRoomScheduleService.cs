@@ -1,5 +1,5 @@
-﻿using Rooms.Core.Dtos.Requests.RoomSchedule;
-using Rooms.Core.Dtos.Responses;
+﻿using Rooms.Core.Clients.RoomSchedule;
+using Rooms.Core.Dtos.Room.Requests;
 
 namespace Rooms.Core.Services.Rooms.Interfaces;
 

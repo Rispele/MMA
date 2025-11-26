@@ -1,6 +1,6 @@
 ﻿using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Requests.EquipmentTypes;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentTypes;
+using Rooms.Core.Dtos.Equipment.Responses;
 
 namespace Rooms.Core.Services.Equipments.Interfaces;
 

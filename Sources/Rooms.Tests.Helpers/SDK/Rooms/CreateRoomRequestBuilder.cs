@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Dtos.Requests.Rooms;
-using Rooms.Core.Dtos.Room.Fix;
+﻿using Rooms.Core.Dtos.Room.Fix;
 using Rooms.Core.Dtos.Room.Parameters;
+using Rooms.Core.Dtos.Room.Requests;
 
 namespace Rooms.Tests.Helpers.SDK.Rooms;
 

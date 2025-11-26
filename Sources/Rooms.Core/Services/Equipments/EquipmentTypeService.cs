@@ -1,7 +1,7 @@
 ﻿using Commons;
 using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Requests.EquipmentTypes;
-using Rooms.Core.Dtos.Responses;
+using Rooms.Core.Dtos.Equipment.Requests.EquipmentTypes;
+using Rooms.Core.Dtos.Equipment.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.Equipment;

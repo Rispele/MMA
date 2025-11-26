@@ -1,5 +1,5 @@
 ﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.Requests.RoomSchedule;
+using Rooms.Core.Dtos.Room.Requests;
 using WebApi.Models.Requests.RoomSchedule;
 
 namespace WebApi.ModelConverters;
