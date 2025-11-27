@@ -1,6 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.InstituteResponsible;
-using Rooms.Core.Dtos.InstituteResponsible.Requests;
+using Rooms.Core.Dtos.InstituteCoordinator;
+using Rooms.Core.Dtos.InstituteCoordinator.Requests;
 using WebApi.Models.InstituteResponsible;
 using WebApi.Models.Requests.InstituteResponsible;
 // ReSharper disable RedundantVerbatimPrefix
@@ -10,22 +10,22 @@ namespace WebApi.ModelConverters;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class InstituteResponsibleModelMapper
 {
-    public static partial InstituteResponsibleModel MapInstituteResponsibleToModel(InstituteResponsibleDto instituteResponsible);
+    public static partial InstituteCoordinatorModel MapInstituteResponsibleToModel(InstituteCoordinatorDto instituteCoordinator);
 
-    [MapperIgnoreSource(nameof(InstituteResponsibleDto.Id))]
-    public static partial PatchInstituteResponsibleModel MapInstituteResponsibleToPatchModel(InstituteResponsibleDto instituteResponsible);
+    [MapperIgnoreSource(nameof(InstituteCoordinatorDto.Id))]
+    public static partial PatchInstituteResponsibleModel MapInstituteResponsibleToPatchModel(InstituteCoordinatorDto instituteCoordinator);
 
-    public static partial CreateInstituteResponsibleDto MapCreateInstituteResponsibleFromModel(CreateInstituteResponsibleModel instituteResponsible);
+    public static partial CreateInstituteCoordinatorDto MapCreateInstituteResponsibleFromModel(CreateInstituteResponsibleModel instituteResponsible);
 
-    public static partial PatchInstituteResponsibleDto MapPatchInstituteResponsibleTypeFromModel(PatchInstituteResponsibleModel instituteResponsible);
+    public static partial PatchInstituteCoordinatorDto MapPatchInstituteResponsibleTypeFromModel(PatchInstituteResponsibleModel instituteResponsible);
 
-    public static partial InstituteResponsibleDto MapInstituteResponsibleFromModel(InstituteResponsibleModel instituteResponsible);
+    public static partial InstituteCoordinatorDto MapInstituteResponsibleFromModel(InstituteCoordinatorModel instituteCoordinator);
 
-    [MapProperty(nameof(GetInstituteResponsibleModel.AfterInstituteResponsibleId), nameof(GetInstituteResponsibleDto.AfterInstituteResponsibleId))]
-    [MapProperty(nameof(GetInstituteResponsibleModel.PageSize), nameof(GetInstituteResponsibleDto.BatchSize))]
+    [MapProperty(nameof(GetInstituteResponsibleModel.AfterInstituteResponsibleId), nameof(GetInstituteCoordinatorDto.AfterInstituteResponsibleId))]
+    [MapProperty(nameof(GetInstituteResponsibleModel.PageSize), nameof(GetInstituteCoordinatorDto.BatchSize))]
     [MapProperty(
         nameof(GetInstituteResponsibleModel.Page),
-        nameof(GetInstituteResponsibleDto.BatchNumber),
+        nameof(GetInstituteCoordinatorDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetInstituteResponsibleDto MapGetInstituteResponsibleFromModel(GetInstituteResponsibleModel model);
+    public static partial GetInstituteCoordinatorDto MapGetInstituteResponsibleFromModel(GetInstituteResponsibleModel model);
 }

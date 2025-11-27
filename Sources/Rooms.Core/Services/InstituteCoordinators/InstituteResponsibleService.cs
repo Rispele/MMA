@@ -1,25 +1,25 @@
 ﻿using Commons;
 using Rooms.Core.Clients.Interfaces;
 using Rooms.Core.Clients.LkUsers;
-using Rooms.Core.Dtos.InstituteResponsible;
-using Rooms.Core.Dtos.InstituteResponsible.Requests;
-using Rooms.Core.Dtos.InstituteResponsible.Responses;
+using Rooms.Core.Dtos.InstituteCoordinator;
+using Rooms.Core.Dtos.InstituteCoordinator.Requests;
+using Rooms.Core.Dtos.InstituteCoordinator.Responses;
 using Rooms.Core.Queries.Abstractions;
 using Rooms.Core.Queries.Factories;
 using Rooms.Core.Queries.Implementations.InstituteResponsible;
-using Rooms.Core.Services.InstituteResponsibles.Interfaces;
-using Rooms.Core.Services.InstituteResponsibles.Mappers;
+using Rooms.Core.Services.InstituteCoordinators.Interfaces;
+using Rooms.Core.Services.InstituteCoordinators.Mappers;
 using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.InstituteResponsibles;
+using Rooms.Domain.Models.InstituteCoordinators;
 
-namespace Rooms.Core.Services.InstituteResponsibles;
+namespace Rooms.Core.Services.InstituteCoordinators;
 
 public class InstituteResponsibleService(
     IUnitOfWorkFactory unitOfWorkFactory,
     ILkUsersClient lkUsersClient,
     IInstituteDepartmentClient instituteDepartmentClient) : IInstituteResponsibleService
 {
-    public async Task<InstituteResponsibleDto> GetInstituteResponsibleById(int instituteResponsibleId, CancellationToken cancellationToken)
+    public async Task<InstituteCoordinatorDto> GetInstituteResponsibleById(int instituteResponsibleId, CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
@@ -42,7 +42,7 @@ public class InstituteResponsibleService(
         return departments;
     }
 
-    public async Task<InstituteResponsibleResponseDto> FilterInstituteResponsible(GetInstituteResponsibleDto dto, CancellationToken cancellationToken)
+    public async Task<InstituteCoordinatorResponseDto> FilterInstituteResponsible(GetInstituteCoordinatorDto dto, CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
@@ -53,16 +53,16 @@ public class InstituteResponsibleService(
         var convertedInstituteResponsible = instituteResponsible.Select(InstituteResponsibleDtoMapper.MapInstituteResponsibleToDto).ToArray();
         int? lastInstituteResponsibleId = convertedInstituteResponsible.Length == 0 ? null : convertedInstituteResponsible.Select(t => t.Id).Max();
 
-        return new InstituteResponsibleResponseDto(convertedInstituteResponsible, convertedInstituteResponsible.Length, lastInstituteResponsibleId);
+        return new InstituteCoordinatorResponseDto(convertedInstituteResponsible, convertedInstituteResponsible.Length, lastInstituteResponsibleId);
     }
 
-    public async Task<InstituteResponsibleDto> CreateInstituteResponsible(CreateInstituteResponsibleDto dto, CancellationToken cancellationToken)
+    public async Task<InstituteCoordinatorDto> CreateInstituteResponsible(CreateInstituteCoordinatorDto dto, CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var instituteResponsible = new InstituteResponsible(
+        var instituteResponsible = new InstituteCoordinator(
             dto.Institute,
-            dto.Responsible);
+            dto.Coordinators.Select(t => new Coordinator(t.Id, t.FullName)).ToArray());
 
         context.Add(instituteResponsible);
 
@@ -71,9 +71,9 @@ public class InstituteResponsibleService(
         return InstituteResponsibleDtoMapper.MapInstituteResponsibleToDto(instituteResponsible);
     }
 
-    public async Task<InstituteResponsibleDto> PatchInstituteResponsible(
+    public async Task<InstituteCoordinatorDto> PatchInstituteResponsible(
         int instituteResponsibleId,
-        PatchInstituteResponsibleDto dto,
+        PatchInstituteCoordinatorDto dto,
         CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
@@ -82,14 +82,14 @@ public class InstituteResponsibleService(
 
         instituteResponsibleToPatch.Update(
             dto.Institute,
-            dto.Responsible);
+            dto.Coordinators.Select(t => new Coordinator(t.Id, t.FullName)).ToArray());
 
         await context.Commit(cancellationToken);
 
         return InstituteResponsibleDtoMapper.MapInstituteResponsibleToDto(instituteResponsibleToPatch);
     }
 
-    private async Task<InstituteResponsible> GetInstituteResponsibleByIdInner(
+    private async Task<InstituteCoordinator> GetInstituteResponsibleByIdInner(
         int instituteResponsibleId,
         CancellationToken cancellationToken,
         IUnitOfWork context)

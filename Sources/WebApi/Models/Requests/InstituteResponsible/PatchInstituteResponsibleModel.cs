@@ -1,7 +1,9 @@
-﻿namespace WebApi.Models.Requests.InstituteResponsible;
+﻿using WebApi.Models.InstituteResponsible;
+
+namespace WebApi.Models.Requests.InstituteResponsible;
 
 public record PatchInstituteResponsibleModel
 {
-    public string Institute { get; set; } = null!;
-    public Dictionary<string, string> Responsible { get; set; } = null!;
+    public required string Institute { get; init; } 
+    public required CoordinatorModel[] Coordinators { get; init; }
 }

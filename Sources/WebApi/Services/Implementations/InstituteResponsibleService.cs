@@ -6,7 +6,7 @@ using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class InstituteResponsibleService(Rooms.Core.Services.InstituteResponsibles.Interfaces.IInstituteResponsibleService instituteResponsibleService) : IInstituteResponsibleService
+public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinators.Interfaces.IInstituteResponsibleService instituteResponsibleService) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(
         GetInstituteResponsibleModel model,
@@ -23,7 +23,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteResponsibl
         };
     }
 
-    public async Task<InstituteResponsibleModel> GetInstituteResponsibleByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<InstituteCoordinatorModel> GetInstituteResponsibleByIdAsync(int id, CancellationToken cancellationToken)
     {
         var instituteResponsible = await instituteResponsibleService.GetInstituteResponsibleById(id, cancellationToken);
 
@@ -44,7 +44,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteResponsibl
         return departments;
     }
 
-    public async Task<InstituteResponsibleModel> CreateInstituteResponsibleAsync(
+    public async Task<InstituteCoordinatorModel> CreateInstituteResponsibleAsync(
         CreateInstituteResponsibleModel model,
         CancellationToken cancellationToken)
     {
@@ -64,7 +64,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteResponsibl
         return InstituteResponsibleModelMapper.MapInstituteResponsibleToPatchModel(instituteResponsible);
     }
 
-    public async Task<InstituteResponsibleModel> PatchInstituteResponsibleAsync(
+    public async Task<InstituteCoordinatorModel> PatchInstituteResponsibleAsync(
         int instituteResponsibleId,
         PatchInstituteResponsibleModel patchModel,
         CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Rooms.Domain.Models.InstituteResponsibles;
+using Rooms.Domain.Models.InstituteCoordinators;
 using WebApi.ModelBinders;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;
@@ -35,7 +35,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <param name="cancellationToken"></param>
     /// <returns>Ответственный от института/подразделения</returns>
     [HttpGet("{instituteResponsibleId:int}")]
-    public async Task<ActionResult<InstituteResponsible>> GetInstituteResponsibleById(
+    public async Task<ActionResult<InstituteCoordinator>> GetInstituteResponsibleById(
         int instituteResponsibleId,
         CancellationToken cancellationToken)
     {

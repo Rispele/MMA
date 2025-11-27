@@ -1,21 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Rooms.Domain.Models.InstituteResponsibles;
+using Rooms.Domain.Models.InstituteCoordinators;
 
 namespace Rooms.Infrastructure.EFCore.EntityConfigurations.InstituteResponsibles;
 
-public class InstituteResponsibleEntityTypeConfiguration : IEntityTypeConfiguration<InstituteResponsible>
+public class InstituteResponsibleEntityTypeConfiguration : IEntityTypeConfiguration<InstituteCoordinator>
 {
-    public void Configure(EntityTypeBuilder<InstituteResponsible> builder)
+    public void Configure(EntityTypeBuilder<InstituteCoordinator> builder)
     {
         builder.HasKey(t => t.Id);
         builder
             .Property(t => t.Id)
-            .HasField(InstituteResponsibleFieldNames.Id)
+            .HasField(InstituteCoordinatorFieldNames.Id)
             .ValueGeneratedOnAdd();
 
-        builder.Ignore(t => t.Responsible);
-        builder.Property(InstituteResponsibleFieldNames.Responsible).HasColumnType("jsonb");
+        builder.Ignore(t => t.Coordinators);
+        builder.Property(InstituteCoordinatorFieldNames.Coordinators).HasColumnType("jsonb");
 
         builder.Property(t => t.Institute).HasMaxLength(500).IsRequired();
     }
