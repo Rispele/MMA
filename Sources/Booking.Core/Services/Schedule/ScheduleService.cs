@@ -1,10 +1,10 @@
 ﻿using System.Runtime.CompilerServices;
+using Booking.Core.Dtos.Schedule;
+using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.Logging;
-using Rooms.Core.Clients.RoomSchedule;
-using Rooms.Core.Dtos.Room.Requests;
-using Rooms.Core.Services.Rooms.Interfaces;
+using Rooms.Core.Interfaces.Services.Rooms;
 
-namespace Rooms.Core.Services.Rooms;
+namespace Booking.Core.Services.Schedule;
 
 public class ScheduleService(
     IRoomScheduleClient roomScheduleClient,
@@ -22,7 +22,7 @@ public class ScheduleService(
             throw new InvalidOperationException("Room address and number is not initialized");
         }
 
-        var request = new GetRoomScheduleRequest(room.ScheduleAddress, dto.From, dto.To);
+        var request = new GetRoomScheduleRequest(room.ScheduleAddress.RoomNumber, room.ScheduleAddress.Address, dto.From, dto.To);
         var response = roomScheduleClient.GetRoomSchedule(request, cancellationToken);
 
         await foreach (var item in response)
@@ -32,7 +32,7 @@ public class ScheduleService(
                 logger.LogError("Room Schedule returned null for room id {RoomId}", dto.RoomId);
                 continue;
             }
-            
+
             yield return item;
         }
     }

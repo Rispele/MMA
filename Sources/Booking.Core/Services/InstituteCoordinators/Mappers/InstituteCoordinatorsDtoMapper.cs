@@ -1,8 +1,8 @@
-﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.InstituteCoordinator;
-using Rooms.Domain.Models.InstituteCoordinators;
+﻿using Booking.Core.Dtos.InstituteCoordinator;
+using Booking.Domain.Models.InstituteCoordinators;
+using Riok.Mapperly.Abstractions;
 
-namespace Rooms.Core.Services.InstituteCoordinators.Mappers;
+namespace Booking.Core.Services.InstituteCoordinators.Mappers;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class InstituteCoordinatorsDtoMapper

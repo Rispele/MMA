@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Dtos.Files;
+﻿using Rooms.Core.Interfaces.Dtos.Files;
+using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Core.Services.Files.Mappers;
-using Rooms.Core.Services.Rooms.Interfaces;
 using Rooms.Domain.Services;
 
 namespace Rooms.Core.Services.Rooms;

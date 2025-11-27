@@ -1,4 +1,4 @@
-﻿using Rooms.Core.Dtos.Files;
+﻿using Rooms.Core.Interfaces.Dtos.Files;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 
 namespace Rooms.Core.Services.Spreadsheets;

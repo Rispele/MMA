@@ -1,10 +1,10 @@
-﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.BookingRequest;
-using Rooms.Core.Dtos.BookingRequest.RoomEventCoordinator;
-using Rooms.Domain.Models.BookingRequests;
-using Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
+﻿using Booking.Core.Dtos.BookingRequest;
+using Booking.Core.Dtos.BookingRequest.RoomEventCoordinator;
+using Booking.Domain.Models.BookingRequests;
+using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
+using Riok.Mapperly.Abstractions;
 
-namespace Rooms.Core.Services.Booking.BookingRequests.Mappers;
+namespace Booking.Core.Services.Booking.BookingRequests.Mappers;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class BookingRequestDtoMapper

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Rooms.Domain.Models.BookingRequests;
+namespace Booking.Domain.Models.BookingRequests;
 
 public enum BookingStatus
 {

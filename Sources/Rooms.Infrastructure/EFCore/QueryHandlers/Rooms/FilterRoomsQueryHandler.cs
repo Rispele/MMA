@@ -1,18 +1,19 @@
 ﻿using System.Linq.Expressions;
+using Commons.Core.Models.Filtering;
+using Commons.Infrastructure.EFCore.QueryHandlers;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Dtos.Filtering;
-using Rooms.Core.Dtos.Room.Requests;
+using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Rooms.Mappers;
 using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 
-public class FilterRoomsQueryHandler : IQueryHandler<FilterRoomsQuery, Room>
+public class FilterRoomsQueryHandler : IQueryHandler<RoomsDbContext, FilterRoomsQuery, Room>
 {
     public Task<IAsyncEnumerable<Room>> Handle(
-        EntityQuery<FilterRoomsQuery, IAsyncEnumerable<Room>> request,
+        EntityQuery<RoomsDbContext, FilterRoomsQuery, IAsyncEnumerable<Room>> request,
         CancellationToken cancellationToken)
     {
         IQueryable<Room> rooms = request.Context.Rooms.Include(room => room.Equipments);

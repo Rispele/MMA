@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Rooms.Core.Services.Equipments.Interfaces;
+using Rooms.Core.Interfaces.Services.Equipments;
 
 namespace Rooms.Tests.Helpers.SDK.Equipments.Parts;
 

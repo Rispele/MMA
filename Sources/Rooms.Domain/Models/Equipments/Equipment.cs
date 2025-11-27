@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
+using Rooms.Domain.Propagated.Equipments;
 
 namespace Rooms.Domain.Models.Equipments;
 

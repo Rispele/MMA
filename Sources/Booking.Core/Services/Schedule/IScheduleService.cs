@@ -1,7 +1,7 @@
-﻿using Rooms.Core.Clients.RoomSchedule;
-using Rooms.Core.Dtos.Room.Requests;
+﻿using Booking.Core.Dtos.Schedule;
+using Commons.ExternalClients.RoomSchedule;
 
-namespace Rooms.Core.Services.Rooms.Interfaces;
+namespace Booking.Core.Services.Schedule;
 
 public interface IScheduleService
 {

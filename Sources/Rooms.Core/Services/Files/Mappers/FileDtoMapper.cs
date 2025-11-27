@@ -1,5 +1,5 @@
 ﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.Files;
+using Rooms.Core.Interfaces.Dtos.Files;
 using Rooms.Domain.Models.File;
 
 namespace Rooms.Core.Services.Files.Mappers;

@@ -1,5 +1,5 @@
 ﻿using NPOI.XSSF.UserModel;
-using Rooms.Core.Dtos.Files;
+using Rooms.Core.Interfaces.Dtos.Files;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 
 namespace Rooms.Infrastructure.Services.Spreadsheets;

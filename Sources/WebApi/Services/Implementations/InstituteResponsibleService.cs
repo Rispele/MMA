@@ -1,12 +1,13 @@
-﻿using WebApi.ModelConverters;
-using WebApi.Models.InstituteResponsible;
+﻿using Booking.Core.Services.InstituteCoordinators.Interfaces;
+using WebApi.ModelConverters;
+using WebApi.Models.InstituteCoordinator;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinators.Interfaces.IInstituteResponsibleService instituteResponsibleService) : IInstituteResponsibleService
+public class InstituteResponsibleService(IInstituteCoordinatorsService instituteCoordinatorService) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(
         GetInstituteResponsibleModel model,
@@ -14,7 +15,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinato
     {
         var getInstituteResponsibleRequest = InstituteResponsibleModelMapper.MapGetInstituteResponsibleFromModel(model);
 
-        var batch = await instituteResponsibleService.FilterInstituteResponsible(getInstituteResponsibleRequest, cancellationToken);
+        var batch = await instituteCoordinatorService.FilterInstituteResponsible(getInstituteResponsibleRequest, cancellationToken);
 
         return new InstituteResponsibleResponseModel
         {
@@ -25,21 +26,21 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinato
 
     public async Task<InstituteCoordinatorModel> GetInstituteResponsibleByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var instituteResponsible = await instituteResponsibleService.GetInstituteResponsibleById(id, cancellationToken);
+        var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleById(id, cancellationToken);
 
         return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(instituteResponsible);
     }
 
     public async Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken)
     {
-        var responsible = await instituteResponsibleService.GetAvailableInstituteDepartments(cancellationToken);
+        var responsible = await instituteCoordinatorService.GetAvailableInstituteDepartments(cancellationToken);
 
         return responsible;
     }
 
     public async Task<Dictionary<string, string>> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken)
     {
-        var departments = await instituteResponsibleService.GetAvailableInstituteDepartments(cancellationToken);
+        var departments = await instituteCoordinatorService.GetAvailableInstituteDepartments(cancellationToken);
 
         return departments;
     }
@@ -50,7 +51,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinato
     {
         var innerRequest = InstituteResponsibleModelMapper.MapCreateInstituteResponsibleFromModel(model);
 
-        var instituteResponsible = await instituteResponsibleService.CreateInstituteResponsible(innerRequest, cancellationToken);
+        var instituteResponsible = await instituteCoordinatorService.CreateInstituteResponsible(innerRequest, cancellationToken);
 
         return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(instituteResponsible);
     }
@@ -59,7 +60,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinato
         int instituteResponsibleId,
         CancellationToken cancellationToken)
     {
-        var instituteResponsible = await instituteResponsibleService.GetInstituteResponsibleById(instituteResponsibleId, cancellationToken);
+        var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleById(instituteResponsibleId, cancellationToken);
 
         return InstituteResponsibleModelMapper.MapInstituteResponsibleToPatchModel(instituteResponsible);
     }
@@ -71,7 +72,7 @@ public class InstituteResponsibleService(Rooms.Core.Services.InstituteCoordinato
     {
         var patchRequest = InstituteResponsibleModelMapper.MapPatchInstituteResponsibleTypeFromModel(patchModel);
 
-        var patched = await instituteResponsibleService.PatchInstituteResponsible(instituteResponsibleId, patchRequest, cancellationToken);
+        var patched = await instituteCoordinatorService.PatchInstituteResponsible(instituteResponsibleId, patchRequest, cancellationToken);
 
         return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(patched);
     }

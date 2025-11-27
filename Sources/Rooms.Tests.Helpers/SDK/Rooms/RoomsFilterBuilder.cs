@@ -1,7 +1,7 @@
-﻿using Rooms.Core.Dtos.Filtering;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
-using Rooms.Core.Dtos.Room.Requests;
+﻿using Commons.Core.Models.Filtering;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Parameters;
+using Rooms.Core.Interfaces.Dtos.Room.Requests;
 
 namespace Rooms.Tests.Helpers.SDK.Rooms;
 

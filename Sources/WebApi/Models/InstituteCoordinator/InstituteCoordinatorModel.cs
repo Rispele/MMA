@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models.InstituteResponsible;
+﻿namespace WebApi.Models.InstituteCoordinator;
 
 public class InstituteCoordinatorModel
 {

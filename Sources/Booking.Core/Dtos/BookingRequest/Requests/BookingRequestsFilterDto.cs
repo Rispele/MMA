@@ -1,7 +1,7 @@
-﻿using Rooms.Core.Dtos.Filtering;
-using Rooms.Domain.Models.BookingRequests;
+﻿using Booking.Domain.Models.BookingRequests;
+using Commons.Core.Models.Filtering;
 
-namespace Rooms.Core.Dtos.BookingRequest.Requests;
+namespace Booking.Core.Dtos.BookingRequest.Requests;
 
 public record BookingRequestsFilterDto
 {

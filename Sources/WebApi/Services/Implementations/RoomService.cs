@@ -9,7 +9,7 @@ using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomService(Rooms.Core.Services.Rooms.Interfaces.IRoomService roomService, SpreadsheetService spreadsheetService) : IRoomService
+public class RoomService(Rooms.Core.Interfaces.Services.Rooms.IRoomService roomService, SpreadsheetService spreadsheetService) : IRoomService
 {
     public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
     {

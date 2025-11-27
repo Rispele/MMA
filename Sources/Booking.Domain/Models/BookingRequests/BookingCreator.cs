@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.BookingRequests;
+﻿namespace Booking.Domain.Models.BookingRequests;
 
 public record BookingCreator
 {

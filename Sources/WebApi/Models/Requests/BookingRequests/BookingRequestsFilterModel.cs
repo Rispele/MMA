@@ -1,4 +1,4 @@
-﻿using Rooms.Domain.Models.BookingRequests;
+﻿using Booking.Domain.Models.BookingRequests;
 using WebApi.Models.Requests.Filtering;
 
 namespace WebApi.Models.Requests.BookingRequests;

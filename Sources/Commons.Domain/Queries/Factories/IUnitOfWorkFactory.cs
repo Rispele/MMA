@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Queries.Abstractions;
+﻿using Commons.Domain.Queries.Abstractions;
 
-namespace Rooms.Core.Queries.Factories;
+namespace Commons.Domain.Queries.Factories;
 
 public interface IUnitOfWorkFactory
 {

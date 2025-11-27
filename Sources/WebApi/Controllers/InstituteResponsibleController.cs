@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Booking.Domain.Models.InstituteCoordinators;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Rooms.Domain.Models.InstituteCoordinators;
 using WebApi.ModelBinders;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;

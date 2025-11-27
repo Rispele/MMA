@@ -1,7 +1,7 @@
-﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.InstituteCoordinator;
-using Rooms.Core.Dtos.InstituteCoordinator.Requests;
-using WebApi.Models.InstituteResponsible;
+﻿using Booking.Core.Dtos.InstituteCoordinator;
+using Booking.Core.Dtos.InstituteCoordinator.Requests;
+using Riok.Mapperly.Abstractions;
+using WebApi.Models.InstituteCoordinator;
 using WebApi.Models.Requests.InstituteResponsible;
 // ReSharper disable RedundantVerbatimPrefix
 

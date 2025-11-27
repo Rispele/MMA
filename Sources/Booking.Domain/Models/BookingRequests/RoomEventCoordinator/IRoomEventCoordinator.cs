@@ -1,4 +1,4 @@
-﻿namespace Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
+﻿namespace Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 
 public interface IRoomEventCoordinator
 {

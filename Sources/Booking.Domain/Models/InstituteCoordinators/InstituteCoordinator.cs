@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 
-namespace Rooms.Domain.Models.InstituteCoordinators;
+namespace Booking.Domain.Models.InstituteCoordinators;
 
 [GenerateFieldNames]
 public class InstituteCoordinator

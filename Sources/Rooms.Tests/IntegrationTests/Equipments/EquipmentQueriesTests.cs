@@ -1,16 +1,16 @@
 ﻿using AutoFixture;
 using AutoFixture.Dsl;
+using Commons.Core.Models.Filtering;
+using Commons.Domain.Queries.Abstractions;
+using Commons.Domain.Queries.Factories;
 using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
-using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Equipment.Requests.Equipments;
-using Rooms.Core.Dtos.Filtering;
-using Rooms.Core.Dtos.Room;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Core.Queries.Factories;
+using Rooms.Core.Interfaces.Dtos.Equipment;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
+using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Queries.Implementations.Equipment;
-using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Propagated.Equipments;
 using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests.Equipments;

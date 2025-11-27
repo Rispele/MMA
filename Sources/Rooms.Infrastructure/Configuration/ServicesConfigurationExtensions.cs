@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Queries.Factories;
+﻿using Commons.Domain.Queries.Factories;
+using Microsoft.Extensions.DependencyInjection;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Domain.Services;
 using Rooms.Infrastructure.EFCore;

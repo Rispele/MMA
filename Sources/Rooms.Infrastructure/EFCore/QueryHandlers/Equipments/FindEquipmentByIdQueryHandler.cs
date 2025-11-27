@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Commons.Infrastructure.EFCore.QueryHandlers;
+using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
 
-public class FindEquipmentByIdQueryHandler : ISingleQueryHandler<FindEquipmentByIdQuery, Equipment?>
+public class FindEquipmentByIdQueryHandler : ISingleQueryHandler<RoomsDbContext, FindEquipmentByIdQuery, Equipment?>
 {
-    public Task<Equipment?> Handle(EntityQuery<FindEquipmentByIdQuery, Equipment?> request, CancellationToken cancellationToken)
+    public Task<Equipment?> Handle(EntityQuery<RoomsDbContext, FindEquipmentByIdQuery, Equipment?> request, CancellationToken cancellationToken)
     {
         var id = request.Query.EquipmentId;
 

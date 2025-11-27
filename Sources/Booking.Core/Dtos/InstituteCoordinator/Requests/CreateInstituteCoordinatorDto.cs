@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Dtos.InstituteCoordinator.Requests;
+﻿namespace Booking.Core.Dtos.InstituteCoordinator.Requests;
 
 public record CreateInstituteCoordinatorDto
 {

@@ -1,8 +1,8 @@
-﻿using Rooms.Core.Dtos.InstituteCoordinator.Requests;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Domain.Models.InstituteCoordinators;
+﻿using Booking.Core.Dtos.InstituteCoordinator.Requests;
+using Booking.Domain.Models.InstituteCoordinators;
+using Commons.Domain.Queries.Abstractions;
 
-namespace Rooms.Core.Queries.Implementations.InstituteResponsible;
+namespace Booking.Core.Queries.InstituteResponsible;
 
 public sealed record FilterInstituteResponsibleQuery(
     int BatchSize,

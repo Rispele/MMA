@@ -1,7 +1,4 @@
-﻿using Rooms.Core.Clients.Interfaces;
-using Rooms.Core.Dtos.Responses;
-
-namespace Rooms.Infrastructure.Clients.Implementations;
+﻿namespace Commons.ExternalClients.InstituteDepartments;
 
 public class InstituteDepartmentClient : IInstituteDepartmentClient
 {

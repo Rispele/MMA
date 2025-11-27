@@ -2,10 +2,10 @@
 using FluentAssertions;
 using MathNet.Numerics.Random;
 using NPOI.XSSF.UserModel;
-using Rooms.Core.Dtos.OperatorDepartments;
-using Rooms.Core.Dtos.Room;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
+using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
+using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExportModels;
 using Rooms.Core.Services.Spreadsheets.Specifications;

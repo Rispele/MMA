@@ -1,7 +1,7 @@
-﻿using Rooms.Core.Dtos.BookingRequest.RoomEventCoordinator;
-using Rooms.Domain.Models.BookingRequests;
+﻿using Booking.Core.Dtos.BookingRequest.RoomEventCoordinator;
+using Booking.Domain.Models.BookingRequests;
 
-namespace Rooms.Core.Dtos.BookingRequest.Requests;
+namespace Booking.Core.Dtos.BookingRequest.Requests;
 
 public record PatchBookingRequestDto
 {

@@ -1,13 +1,13 @@
 ﻿using Commons;
-using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Equipment.Requests.Equipments;
-using Rooms.Core.Dtos.Equipment.Responses;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Core.Queries.Factories;
+using Commons.Domain.Queries.Abstractions;
+using Commons.Domain.Queries.Factories;
+using Rooms.Core.Interfaces.Dtos.Equipment;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
+using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
+using Rooms.Core.Interfaces.Services.Equipments;
+using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Core.Queries.Implementations.Equipment;
-using Rooms.Core.Services.Equipments.Interfaces;
 using Rooms.Core.Services.Equipments.Mappers;
-using Rooms.Core.Services.Rooms.Interfaces;
 using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipments;
 

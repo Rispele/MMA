@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Dtos.BookingRequest;
+﻿namespace Booking.Core.Dtos.BookingRequest;
 
 public class BookingCreatorDto
 {

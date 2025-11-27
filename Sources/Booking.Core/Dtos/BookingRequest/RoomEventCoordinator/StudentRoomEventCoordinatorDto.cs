@@ -1,6 +1,6 @@
-﻿using Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
+﻿using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 
-namespace Rooms.Core.Dtos.BookingRequest.RoomEventCoordinator;
+namespace Booking.Core.Dtos.BookingRequest.RoomEventCoordinator;
 
 public record StudentRoomEventCoordinatorDto : IRoomEventCoordinatorDto
 {

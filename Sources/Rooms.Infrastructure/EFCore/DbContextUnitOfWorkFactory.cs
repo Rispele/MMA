@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using Commons.Domain.Queries.Abstractions;
+using Commons.Domain.Queries.Factories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Core.Queries.Factories;
 
 namespace Rooms.Infrastructure.EFCore;
 

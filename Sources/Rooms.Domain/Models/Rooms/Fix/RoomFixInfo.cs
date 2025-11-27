@@ -1,4 +1,6 @@
-﻿namespace Rooms.Domain.Models.Rooms.Fix;
+﻿using Rooms.Domain.Propagated.Rooms;
+
+namespace Rooms.Domain.Models.Rooms.Fix;
 
 public class RoomFixInfo
 {

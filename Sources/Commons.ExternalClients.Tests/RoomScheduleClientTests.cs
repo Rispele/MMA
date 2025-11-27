@@ -1,8 +1,7 @@
-﻿using FluentAssertions;
-using Rooms.Core.Clients.RoomSchedule;
-using Rooms.Infrastructure.Clients.RoomSchedule;
+﻿using Commons.ExternalClients.RoomSchedule;
+using FluentAssertions;
 
-namespace Rooms.Tests.UnitTests.Clients;
+namespace Commons.ExternalClients.Tests;
 
 [TestFixture]
 public class RoomScheduleClientTests

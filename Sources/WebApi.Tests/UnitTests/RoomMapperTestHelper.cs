@@ -1,9 +1,9 @@
-﻿using Rooms.Core.Dtos.Files;
-using Rooms.Core.Dtos.Filtering;
-using Rooms.Core.Dtos.Room;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
-using Rooms.Core.Dtos.Room.Requests;
+﻿using Commons.Core.Models.Filtering;
+using Rooms.Core.Interfaces.Dtos.Files;
+using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Parameters;
+using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using WebApi.Models.Files;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;

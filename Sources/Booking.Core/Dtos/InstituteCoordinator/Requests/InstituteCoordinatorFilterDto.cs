@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Dtos.Filtering;
+﻿using Commons.Core.Models.Filtering;
 
-namespace Rooms.Core.Dtos.InstituteCoordinator.Requests;
+namespace Booking.Core.Dtos.InstituteCoordinator.Requests;
 
 public record InstituteCoordinatorFilterDto
 {

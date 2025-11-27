@@ -1,6 +1,5 @@
 ﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Rooms.Domain.Models.Rooms.Fix;
-using Rooms.Domain.Models.Rooms.Parameters;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Rooms.Infrastructure.Configuration;
 

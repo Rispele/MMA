@@ -9,7 +9,7 @@ using WebApi.Services.Interfaces;
 namespace WebApi.Services.Implementations;
 
 public class EquipmentTypeService(
-    Rooms.Core.Services.Equipments.Interfaces.IEquipmentTypeService equipmentTypeService,
+    Rooms.Core.Interfaces.Services.Equipments.IEquipmentTypeService equipmentTypeService,
     SpreadsheetService spreadsheetService) : IEquipmentTypeService
 {
     public async Task<EquipmentTypesResponseModel> GetEquipmentTypesAsync(

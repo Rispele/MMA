@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Rooms.Core.Dtos.Files;
-using Rooms.Core.Services.Rooms.Interfaces;
+using Rooms.Core.Interfaces.Dtos.Files;
+using Rooms.Core.Interfaces.Services.Rooms;
 using WebApi.Models.Files;
 
 namespace WebApi.Controllers;

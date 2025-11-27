@@ -8,7 +8,7 @@ using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class EquipmentSchemaService(Rooms.Core.Services.Equipments.Interfaces.IEquipmentSchemaService equipmentSchemaService,
+public class EquipmentSchemaService(Rooms.Core.Interfaces.Services.Equipments.IEquipmentSchemaService equipmentSchemaService,
     SpreadsheetService spreadsheetService) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(

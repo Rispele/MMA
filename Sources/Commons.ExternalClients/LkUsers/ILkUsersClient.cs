@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Clients.LkUsers;
+﻿namespace Commons.ExternalClients.LkUsers;
 
 public interface ILkUsersClient
 {

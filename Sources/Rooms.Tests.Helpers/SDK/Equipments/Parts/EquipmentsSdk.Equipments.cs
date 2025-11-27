@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
-using Rooms.Core.Dtos.Equipment;
-using Rooms.Core.Dtos.Equipment.Requests.Equipments;
-using Rooms.Core.Dtos.Equipment.Responses;
+using Rooms.Core.Interfaces.Dtos.Equipment;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
+using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
 
 namespace Rooms.Tests.Helpers.SDK.Equipments.Parts;
 

@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Queries.Abstractions;
+﻿namespace Commons.Domain.Queries.Abstractions;
 
 public interface IQuerySpecification<out TSelf, out TEntity>
     where TSelf : class, IQuerySpecification<TSelf, TEntity>

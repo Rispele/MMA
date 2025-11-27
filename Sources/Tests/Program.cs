@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Propagated.Equipments;
 using WebApi.Models.Equipment;
 using WebApi.Models.OperatorDepartments;
 using WebApi.Models.Requests.Equipments;

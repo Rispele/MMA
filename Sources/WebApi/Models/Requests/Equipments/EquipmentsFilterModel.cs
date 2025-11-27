@@ -1,4 +1,4 @@
-﻿using Rooms.Domain.Models.Equipments;
+﻿using Rooms.Domain.Propagated.Equipments;
 using WebApi.Models.Requests.Filtering;
 
 namespace WebApi.Models.Requests.Equipments;

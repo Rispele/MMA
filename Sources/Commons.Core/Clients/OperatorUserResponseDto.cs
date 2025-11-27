@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Rooms.Core.Dtos.Responses;
+namespace Commons.Core.Clients;
 
 public class OperatorUserResponseDto
 {

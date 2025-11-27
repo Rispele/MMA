@@ -1,5 +1,5 @@
-﻿using Rooms.Core.Dtos.OperatorDepartments;
-using Rooms.Core.Dtos.Room;
+﻿using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
+using Rooms.Core.Interfaces.Dtos.Room;
 
 namespace Rooms.Core.Services.Spreadsheets.ExportModels;
 

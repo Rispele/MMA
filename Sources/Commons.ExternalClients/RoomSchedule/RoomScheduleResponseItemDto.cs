@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Rooms.Core.Clients.RoomSchedule;
+namespace Commons.ExternalClients.RoomSchedule;
 
 public record RoomScheduleResponseItemDto
 {

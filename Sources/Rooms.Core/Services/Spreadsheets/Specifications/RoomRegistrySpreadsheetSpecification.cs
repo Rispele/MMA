@@ -1,5 +1,5 @@
 ﻿using Commons;
-using Rooms.Core.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExcelValueTypes;
 using Rooms.Core.Services.Spreadsheets.ExportModels;

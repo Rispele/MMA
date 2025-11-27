@@ -1,4 +1,4 @@
-﻿namespace Rooms.Infrastructure.Clients.Implementations;
+﻿namespace Commons.ExternalClients.InstituteDepartments;
 
 public class InstituteDepartmentsTestData
 {

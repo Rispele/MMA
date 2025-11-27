@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Commons.Infrastructure.EFCore.QueryHandlers;
+using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 
-public class FindRoomsByIdQueryHandler : IQueryHandler<FindRoomsByIdQuery, Room>
+public class FindRoomsByIdQueryHandler : IQueryHandler<RoomsDbContext, FindRoomsByIdQuery, Room>
 {
-    public Task<IAsyncEnumerable<Room>> Handle(EntityQuery<FindRoomsByIdQuery, IAsyncEnumerable<Room>> request, CancellationToken cancellationToken)
+    public Task<IAsyncEnumerable<Room>> Handle(EntityQuery<RoomsDbContext, FindRoomsByIdQuery, IAsyncEnumerable<Room>> request, CancellationToken cancellationToken)
     {
         var ids = request.Query.RoomIds;
 

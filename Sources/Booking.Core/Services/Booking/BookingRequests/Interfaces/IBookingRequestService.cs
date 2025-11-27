@@ -1,8 +1,8 @@
-﻿using Rooms.Core.Dtos.BookingRequest;
-using Rooms.Core.Dtos.BookingRequest.Requests;
-using Rooms.Core.Dtos.BookingRequest.Responses;
+﻿using Booking.Core.Dtos.BookingRequest;
+using Booking.Core.Dtos.BookingRequest.Requests;
+using Booking.Core.Dtos.BookingRequest.Responses;
 
-namespace Rooms.Core.Services.Booking.BookingRequests.Interfaces;
+namespace Booking.Core.Services.Booking.BookingRequests.Interfaces;
 
 public interface IBookingRequestService
 {

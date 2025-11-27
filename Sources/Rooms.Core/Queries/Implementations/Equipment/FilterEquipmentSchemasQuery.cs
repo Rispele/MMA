@@ -1,5 +1,5 @@
-﻿using Rooms.Core.Dtos.Equipment.Requests.EquipmentSchemas;
-using Rooms.Core.Queries.Abstractions;
+﻿using Commons.Domain.Queries.Abstractions;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Queries.Implementations.Equipment;

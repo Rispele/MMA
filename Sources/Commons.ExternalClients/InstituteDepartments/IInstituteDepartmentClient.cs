@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Clients.Interfaces;
+﻿namespace Commons.ExternalClients.InstituteDepartments;
 
 public interface IInstituteDepartmentClient
 {

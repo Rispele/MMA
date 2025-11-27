@@ -1,14 +1,14 @@
-﻿using JetBrains.Annotations;
+﻿using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
+using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
-using Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
 
-namespace Rooms.Domain.Models.BookingRequests;
+namespace Booking.Domain.Models.BookingRequests;
 
 [GenerateFieldNames]
 public class BookingRequest
 {
     private readonly int? id = null;
-    private readonly List<int> roomIds = null!;
+    private List<int> roomIds = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()
@@ -92,6 +92,6 @@ public class BookingRequest
     public void SetRooms(List<int> roomsToSet)
     {
         roomIds.Clear();
-        roomIds.AddRange(roomsToSet);
+        roomIds = roomsToSet;
     }
 }

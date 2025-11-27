@@ -1,6 +1,6 @@
-﻿using MediatR;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Infrastructure.EFCore.QueryHandlers;
+﻿using Commons.Domain.Queries.Abstractions;
+using Commons.Infrastructure.EFCore.QueryHandlers;
+using MediatR;
 
 namespace Rooms.Infrastructure.EFCore;
 
@@ -11,7 +11,7 @@ public class RoomsDbContextUnitOfWork(RoomsDbContext dbContext, IMediator mediat
         CancellationToken cancellationToken)
         where TQuery : class, IQuerySpecification<TQuery, TEntity>
     {
-        var query = new EntityQuery<TQuery, IAsyncEnumerable<TEntity>>(querySpecification.Self(), dbContext);
+        var query = new EntityQuery<RoomsDbContext, TQuery, IAsyncEnumerable<TEntity>>(querySpecification.Self(), dbContext);
 
         return mediator.Send(query, cancellationToken);
     }
@@ -21,7 +21,7 @@ public class RoomsDbContextUnitOfWork(RoomsDbContext dbContext, IMediator mediat
         CancellationToken cancellationToken)
         where TQuery : class, ISingleQuerySpecification<TQuery, TEntity>
     {
-        var query = new EntityQuery<TQuery, TEntity>(querySpecification.Self(), dbContext);
+        var query = new EntityQuery<RoomsDbContext, TQuery, TEntity>(querySpecification.Self(), dbContext);
 
         return mediator.Send(query, cancellationToken);
     }

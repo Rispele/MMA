@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Services.Booking.BookingRequests;
-using Rooms.Core.Services.Booking.BookingRequests.Interfaces;
-using Rooms.Core.Services.InstituteCoordinators;
-using Rooms.Core.Services.InstituteCoordinators.Interfaces;
+﻿using Booking.Core.Services.Booking.BookingRequests;
+using Booking.Core.Services.Booking.BookingRequests.Interfaces;
+using Booking.Core.Services.InstituteCoordinators;
+using Booking.Core.Services.InstituteCoordinators.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Rooms.Core.ServicesConfiguration;
+namespace Booking.Core.ServicesConfiguration;
 
 public static class ServicesConfigurationExtensions
 {
-    public static IServiceCollection ConfigureServicesForRoomsCore(this IServiceCollection serviceCollection)
+    public static IServiceCollection ConfigureServicesForBookingCore(this IServiceCollection serviceCollection)
     {
         return serviceCollection
             .AddScoped<IInstituteCoordinatorsService, InstituteCoordinatorsService>()

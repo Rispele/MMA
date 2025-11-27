@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Rooms.Core.Dtos.Filtering;
+namespace Commons.Core.Models.Filtering;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum SortDirectionDto

@@ -1,5 +1,5 @@
-﻿using Rooms.Core.Dtos.OperatorDepartments.Requests;
-using Rooms.Core.Queries.Abstractions;
+﻿using Commons.Domain.Queries.Abstractions;
+using Rooms.Core.Interfaces.Dtos.OperatorDepartments.Requests;
 using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Core.Queries.Implementations.OperatorDepartments;

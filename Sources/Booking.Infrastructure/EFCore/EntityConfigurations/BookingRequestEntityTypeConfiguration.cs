@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Booking.Domain.Models.BookingRequests;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Rooms.Domain.Models.BookingRequests;
 
-namespace Rooms.Infrastructure.EFCore.EntityConfigurations.BookingRequests;
+namespace Booking.Infrastructure.EFCore.EntityConfigurations;
 
 public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<BookingRequest>
 {

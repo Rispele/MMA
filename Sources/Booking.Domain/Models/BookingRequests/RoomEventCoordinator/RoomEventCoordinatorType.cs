@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
+namespace Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomEventCoordinatorType

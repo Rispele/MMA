@@ -1,6 +1,4 @@
-﻿using Rooms.Core.Clients.LkUsers;
-
-namespace Rooms.Infrastructure.Clients.LkUser;
+﻿namespace Commons.ExternalClients.LkUsers;
 
 public static class LkUserTestData
 {

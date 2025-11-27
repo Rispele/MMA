@@ -1,8 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
-using Rooms.Core.Clients.RoomSchedule;
 
-namespace Rooms.Infrastructure.Clients.RoomSchedule;
+namespace Commons.ExternalClients.RoomSchedule;
 
 public class RoomScheduleClient : IRoomScheduleClient
 {

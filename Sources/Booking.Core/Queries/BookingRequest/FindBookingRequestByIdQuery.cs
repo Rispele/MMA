@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Queries.Abstractions;
+﻿using Commons.Domain.Queries.Abstractions;
 
-namespace Rooms.Core.Queries.Implementations.BookingRequest;
+namespace Booking.Core.Queries.BookingRequest;
 
 public sealed record FindBookingRequestByIdQuery(int BookingRequestId)
     : ISingleQuerySpecification<FindBookingRequestByIdQuery, Domain.Models.BookingRequests.BookingRequest>;

@@ -1,4 +1,4 @@
-﻿using Rooms.Domain.Models.BookingRequests;
+﻿using Booking.Domain.Models.BookingRequests;
 using WebApi.Models.BookingRequest.RoomEventCoordinator;
 
 namespace WebApi.Models.BookingRequest;

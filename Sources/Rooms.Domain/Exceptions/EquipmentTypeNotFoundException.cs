@@ -1,3 +1,5 @@
-﻿namespace Rooms.Domain.Exceptions;
+﻿using Commons.Domain.Exceptions;
+
+namespace Rooms.Domain.Exceptions;
 
 public class EquipmentTypeNotFoundException(string message) : DomainException(code: 404, errorCode: "EquipmentTypeNotFound", message);

@@ -1,4 +1,4 @@
-﻿using WebApi.Models.InstituteResponsible;
+﻿using WebApi.Models.InstituteCoordinator;
 
 namespace WebApi.Models.Responses;
 

@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Rooms.Core.Dtos.Responses;
+namespace Commons.ExternalClients.InstituteDepartments;
 
 public class InstituteDepartmentResponseDto
 {

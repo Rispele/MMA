@@ -1,9 +1,9 @@
-﻿using Rooms.Core.Clients.LkUsers;
-using Rooms.Core.Dtos.InstituteCoordinator;
-using Rooms.Core.Dtos.InstituteCoordinator.Requests;
-using Rooms.Core.Dtos.InstituteCoordinator.Responses;
+﻿using Booking.Core.Dtos.InstituteCoordinator;
+using Booking.Core.Dtos.InstituteCoordinator.Requests;
+using Booking.Core.Dtos.InstituteCoordinator.Responses;
+using Commons.ExternalClients.LkUsers;
 
-namespace Rooms.Core.Services.InstituteCoordinators.Interfaces;
+namespace Booking.Core.Services.InstituteCoordinators.Interfaces;
 
 public interface IInstituteCoordinatorsService
 {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Rooms.Core.Interfaces.Services.Equipments;
+using Rooms.Core.Interfaces.Services.OperatorDepartments;
+using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Core.Services.Equipments;
-using Rooms.Core.Services.Equipments.Interfaces;
 using Rooms.Core.Services.OperatorDepartments;
-using Rooms.Core.Services.OperatorDepartments.Interfaces;
 using Rooms.Core.Services.Rooms;
-using Rooms.Core.Services.Rooms.Interfaces;
 using Rooms.Core.Services.Spreadsheets;
 
 namespace Rooms.Core.ServicesConfiguration;

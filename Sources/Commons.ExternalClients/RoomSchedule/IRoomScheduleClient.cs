@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Clients.RoomSchedule;
+﻿namespace Commons.ExternalClients.RoomSchedule;
 
 public interface IRoomScheduleClient
 {

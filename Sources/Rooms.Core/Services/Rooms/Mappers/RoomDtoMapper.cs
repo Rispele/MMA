@@ -1,10 +1,9 @@
 ﻿using Riok.Mapperly.Abstractions;
-using Rooms.Core.Dtos.Room;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
+using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Domain.Models.Rooms;
-using Rooms.Domain.Models.Rooms.Fix;
-using Rooms.Domain.Models.Rooms.Parameters;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Rooms.Core.Services.Rooms.Mappers;
 

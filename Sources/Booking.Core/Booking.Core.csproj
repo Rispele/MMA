@@ -22,6 +22,7 @@
       <ProjectReference Include="..\Commons.Domain\Commons.Domain.csproj" />
       <ProjectReference Include="..\Commons.ExternalClients\Commons.ExternalClients.csproj" />
       <ProjectReference Include="..\Commons\Commons.csproj" />
+      <ProjectReference Include="..\Rooms.Core.Interfaces\Rooms.Core.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

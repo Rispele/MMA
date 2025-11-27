@@ -1,7 +1,7 @@
-﻿using Rooms.Core.Queries.Abstractions;
-using Rooms.Domain.Models.InstituteCoordinators;
+﻿using Booking.Domain.Models.InstituteCoordinators;
+using Commons.Domain.Queries.Abstractions;
 
-namespace Rooms.Core.Queries.Implementations.InstituteResponsible;
+namespace Booking.Core.Queries.InstituteResponsible;
 
 public sealed record FindInstituteResponsibleByIdQuery(int InstituteResponsibleId)
     : ISingleQuerySpecification<FindInstituteResponsibleByIdQuery, InstituteCoordinator>;

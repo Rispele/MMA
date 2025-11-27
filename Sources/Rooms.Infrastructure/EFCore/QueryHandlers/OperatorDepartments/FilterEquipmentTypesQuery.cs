@@ -1,17 +1,18 @@
 ﻿using System.Linq.Expressions;
+using Commons.Core.Models.Filtering;
+using Commons.Infrastructure.EFCore.QueryHandlers;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Dtos.Filtering;
-using Rooms.Core.Dtos.OperatorDepartments.Requests;
+using Rooms.Core.Interfaces.Dtos.OperatorDepartments.Requests;
 using Rooms.Core.Queries.Implementations.OperatorDepartments;
 using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.OperatorDepartments;
 
-public class FilterOperatorDepartmentsQueryHandler : IQueryHandler<FilterOperatorDepartmentsQuery, OperatorDepartment>
+public class FilterOperatorDepartmentsQueryHandler : IQueryHandler<RoomsDbContext, FilterOperatorDepartmentsQuery, OperatorDepartment>
 {
     public Task<IAsyncEnumerable<OperatorDepartment>> Handle(
-        EntityQuery<FilterOperatorDepartmentsQuery, IAsyncEnumerable<OperatorDepartment>> request,
+        EntityQuery<RoomsDbContext, FilterOperatorDepartmentsQuery, IAsyncEnumerable<OperatorDepartment>> request,
         CancellationToken cancellationToken)
     {
         IQueryable<OperatorDepartment> operatorDepartments = request.Context.OperatorDepartments.Include(x => x.Rooms);

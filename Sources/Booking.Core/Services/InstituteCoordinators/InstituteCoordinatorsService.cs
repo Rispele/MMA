@@ -1,18 +1,18 @@
-﻿using Commons;
-using Rooms.Core.Clients.Interfaces;
-using Rooms.Core.Clients.LkUsers;
-using Rooms.Core.Dtos.InstituteCoordinator;
-using Rooms.Core.Dtos.InstituteCoordinator.Requests;
-using Rooms.Core.Dtos.InstituteCoordinator.Responses;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Core.Queries.Factories;
-using Rooms.Core.Queries.Implementations.InstituteResponsible;
-using Rooms.Core.Services.InstituteCoordinators.Interfaces;
-using Rooms.Core.Services.InstituteCoordinators.Mappers;
-using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.InstituteCoordinators;
+﻿using Booking.Core.Dtos.InstituteCoordinator;
+using Booking.Core.Dtos.InstituteCoordinator.Requests;
+using Booking.Core.Dtos.InstituteCoordinator.Responses;
+using Booking.Core.Exceptions;
+using Booking.Core.Queries.InstituteResponsible;
+using Booking.Core.Services.InstituteCoordinators.Interfaces;
+using Booking.Core.Services.InstituteCoordinators.Mappers;
+using Booking.Domain.Models.InstituteCoordinators;
+using Commons;
+using Commons.Domain.Queries.Abstractions;
+using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.InstituteDepartments;
+using Commons.ExternalClients.LkUsers;
 
-namespace Rooms.Core.Services.InstituteCoordinators;
+namespace Booking.Core.Services.InstituteCoordinators;
 
 public class InstituteCoordinatorsService(
     IUnitOfWorkFactory unitOfWorkFactory,

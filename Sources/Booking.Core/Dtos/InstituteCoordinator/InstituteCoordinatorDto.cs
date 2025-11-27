@@ -1,4 +1,4 @@
-﻿namespace Rooms.Core.Dtos.InstituteCoordinator;
+﻿namespace Booking.Core.Dtos.InstituteCoordinator;
 
 public class InstituteCoordinatorDto
 {

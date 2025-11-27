@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Booking.Domain.Models.InstituteCoordinators;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Rooms.Domain.Models.InstituteCoordinators;
 
-namespace Rooms.Infrastructure.EFCore.EntityConfigurations.InstituteResponsibles;
+namespace Booking.Infrastructure.EFCore.EntityConfigurations;
 
 public class InstituteCoordinatorEntityTypeConfiguration : IEntityTypeConfiguration<InstituteCoordinator>
 {

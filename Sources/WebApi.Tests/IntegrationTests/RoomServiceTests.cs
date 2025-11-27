@@ -2,9 +2,9 @@
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
 using Microsoft.AspNetCore.JsonPatch;
-using Rooms.Core.Dtos.Room;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
+using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Domain.Exceptions;
 using Rooms.Tests.Helpers.SDK.Rooms;
 using WebApi.ModelConverters;

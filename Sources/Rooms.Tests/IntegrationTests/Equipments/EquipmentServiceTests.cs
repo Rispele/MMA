@@ -2,8 +2,8 @@
 using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
-using Rooms.Core.Dtos.Equipment.Requests.Equipments;
-using Rooms.Core.Services.Equipments.Interfaces;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
+using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests.Equipments;

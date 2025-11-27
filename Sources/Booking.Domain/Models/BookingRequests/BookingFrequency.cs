@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Rooms.Domain.Models.BookingRequests;
+namespace Booking.Domain.Models.BookingRequests;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum BookingFrequency

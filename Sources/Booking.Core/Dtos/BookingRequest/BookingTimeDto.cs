@@ -1,6 +1,6 @@
-﻿using Rooms.Domain.Models.BookingRequests;
+﻿using Booking.Domain.Models.BookingRequests;
 
-namespace Rooms.Core.Dtos.BookingRequest;
+namespace Booking.Core.Dtos.BookingRequest;
 
 public class BookingTimeDto
 {

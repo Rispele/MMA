@@ -1,6 +1,6 @@
-﻿using Rooms.Core.Clients.LkUsers;
+﻿using Commons.ExternalClients.LkUsers;
 
-namespace Rooms.Core.Services.LkUser;
+namespace Booking.Core.Services.LkUser;
 
 public class LkUserService(ILkUsersClient lkUsersClient) : ILkUserService
 {

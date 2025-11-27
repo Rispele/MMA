@@ -1,17 +1,19 @@
-﻿using Commons;
-using Rooms.Core.Dtos.BookingRequest;
-using Rooms.Core.Dtos.BookingRequest.Requests;
-using Rooms.Core.Dtos.BookingRequest.Responses;
-using Rooms.Core.Queries.Abstractions;
-using Rooms.Core.Queries.Factories;
-using Rooms.Core.Queries.Implementations.BookingRequest;
-using Rooms.Core.Services.Booking.BookingRequests.Interfaces;
-using Rooms.Core.Services.Booking.BookingRequests.Mappers;
-using Rooms.Core.Services.LkUser;
-using Rooms.Domain.Exceptions;
-using Rooms.Domain.Models.BookingRequests;
+﻿using Booking.Core.Dtos.BookingRequest;
+using Booking.Core.Dtos.BookingRequest.Requests;
+using Booking.Core.Dtos.BookingRequest.Responses;
+using Booking.Core.Exceptions;
+using Booking.Core.Queries.BookingRequest;
+using Booking.Core.Services.Booking.BookingRequests.Interfaces;
+using Booking.Core.Services.Booking.BookingRequests.Mappers;
+using Booking.Core.Services.LkUser;
+using Booking.Domain.Models.BookingRequests;
+using Commons;
+using Commons.Domain.Queries.Abstractions;
+using Commons.Domain.Queries.Factories;
+using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Services.Rooms;
 
-namespace Rooms.Core.Services.Booking.BookingRequests;
+namespace Booking.Core.Services.Booking.BookingRequests;
 
 public class BookingRequestService(
     IUnitOfWorkFactory unitOfWorkFactory,
@@ -52,7 +54,7 @@ public class BookingRequestService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var rooms = await (await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds.ToArray()), cancellationToken)).ToListAsync(cancellationToken);
+        var rooms = await GetRooms(dto.RoomIds, cancellationToken);
 
         var bookingRequest = new BookingRequest(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
@@ -67,7 +69,7 @@ public class BookingRequestService(
             dto.Status,
             dto.ModeratorComment,
             dto.BookingScheduleStatus,
-            rooms);
+            rooms.Select(t => t.Id).ToList());
 
         context.Add(bookingRequest);
 
@@ -84,12 +86,12 @@ public class BookingRequestService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var bookingRequestToPatch = await GetBookingRequestByIdInner(bookingRequestId, cancellationToken, context);
-        var rooms = await (await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds.ToArray()), cancellationToken)).ToListAsync(cancellationToken);
+        var rooms = await GetRooms(dto.RoomIds, cancellationToken);
 
-        if (rooms.Count < dto.RoomIds.Length)
+        if (rooms.Length < dto.RoomIds.Length)
         {
             var roomIdsNotFound = dto.RoomIds.Where(t => rooms.All(r => r.Id != t)).JoinStrings(", ");
-            throw new RoomNotFoundException($"Several rooms was not found: [{roomIdsNotFound}]");
+            throw new InvalidRequestException($"Several rooms was not found: [{roomIdsNotFound}]");
         }
 
         bookingRequestToPatch.Update(
@@ -105,11 +107,23 @@ public class BookingRequestService(
             dto.Status,
             dto.ModeratorComment,
             dto.BookingScheduleStatus);
-        bookingRequestToPatch.SetRooms(rooms);
+        bookingRequestToPatch.SetRooms(rooms.Select(t => t.Id).ToList());
 
         await context.Commit(cancellationToken);
 
         return BookingRequestDtoMapper.MapBookingRequestToDto(bookingRequestToPatch);
+    }
+
+    private async Task<RoomDto[]> GetRooms(int[] roomIds, CancellationToken cancellationToken)
+    {
+        var rooms = await roomService.FindRoomByIds(roomIds, cancellationToken);
+        if (rooms.Length >= roomIds.Length)
+        {
+            return rooms;
+        }
+
+        var roomIdsNotFound = roomIds.Where(t => rooms.All(r => r.Id != t)).JoinStrings(", ");
+        throw new InvalidRequestException($"Several rooms was not found: [{roomIdsNotFound}]");
     }
 
     private async Task<BookingRequest> GetBookingRequestByIdInner(

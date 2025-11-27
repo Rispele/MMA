@@ -1,5 +1,6 @@
-﻿using Rooms.Core.Dtos.Equipment;
+﻿using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Propagated.Equipments;
 
 namespace Rooms.Tests.UnitTests;
 

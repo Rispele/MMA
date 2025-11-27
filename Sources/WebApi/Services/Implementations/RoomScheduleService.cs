@@ -1,4 +1,5 @@
-﻿using Commons;
+﻿using Booking.Core.Services.Schedule;
+using Commons;
 using WebApi.ModelConverters;
 using WebApi.Models.Requests.RoomSchedule;
 using WebApi.Models.Responses;
@@ -7,7 +8,7 @@ using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class RoomScheduleService(Rooms.Core.Services.Rooms.Interfaces.IRoomScheduleService roomScheduleService) : IRoomScheduleService
+public class RoomScheduleService(IScheduleService roomScheduleService) : IRoomScheduleService
 {
     public async Task<RoomScheduleResponseModel> GetRoomSchedule(GetRoomScheduleModel model, CancellationToken cancellationToken)
     {

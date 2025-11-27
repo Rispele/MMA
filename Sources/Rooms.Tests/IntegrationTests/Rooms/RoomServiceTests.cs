@@ -1,12 +1,12 @@
-﻿using FluentAssertions;
+﻿using Commons.Core.Models.Filtering;
+using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
-using Rooms.Core.Dtos.Filtering;
-using Rooms.Core.Dtos.Room;
-using Rooms.Core.Dtos.Room.Fix;
-using Rooms.Core.Dtos.Room.Parameters;
-using Rooms.Core.Dtos.Room.Requests;
-using Rooms.Core.Services.Rooms.Interfaces;
+using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.Room.Fix;
+using Rooms.Core.Interfaces.Dtos.Room.Parameters;
+using Rooms.Core.Interfaces.Dtos.Room.Requests;
+using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Domain.Exceptions;
 using Rooms.Tests.Helpers.SDK.Rooms;
 

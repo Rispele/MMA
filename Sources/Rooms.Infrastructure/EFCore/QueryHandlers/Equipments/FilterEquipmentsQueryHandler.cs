@@ -1,17 +1,18 @@
 ﻿using System.Linq.Expressions;
+using Commons.Core.Models.Filtering;
+using Commons.Infrastructure.EFCore.QueryHandlers;
 using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
-using Rooms.Core.Dtos.Equipment.Requests.Equipments;
-using Rooms.Core.Dtos.Filtering;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
 using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
 
-public class FilterEquipmentsQueryHandler : IQueryHandler<FilterEquipmentsQuery, Equipment>
+public class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, FilterEquipmentsQuery, Equipment>
 {
     public Task<IAsyncEnumerable<Equipment>> Handle(
-        EntityQuery<FilterEquipmentsQuery, IAsyncEnumerable<Equipment>> request,
+        EntityQuery<RoomsDbContext, FilterEquipmentsQuery, IAsyncEnumerable<Equipment>> request,
         CancellationToken cancellationToken)
     {
         IQueryable<Equipment> equipments = request.Context.Equipments

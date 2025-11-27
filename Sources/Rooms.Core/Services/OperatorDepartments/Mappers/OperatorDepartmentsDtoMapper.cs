@@ -1,6 +1,6 @@
 ﻿using Commons;
-using Rooms.Core.Dtos.OperatorDepartments;
-using Rooms.Core.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
+using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Core.Services.OperatorDepartments.Mappers;

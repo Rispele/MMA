@@ -1,7 +1,7 @@
-﻿using Rooms.Core.Dtos.BookingRequest.Requests;
-using Rooms.Core.Queries.Abstractions;
+﻿using Booking.Core.Dtos.BookingRequest.Requests;
+using Commons.Domain.Queries.Abstractions;
 
-namespace Rooms.Core.Queries.Implementations.BookingRequest;
+namespace Booking.Core.Queries.BookingRequest;
 
 public sealed record FilterBookingRequestsQuery(
     int BatchSize,
