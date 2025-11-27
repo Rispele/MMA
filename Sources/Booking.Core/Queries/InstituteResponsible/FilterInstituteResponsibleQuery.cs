@@ -1,4 +1,4 @@
-﻿using Booking.Core.Dtos.InstituteCoordinator.Requests;
+﻿using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Requests;
 using Booking.Domain.Models.InstituteCoordinators;
 using Commons.Domain.Queries.Abstractions;
 

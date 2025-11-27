@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
-using Booking.Core.Dtos.Schedule;
+using Booking.Core.Interfaces.Dtos.Schedule;
+using Booking.Core.Interfaces.Services.Schedule;
 using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.Logging;
 using Rooms.Core.Interfaces.Services.Rooms;

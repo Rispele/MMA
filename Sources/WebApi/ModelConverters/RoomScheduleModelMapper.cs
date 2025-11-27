@@ -1,4 +1,4 @@
-﻿using Booking.Core.Dtos.Schedule;
+﻿using Booking.Core.Interfaces.Dtos.Schedule;
 using Riok.Mapperly.Abstractions;
 using WebApi.Models.Requests.RoomSchedule;
 

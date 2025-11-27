@@ -1,4 +1,5 @@
 ﻿using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
+using Booking.Domain.Propagated.BookingRequests;
 using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 

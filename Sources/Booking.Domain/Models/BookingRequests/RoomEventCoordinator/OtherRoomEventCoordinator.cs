@@ -1,4 +1,6 @@
-﻿namespace Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
+﻿using Booking.Domain.Propagated.BookingRequests;
+
+namespace Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 
 public record OtherRoomEventCoordinator : IRoomEventCoordinator
 {

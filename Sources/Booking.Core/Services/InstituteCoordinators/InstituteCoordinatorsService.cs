@@ -1,9 +1,9 @@
-﻿using Booking.Core.Dtos.InstituteCoordinator;
-using Booking.Core.Dtos.InstituteCoordinator.Requests;
-using Booking.Core.Dtos.InstituteCoordinator.Responses;
-using Booking.Core.Exceptions;
+﻿using Booking.Core.Exceptions;
+using Booking.Core.Interfaces.Dtos.InstituteCoordinator;
+using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Requests;
+using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Responses;
+using Booking.Core.Interfaces.Services.InstituteCoordinators;
 using Booking.Core.Queries.InstituteResponsible;
-using Booking.Core.Services.InstituteCoordinators.Interfaces;
 using Booking.Core.Services.InstituteCoordinators.Mappers;
 using Booking.Domain.Models.InstituteCoordinators;
 using Commons;

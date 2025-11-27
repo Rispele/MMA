@@ -1,4 +1,4 @@
-﻿using Booking.Core.Services.Schedule;
+﻿using Booking.Core.Interfaces.Services.Schedule;
 using Commons;
 using WebApi.ModelConverters;
 using WebApi.Models.Requests.RoomSchedule;

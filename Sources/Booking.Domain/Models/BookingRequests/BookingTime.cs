@@ -1,4 +1,6 @@
-﻿namespace Booking.Domain.Models.BookingRequests;
+﻿using Booking.Domain.Propagated.BookingRequests;
+
+namespace Booking.Domain.Models.BookingRequests;
 
 public record BookingTime
 {

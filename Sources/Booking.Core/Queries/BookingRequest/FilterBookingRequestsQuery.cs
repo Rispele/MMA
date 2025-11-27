@@ -1,4 +1,4 @@
-﻿using Booking.Core.Dtos.BookingRequest.Requests;
+﻿using Booking.Core.Interfaces.Dtos.BookingRequest.Requests;
 using Commons.Domain.Queries.Abstractions;
 
 namespace Booking.Core.Queries.BookingRequest;

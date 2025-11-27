@@ -6,7 +6,7 @@ using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class BookingRequestService(Booking.Core.Services.Booking.BookingRequests.Interfaces.IBookingRequestService bookingRequestService) : IBookingRequestService
+public class BookingRequestService(Booking.Core.Interfaces.Services.BookingRequests.IBookingRequestService bookingRequestService) : IBookingRequestService
 {
     public async Task<BookingRequestsResponseModel> GetBookingRequestsAsync(
         GetBookingRequestsModel model,

@@ -1,5 +1,5 @@
-﻿using Booking.Core.Dtos.BookingRequest;
-using Booking.Core.Dtos.BookingRequest.RoomEventCoordinator;
+﻿using Booking.Core.Interfaces.Dtos.BookingRequest;
+using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
 using Booking.Domain.Models.BookingRequests;
 using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Riok.Mapperly.Abstractions;

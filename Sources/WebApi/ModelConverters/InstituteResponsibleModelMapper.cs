@@ -1,5 +1,5 @@
-﻿using Booking.Core.Dtos.InstituteCoordinator;
-using Booking.Core.Dtos.InstituteCoordinator.Requests;
+﻿using Booking.Core.Interfaces.Dtos.InstituteCoordinator;
+using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Requests;
 using Riok.Mapperly.Abstractions;
 using WebApi.Models.InstituteCoordinator;
 using WebApi.Models.Requests.InstituteResponsible;

@@ -1,4 +1,4 @@
-﻿using Booking.Core.Dtos.InstituteCoordinator;
+﻿using Booking.Core.Interfaces.Dtos.InstituteCoordinator;
 using Booking.Domain.Models.InstituteCoordinators;
 using Riok.Mapperly.Abstractions;
 

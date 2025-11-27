@@ -1,7 +1,7 @@
-﻿using Booking.Core.Services.Booking.BookingRequests;
-using Booking.Core.Services.Booking.BookingRequests.Interfaces;
+﻿using Booking.Core.Interfaces.Services.BookingRequests;
+using Booking.Core.Interfaces.Services.InstituteCoordinators;
+using Booking.Core.Services.Booking.BookingRequests;
 using Booking.Core.Services.InstituteCoordinators;
-using Booking.Core.Services.InstituteCoordinators.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Booking.Core.ServicesConfiguration;

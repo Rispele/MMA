@@ -1,4 +1,4 @@
-﻿using Booking.Core.Services.InstituteCoordinators.Interfaces;
+﻿using Booking.Core.Interfaces.Services.InstituteCoordinators;
 using WebApi.ModelConverters;
 using WebApi.Models.InstituteCoordinator;
 using WebApi.Models.Requests.InstituteResponsible;

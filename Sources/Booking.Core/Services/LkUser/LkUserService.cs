@@ -1,4 +1,5 @@
-﻿using Commons.ExternalClients.LkUsers;
+﻿using Booking.Core.Interfaces.Services.LkUser;
+using Commons.ExternalClients.LkUsers;
 
 namespace Booking.Core.Services.LkUser;
 
