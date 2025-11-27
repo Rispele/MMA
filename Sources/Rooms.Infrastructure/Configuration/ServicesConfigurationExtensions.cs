@@ -1,5 +1,6 @@
 ﻿using Commons.Domain.Queries.Factories;
 using Microsoft.Extensions.DependencyInjection;
+using Rooms.Core;
 using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Core.Interfaces.Services.OperatorDepartments;
 using Rooms.Core.Interfaces.Services.Rooms;
@@ -21,9 +22,10 @@ public static class ServicesConfigurationExtensions
     public static IServiceCollection ConfigureServicesForRooms(this IServiceCollection serviceCollection)
     {
         return serviceCollection
+            .AddKeyedScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>(KnownScopes.Rooms)
+          
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()
-            .AddScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>()
             .AddScoped<ISpreadsheetExporter, ExcelExporter>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IEquipmentService, EquipmentService>()

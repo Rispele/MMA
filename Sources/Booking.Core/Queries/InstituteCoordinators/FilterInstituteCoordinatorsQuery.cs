@@ -2,11 +2,11 @@
 using Booking.Domain.Models.InstituteCoordinators;
 using Commons.Domain.Queries.Abstractions;
 
-namespace Booking.Core.Queries.InstituteResponsible;
+namespace Booking.Core.Queries.InstituteCoordinators;
 
-internal sealed record FilterInstituteResponsibleQuery(
+internal sealed record FilterInstituteCoordinatorsQuery(
     int BatchSize,
     int BatchNumber,
     int AfterInstituteResponsibleId,
     InstituteCoordinatorFilterDto? Filter)
-    : IQuerySpecification<FilterInstituteResponsibleQuery, InstituteCoordinator>;
+    : IQuerySpecification<FilterInstituteCoordinatorsQuery, InstituteCoordinator>;

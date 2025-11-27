@@ -15,7 +15,7 @@ using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Rooms;
 
-internal class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
+internal class RoomService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken)
     {

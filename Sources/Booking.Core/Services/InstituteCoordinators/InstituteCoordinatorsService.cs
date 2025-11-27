@@ -3,7 +3,7 @@ using Booking.Core.Interfaces.Dtos.InstituteCoordinator;
 using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Requests;
 using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Responses;
 using Booking.Core.Interfaces.Services.InstituteCoordinators;
-using Booking.Core.Queries.InstituteResponsible;
+using Booking.Core.Queries.InstituteCoordinators;
 using Booking.Core.Services.InstituteCoordinators.Mappers;
 using Booking.Domain.Models.InstituteCoordinators;
 using Commons;
@@ -15,7 +15,7 @@ using Commons.ExternalClients.LkUsers;
 namespace Booking.Core.Services.InstituteCoordinators;
 
 public class InstituteCoordinatorsService(
-    IUnitOfWorkFactory unitOfWorkFactory,
+    [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,
     ILkUsersClient lkUsersClient,
     IInstituteDepartmentClient instituteDepartmentClient) : IInstituteCoordinatorsService
 {
@@ -46,7 +46,7 @@ public class InstituteCoordinatorsService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterInstituteResponsibleQuery(dto.BatchSize, dto.BatchNumber, dto.AfterInstituteResponsibleId, dto.Filter);
+        var query = new FilterInstituteCoordinatorsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterInstituteResponsibleId, dto.Filter);
 
         var instituteResponsible = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
@@ -94,7 +94,7 @@ public class InstituteCoordinatorsService(
         CancellationToken cancellationToken,
         IUnitOfWork context)
     {
-        var query = new FindInstituteResponsibleByIdQuery(instituteResponsibleId);
+        var query = new FindInstituteCoordinatorByIdQuery(instituteResponsibleId);
 
         return await context.ApplyQuery(query, cancellationToken) ??
                throw new InstituteCoordinatorNotFoundException($"InstituteResponsible [{instituteResponsibleId}] not found");

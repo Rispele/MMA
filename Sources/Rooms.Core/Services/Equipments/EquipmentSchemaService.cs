@@ -12,7 +12,7 @@ using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Equipments;
 
-internal class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEquipmentSchemaService
+internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemaDto> GetEquipmentSchemaById(int equipmentSchemaId, CancellationToken cancellationToken)
     {

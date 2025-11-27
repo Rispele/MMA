@@ -13,7 +13,7 @@ using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Equipments;
 
-internal class EquipmentService(IUnitOfWorkFactory unitOfWorkFactory, IRoomService roomService) : IEquipmentService
+internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory, IRoomService roomService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {

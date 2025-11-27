@@ -14,7 +14,7 @@ using Rooms.Domain.Propagated.Exceptions;
 namespace Rooms.Core.Services.Equipments;
 
 internal class EquipmentTypeService(
-    IUnitOfWorkFactory unitOfWorkFactory,
+    [RoomsScope] IUnitOfWorkFactory unitOfWorkFactory,
     IRoomService roomService) : IEquipmentTypeService
 {
     public async Task<EquipmentTypeDto> GetEquipmentTypeById(int equipmentTypeId, CancellationToken cancellationToken)

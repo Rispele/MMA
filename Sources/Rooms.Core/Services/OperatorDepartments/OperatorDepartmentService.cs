@@ -15,7 +15,7 @@ using Rooms.Domain.Propagated.Exceptions;
 namespace Rooms.Core.Services.OperatorDepartments;
 
 internal class OperatorDepartmentService(
-    IUnitOfWorkFactory unitOfWorkFactory,
+    [RoomsScope] IUnitOfWorkFactory unitOfWorkFactory,
     ILkUsersClient lkUsersClient) : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentDto> GetOperatorDepartmentById(int operatorDepartmentId, CancellationToken cancellationToken)

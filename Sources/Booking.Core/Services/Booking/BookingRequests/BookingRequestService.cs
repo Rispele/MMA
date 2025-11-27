@@ -16,7 +16,7 @@ using Rooms.Core.Interfaces.Services.Rooms;
 namespace Booking.Core.Services.Booking.BookingRequests;
 
 public class BookingRequestService(
-    IUnitOfWorkFactory unitOfWorkFactory,
+    [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,
     IRoomService roomService,
     ILkUserService lkUserService) : IBookingRequestService
 {
