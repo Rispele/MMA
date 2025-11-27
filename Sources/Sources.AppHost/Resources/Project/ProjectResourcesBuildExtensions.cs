@@ -16,6 +16,17 @@ public static class ProjectResourcesBuildExtensions
             .WithReference(postgresResource1)
             .WaitFor(postgresResource1);
     }
+    
+    public static IResourceBuilder<ProjectResource> AddBookingsMigration(
+        this IDistributedApplicationBuilder distributedApplicationBuilder,
+        ResourceSpecification resourceSpecification,
+        IResourceBuilder<PostgresDatabaseResource> postgresResource1)
+    {
+        return distributedApplicationBuilder
+            .AddProject<Booking_MigrationService>(resourceSpecification.Name)
+            .WithReference(postgresResource1)
+            .WaitFor(postgresResource1);
+    }
 
     public static IResourceBuilder<ProjectResource> AddWebApi(
         this IDistributedApplicationBuilder distributedApplicationBuilder,
@@ -23,7 +34,9 @@ public static class ProjectResourcesBuildExtensions
         MinioResourceParameters minioResourceParameters,
         // TestDoubleLkUserApiResourceParameters testDoubleLkUserApiParameters,
         IResourceBuilder<PostgresDatabaseResource> postgresResource2,
-        IResourceBuilder<ProjectResource> roomsMigrationService2)
+        IResourceBuilder<ProjectResource> roomsMigrationResource,
+        IResourceBuilder<ProjectResource> bookingMigrationResource
+    )
     {
         return distributedApplicationBuilder
             .AddProject<WebApi>(resourceSpecification.Name)
@@ -47,6 +60,7 @@ public static class ProjectResourcesBuildExtensions
             //
             // #endregion
             .WithReference(postgresResource2)
-            .WaitForCompletion(roomsMigrationService2);
+            .WaitForCompletion(roomsMigrationResource)
+            .WaitForCompletion(bookingMigrationResource);
     }
 }

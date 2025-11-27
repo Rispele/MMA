@@ -1,5 +1,5 @@
-using Rooms.Infrastructure.Configuration;
-using Rooms.MigrationService;
+using Booking.Infrastructure.Configuration;
+using Booking.MigrationService;
 using Sources.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -7,7 +7,7 @@ var builder = Host.CreateApplicationBuilder(args);
 
 builder
     .AddServiceDefaults()
-    .AddRoomsDbContext();
+    .AddBookingDbContext();
 
 builder.Services
     .AddHostedService<Worker>();

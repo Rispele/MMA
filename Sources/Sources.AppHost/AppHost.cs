@@ -27,13 +27,20 @@ if (testingProfile is "Testing.Core")
     builder.AddMinio(KnownResources.Minio, configuration);
     var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
     builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
+    builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
 }
 else
 {
     var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
     var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
     var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
-    builder.AddWebApi(KnownResources.WebApiService, minioResourceParameters, postgresResource, roomsMigrationResource);
+    var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
+    builder.AddWebApi(
+        KnownResources.WebApiService, 
+        minioResourceParameters,
+        postgresResource, 
+        roomsMigrationResource,
+        bookingMigrationResource);
 }
 
 builder.Build().Run();
