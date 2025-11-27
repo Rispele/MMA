@@ -55,11 +55,12 @@ public class BookingRequest
     public IRoomEventCoordinator RoomEventCoordinator { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public string EventName { get; private set; } = null!;
-    public IEnumerable<Room> Rooms => rooms;
-    public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
     public BookingStatus Status { get; private set; }
     public string? ModeratorComment { get; private set; }
     public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
+
+    public IEnumerable<Room> Rooms => rooms;
+    public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
 
     public void Update(
         BookingCreator creator,

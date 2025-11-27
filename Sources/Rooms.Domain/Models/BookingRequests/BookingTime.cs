@@ -1,11 +1,11 @@
 ﻿namespace Rooms.Domain.Models.BookingRequests;
 
-public class BookingTime
+public record BookingTime
 {
-    public string RoomId { get; set; } = null!;
-    public DateOnly Date { get; set; }
-    public TimeOnly TimeFrom { get; set; }
-    public TimeOnly TimeTo { get; set; }
-    public BookingFrequency Frequency { get; set; }
-    public DateOnly? BookingFinishDate { get; set; }
+    public required string RoomId { get; init; }
+    public required DateOnly Date { get; init; }
+    public required TimeOnly TimeFrom { get; init; }
+    public required TimeOnly TimeTo { get; init; }
+    public required BookingFrequency Frequency { get; init; }
+    public required DateOnly? BookingFinishDate { get; init; }
 }

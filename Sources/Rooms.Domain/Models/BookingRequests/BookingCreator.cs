@@ -2,7 +2,7 @@
 
 public record BookingCreator
 {
-    public string FullName { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public string PhoneNumber { get; set; } = null!;
+    public required string FullName { get; init; }
+    public required string Email { get; init; }
+    public required string PhoneNumber { get; init; }
 }
