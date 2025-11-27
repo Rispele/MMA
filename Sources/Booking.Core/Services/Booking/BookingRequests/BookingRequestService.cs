@@ -6,7 +6,6 @@ using Booking.Core.Interfaces.Services.BookingRequests;
 using Booking.Core.Interfaces.Services.LkUser;
 using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.Booking.BookingRequests.Mappers;
-using Booking.Core.Services.LkUser;
 using Booking.Domain.Models.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;

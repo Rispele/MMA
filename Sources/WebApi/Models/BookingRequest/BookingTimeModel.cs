@@ -1,5 +1,4 @@
-﻿using Booking.Domain.Models.BookingRequests;
-using Booking.Domain.Propagated.BookingRequests;
+﻿using Booking.Domain.Propagated.BookingRequests;
 
 namespace WebApi.Models.BookingRequest;
 
