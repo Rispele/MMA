@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework.Interfaces;
-using Rooms.Core.ServicesConfiguration;
 using Rooms.Infrastructure.Configuration;
 using Rooms.Tests.Helpers.SDK;
 using SkbKontur.NUnit.Middlewares;
@@ -59,8 +58,7 @@ public class CoreIntegrationsTestsSetup : ISetup
             .ConfigureRoomsDbContext(roomsDbContextConnectionString)
             .ConfigureServices(t => t
                 .AddLogging(builder => builder.AddConsole())
-                .ConfigureServicesForRoomsInfrastructure()
-                .ConfigureServicesForRoomsCore()
+                .ConfigureServicesForRooms()
                 .AddSdkServices())
             .BuildServiceProvider();
     }

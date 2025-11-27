@@ -12,6 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Booking.Core.Interfaces\Booking.Core.Interfaces.csproj" />
+      <ProjectReference Include="..\Booking.Core\Booking.Core.csproj" />
       <ProjectReference Include="..\Booking.Domain\Booking.Domain.csproj" />
     </ItemGroup>
 

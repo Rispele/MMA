@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
-using Rooms.Core.ServicesConfiguration;
+using Booking.Infrastructure.Configuration;
 using Rooms.Infrastructure.Configuration;
 using WebApi.Services.Implementations;
 using WebApi.Services.Interfaces;
 using WebApi.Startup.InputFormatters;
-
 
 namespace WebApi.Startup.ConfigurationExtensions;
 
@@ -36,10 +35,8 @@ public static class ServicesConfigurationExtensions
     {
         serviceCollection
             // Infrastructure
-            .ConfigureServicesForRoomsInfrastructure()
-
-            // Core
-            .ConfigureServicesForRoomsCore()
+            .ConfigureServicesForRooms()
+            .ConfigureServicesForBooking()
 
             // WebApi
             .AddScoped<IRoomService, RoomService>()

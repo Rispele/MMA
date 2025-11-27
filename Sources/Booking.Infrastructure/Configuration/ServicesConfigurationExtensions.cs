@@ -4,11 +4,11 @@ using Booking.Core.Services.Booking.BookingRequests;
 using Booking.Core.Services.InstituteCoordinators;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Booking.Core.ServicesConfiguration;
+namespace Booking.Infrastructure.Configuration;
 
 public static class ServicesConfigurationExtensions
 {
-    public static IServiceCollection ConfigureServicesForBookingCore(this IServiceCollection serviceCollection)
+    public static IServiceCollection ConfigureServicesForBooking(this IServiceCollection serviceCollection)
     {
         return serviceCollection
             .AddScoped<IInstituteCoordinatorsService, InstituteCoordinatorsService>()
