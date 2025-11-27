@@ -24,9 +24,7 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.ParticipantsCount).IsRequired();
         builder.Property(x => x.TechEmployeeRequired).IsRequired();
         builder.Property(x => x.EventHostFullName).IsRequired().HasMaxLength(500);
-        builder.Property(x => x.EventType).IsRequired();
-        builder.Property(x => x.CoordinatorInstitute);
-        builder.Property(x => x.CoordinatorFullName);
+        builder.Property(x => x.RoomEventCoordinator).HasColumnType("jsonb");
         builder.Property(x => x.CreatedAt).HasColumnType("timestamptz");
         builder.Property(x => x.EventName).IsRequired().HasMaxLength(500);
 

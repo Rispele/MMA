@@ -1,24 +1,23 @@
-﻿using Rooms.Core.Dtos.Room;
+﻿using Rooms.Core.Dtos.BookingRequest.RoomEventCoordinator;
+using Rooms.Core.Dtos.Room;
 using Rooms.Domain.Models.BookingRequests;
 
 namespace Rooms.Core.Dtos.BookingRequest;
 
 public class BookingRequestDto
 {
-    public int Id { get; set; }
-    public BookingCreatorDto Creator { get; set; } = null!;
-    public string Reason { get; set; } = null!;
-    public int ParticipantsCount { get; set; }
-    public bool TechEmployeeRequired { get; set; }
-    public string EventHostFullName { get; set; } = null!;
-    public BookingEventType EventType { get; set; }
-    public string? CoordinatorInstitute { get; set; }
-    public string? CoordinatorFullName { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public string EventName { get; set; } = null!;
-    public IEnumerable<RoomDto> Rooms { get; set; } = [];
-    public BookingTimeDto[] BookingSchedule { get; set; } = [];
-    public BookingStatus Status { get; set; }
-    public string ModeratorComment { get; set; } = null!;
-    public BookingScheduleStatus? BookingScheduleStatus { get; set; }
+    public required int Id { get; init; }
+    public required BookingCreatorDto Creator { get; init; } = null!;
+    public required string Reason { get; init; } = null!;
+    public required int ParticipantsCount { get; init; }
+    public required bool TechEmployeeRequired { get; init; }
+    public required string EventHostFullName { get; init; } = null!;
+    public required IRoomEventCoordinatorDto RoomEventCoordinator { get; init; }
+    public required DateTime CreatedAt { get; init; }
+    public required string EventName { get; init; } = null!;
+    public required IEnumerable<RoomDto> Rooms { get; init; } = [];
+    public required BookingTimeDto[] BookingSchedule { get; init; } = [];
+    public required BookingStatus Status { get; init; }
+    public required string ModeratorComment { get; init; } = null!;
+    public required BookingScheduleStatus? BookingScheduleStatus { get; init; }
 }

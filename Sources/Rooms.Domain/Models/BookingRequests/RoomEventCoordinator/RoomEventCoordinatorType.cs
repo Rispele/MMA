@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Rooms.Domain.Models.BookingRequests;
+namespace Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum BookingEventType
+public enum RoomEventCoordinatorType
 {
     [Description("Научное")]
     Scientific = 1,

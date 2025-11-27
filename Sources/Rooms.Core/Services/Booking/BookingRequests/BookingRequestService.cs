@@ -62,9 +62,7 @@ public class BookingRequestService(
             dto.ParticipantsCount,
             dto.TechEmployeeRequired,
             dto.EventHostFullName,
-            dto.EventType,
-            dto.CoordinatorInstitute,
-            dto.CoordinatorFullName,
+            BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
             dto.CreatedAt,
             dto.EventName,
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
@@ -88,7 +86,13 @@ public class BookingRequestService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var bookingRequestToPatch = await GetBookingRequestByIdInner(bookingRequestId, cancellationToken, context);
-        var rooms = await roomService.FindRoomByIds(dto.RoomIds.ToArray(), cancellationToken);
+        var rooms = await (await context.ApplyQuery(new FindRoomsByIdQuery(dto.RoomIds.ToArray()), cancellationToken)).ToListAsync(cancellationToken);
+
+        if (rooms.Count < dto.RoomIds.Length)
+        {
+            var roomIdsNotFound = dto.RoomIds.Where(t => rooms.All(r => r.Id != t)).JoinStrings(", ");
+            throw new RoomNotFoundException($"Several rooms was not found: [{roomIdsNotFound}]");
+        }
 
         bookingRequestToPatch.Update(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
@@ -96,15 +100,14 @@ public class BookingRequestService(
             dto.ParticipantsCount,
             dto.TechEmployeeRequired,
             dto.EventHostFullName,
-            dto.EventType,
-            dto.CoordinatorInstitute,
-            dto.CoordinatorFullName,
+            BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
             dto.CreatedAt,
             dto.EventName,
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
             dto.Status,
             dto.ModeratorComment,
             dto.BookingScheduleStatus);
+        bookingRequestToPatch.SetRooms(rooms);
 
         await context.Commit(cancellationToken);
 

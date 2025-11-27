@@ -1,5 +1,6 @@
 ﻿using Rooms.Domain.Models.BookingRequests;
 using WebApi.Models.BookingRequest;
+using WebApi.Models.BookingRequest.RoomEventCoordinator;
 
 namespace WebApi.Models.Requests.BookingRequests;
 
@@ -10,9 +11,7 @@ public record PatchBookingRequestModel
     public int ParticipantsCount { get; set; }
     public bool TechEmployeeRequired { get; set; }
     public string EventHostFullName { get; set; } = null!;
-    public BookingEventType EventType { get; set; }
-    public string? CoordinatorInstitute { get; set; }
-    public string? CoordinatorFullName { get; set; }
+    public required IRoomEventCoordinatorModel RoomEventCoordinator { get; init; }
     public DateTime CreatedAt { get; set; }
     public string EventName { get; set; } = null!;
     public IEnumerable<int> RoomIds { get; set; } = null!;

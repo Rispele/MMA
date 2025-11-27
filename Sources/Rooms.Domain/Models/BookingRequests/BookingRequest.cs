@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
+using Rooms.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Domain.Models.BookingRequests;
@@ -21,9 +22,7 @@ public class BookingRequest
         int participantsCount,
         bool techEmployeeRequired,
         string eventHostFullName,
-        BookingEventType eventType,
-        string? coordinatorInstitute,
-        string? coordinatorFullName,
+        IRoomEventCoordinator roomEventCoordinator,
         DateTime createdAt,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule,
@@ -37,10 +36,8 @@ public class BookingRequest
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
         EventHostFullName = eventHostFullName;
-        EventType = eventType;
-        CoordinatorInstitute = coordinatorInstitute;
-        CoordinatorFullName = coordinatorFullName;
         CreatedAt = createdAt;
+        RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
         Status = status;
@@ -50,21 +47,19 @@ public class BookingRequest
     }
 
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
-    public BookingCreator Creator { get; set; } = null!;
-    public string Reason { get; set; } = null!;
-    public int ParticipantsCount { get; set; }
-    public bool TechEmployeeRequired { get; set; }
-    public string EventHostFullName { get; set; } = null!;
-    public BookingEventType EventType { get; set; }
-    public string? CoordinatorInstitute { get; set; }
-    public string? CoordinatorFullName { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public string EventName { get; set; } = null!;
+    public BookingCreator Creator { get; private set; } = null!;
+    public string Reason { get; private set; } = null!;
+    public int ParticipantsCount { get; private set; }
+    public bool TechEmployeeRequired { get; private set; }
+    public string EventHostFullName { get; private set; } = null!;
+    public IRoomEventCoordinator RoomEventCoordinator { get; private set; } = null!;
+    public DateTime CreatedAt { get; private set; }
+    public string EventName { get; private set; } = null!;
     public IEnumerable<Room> Rooms => rooms;
     public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
-    public BookingStatus Status { get; set; }
-    public string? ModeratorComment { get; set; } = null!;
-    public BookingScheduleStatus? BookingScheduleStatus { get; set; }
+    public BookingStatus Status { get; private set; }
+    public string? ModeratorComment { get; private set; }
+    public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
 
     public void Update(
         BookingCreator creator,
@@ -72,9 +67,7 @@ public class BookingRequest
         int participantsCount,
         bool techEmployeeRequired,
         string eventHostFullName,
-        BookingEventType eventType,
-        string? coordinatorInstitute,
-        string? coordinatorFullName,
+        IRoomEventCoordinator roomEventCoordinator,
         DateTime createdAt,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule,
@@ -87,14 +80,18 @@ public class BookingRequest
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
         EventHostFullName = eventHostFullName;
-        EventType = eventType;
-        CoordinatorInstitute = coordinatorInstitute;
-        CoordinatorFullName = coordinatorFullName;
+        RoomEventCoordinator = roomEventCoordinator;
         CreatedAt = createdAt;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
         Status = status;
         ModeratorComment = moderatorComment;
         BookingScheduleStatus = bookingScheduleStatus;
+    }
+
+    public void SetRooms(List<Room> roomsToSet)
+    {
+        rooms.Clear();
+        rooms.AddRange(roomsToSet);
     }
 }
