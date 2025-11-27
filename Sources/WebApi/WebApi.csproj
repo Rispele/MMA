@@ -18,6 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Booking.Core\Booking.Core.csproj" />
+        <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />
         <ProjectReference Include="..\Commons\Commons.csproj"/>
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
         <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj"/>

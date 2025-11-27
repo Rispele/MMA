@@ -8,6 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Commons.Core\Commons.Core.csproj" />
+        <ProjectReference Include="..\Commons.Domain\Commons.Domain.csproj" />
+        <ProjectReference Include="..\Commons.ExternalClients\Commons.ExternalClients.csproj" />
         <ProjectReference Include="..\Commons\Commons.csproj"/>
         <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>
     </ItemGroup>

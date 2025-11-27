@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Core.Services.Booking.BookingRequests;
-using Rooms.Core.Services.Booking.BookingRequests.Interfaces;
 using Rooms.Core.Services.Equipments;
 using Rooms.Core.Services.Equipments.Interfaces;
-using Rooms.Core.Services.InstituteCoordinators;
-using Rooms.Core.Services.InstituteCoordinators.Interfaces;
 using Rooms.Core.Services.OperatorDepartments;
 using Rooms.Core.Services.OperatorDepartments.Interfaces;
 using Rooms.Core.Services.Rooms;
@@ -23,9 +19,6 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
             .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>()
-            .AddScoped<IInstituteResponsibleService, InstituteResponsibleService>()
-            .AddScoped<IRoomScheduleService, RoomScheduleService>()
-            .AddScoped<IBookingRequestService, BookingRequestService>()
             .AddScoped<SpreadsheetService>();
     }
 }

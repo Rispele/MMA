@@ -4,7 +4,6 @@ using Rooms.Domain.Models.Equipments;
 using Rooms.Domain.Models.OperatorDepartments;
 using Rooms.Domain.Models.Rooms;
 using Rooms.Infrastructure.EFCore.EntityConfigurations.Equipment;
-using Rooms.Infrastructure.EFCore.EntityConfigurations.InstituteResponsibles;
 using Rooms.Infrastructure.EFCore.EntityConfigurations.OperatorDepartments;
 using Rooms.Infrastructure.EFCore.EntityConfigurations.Rooms;
 
@@ -29,7 +28,6 @@ public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContex
         modelBuilder.ApplyConfiguration(new EquipmentTypeEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RoomEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OperatorDepartmentEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new InstituteResponsibleEntityTypeConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

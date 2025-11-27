@@ -3,7 +3,6 @@ using Rooms.Core.Dtos.BookingRequest;
 using Rooms.Core.Dtos.BookingRequest.Requests;
 using Rooms.Core.Dtos.BookingRequest.Responses;
 using Rooms.Core.Dtos.BookingRequest.RoomEventCoordinator;
-using Rooms.Core.Dtos.Room;
 using WebApi.Models.BookingRequest;
 using WebApi.Models.BookingRequest.RoomEventCoordinator;
 using WebApi.Models.Requests.BookingRequests;
@@ -14,11 +13,9 @@ namespace WebApi.ModelConverters;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class BookingRequestModelsMapper
 {
-    [MapProperty(nameof(BookingRequestDto.Rooms), nameof(BookingRequestModel.RoomIds), Use = nameof(MapRoomIds))]
     public static partial BookingRequestModel MapBookingRequestToModel(BookingRequestDto bookingRequest);
 
     [MapperIgnoreSource(nameof(BookingRequestDto.Id))]
-    [MapProperty(nameof(BookingRequestDto.Rooms), nameof(PatchBookingRequestModel.RoomIds), Use = nameof(MapRoomIds))]
     [MapProperty(nameof(BookingRequestDto.RoomEventCoordinator), nameof(PatchBookingRequestModel.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorFromDto))]
     public static partial PatchBookingRequestModel MapBookingRequestToPatchModel(BookingRequestDto bookingRequest);
 
@@ -38,11 +35,6 @@ public static partial class BookingRequestModelsMapper
 
     public static partial AutocompleteEventHostResponseModel MapEventHostToDto(AutocompleteEventHostResponseDto eventHost);
 
-    public static IEnumerable<int> MapRoomIds(IEnumerable<RoomDto> rooms)
-    {
-        return rooms.Select(x => x.Id);
-    }
-    
     public static IRoomEventCoordinatorModel MapRoomEventCoordinatorFromDto(IRoomEventCoordinatorDto coordinator)
     {
         return coordinator switch

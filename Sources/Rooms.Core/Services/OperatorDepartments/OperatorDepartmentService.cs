@@ -1,5 +1,5 @@
 ﻿using Commons;
-using Rooms.Core.Clients.Interfaces;
+using Rooms.Core.Clients.LkUsers;
 using Rooms.Core.Dtos.OperatorDepartments;
 using Rooms.Core.Dtos.OperatorDepartments.Requests;
 using Rooms.Core.Dtos.OperatorDepartments.Responses;
@@ -16,7 +16,7 @@ namespace Rooms.Core.Services.OperatorDepartments;
 
 public class OperatorDepartmentService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IOperatorDepartmentClient operatorDepartmentClient) : IOperatorDepartmentService
+    ILkUsersClient lkUsersClient) : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentDto> GetOperatorDepartmentById(int operatorDepartmentId, CancellationToken cancellationToken)
     {
@@ -39,9 +39,7 @@ public class OperatorDepartmentService(
 
     public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
     {
-        var operators = await operatorDepartmentClient.GetAvailableOperators();
-
-        return operators;
+        return [];
     }
 
     public async Task<OperatorDepartmentsResponseDto> FilterOperatorDepartments(GetOperatorDepartmentsDto dto, CancellationToken cancellationToken)
