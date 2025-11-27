@@ -4,7 +4,7 @@ using Commons.Domain.Queries.Abstractions;
 
 namespace Booking.Core.Queries.InstituteResponsible;
 
-public sealed record FilterInstituteResponsibleQuery(
+internal sealed record FilterInstituteResponsibleQuery(
     int BatchSize,
     int BatchNumber,
     int AfterInstituteResponsibleId,

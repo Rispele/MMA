@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
-using Rooms.Domain.Exceptions;
+using Rooms.Domain.Propagated.Exceptions;
 using Rooms.Tests.Helpers.SDK.Rooms;
 using WebApi.ModelConverters;
 using WebApi.Models.Requests.Filtering;

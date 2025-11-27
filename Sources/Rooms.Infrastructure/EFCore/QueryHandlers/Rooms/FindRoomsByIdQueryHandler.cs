@@ -5,7 +5,7 @@ using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 
-public class FindRoomsByIdQueryHandler : IQueryHandler<RoomsDbContext, FindRoomsByIdQuery, Room>
+internal class FindRoomsByIdQueryHandler : IQueryHandler<RoomsDbContext, FindRoomsByIdQuery, Room>
 {
     public Task<IAsyncEnumerable<Room>> Handle(EntityQuery<RoomsDbContext, FindRoomsByIdQuery, IAsyncEnumerable<Room>> request, CancellationToken cancellationToken)
     {

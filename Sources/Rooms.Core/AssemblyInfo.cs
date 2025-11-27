@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Rooms.Core")]
 [assembly: InternalsVisibleTo("Rooms.Infrastructure")]
 [assembly: InternalsVisibleTo("Rooms.Tests")]

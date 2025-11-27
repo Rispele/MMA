@@ -39,13 +39,13 @@ public static class Extensions
         return builder;
     }
 
-    public static void ConfigurePostgresDbContext<TDbContext>(
+    public static IServiceCollection ConfigurePostgresDbContext<TDbContext>(
         this IServiceCollection serviceCollection,
         string connectionString,
         Action<NpgsqlDbContextOptionsBuilder>? npgsqlOptionsAction = null)
         where TDbContext : DbContext
     {
-        serviceCollection.AddDbContextFactory<TDbContext>(optionsBuilder => optionsBuilder
+        return serviceCollection.AddDbContextFactory<TDbContext>(optionsBuilder => optionsBuilder
             .UseSnakeCaseNamingConvention()
             .UseNpgsql(connectionString, npgsqlOptionsAction));
     }

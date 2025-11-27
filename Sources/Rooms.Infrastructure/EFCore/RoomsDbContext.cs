@@ -9,7 +9,7 @@ using Rooms.Infrastructure.EFCore.EntityConfigurations.Rooms;
 
 namespace Rooms.Infrastructure.EFCore;
 
-public class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContext(options)
+internal class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbContext(options)
 {
     public DbSet<Room> Rooms { get; [UsedImplicitly] private set; }
 

@@ -4,7 +4,7 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.EntityConfigurations.Equipment;
 
-public class EquipmentSchemaEntityTypeConfiguration : IEntityTypeConfiguration<EquipmentSchema>
+internal class EquipmentSchemaEntityTypeConfiguration : IEntityTypeConfiguration<EquipmentSchema>
 {
     public void Configure(EntityTypeBuilder<EquipmentSchema> builder)
     {

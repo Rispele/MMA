@@ -8,19 +8,20 @@ using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Core.Interfaces.Services.OperatorDepartments;
 using Rooms.Core.Interfaces.Services.Rooms;
+using Rooms.Core.Interfaces.Services.Spreadsheets;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExportModels;
 using Rooms.Core.Services.Spreadsheets.Specifications;
 
 namespace Rooms.Core.Services.Spreadsheets;
 
-public class SpreadsheetService(
+internal class SpreadsheetService(
     ISpreadsheetExporter exporter,
     IEquipmentTypeService equipmentTypeService,
     IEquipmentSchemaService equipmentSchemaService,
     IEquipmentService equipmentService,
     IRoomService roomService,
-    IOperatorDepartmentService operatorDepartmentService)
+    IOperatorDepartmentService operatorDepartmentService) : ISpreadsheetService
 {
     public const int ExportLimit = 10_000;
 

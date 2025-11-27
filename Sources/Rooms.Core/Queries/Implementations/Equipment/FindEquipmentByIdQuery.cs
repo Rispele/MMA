@@ -2,4 +2,4 @@
 
 namespace Rooms.Core.Queries.Implementations.Equipment;
 
-public sealed record FindEquipmentByIdQuery(int EquipmentId) : ISingleQuerySpecification<FindEquipmentByIdQuery, Domain.Models.Equipments.Equipment>;
+internal sealed record FindEquipmentByIdQuery(int EquipmentId) : ISingleQuerySpecification<FindEquipmentByIdQuery, Domain.Models.Equipments.Equipment>;

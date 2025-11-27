@@ -5,7 +5,7 @@ using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Core.Services.OperatorDepartments.Mappers;
 
-public static class OperatorDepartmentsDtoMapper
+internal static class OperatorDepartmentsDtoMapper
 {
     public static OperatorDepartmentDto Map(OperatorDepartment entity)
     {

@@ -1,6 +1,6 @@
 ﻿namespace Rooms.Domain.Models.File;
 
-public readonly struct TempFileUrl
+internal readonly struct TempFileUrl
 {
     public required string Url { get; init; }
 }

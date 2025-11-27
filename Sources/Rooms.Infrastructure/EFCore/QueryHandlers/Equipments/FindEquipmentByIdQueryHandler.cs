@@ -5,7 +5,7 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
 
-public class FindEquipmentByIdQueryHandler : ISingleQueryHandler<RoomsDbContext, FindEquipmentByIdQuery, Equipment?>
+internal class FindEquipmentByIdQueryHandler : ISingleQueryHandler<RoomsDbContext, FindEquipmentByIdQuery, Equipment?>
 {
     public Task<Equipment?> Handle(EntityQuery<RoomsDbContext, FindEquipmentByIdQuery, Equipment?> request, CancellationToken cancellationToken)
     {

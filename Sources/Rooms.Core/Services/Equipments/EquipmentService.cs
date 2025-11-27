@@ -8,12 +8,12 @@ using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Core.Services.Equipments.Mappers;
-using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Equipments;
 
-public class EquipmentService(IUnitOfWorkFactory unitOfWorkFactory, IRoomService roomService) : IEquipmentService
+internal class EquipmentService(IUnitOfWorkFactory unitOfWorkFactory, IRoomService roomService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {

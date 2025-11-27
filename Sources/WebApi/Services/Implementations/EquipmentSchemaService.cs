@@ -1,4 +1,4 @@
-using Rooms.Core.Services.Spreadsheets;
+using Rooms.Core.Interfaces.Services.Spreadsheets;
 using WebApi.ModelConverters;
 using WebApi.Models.Equipment;
 using WebApi.Models.Files;
@@ -9,7 +9,7 @@ using WebApi.Services.Interfaces;
 namespace WebApi.Services.Implementations;
 
 public class EquipmentSchemaService(Rooms.Core.Interfaces.Services.Equipments.IEquipmentSchemaService equipmentSchemaService,
-    SpreadsheetService spreadsheetService) : IEquipmentSchemaService
+    ISpreadsheetService spreadsheetService) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(
         GetEquipmentSchemasModel model,

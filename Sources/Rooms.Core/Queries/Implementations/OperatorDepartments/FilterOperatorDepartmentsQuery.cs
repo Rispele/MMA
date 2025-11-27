@@ -4,7 +4,7 @@ using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Core.Queries.Implementations.OperatorDepartments;
 
-public sealed record FilterOperatorDepartmentsQuery(
+internal sealed record FilterOperatorDepartmentsQuery(
     int BatchSize,
     int BatchNumber,
     int AfterOperatorDepartmentId,

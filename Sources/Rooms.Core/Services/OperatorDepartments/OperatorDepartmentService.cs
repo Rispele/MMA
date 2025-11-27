@@ -9,12 +9,12 @@ using Rooms.Core.Interfaces.Services.OperatorDepartments;
 using Rooms.Core.Queries.Implementations.OperatorDepartments;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.OperatorDepartments.Mappers;
-using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.OperatorDepartments;
+using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.OperatorDepartments;
 
-public class OperatorDepartmentService(
+internal class OperatorDepartmentService(
     IUnitOfWorkFactory unitOfWorkFactory,
     ILkUsersClient lkUsersClient) : IOperatorDepartmentService
 {

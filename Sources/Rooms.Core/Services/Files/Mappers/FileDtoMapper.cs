@@ -5,7 +5,7 @@ using Rooms.Domain.Models.File;
 namespace Rooms.Core.Services.Files.Mappers;
 
 [Mapper]
-public static partial class FileDtoMapper
+internal static partial class FileDtoMapper
 {
     public static partial FileDescriptorDto Convert(FileDescriptor fileDescriptor);
 

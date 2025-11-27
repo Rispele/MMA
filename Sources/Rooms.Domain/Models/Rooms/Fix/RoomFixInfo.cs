@@ -2,7 +2,7 @@
 
 namespace Rooms.Domain.Models.Rooms.Fix;
 
-public class RoomFixInfo
+internal class RoomFixInfo
 {
     public RoomStatus Status { get; set; }
     public DateTime? FixDeadline { get; set; }

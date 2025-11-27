@@ -4,7 +4,7 @@ using PrivateFieldNamesExposingGenerator.Attributes;
 namespace Rooms.Domain.Models.Equipments;
 
 [GenerateFieldNames]
-public class EquipmentType
+internal class EquipmentType
 {
     private readonly int? id;
     private List<EquipmentParameterDescriptor> parameters = null!;

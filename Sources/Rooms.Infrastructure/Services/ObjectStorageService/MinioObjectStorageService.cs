@@ -6,7 +6,7 @@ using Rooms.Domain.Services;
 
 namespace Rooms.Infrastructure.Services.ObjectStorageService;
 
-public class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorageService
+internal class MinioObjectStorageService(IMinioClient minioClient) : IObjectStorageService
 {
     public async Task<FileDescriptor> StoreObject(
         Guid id,

@@ -3,7 +3,7 @@ using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
 
 namespace Rooms.Core.Queries.Implementations.Equipment;
 
-public sealed record FilterEquipmentsQuery(
+internal sealed record FilterEquipmentsQuery(
     int BatchSize,
     int BatchNumber,
     int AfterEquipmentId,

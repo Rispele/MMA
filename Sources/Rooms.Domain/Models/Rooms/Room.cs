@@ -7,7 +7,7 @@ using Rooms.Domain.Models.Rooms.Parameters;
 namespace Rooms.Domain.Models.Rooms;
 
 [GenerateFieldNames]
-public class Room
+internal class Room
 {
     private readonly List<Equipment> equipments = null!;
     private readonly int? id;

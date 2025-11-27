@@ -4,7 +4,7 @@ using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.EntityConfigurations.Rooms;
 
-public class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
+internal class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
 {
     public void Configure(EntityTypeBuilder<Room> builder)
     {

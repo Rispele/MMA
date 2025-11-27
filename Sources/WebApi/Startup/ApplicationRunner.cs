@@ -1,4 +1,5 @@
-﻿using Sources.ServiceDefaults;
+﻿using Rooms.Infrastructure.Configuration;
+using Sources.ServiceDefaults;
 using WebApi.Startup.ConfigurationExtensions;
 
 namespace WebApi.Startup;

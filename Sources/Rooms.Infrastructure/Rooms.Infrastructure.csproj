@@ -22,6 +22,7 @@
         <ProjectReference Include="..\Commons\Commons.csproj"/>
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
         <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>
+        <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj" />
     </ItemGroup>
 
     <ItemGroup>

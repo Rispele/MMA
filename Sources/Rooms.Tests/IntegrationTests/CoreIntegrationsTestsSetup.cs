@@ -55,8 +55,8 @@ public class CoreIntegrationsTestsSetup : ISetup
             .GetConnectionString(KnownResources.MmrDb.Name) ?? throw new InvalidOperationException("Database connection string is not set");
 
         return new TestingContainerFactory()
-            .ConfigureRoomsDbContext(roomsDbContextConnectionString)
             .ConfigureServices(t => t
+                .ConfigureRoomsDbContextForTests(roomsDbContextConnectionString)
                 .AddLogging(builder => builder.AddConsole())
                 .ConfigureServicesForRooms()
                 .AddSdkServices())

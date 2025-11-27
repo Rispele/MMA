@@ -8,12 +8,10 @@ public class ExcelExporter : ISpreadsheetExporter
 {
     private const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-    public FileExportDto Export<TExporterSpecification, TWriterSpecification, TData>(
+    FileExportDto ISpreadsheetExporter.Export<TExporterSpecification, TWriterSpecification, TData>(
         TData[] data,
         Stream outputStream,
         CancellationToken cancellationToken)
-        where TExporterSpecification : struct, ISpreadsheetExporterSpecification
-        where TWriterSpecification : struct, ISpreadsheetWriterSpecification<TData>
     {
         var exporterSpecification = new TExporterSpecification();
         var writerSpecification = new TWriterSpecification();

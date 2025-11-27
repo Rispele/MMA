@@ -4,7 +4,7 @@ using Rooms.Domain.Propagated.Equipments;
 
 namespace Rooms.Tests.UnitTests;
 
-public static class EquipmentsTestHelper
+internal static class EquipmentsTestHelper
 {
     private const int EquipmentId = 1;
     private const int RoomId = 2;

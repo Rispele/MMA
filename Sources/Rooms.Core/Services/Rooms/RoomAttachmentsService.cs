@@ -5,7 +5,7 @@ using Rooms.Domain.Services;
 
 namespace Rooms.Core.Services.Rooms;
 
-public class RoomAttachmentsService(IObjectStorageService objectStorageService) : IRoomAttachmentsService
+internal class RoomAttachmentsService(IObjectStorageService objectStorageService) : IRoomAttachmentsService
 {
     private const string AttachmentsBucket = "attachments";
     private const int AttachmentsExpirationInSeconds = 300;

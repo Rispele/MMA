@@ -3,7 +3,7 @@ using Rooms.Core.Services.Spreadsheets.Abstractions;
 
 namespace Rooms.Core.Services.Spreadsheets;
 
-public static class SpreadsheetsExporterExtensions
+internal static class SpreadsheetsExporterExtensions
 {
     public static FileExportDto Export<TSpecification, TData>(
         this ISpreadsheetExporter exporter, 

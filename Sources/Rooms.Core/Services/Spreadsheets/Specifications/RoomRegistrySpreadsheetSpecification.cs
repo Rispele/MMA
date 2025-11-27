@@ -7,7 +7,7 @@ using Rooms.Core.Services.Spreadsheets.ExportModels;
 namespace Rooms.Core.Services.Spreadsheets.Specifications;
 
 //todo: смапить все енумы в строки
-public struct RoomRegistrySpreadsheetSpecification
+internal struct RoomRegistrySpreadsheetSpecification
     : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<RoomRegistrySpreadsheetExportDto>
 {
     private static readonly IReadOnlyList<ColumnSpecification<RoomRegistrySpreadsheetExportDto>> Specifications =

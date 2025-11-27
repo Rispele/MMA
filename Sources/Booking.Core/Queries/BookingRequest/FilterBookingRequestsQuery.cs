@@ -3,7 +3,7 @@ using Commons.Domain.Queries.Abstractions;
 
 namespace Booking.Core.Queries.BookingRequest;
 
-public sealed record FilterBookingRequestsQuery(
+internal sealed record FilterBookingRequestsQuery(
     int BatchSize,
     int BatchNumber,
     int AfterBookingRequestId,

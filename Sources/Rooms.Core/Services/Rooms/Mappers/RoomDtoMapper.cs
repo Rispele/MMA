@@ -8,7 +8,7 @@ using Rooms.Domain.Propagated.Rooms;
 namespace Rooms.Core.Services.Rooms.Mappers;
 
 [Mapper]
-public static partial class RoomDtoMapper
+internal static partial class RoomDtoMapper
 {
     public static partial RoomDto Map(Room room);
     public static partial RoomType Map(RoomTypeDto roomType);

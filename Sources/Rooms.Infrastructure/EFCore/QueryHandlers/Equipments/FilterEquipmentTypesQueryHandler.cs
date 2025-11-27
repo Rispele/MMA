@@ -9,7 +9,7 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
 
-public class FilterEquipmentTypesQueryHandler : IQueryHandler<RoomsDbContext, FilterEquipmentTypesQuery, EquipmentType>
+internal class FilterEquipmentTypesQueryHandler : IQueryHandler<RoomsDbContext, FilterEquipmentTypesQuery, EquipmentType>
 {
     public Task<IAsyncEnumerable<EquipmentType>> Handle(
         EntityQuery<RoomsDbContext, FilterEquipmentTypesQuery, IAsyncEnumerable<EquipmentType>> request,

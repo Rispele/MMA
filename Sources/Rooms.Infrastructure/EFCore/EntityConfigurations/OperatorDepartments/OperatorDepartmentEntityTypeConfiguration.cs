@@ -4,7 +4,7 @@ using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Infrastructure.EFCore.EntityConfigurations.OperatorDepartments;
 
-public class OperatorDepartmentEntityTypeConfiguration : IEntityTypeConfiguration<OperatorDepartment>
+internal class OperatorDepartmentEntityTypeConfiguration : IEntityTypeConfiguration<OperatorDepartment>
 {
     public void Configure(EntityTypeBuilder<OperatorDepartment> builder)
     {

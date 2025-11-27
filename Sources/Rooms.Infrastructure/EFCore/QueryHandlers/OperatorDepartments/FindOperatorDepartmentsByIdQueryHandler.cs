@@ -5,7 +5,7 @@ using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.OperatorDepartments;
 
-public class FindOperatorDepartmentsByIdQueryHandler : ISingleQueryHandler<RoomsDbContext, FindOperatorDepartmentByIdQuery, OperatorDepartment?>
+internal class FindOperatorDepartmentsByIdQueryHandler : ISingleQueryHandler<RoomsDbContext, FindOperatorDepartmentByIdQuery, OperatorDepartment?>
 {
     public Task<OperatorDepartment?> Handle(
         EntityQuery<RoomsDbContext, FindOperatorDepartmentByIdQuery, OperatorDepartment?> request,

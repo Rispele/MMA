@@ -10,7 +10,7 @@ using Rooms.Domain.Propagated.Rooms;
 
 namespace Rooms.Tests.UnitTests;
 
-public static class RoomTestHelper
+internal static class RoomTestHelper
 {
     private const int RoomId = 1;
     private const string RoomName = "Room";

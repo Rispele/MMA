@@ -2,5 +2,5 @@
 
 namespace Booking.Core.Queries.BookingRequest;
 
-public sealed record FindBookingRequestByIdQuery(int BookingRequestId)
+internal sealed record FindBookingRequestByIdQuery(int BookingRequestId)
     : ISingleQuerySpecification<FindBookingRequestByIdQuery, Domain.Models.BookingRequests.BookingRequest>;

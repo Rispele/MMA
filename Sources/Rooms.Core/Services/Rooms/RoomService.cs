@@ -8,14 +8,14 @@ using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.Files.Mappers;
 using Rooms.Core.Services.Rooms.Mappers;
-using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Rooms;
 using Rooms.Domain.Models.Rooms.Fix;
 using Rooms.Domain.Models.Rooms.Parameters;
+using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Rooms;
 
-public class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
+internal class RoomService(IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken)
     {

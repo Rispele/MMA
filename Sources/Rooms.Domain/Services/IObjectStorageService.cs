@@ -2,7 +2,7 @@
 
 namespace Rooms.Domain.Services;
 
-public interface IObjectStorageService
+internal interface IObjectStorageService
 {
     Task<FileDescriptor> StoreObject(
         Guid id,

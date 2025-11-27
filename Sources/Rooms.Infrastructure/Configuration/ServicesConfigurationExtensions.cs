@@ -23,7 +23,7 @@ public static class ServicesConfigurationExtensions
         return serviceCollection
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()
-            .AddScoped<IUnitOfWorkFactory, DbContextUnitOfWorkFactory>()
+            .AddScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>()
             .AddScoped<ISpreadsheetExporter, ExcelExporter>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IEquipmentService, EquipmentService>()

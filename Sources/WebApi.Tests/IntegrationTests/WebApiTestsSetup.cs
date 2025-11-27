@@ -3,6 +3,7 @@ using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework.Interfaces;
+using Rooms.Infrastructure.Configuration;
 using Rooms.Tests.Helpers.SDK.Rooms;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
@@ -53,8 +54,8 @@ public class WebApiTestsSetup : ISetup
             .GetConnectionString(KnownResources.MmrDb.Name) ?? throw new InvalidOperationException("Database connection string is not set");
 
         return new TestingContainerFactory()
-            .ConfigureRoomsDbContext(roomsDbContextConnectionString)
             .ConfigureServices(t => t
+                .ConfigureRoomsDbContextForTests(roomsDbContextConnectionString)
                 .ConfigureServicesForWebApi()
                 .AddScoped<RoomsSdk>())
             .BuildServiceProvider();

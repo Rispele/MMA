@@ -4,7 +4,7 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Core.Queries.Implementations.Equipment;
 
-public sealed record FilterEquipmentTypesQuery(
+internal sealed record FilterEquipmentTypesQuery(
     int BatchSize,
     int BatchNumber,
     int AfterEquipmentTypeId,

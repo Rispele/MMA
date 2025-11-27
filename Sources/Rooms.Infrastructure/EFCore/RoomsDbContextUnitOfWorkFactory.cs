@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Rooms.Infrastructure.EFCore;
 
-public class DbContextUnitOfWorkFactory(IDbContextFactory<RoomsDbContext> dbContextFactory, IMediator mediator) : IUnitOfWorkFactory
+internal class RoomsDbContextUnitOfWorkFactory(IDbContextFactory<RoomsDbContext> dbContextFactory, IMediator mediator) : IUnitOfWorkFactory
 {
     public async Task<IUnitOfWork> Create(CancellationToken cancellationToken = default)
     {

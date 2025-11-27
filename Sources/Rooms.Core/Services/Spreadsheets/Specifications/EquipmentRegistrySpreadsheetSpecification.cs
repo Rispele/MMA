@@ -4,7 +4,7 @@ using Rooms.Core.Services.Spreadsheets.ExportModels;
 
 namespace Rooms.Core.Services.Spreadsheets.Specifications;
 
-public struct EquipmentRegistrySpreadsheetSpecification
+internal struct EquipmentRegistrySpreadsheetSpecification
     : ISpreadsheetExporterSpecification, ISpreadsheetWriterSpecification<EquipmentRegistrySpreadsheetExportDto>
 {
     private static readonly IReadOnlyList<ColumnSpecification<EquipmentRegistrySpreadsheetExportDto>> Specifications =

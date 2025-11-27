@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Rooms.Infrastructure.EFCore;
 
-public class RoomsDbContextUnitOfWork(RoomsDbContext dbContext, IMediator mediator) : IUnitOfWork
+internal class RoomsDbContextUnitOfWork(RoomsDbContext dbContext, IMediator mediator) : IUnitOfWork
 {
     public Task<IAsyncEnumerable<TEntity>> ApplyQuery<TQuery, TEntity>(
         IQuerySpecification<TQuery, TEntity> querySpecification,

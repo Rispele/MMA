@@ -10,7 +10,7 @@ using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 
-public class FilterRoomsQueryHandler : IQueryHandler<RoomsDbContext, FilterRoomsQuery, Room>
+internal class FilterRoomsQueryHandler : IQueryHandler<RoomsDbContext, FilterRoomsQuery, Room>
 {
     public Task<IAsyncEnumerable<Room>> Handle(
         EntityQuery<RoomsDbContext, FilterRoomsQuery, IAsyncEnumerable<Room>> request,

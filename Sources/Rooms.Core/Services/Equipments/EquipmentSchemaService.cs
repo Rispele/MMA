@@ -7,12 +7,12 @@ using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
 using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Core.Services.Equipments.Mappers;
-using Rooms.Domain.Exceptions;
 using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Equipments;
 
-public class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEquipmentSchemaService
+internal class EquipmentSchemaService(IUnitOfWorkFactory unitOfWorkFactory) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemaDto> GetEquipmentSchemaById(int equipmentSchemaId, CancellationToken cancellationToken)
     {

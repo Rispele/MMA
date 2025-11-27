@@ -4,7 +4,7 @@ using PrivateFieldNamesExposingGenerator.Attributes;
 namespace Rooms.Domain.Models.Equipments;
 
 [GenerateFieldNames]
-public class EquipmentSchema
+internal class EquipmentSchema
 {
     private readonly int? id;
     private Dictionary<string, string> parameterValues = null!;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Rooms.Domain.Models.Equipments;
 using WebApi.ModelBinders;
+using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -35,7 +35,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     /// <param name="cancellationToken"></param>
     /// <returns>Единица оборудования</returns>
     [HttpGet("{equipmentId:int}")]
-    public async Task<ActionResult<Equipment>> GetEquipmentById(
+    public async Task<ActionResult<EquipmentModel>> GetEquipmentById(
         int equipmentId,
         CancellationToken cancellationToken)
     {

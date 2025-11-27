@@ -3,5 +3,5 @@ using Commons.Domain.Queries.Abstractions;
 
 namespace Booking.Core.Queries.InstituteResponsible;
 
-public sealed record FindInstituteResponsibleByIdQuery(int InstituteResponsibleId)
+internal sealed record FindInstituteResponsibleByIdQuery(int InstituteResponsibleId)
     : ISingleQuerySpecification<FindInstituteResponsibleByIdQuery, InstituteCoordinator>;
