@@ -15,9 +15,9 @@ internal class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, Filt
         EntityQuery<RoomsDbContext, FilterEquipmentsQuery, IAsyncEnumerable<Equipment>> request,
         CancellationToken cancellationToken)
     {
-        IQueryable<Equipment> equipments = request.Context.Equipments
-            .Include(x => x.Schema)
-            .ThenInclude(x => x.Type);
+        IQueryable<Equipment> equipments = request.Context.Equipments;
+            // .Include(x => x.Schema)
+            // .ThenInclude(x => x.Type);
 
         equipments = Filters(equipments, request.Query.Filter);
         equipments = Sort(equipments, request.Query.Filter);
@@ -42,20 +42,20 @@ internal class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, Filt
                     return queryable.Where(t => parameter.Values.Contains(t.RoomId));
                 });
 
-        equipments = filter.Types
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                {
-                    return queryable.Where(t => parameter.Values.Contains(t.Schema.Type.Id));
-                });
+        // equipments = filter.Types
+        //     .AsOptional()
+        //     .Apply(equipments,
+        //         apply: (queryable, parameter) =>
+        //         {
+        //             return queryable.Where(t => parameter.Values.Contains(t.Schema.Type.Id));
+        //         });
 
         equipments = filter.Schemas
             .AsOptional()
             .Apply(equipments,
                 apply: (queryable, parameter) =>
                 {
-                    return queryable.Where(t => parameter.Values.Contains(t.Schema.Id));
+                    return queryable.Where(t => parameter.Values.Contains(t.EquipmentSchemaId));
                 });
 
         equipments = filter.InventoryNumber
@@ -101,8 +101,8 @@ internal class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, Filt
             sorts =
             [
                 BuildSort(filter.Rooms?.SortDirection, parameter: t => t.RoomId), // todo: поменять а имя
-                BuildSort(filter.Types?.SortDirection, parameter: t => t.Schema.Type.Name),
-                BuildSort(filter.Schemas?.SortDirection, parameter: t => t.Schema.Name),
+                // BuildSort(filter.Types?.SortDirection, parameter: t => t.Schema.Type.Name),
+                // BuildSort(filter.Schemas?.SortDirection, parameter: t => t.Schema.Name),
                 BuildSort(filter.InventoryNumber?.SortDirection, parameter: t => t.InventoryNumber),
                 BuildSort(filter.SerialNumber?.SortDirection, parameter: t => t.SerialNumber),
                 // BuildSort(filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.NetworkEquipmentIp),

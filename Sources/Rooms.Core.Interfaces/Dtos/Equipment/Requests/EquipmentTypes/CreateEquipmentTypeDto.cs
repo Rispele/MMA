@@ -3,5 +3,5 @@
 public record CreateEquipmentTypeDto
 {
     public required string Name { get; init; }
-    public EquipmentParameterDescriptorDto[] Parameters { get; init; }
+    public IEnumerable<EquipmentParameterDescriptorDto> Parameters { get; init; } = [];
 }

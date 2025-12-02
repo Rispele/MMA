@@ -7,6 +7,7 @@ using Booking.Core.Interfaces.Services.LkUser;
 using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.Booking.BookingRequests.Mappers;
 using Booking.Domain.Models.BookingRequests;
+using Booking.Domain.Propagated.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
@@ -56,6 +57,33 @@ public class BookingRequestService(
 
         var rooms = await GetRooms(dto.RoomIds, cancellationToken);
 
+        if (rooms.Length < dto.RoomIds.Length)
+        {
+            var roomIdsNotFound = dto.RoomIds.Where(t => rooms.All(r => r.Id != t)).JoinStrings(", ");
+            throw new InvalidRequestException($"Several rooms was not found: [{roomIdsNotFound}]");
+        }
+
+        if (dto.BookingSchedule.Length == 0)
+        {
+            throw new InvalidRequestException("No booking time bounds specified");
+        }
+
+        var invalidTimeBounds = dto.BookingSchedule.Where(x => x.TimeTo < x.TimeFrom).ToArray();
+        if (invalidTimeBounds.Length != 0)
+        {
+            var invalidTimeBoundData =
+                invalidTimeBounds.Select(x => $"Date: {x.Date}, Begin: {x.TimeFrom}, End: {x.TimeTo}").JoinStrings("\n");
+            throw new InvalidRequestException($"Wrong time bounds specified:\n{invalidTimeBoundData}");
+        }
+
+        var invalidBookingFinishDates = dto.BookingSchedule.Where(x => x.Date > x.BookingFinishDate).ToArray();
+        if (invalidBookingFinishDates.Length != 0)
+        {
+            var invalidBookingFinishDateData =
+                invalidBookingFinishDates.Select(x => $"Date: {x.Date}, Finish date: {x.BookingFinishDate}").JoinStrings("\n");
+            throw new InvalidRequestException($"Wrong booking dates specified:\n{invalidBookingFinishDateData}");
+        }
+
         var bookingRequest = new BookingRequest(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
             dto.Reason,
@@ -63,12 +91,12 @@ public class BookingRequestService(
             dto.TechEmployeeRequired,
             dto.EventHostFullName,
             BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
-            dto.CreatedAt,
+            createdAt: DateTime.Now,
             dto.EventName,
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
-            dto.Status,
+            status: BookingStatus.New,
             dto.ModeratorComment,
-            dto.BookingScheduleStatus,
+            bookingScheduleStatus: BookingScheduleStatus.NotSent,
             rooms.Select(t => t.Id).ToList());
 
         context.Add(bookingRequest);
@@ -94,6 +122,27 @@ public class BookingRequestService(
             throw new InvalidRequestException($"Several rooms was not found: [{roomIdsNotFound}]");
         }
 
+        if (dto.BookingSchedule.Length == 0)
+        {
+            throw new InvalidRequestException("No booking time bounds specified");
+        }
+
+        var invalidTimeBounds = dto.BookingSchedule.Where(x => x.TimeTo < x.TimeFrom).ToArray();
+        if (invalidTimeBounds.Length != 0)
+        {
+            var invalidTimeBoundData =
+                invalidTimeBounds.Select(x => $"Date: {x.Date}, Event begins: {x.TimeFrom}, Event ends: {x.TimeTo}").JoinStrings("\n");
+            throw new InvalidRequestException($"Wrong time bounds specified:\n{invalidTimeBoundData}");
+        }
+
+        var invalidBookingFinishDates = dto.BookingSchedule.Where(x => x.Date > x.BookingFinishDate).ToArray();
+        if (invalidBookingFinishDates.Length != 0)
+        {
+            var invalidBookingFinishDateData =
+                invalidBookingFinishDates.Select(x => $"Date: {x.Date}, Finish date: {x.BookingFinishDate}").JoinStrings("\n");
+            throw new InvalidRequestException($"Wrong booking dates specified:\n{invalidBookingFinishDateData}");
+        }
+
         bookingRequestToPatch.Update(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
             dto.Reason,
@@ -101,12 +150,9 @@ public class BookingRequestService(
             dto.TechEmployeeRequired,
             dto.EventHostFullName,
             BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
-            dto.CreatedAt,
             dto.EventName,
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
-            dto.Status,
-            dto.ModeratorComment,
-            dto.BookingScheduleStatus);
+            dto.ModeratorComment);
         bookingRequestToPatch.SetRooms(rooms.Select(t => t.Id).ToList());
 
         await context.Commit(cancellationToken);

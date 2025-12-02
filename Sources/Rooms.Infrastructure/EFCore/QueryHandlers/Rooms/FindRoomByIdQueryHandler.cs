@@ -13,8 +13,8 @@ internal class FindRoomByIdQueryHandler : ISingleQueryHandler<RoomsDbContext, Fi
 
         return request.Context.Rooms
             .Include(room => room.Equipments)
-            .ThenInclude(x => x.Schema)
-            .ThenInclude(x => x.Type)
+            // .ThenInclude(x => x.Schema)
+            // .ThenInclude(x => x.Type)
             .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

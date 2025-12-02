@@ -12,8 +12,8 @@ internal class FindEquipmentByIdQueryHandler : ISingleQueryHandler<RoomsDbContex
         var id = request.Query.EquipmentId;
 
         return request.Context.Equipments
-            .Include(x => x.Schema)
-            .ThenInclude(x => x.Type)
+            // .Include(x => x.Schema)
+            // .ThenInclude(x => x.Type)
             .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

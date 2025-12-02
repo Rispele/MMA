@@ -16,26 +16,26 @@ internal class EquipmentSchema
 
     public EquipmentSchema(
         string name,
-        EquipmentType equipmentType,
+        int equipmentTypeId,
         Dictionary<string, string> parameterValues)
     {
         Name = name;
-        Type = equipmentType;
+        EquipmentTypeId = equipmentTypeId;
         this.parameterValues = parameterValues;
     }
 
     public int Id => id ?? throw new InvalidOperationException("Equipment id not initialized yet");
     public IReadOnlyDictionary<string, string> ParameterValues => parameterValues;
     public string Name { get; private set; } = null!;
-    public EquipmentType Type { get; private set; } = null!;
+    public int EquipmentTypeId { get; private set; }
 
     public void Update(
         string name,
-        EquipmentType equipmentType,
+        int equipmentTypeId,
         Dictionary<string, string> parameterValuesToSet)
     {
         Name = name;
-        Type = equipmentType;
+        EquipmentTypeId = equipmentTypeId;
         parameterValues = parameterValuesToSet;
     }
 
@@ -47,8 +47,8 @@ internal class EquipmentSchema
     internal EquipmentSchema(
         int id,
         string name,
-        EquipmentType equipmentType,
-        Dictionary<string, string> parameterValues) : this(name, equipmentType, parameterValues)
+        int equipmentTypeId,
+        Dictionary<string, string> parameterValues) : this(name, equipmentTypeId, parameterValues)
     {
         this.id = id;
     }

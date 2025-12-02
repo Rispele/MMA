@@ -12,7 +12,7 @@ internal class FindEquipmentSchemaByIdQueryHandler : ISingleQueryHandler<RoomsDb
         var id = request.Query.EquipmentSchemaId;
 
         return request.Context.EquipmentSchemas
-            .Include(x => x.Type)
+            // .Include(x => x.Type)
             .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }

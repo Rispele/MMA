@@ -2,7 +2,7 @@
 
 public record CreateEquipmentSchemaModel
 {
-    public string Name { get; init; } = default!;
+    public string Name { get; init; } = null!;
     public int EquipmentTypeId { get; init; }
-    public Dictionary<string, string> ParameterValues { get; init; } = default!;
+    public Dictionary<string, string> ParameterValues { get; init; } = null!;
 }
