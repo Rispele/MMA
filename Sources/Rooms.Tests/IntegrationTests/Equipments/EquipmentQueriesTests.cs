@@ -86,9 +86,9 @@ public class EquipmentQueriesTests : ContainerTestBase
     public async Task FilterEquipment_ByStatus_ShouldReturnCorrectly()
     {
         var fixture = new Fixture();
-    
+
         var context = await GenerateContext(fixture);
-    
+
         var expected = fixture.Create<EquipmentStatus>();
         var notExpected = fixture.Create<EquipmentStatus>();
         var (expected1, expected2) = await CreateEquipments(
@@ -97,7 +97,7 @@ public class EquipmentQueriesTests : ContainerTestBase
             expected1EquipmentBuild: composer => composer.With(t => t.Status, expected),
             expected2EquipmentBuild: composer => composer.With(t => t.Status, expected),
             notExpectedEquipmentBuilder: composer => composer.With(t => t.Status, notExpected));
-    
+
         await Test(
             expected1.Id,
             expected2.Id,

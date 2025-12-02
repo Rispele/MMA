@@ -2,9 +2,9 @@
 
 public class TestLkUserClient : ILkUsersClient
 {
-    private static readonly LkUserDto[] Users = LkUserTestData.GetUsers(); 
-    private static readonly LkEmployeeDto[] Employees = LkUserTestData.GetEmployees(); 
-    
+    private static readonly LkUserDto[] Users = LkUserTestData.GetUsers();
+    private static readonly LkEmployeeDto[] Employees = LkUserTestData.GetEmployees();
+
     public Task<LkUserDto[]> GetUsers(CancellationToken cancellationToken)
     {
         return Task.FromResult(Users);

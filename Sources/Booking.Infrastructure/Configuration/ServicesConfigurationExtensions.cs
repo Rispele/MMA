@@ -20,7 +20,7 @@ public static class ServicesConfigurationExtensions
     {
         return serviceCollection
             .AddKeyedScoped<IUnitOfWorkFactory, BookingDbContextUnitOfWorkFactory>(KnownScopes.Booking)
-                
+
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterBookingRequestsQuery>(); })
             .AddScoped<IInstituteCoordinatorsService, InstituteCoordinatorsService>()
             .AddScoped<IBookingRequestService, BookingRequestService>()

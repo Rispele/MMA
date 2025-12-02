@@ -10,10 +10,10 @@ public partial class EquipmentsSdk
     public async Task<EquipmentSchemaDto> CreateEquipmentSchema(string? name = null, CancellationToken cancellationToken = default)
     {
         var type = await CreateEquipmentType(cancellationToken: cancellationToken);
-        
+
         return await CreateEquipmentSchema(type.Id, name, cancellationToken: cancellationToken);
     }
-    
+
     public Task<EquipmentSchemaDto> CreateEquipmentSchema(
         int typeId,
         string? name = null,
@@ -33,10 +33,10 @@ public partial class EquipmentsSdk
         {
             createRequestBuilder = createRequestBuilder.With(create => create.ParameterValues, parameterValues);
         }
-        
+
         return CreateEquipmentSchema(createRequestBuilder.Create(), cancellationToken);
     }
-    
+
     public Task<EquipmentSchemaDto> CreateEquipmentSchema(
         CreateEquipmentSchemaDto createRequest,
         CancellationToken cancellationToken = default)
@@ -64,7 +64,7 @@ public partial class EquipmentsSdk
         CancellationToken cancellationToken = default)
     {
         var request = new GetEquipmentSchemasDto(batchNumber, batchSize, -1, filter);
-        
+
         return equipmentSchemaService.FilterEquipmentSchemas(request, cancellationToken);
     }
 }

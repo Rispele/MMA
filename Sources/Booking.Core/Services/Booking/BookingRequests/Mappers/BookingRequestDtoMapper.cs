@@ -32,7 +32,7 @@ public static partial class BookingRequestDtoMapper
             _ => throw new ArgumentOutOfRangeException(nameof(coordinator))
         };
     }
-    
+
     public static IRoomEventCoordinatorDto MapRoomEventCoordinatorToDto(IRoomEventCoordinator coordinator)
     {
         return coordinator switch

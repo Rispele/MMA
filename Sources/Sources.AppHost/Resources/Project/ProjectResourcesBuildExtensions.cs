@@ -16,7 +16,7 @@ public static class ProjectResourcesBuildExtensions
             .WithReference(postgresResource1)
             .WaitFor(postgresResource1);
     }
-    
+
     public static IResourceBuilder<ProjectResource> AddBookingsMigration(
         this IDistributedApplicationBuilder distributedApplicationBuilder,
         ResourceSpecification resourceSpecification,

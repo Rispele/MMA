@@ -12,7 +12,7 @@ public class RoomScheduleClient : IRoomScheduleClient
         RoomScheduleClientSettings settings)
     {
         this.httpClient = httpClient;
-        
+
         httpClient.BaseAddress = new Uri(settings.ApiGateway);
     }
 
@@ -23,7 +23,7 @@ public class RoomScheduleClient : IRoomScheduleClient
         {
             Path = "events",
         };
-        
+
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
         query["date_gte"] = request.FromDate.ToString("yyyy-MM-dd");
         query["date_lt"] = request.ToDate.ToString("yyyy-MM-dd");

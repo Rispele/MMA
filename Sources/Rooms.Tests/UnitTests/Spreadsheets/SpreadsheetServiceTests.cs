@@ -148,7 +148,7 @@ public class SpreadsheetServiceTests
 
         await action.Should().NotThrowAsync();
     }
-    
+
     [Test]
     public async Task ExportEquipmentTypeRegistry_ShouldSuccessfullyExport()
     {
@@ -176,7 +176,7 @@ public class SpreadsheetServiceTests
 
         await action.Should().NotThrowAsync();
     }
-    
+
     private static SpreadsheetServiceContext SetupSpreadsheetService()
     {
         var mockRepository = new MockRepository(MockBehavior.Strict);

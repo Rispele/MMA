@@ -7,7 +7,7 @@ namespace Rooms.Domain.Models.OperatorDepartments;
 internal class OperatorDepartment
 {
     private readonly int? id;
-    
+
     private Dictionary<string, string> operators = null!;
     private readonly List<Rooms.Room> rooms = null!;
 

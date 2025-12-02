@@ -13,16 +13,16 @@ public partial class EquipmentsSdk
 
         var equipmentType = await CreateEquipmentType(cancellationToken: cancellationToken);
         var equipmentSchema = await CreateEquipmentSchema(equipmentType.Id, cancellationToken: cancellationToken);
-            
+
         var createRequest = fixture
             .Build<CreateEquipmentDto>()
             .With(create => create.SchemaId, equipmentSchema.Id)
             .With(create => create.RoomId, roomId)
             .Create();
-        
+
         return await CreateEquipment(createRequest, cancellationToken);
     }
-    
+
     public Task<EquipmentDto> CreateEquipment(
         CreateEquipmentDto createRequest,
         CancellationToken cancellationToken = default)
@@ -50,7 +50,7 @@ public partial class EquipmentsSdk
         CancellationToken cancellationToken = default)
     {
         var request = new GetEquipmentsDto(batchNumber, batchSize, -1, filter);
-        
+
         return equipmentService.FilterEquipments(request, cancellationToken);
     }
 }

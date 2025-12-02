@@ -6,7 +6,7 @@ namespace Rooms.Core.Services.Spreadsheets;
 internal static class SpreadsheetsExporterExtensions
 {
     public static FileExportDto Export<TSpecification, TData>(
-        this ISpreadsheetExporter exporter, 
+        this ISpreadsheetExporter exporter,
         TData[] data,
         Stream outputStream,
         CancellationToken cancellationToken)

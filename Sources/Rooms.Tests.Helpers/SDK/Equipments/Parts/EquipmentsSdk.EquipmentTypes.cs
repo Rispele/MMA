@@ -35,7 +35,7 @@ public partial class EquipmentsSdk
         CancellationToken cancellationToken = default)
     {
         var request = new GetEquipmentTypesDto(batchNumber, batchSize, -1, filter);
-        
+
         return equipmentTypeService.FilterEquipmentTypes(request, cancellationToken);
     }
 }

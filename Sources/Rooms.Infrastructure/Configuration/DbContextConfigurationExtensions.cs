@@ -14,7 +14,6 @@ public static class DbContextConfigurationExtensions
             npgsqlOptionsAction: builder => builder.ConfigureNpgsqlRoomsDbContextOptions());
     }
 
-    
     public static IHostApplicationBuilder AddRoomsDbContext(this IHostApplicationBuilder builder)
     {
         return builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, RoomsDbContext>(

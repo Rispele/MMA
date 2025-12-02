@@ -23,7 +23,7 @@ public static class ServicesConfigurationExtensions
     {
         return serviceCollection
             .AddKeyedScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>(KnownScopes.Rooms)
-          
+
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()
             .AddScoped<ISpreadsheetExporter, ExcelExporter>()

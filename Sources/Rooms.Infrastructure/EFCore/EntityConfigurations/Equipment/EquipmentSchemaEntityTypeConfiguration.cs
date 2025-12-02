@@ -10,7 +10,7 @@ internal class EquipmentSchemaEntityTypeConfiguration : IEntityTypeConfiguration
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).HasField(EquipmentSchemaFieldNames.Id).ValueGeneratedOnAdd();
-        
+
         builder.Property(x => x.Name).HasMaxLength(50);
         builder.HasOne(x => x.Type).WithMany();
         builder.Property(x => x.ParameterValues).HasField(EquipmentSchemaFieldNames.ParameterValues).HasColumnType("jsonb");

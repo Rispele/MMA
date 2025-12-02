@@ -36,9 +36,9 @@ else
     var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
     var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
     builder.AddWebApi(
-        KnownResources.WebApiService, 
+        KnownResources.WebApiService,
         minioResourceParameters,
-        postgresResource, 
+        postgresResource,
         roomsMigrationResource,
         bookingMigrationResource);
 }

@@ -26,7 +26,7 @@ public static partial class BookingRequestModelsMapper
         nameof(GetBookingRequestsDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
     public static partial GetBookingRequestsDto MapGetBookingRequestFromModel(GetBookingRequestsModel model);
-    
+
     [MapProperty(nameof(CreateBookingRequestModel.RoomEventCoordinator), nameof(CreateBookingRequestDto.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorToDto))]
     public static partial CreateBookingRequestDto MapCreateBookingRequestFromModel(CreateBookingRequestModel bookingRequest);
 
@@ -47,7 +47,7 @@ public static partial class BookingRequestModelsMapper
             _ => throw new ArgumentOutOfRangeException(nameof(coordinator))
         };
     }
-    
+
     public static IRoomEventCoordinatorDto MapRoomEventCoordinatorToDto(IRoomEventCoordinatorModel coordinator)
     {
         return coordinator switch

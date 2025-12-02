@@ -19,10 +19,10 @@ public class RoomDtoMapperTests
                 return t.JoinStrings(",");
             })
             .ToArray();
-        
+
         File.WriteAllLines("C:\\Users\\d.smirnov\\Downloads\\Копия Пользователи для тестового двойника - Пользователи1.csv", newLines);
     }
-    
+
     [Test]
     public void Map_Room_To_RoomDto_ShouldCorrectlyMap()
     {
