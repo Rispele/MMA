@@ -8,6 +8,19 @@ namespace Rooms.Tests.Helpers.SDK.Equipments.Parts;
 public partial class EquipmentsSdk
 {
     public Task<EquipmentTypeDto> CreateEquipmentType(
+        string name,
+        CancellationToken cancellationToken = default)
+    {
+        return equipmentTypeService.CreateEquipmentType(
+            new CreateEquipmentTypeDto
+            {
+                Name = name,
+                Parameters = []
+            },
+            cancellationToken);
+    }
+
+    public Task<EquipmentTypeDto> CreateEquipmentType(
         CreateEquipmentTypeDto? createRequest = null,
         CancellationToken cancellationToken = default)
     {

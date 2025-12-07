@@ -16,7 +16,7 @@ using Rooms.Tests.Helpers.SDK;
 namespace Rooms.Tests.IntegrationTests.Equipments;
 
 [TestFixture]
-public class EquipmentQueriesTests : ContainerTestBase
+public class FilterEquipmentQueryTests : ContainerTestBase
 {
     [Inject]
     private readonly MmrSdk mmrSdk = null!;

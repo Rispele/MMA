@@ -37,6 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Coverage\" />
       <Folder Include="UnitTests\Clients\" />
       <Folder Include="UnitTests\Spreadsheets\TestCases\" />
     </ItemGroup>

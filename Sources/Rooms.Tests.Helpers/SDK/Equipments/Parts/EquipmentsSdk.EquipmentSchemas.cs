@@ -1,17 +1,34 @@
 ﻿using AutoFixture;
 using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
+using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
 using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
 
 namespace Rooms.Tests.Helpers.SDK.Equipments.Parts;
 
 public partial class EquipmentsSdk
 {
-    public async Task<EquipmentSchemaDto> CreateEquipmentSchema(string? name = null, CancellationToken cancellationToken = default)
+    public async Task<EquipmentSchemaDto> CreateEquipmentSchema(
+        string? name = null,
+        Dictionary<string, string>? parameterValues = null,
+        CancellationToken cancellationToken = default)
     {
-        var type = await CreateEquipmentType(cancellationToken: cancellationToken);
+        var type = await CreateEquipmentType(
+            new CreateEquipmentTypeDto
+            {
+                Name = (name ?? Guid.NewGuid().ToString("N")) + "type",
+                Parameters = (parameterValues ?? [])
+                    .Select(t => t.Key)
+                    .Select(t => new EquipmentParameterDescriptorDto
+                    {
+                        Name = t,
+                        Required = true
+                    })
+                    .ToArray()
+            },
+            cancellationToken: cancellationToken);
 
-        return await CreateEquipmentSchema(type.Id, name, cancellationToken: cancellationToken);
+        return await CreateEquipmentSchema(type.Id, name, parameterValues, cancellationToken: cancellationToken);
     }
 
     public Task<EquipmentSchemaDto> CreateEquipmentSchema(

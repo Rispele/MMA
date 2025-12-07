@@ -131,7 +131,7 @@ namespace Rooms.Infrastructure.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
-                    b.Property<IReadOnlyList<EquipmentParameterDescriptor>>("Parameters")
+                    b.Property<IEnumerable<EquipmentParameterDescriptor>>("Parameters")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("parameters");

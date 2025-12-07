@@ -23,7 +23,7 @@ internal class EquipmentType
     }
 
     public int Id => id ?? throw new InvalidOperationException("Equipment Type id is not initialized yet");
-    public IReadOnlyList<EquipmentParameterDescriptor> Parameters => parameters;
+    public IEnumerable<EquipmentParameterDescriptor> Parameters => parameters;
     public string Name { get; private set; } = null!;
 
     public void Update(

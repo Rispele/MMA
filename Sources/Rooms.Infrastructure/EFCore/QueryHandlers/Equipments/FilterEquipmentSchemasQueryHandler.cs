@@ -20,6 +20,8 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
         equipmentSchemas = Filters(equipmentSchemas, request.Query.Filter);
         equipmentSchemas = Sort(equipmentSchemas, request.Query.Filter);
         equipmentSchemas = Paginate(equipmentSchemas, request.Query);
+        
+        Console.WriteLine(equipmentSchemas.ToQueryString());
 
         return Task.FromResult(equipmentSchemas.AsAsyncEnumerable());
     }
@@ -34,20 +36,20 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
         equipmentSchemas = filter.Name
             .AsOptional()
             .Apply(equipmentSchemas,
-                apply: (queryable, parameter) => queryable.Where(t =>
-                    t.Name != null! && t.Name.Contains(parameter.Value)));
+                apply: (queryable, parameter) => queryable.Where(t => t.Name.Contains(parameter.Value)));
 
         equipmentSchemas = filter.EquipmentTypeName
             .AsOptional()
             .Apply(equipmentSchemas,
-                apply: (queryable, parameter) => queryable.Where(t =>
-                    t.Type != null! && t.Type.ToString()!.Contains(parameter.Value)));
+                apply: (queryable, parameter) => queryable.Where(t => t.Type.Name.Contains(parameter.Value)));
 
         equipmentSchemas = filter.EquipmentParameters
             .AsOptional()
             .Apply(equipmentSchemas,
-                apply: (queryable, parameter) => queryable.Where(t =>
-                    t.ParameterValues != null! && t.ParameterValues.Keys.Any(x => x.Contains(parameter.Value))));
+                apply: (queryable, parameter) =>
+                {
+                    return queryable.Where(schema => EquipmentsFilterFunctions.EquipmentTypeParameterFilter(schema.Type.Id, parameter.Value));
+                });
 
         return equipmentSchemas;
     }
