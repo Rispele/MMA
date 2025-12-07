@@ -1,7 +1,6 @@
 ﻿using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
-using Rooms.Core.Exceptions;
 using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
@@ -13,8 +12,7 @@ using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Equipments;
 
-internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory,
-    IEquipmentTypeService equipmentTypeService) : IEquipmentSchemaService
+internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : IEquipmentSchemaService
 {
     public async Task<EquipmentSchemaDto> GetEquipmentSchemaById(int equipmentSchemaId, CancellationToken cancellationToken)
     {
@@ -43,28 +41,9 @@ internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWork
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var equipmentType = await equipmentTypeService.GetEquipmentTypeById(dto.EquipmentTypeId, cancellationToken);
+        var equipmentType = await context.ApplyQuery(new FindEquipmentTypeByIdQuery(dto.EquipmentTypeId), cancellationToken);
 
-        if (equipmentType == null)
-        {
-            throw new InvalidRequestException("Equipment type not found");
-        }
-
-        var equipmentTypeParametersByName = equipmentType.Parameters.ToDictionary(x => x.Name);
-
-        var missingParameters = dto.ParameterValues.Where(x => !equipmentTypeParametersByName.ContainsKey(x.Key)).ToArray();
-        if (missingParameters.Length != 0)
-        {
-            throw new InvalidRequestException($"Equipment schema parameters are missing: [{string.Join(", ", missingParameters)}]");
-        }
-
-        var extraParameters = equipmentTypeParametersByName.Keys.Where(x => !dto.ParameterValues.ContainsKey(x)).ToArray();
-        if (extraParameters.Length != 0)
-        {
-            throw new InvalidRequestException($"Provided extra equipment schema parameters: [{string.Join(", ", extraParameters)}]");
-        }
-
-        var equipmentSchema = new EquipmentSchema(dto.Name, equipmentType.Id, dto.ParameterValues);
+        var equipmentSchema = new EquipmentSchema(dto.Name, equipmentType, dto.ParameterValues);
 
         context.Add(equipmentSchema);
 
@@ -81,30 +60,11 @@ internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWork
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipmentSchemaToPatch = await GetEquipmentSchemaByIdInner(equipmentSchemaId, cancellationToken, context);
-        var equipmentType = await equipmentTypeService.GetEquipmentTypeById(dto.EquipmentTypeId, cancellationToken);
-
-        if (equipmentType == null)
-        {
-            throw new InvalidRequestException("Equipment type not found");
-        }
-
-        var equipmentTypeParametersByName = equipmentType.Parameters.ToDictionary(x => x.Name);
-
-        var missingParameters = dto.ParameterValues.Where(x => !equipmentTypeParametersByName.ContainsKey(x.Key)).ToArray();
-        if (missingParameters.Length != 0)
-        {
-            throw new InvalidRequestException($"Equipment schema parameters are missing: [{string.Join(", ", missingParameters)}]");
-        }
-
-        var extraParameters = equipmentTypeParametersByName.Keys.Where(x => !dto.ParameterValues.ContainsKey(x)).ToArray();
-        if (extraParameters.Length != 0)
-        {
-            throw new InvalidRequestException($"Provided extra equipment schema parameters: [{string.Join(", ", extraParameters)}]");
-        }
+        var equipmentType = await context.ApplyQuery(new FindEquipmentTypeByIdQuery(dto.EquipmentTypeId), cancellationToken);
 
         equipmentSchemaToPatch.Update(
             dto.Name,
-            equipmentType.Id,
+            equipmentType,
             dto.ParameterValues);
 
         await context.Commit(cancellationToken);

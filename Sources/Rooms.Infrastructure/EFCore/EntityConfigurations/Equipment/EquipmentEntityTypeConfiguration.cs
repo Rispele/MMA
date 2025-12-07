@@ -11,6 +11,8 @@ internal class EquipmentEntityTypeConfiguration : IEntityTypeConfiguration<Domai
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).HasField(EquipmentFieldNames.Id).ValueGeneratedOnAdd();
 
+        builder.HasOne(x => x.Schema).WithMany();
+
         builder.Property(t => t.InventoryNumber).HasMaxLength(256);
         builder.Property(t => t.SerialNumber).HasMaxLength(256);
         builder.Property(t => t.NetworkEquipmentIp).HasMaxLength(256);

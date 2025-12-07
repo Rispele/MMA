@@ -2,12 +2,10 @@
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
 using Commons.ExternalClients.LkUsers;
-using Rooms.Core.Exceptions;
 using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
 using Rooms.Core.Interfaces.Dtos.OperatorDepartments.Requests;
 using Rooms.Core.Interfaces.Dtos.OperatorDepartments.Responses;
 using Rooms.Core.Interfaces.Services.OperatorDepartments;
-using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Core.Queries.Implementations.OperatorDepartments;
 using Rooms.Core.Queries.Implementations.Room;
 using Rooms.Core.Services.OperatorDepartments.Mappers;
@@ -18,7 +16,6 @@ namespace Rooms.Core.Services.OperatorDepartments;
 
 internal class OperatorDepartmentService(
     [RoomsScope] IUnitOfWorkFactory unitOfWorkFactory,
-    IRoomService roomService,
     ILkUsersClient lkUsersClient) : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentDto> GetOperatorDepartmentById(int operatorDepartmentId, CancellationToken cancellationToken)
@@ -42,7 +39,6 @@ internal class OperatorDepartmentService(
 
     public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
     {
-        // todo
         return [];
     }
 
@@ -63,18 +59,6 @@ internal class OperatorDepartmentService(
     public async Task<OperatorDepartmentDto> CreateOperatorDepartment(CreateOperatorDepartmentDto dto, CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
-
-        var rooms = await roomService.FindRoomByIds(dto.RoomIds, cancellationToken);
-        var missingRooms = dto.RoomIds.Where(x => rooms.All(y => y.Id != x)).ToArray();
-        if (rooms.Length != dto.RoomIds.Distinct().Count())
-        {
-            throw new InvalidRequestException($"Rooms not found: [{string.Join(", ", missingRooms)}]");
-        }
-
-        if (dto.Operators.Keys.Count == 0)
-        {
-            throw new InvalidRequestException("Operator department must have at least one operator");
-        }
 
         var operatorDepartment = new OperatorDepartment(dto.Name, dto.Contacts, dto.Operators);
 
@@ -101,18 +85,6 @@ internal class OperatorDepartmentService(
         var operatorDepartmentToPatch = await GetOperatorDepartmentByIdInner(operatorDepartmentId, cancellationToken, context);
         var roomsToRemove = operatorDepartmentToPatch.Rooms.Where(r => !dto.RoomIds.Contains(r.Id)).ToList();
         var roomIdsToAdd = dto.RoomIds.Where(roomId => operatorDepartmentToPatch.Rooms.All(r => r.Id != roomId)).ToList();
-
-        var rooms = await roomService.FindRoomByIds(dto.RoomIds, cancellationToken);
-        var missingRooms = dto.RoomIds.Where(x => rooms.All(y => y.Id != x)).ToArray();
-        if (rooms.Length != dto.RoomIds.Distinct().Count())
-        {
-            throw new InvalidRequestException($"Rooms not found: [{string.Join(", ", missingRooms)}]");
-        }
-
-        if (dto.Operators.Keys.Count == 0)
-        {
-            throw new InvalidRequestException("Operator department must have at least one operator");
-        }
 
         operatorDepartmentToPatch.Update(
             dto.Name,

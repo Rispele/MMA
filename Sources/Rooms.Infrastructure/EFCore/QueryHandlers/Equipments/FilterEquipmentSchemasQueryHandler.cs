@@ -15,8 +15,7 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
         EntityQuery<RoomsDbContext, FilterEquipmentSchemasQuery, IAsyncEnumerable<EquipmentSchema>> request,
         CancellationToken cancellationToken)
     {
-        IQueryable<EquipmentSchema> equipmentSchemas = request.Context.EquipmentSchemas;
-            // .Include(x => x.Type);
+        IQueryable<EquipmentSchema> equipmentSchemas = request.Context.EquipmentSchemas.Include(x => x.Type);
 
         equipmentSchemas = Filters(equipmentSchemas, request.Query.Filter);
         equipmentSchemas = Sort(equipmentSchemas, request.Query.Filter);
@@ -38,11 +37,11 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
                 apply: (queryable, parameter) => queryable.Where(t =>
                     t.Name != null! && t.Name.Contains(parameter.Value)));
 
-        // equipmentSchemas = filter.EquipmentTypeName
-        //     .AsOptional()
-        //     .Apply(equipmentSchemas,
-        //         apply: (queryable, parameter) => queryable.Where(t =>
-        //             t.Type != null! && t.Type.ToString()!.Contains(parameter.Value)));
+        equipmentSchemas = filter.EquipmentTypeName
+            .AsOptional()
+            .Apply(equipmentSchemas,
+                apply: (queryable, parameter) => queryable.Where(t =>
+                    t.Type != null! && t.Type.ToString()!.Contains(parameter.Value)));
 
         equipmentSchemas = filter.EquipmentParameters
             .AsOptional()

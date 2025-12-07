@@ -13,9 +13,7 @@ using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Equipments;
 
-internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory,
-    IRoomService roomService,
-    IEquipmentSchemaService equipmentSchemaService) : IEquipmentService
+internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory, IRoomService roomService) : IEquipmentService
 {
     public async Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken)
     {
@@ -45,11 +43,11 @@ internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactor
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
-        var equipmentSchema = await equipmentSchemaService.GetEquipmentSchemaById(dto.SchemaId, cancellationToken);
+        var equipmentSchema = await context.ApplyQuery(new FindEquipmentSchemaByIdQuery(dto.SchemaId), cancellationToken);
 
         var equipment = new Equipment(
             room.Id,
-            equipmentSchema.Id,
+            equipmentSchema,
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,
@@ -71,12 +69,11 @@ internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactor
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipmentToPatch = await GetEquipmentByIdInner(equipmentId, cancellationToken, context);
-        var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
-        var equipmentSchema = await equipmentSchemaService.GetEquipmentSchemaById(dto.SchemaId, cancellationToken);
+        var equipmentSchema = await context.ApplyQuery(new FindEquipmentSchemaByIdQuery(dto.SchemaId), cancellationToken);
 
         equipmentToPatch.Update(
-            room.Id,
-            equipmentSchema.Id,
+            equipmentToPatch.RoomId,
+            equipmentSchema,
             dto.InventoryNumber,
             dto.SerialNumber,
             dto.NetworkEquipmentIp,

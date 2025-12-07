@@ -16,7 +16,7 @@ internal class Equipment
 
     public Equipment(
         int roomId,
-        int equipmentSchemaId,
+        EquipmentSchema schema,
         string? inventoryNumber,
         string? serialNumber,
         string? networkEquipmentIp,
@@ -24,7 +24,7 @@ internal class Equipment
         EquipmentStatus? status)
     {
         RoomId = roomId;
-        EquipmentSchemaId = equipmentSchemaId;
+        Schema = schema;
         InventoryNumber = inventoryNumber;
         SerialNumber = serialNumber;
         NetworkEquipmentIp = networkEquipmentIp;
@@ -34,7 +34,7 @@ internal class Equipment
 
     public int Id => id ?? throw new InvalidOperationException("Equipment id not initialized yet");
     public int RoomId { get; private set; }
-    public int EquipmentSchemaId { get; private set; }
+    public EquipmentSchema Schema { get; private set; } = null!;
     public string? InventoryNumber { get; private set; }
     public string? SerialNumber { get; private set; }
     public string? NetworkEquipmentIp { get; private set; }
@@ -43,7 +43,7 @@ internal class Equipment
 
     public void Update(
         int roomId,
-        int equipmentSchemaId,
+        EquipmentSchema schema,
         string? inventoryNumber,
         string? serialNumber,
         string? networkEquipmentIp,
@@ -51,7 +51,7 @@ internal class Equipment
         EquipmentStatus? status)
     {
         RoomId = roomId;
-        EquipmentSchemaId = equipmentSchemaId;
+        Schema = schema;
         InventoryNumber = inventoryNumber;
         SerialNumber = serialNumber;
         NetworkEquipmentIp = networkEquipmentIp;
@@ -67,12 +67,12 @@ internal class Equipment
     internal Equipment(
         int id,
         int roomId,
-        int equipmentSchemaId,
+        EquipmentSchema schema,
         string? inventoryNumber,
         string? serialNumber,
         string? networkEquipmentIp,
         string? comment,
-        EquipmentStatus? status) : this(roomId, equipmentSchemaId, inventoryNumber, serialNumber, networkEquipmentIp, comment, status)
+        EquipmentStatus? status) : this(roomId, schema, inventoryNumber, serialNumber, networkEquipmentIp, comment, status)
     {
         this.id = id;
     }

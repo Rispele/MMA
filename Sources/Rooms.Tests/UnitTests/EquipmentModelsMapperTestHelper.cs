@@ -30,7 +30,7 @@ internal static class EquipmentsTestHelper
         return new Equipment(
             EquipmentId,
             RoomId,
-            CreateEquipmentSchema().Id,
+            CreateEquipmentSchema(),
             InventoryNumber,
             SerialNumber,
             NetworkEquipmentIp,
@@ -63,7 +63,7 @@ internal static class EquipmentsTestHelper
         return new EquipmentSchema(
             SchemaId,
             SchemaName,
-            CreateEquipmentType().Id,
+            CreateEquipmentType(),
             new Dictionary<string, string>
             {
                 [TypeParameterValue] = TypeParameterValue

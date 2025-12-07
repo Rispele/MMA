@@ -1,7 +1,6 @@
 ﻿using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
-using Rooms.Core.Exceptions;
 using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
 using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
@@ -45,11 +44,6 @@ internal class EquipmentTypeService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        if (!dto.Parameters.Any())
-        {
-            throw new InvalidRequestException("Equipment type must have at least one parameter");
-        }
-
         var equipmentType = new EquipmentType(
             dto.Name,
             dto.Parameters.Select(descriptor => new EquipmentParameterDescriptor(descriptor.Name, descriptor.Required)).ToList());
@@ -69,21 +63,6 @@ internal class EquipmentTypeService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var equipmentTypeToPatch = await GetEquipmentTypeByIdInner(equipmentTypeId, cancellationToken, context);
-
-        if (!dto.Parameters.Any())
-        {
-            throw new InvalidRequestException("Equipment type must have at least one parameter");
-        }
-
-        var newRequiredParameters = dto.Parameters
-            .Where(x => x.Required
-                        && (equipmentTypeToPatch.Parameters.All(y => x.Name != y.Name)
-                            || !equipmentTypeToPatch.Parameters.First(y => x.Name == y.Name).Required))
-            .ToArray();
-        if (newRequiredParameters.Length != 0)
-        {
-            throw new InvalidRequestException("Equipment type should not strictly require new or already present parameters");
-        }
 
         var updatedParameters = dto.Parameters
             .Select(descriptor => new EquipmentParameterDescriptor(descriptor.Name, descriptor.Required))

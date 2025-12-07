@@ -69,9 +69,12 @@ public class BookingRequest
         bool techEmployeeRequired,
         string eventHostFullName,
         IRoomEventCoordinator roomEventCoordinator,
+        DateTime createdAt,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule,
-        string? moderatorComment)
+        BookingStatus status,
+        string? moderatorComment,
+        BookingScheduleStatus? bookingScheduleStatus)
     {
         Creator = creator;
         Reason = reason;
@@ -79,24 +82,17 @@ public class BookingRequest
         TechEmployeeRequired = techEmployeeRequired;
         EventHostFullName = eventHostFullName;
         RoomEventCoordinator = roomEventCoordinator;
+        CreatedAt = createdAt;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
+        Status = status;
         ModeratorComment = moderatorComment;
+        BookingScheduleStatus = bookingScheduleStatus;
     }
 
     public void SetRooms(List<int> roomsToSet)
     {
         roomIds.Clear();
         roomIds = roomsToSet;
-    }
-
-    public void UpdateStatus(BookingStatus status)
-    {
-        Status = status;
-    }
-
-    public void UpdateBookingScheduleStatus(BookingScheduleStatus bookingScheduleStatus)
-    {
-        BookingScheduleStatus = bookingScheduleStatus;
     }
 }
