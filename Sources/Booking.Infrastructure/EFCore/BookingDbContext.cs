@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.EFCore;
 
-public class BookingDbContext : DbContext
+public class BookingDbContext(DbContextOptions<BookingDbContext> options) : DbContext(options)
 {
     public DbSet<BookingRequest> BookingRequests { get; [UsedImplicitly] private set; }
 

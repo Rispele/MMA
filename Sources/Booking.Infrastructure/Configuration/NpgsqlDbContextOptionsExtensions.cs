@@ -5,7 +5,7 @@ namespace Booking.Infrastructure.Configuration;
 
 public static class NpgsqlDbContextOptionsExtensions
 {
-    public static void ConfigureNpgsqlRoomsDbContextOptions(this NpgsqlDbContextOptionsBuilder optionsBuilder)
+    public static void ConfigureNpgsqlBookingDbContextOptions(this NpgsqlDbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
             .MapEnum<BookingFrequency>()

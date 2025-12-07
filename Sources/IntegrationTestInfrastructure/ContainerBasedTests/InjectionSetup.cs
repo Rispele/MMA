@@ -44,6 +44,9 @@ public class InjectionSetup : ISetup
             currentType = currentType.BaseType;
         }
 
-        fieldsToInject.ForEach(field => field.SetValue(testFixture, scope.ServiceProvider.GetRequiredService(field.FieldType)));
+        fieldsToInject.ForEach(field =>
+        {
+            field.SetValue(testFixture, scope.ServiceProvider.GetRequiredService(field.FieldType));
+        });
     }
 }

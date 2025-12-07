@@ -4,10 +4,10 @@ namespace Rooms.Tests.IntegrationTests;
 
 [SetUpFixture]
 [Parallelizable(ParallelScope.None)]
-public class CoreIntegrationTestsContext : SimpleSuiteBase
+public class RoomsIntegrationTestsContext : SimpleSuiteBase
 {
     protected override void Configure(ISetupBuilder suite)
     {
-        suite.UseSetup<CoreIntegrationsTestsSetup>();
+        suite.UseSetup<RoomsIntegrationsTestsSetup>();
     }
 }

@@ -11,13 +11,13 @@ public static class DbContextConfigurationExtensions
     {
         return services.ConfigurePostgresDbContext<BookingDbContext>(
             roomsDbContextConnectionString,
-            npgsqlOptionsAction: builder => builder.ConfigureNpgsqlRoomsDbContextOptions());
+            NpgsqlDbContextOptionsExtensions.ConfigureNpgsqlBookingDbContextOptions);
     }
 
     public static IHostApplicationBuilder AddBookingDbContext(this IHostApplicationBuilder builder)
     {
         return builder.ConfigurePostgresDbContextWithInstrumentation<IHostApplicationBuilder, BookingDbContext>(
             KnownResourceNames.MmrDb,
-            NpgsqlDbContextOptionsExtensions.ConfigureNpgsqlRoomsDbContextOptions);
+            NpgsqlDbContextOptionsExtensions.ConfigureNpgsqlBookingDbContextOptions);
     }
 }

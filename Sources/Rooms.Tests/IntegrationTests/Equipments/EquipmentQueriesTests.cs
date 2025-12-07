@@ -78,6 +78,9 @@ public class EquipmentQueriesTests : ContainerTestBase
             expected3.Id,
             filterEquipmentsQuery: sortDirection => new EquipmentsFilterDto
             {
+                Rooms = new FilterMultiParameterDto<int>(
+                    [context.Equipment1.Room.Id, context.Equipment2.Room.Id, context.Equipment3.Room.Id],
+                    SortDirectionDto.None),
                 Schemas = new FilterMultiParameterDto<int>([context.Equipment1.Schema.Id], sortDirection)
             });
     }
@@ -103,34 +106,12 @@ public class EquipmentQueriesTests : ContainerTestBase
             expected2.Id,
             filterEquipmentsQuery: sortDirection => new EquipmentsFilterDto
             {
+                Rooms = new FilterMultiParameterDto<int>(
+                    [context.Equipment1.Room.Id, context.Equipment2.Room.Id, context.Equipment3.Room.Id],
+                    SortDirectionDto.None),
                 Statuses = new FilterMultiParameterDto<EquipmentStatus>([expected], sortDirection)
             });
     }
-
-    // [Test]
-    // public async Task FilterEquipment_ByComment_ShouldReturnCorrectly()
-    // {
-    //     var fixture = new Fixture();
-    //
-    //     var context = await GenerateContext(fixture);
-    //
-    //     var expected = fixture.Create<string>();
-    //     var commentNotExpected = fixture.Create<string>();
-    //     var (expected1, expected2) = await CreateEquipments(
-    //         fixture,
-    //         context,
-    //         expected1EquipmentBuild: composer => composer.With(t => t.Comment, expected + "1"),
-    //         expected2EquipmentBuild: composer => composer.With(t => t.Comment, expected + "2"),
-    //         notExpectedEquipmentBuilder: composer => composer.With(t => t.Comment, commentNotExpected));
-    //
-    //     await Test(
-    //         expected1.Id,
-    //         expected2.Id,
-    //         filterEquipmentsQuery: sortDirection => new EquipmentsFilterDto
-    //         {
-    //             Comment = new FilterParameterDto<string>(expected, sortDirection)
-    //         });
-    // }
 
     private async Task<(EquipmentDto expected1, EquipmentDto expected2)> CreateEquipments(
         Fixture fixture,

@@ -1,10 +1,12 @@
 ﻿using Aspire.Hosting.ApplicationModel;
+using Commons.Domain.Queries.Factories;
 using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework.Interfaces;
 using Rooms.Infrastructure.Configuration;
+using Rooms.Infrastructure.EFCore;
 using Rooms.Tests.Helpers.SDK;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
@@ -12,7 +14,7 @@ using Sources.AppHost.Resources;
 namespace Rooms.Tests.IntegrationTests;
 
 [UsedImplicitly]
-public class CoreIntegrationsTestsSetup : ISetup
+public class RoomsIntegrationsTestsSetup : ISetup
 {
     public async Task SetUpAsync(ITest test)
     {
@@ -56,6 +58,7 @@ public class CoreIntegrationsTestsSetup : ISetup
 
         return new TestingContainerFactory()
             .ConfigureServices(t => t
+                .AddScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>()
                 .ConfigureRoomsDbContextForTests(roomsDbContextConnectionString)
                 .AddLogging(builder => builder.AddConsole())
                 .ConfigureServicesForRooms()
