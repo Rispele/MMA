@@ -1,7 +1,7 @@
-﻿using Aspire.Hosting.ApplicationModel;
-using IntegrationTestInfrastructure.Configuration;
+﻿using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework.Interfaces;
 using Rooms.Infrastructure.Configuration;
 using Rooms.Tests.Helpers.SDK.Rooms;
@@ -41,8 +41,8 @@ public class WebApiTestsSetup : ISetup
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(KnownResources.RoomsMigrationService.Name,
-            KnownResourceStates.Finished, cts.Token);
+        // await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(KnownResources.RoomsMigrationService.Name,
+        //     KnownResourceStates.Finished, cts.Token);
         await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.WebApiService.Name, cts.Token);
 
         return testingApplicationFactory;
@@ -57,6 +57,7 @@ public class WebApiTestsSetup : ISetup
             .ConfigureServices(t => t
                 .ConfigureRoomsDbContextForTests(roomsDbContextConnectionString)
                 .ConfigureServicesForWebApi()
+                .AddLogging(builder => builder.AddConsole())
                 .AddScoped<RoomsSdk>())
             .BuildServiceProvider();
     }

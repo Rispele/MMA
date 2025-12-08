@@ -3,12 +3,12 @@ using Booking.Core.Interfaces.Services.BookingRequests;
 using Booking.Core.Interfaces.Services.InstituteCoordinators;
 using Booking.Core.Interfaces.Services.LkUser;
 using Booking.Core.Interfaces.Services.Schedule;
-using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.Booking.BookingRequests;
 using Booking.Core.Services.InstituteCoordinators;
 using Booking.Core.Services.LkUser;
 using Booking.Core.Services.Schedule;
 using Booking.Infrastructure.EFCore;
+using Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
 using Commons.Domain.Queries.Factories;
 using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +24,7 @@ public static class ServicesConfigurationExtensions
             
             .AddKeyedScoped<IUnitOfWorkFactory, BookingDbContextUnitOfWorkFactory>(KnownScopes.Booking)
             
-            .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterBookingRequestsQuery>(); })
+            .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterBookingRequestsQueryHandler>(); })
             .AddScoped<IRoomScheduleClient, RoomScheduleClient>()
             .AddScoped<IInstituteCoordinatorsService, InstituteCoordinatorsService>()
             .AddScoped<IBookingRequestService, BookingRequestService>()
