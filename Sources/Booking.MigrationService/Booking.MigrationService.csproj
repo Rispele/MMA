@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-Booking.MigrationService-70a17da7-4e2f-4d80-8911-55d4ddd1baf1</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -6,6 +6,7 @@ using Booking.Core.Interfaces.Services.InstituteCoordinators;
 using Booking.Core.Queries.InstituteCoordinators;
 using Booking.Core.Services.InstituteCoordinators.Mappers;
 using Booking.Domain.Models.InstituteCoordinators;
+using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
 using Commons.ExternalClients.InstituteDepartments;
