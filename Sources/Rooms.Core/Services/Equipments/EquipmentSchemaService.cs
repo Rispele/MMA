@@ -1,5 +1,4 @@
-﻿using Commons;
-using Commons.Domain.Queries.Abstractions;
+﻿using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
 using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;

@@ -2,16 +2,16 @@
 
 public static class EnumerableExtensions
 {
-    public static async Task<List<TValue>> ToListAsync<TValue>(this IAsyncEnumerable<TValue> enumerable, CancellationToken cancellationToken)
-    {
-        var result = new List<TValue>();
-        await foreach (var value in enumerable.WithCancellation(cancellationToken))
-        {
-            result.Add(value);
-        }
-
-        return result;
-    }
+    // public static async Task<List<TValue>> ToListAsync<TValue>(this IAsyncEnumerable<TValue> enumerable, CancellationToken cancellationToken)
+    // {
+    //     var result = new List<TValue>();
+    //     await foreach (var value in enumerable.WithCancellation(cancellationToken))
+    //     {
+    //         result.Add(value);
+    //     }
+    //
+    //     return result;
+    // }
 
     public static void ForEach<TValue>(this IEnumerable<TValue> enumerable, Action<TValue> action)
     {
