@@ -22,25 +22,40 @@ var configuration = new ConfigurationBuilder()
 
 var testingProfile = builder.Configuration["testing_profile"];
 
-if (testingProfile is "Testing.Core")
+var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
+switch (testingProfile)
 {
-    builder.AddMinio(KnownResources.Minio, configuration);
-    var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
-    builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
-    builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
-}
-else
-{
-    var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
-    var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
-    var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
-    var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
-    builder.AddWebApi(
-        KnownResources.WebApiService,
-        minioResourceParameters,
-        postgresResource,
-        roomsMigrationResource,
-        bookingMigrationResource);
+    case "Testing.Migration":
+    {
+        break;
+    }
+    case "Testing.Core":
+    {
+        builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
+        builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
+
+        builder.AddMinio(KnownResources.Minio, configuration);
+        break;
+    }
+    case "Testing.WebApi":
+    {
+        var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
+        var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
+
+        var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
+
+        builder.AddWebApi(
+            KnownResources.WebApiService,
+            minioResourceParameters,
+            postgresResource,
+            roomsMigrationResource,
+            bookingMigrationResource);
+        break;
+    }
+    default:
+    {
+        throw new ArgumentException($"Unknown testing profile: {testingProfile}");
+    }
 }
 
 builder.Build().Run();
