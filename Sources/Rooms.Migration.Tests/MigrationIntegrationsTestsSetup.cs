@@ -1,5 +1,4 @@
-﻿using Aspire.Hosting.ApplicationModel;
-using IntegrationTestInfrastructure.Configuration;
+﻿using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,7 +10,7 @@ using Sources.AppHost.Resources;
 namespace Rooms.Migration.Tests;
 
 [UsedImplicitly]
-public class RoomsIntegrationsTestsSetup : ISetup
+public class MigrationIntegrationsTestsSetup : ISetup
 {
     public async Task SetUpAsync(ITest test)
     {
@@ -40,10 +39,7 @@ public class RoomsIntegrationsTestsSetup : ISetup
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(
-            KnownResources.PostgresService.Name,
-            targetState: KnownResourceStates.Running,
-            cts.Token);
+        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.PostgresService.Name, cts.Token);
 
         return testingApplicationFactory;
     }

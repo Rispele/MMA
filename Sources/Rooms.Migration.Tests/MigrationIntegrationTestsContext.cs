@@ -4,10 +4,10 @@ namespace Rooms.Migration.Tests;
 
 [SetUpFixture]
 [Parallelizable(ParallelScope.None)]
-public class RoomsIntegrationTestsContext : SimpleSuiteBase
+public class MigrationIntegrationTestsContext : SimpleSuiteBase
 {
     protected override void Configure(ISetupBuilder suite)
     {
-        suite.UseSetup<RoomsIntegrationsTestsSetup>();
+        suite.UseSetup<MigrationIntegrationsTestsSetup>();
     }
 }

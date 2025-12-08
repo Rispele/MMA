@@ -38,6 +38,7 @@ switch (testingProfile)
         break;
     }
     case "Testing.WebApi":
+    case null:
     {
         var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
         var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);

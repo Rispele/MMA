@@ -1,9 +1,12 @@
 ﻿using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.InstituteDepartments;
+using Commons.ExternalClients.LkUsers;
 using Microsoft.Extensions.DependencyInjection;
 using Rooms.Core;
 using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Core.Interfaces.Services.OperatorDepartments;
 using Rooms.Core.Interfaces.Services.Rooms;
+using Rooms.Core.Interfaces.Services.Spreadsheets;
 using Rooms.Core.Services.Equipments;
 using Rooms.Core.Services.OperatorDepartments;
 using Rooms.Core.Services.Rooms;
@@ -23,8 +26,10 @@ public static class ServicesConfigurationExtensions
     {
         return serviceCollection
             .AddKeyedScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>(KnownScopes.Rooms)
-
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })
+            .AddScoped<IInstituteDepartmentClient, InstituteDepartmentClient>()
+            .AddScoped<IRoomAttachmentsService, RoomAttachmentsService>()
+            .AddScoped<ILkUsersClient, TestLkUserClient>()
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()
             .AddScoped<ISpreadsheetExporter, ExcelExporter>()
             .AddScoped<IRoomService, RoomService>()
@@ -32,6 +37,6 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
             .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>()
-            .AddScoped<SpreadsheetService>();
+            .AddScoped<ISpreadsheetService, SpreadsheetService>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Rooms.Infrastructure.Configuration;
+﻿using Booking.Infrastructure.Configuration;
+using Rooms.Infrastructure.Configuration;
 using Sources.ServiceDefaults;
 using WebApi.Startup.ConfigurationExtensions;
 
@@ -13,9 +14,13 @@ public static class ApplicationRunner
         builder
             .AddServiceDefaults()
             .AddRoomsDbContext()
+            .AddBookingDbContext()
             .AddMinio();
 
-        builder.Services.ConfigureServicesForWebApi();
+        builder
+            .Services
+            .ConfigureServicesForWebApi()
+            .AddOpenApi();
 
         return ConfigureApplication(builder);
     }
