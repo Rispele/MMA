@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Rooms.Tests.Helpers;
+namespace Commons.Tests.Helpers;
 
 public static class EmbeddedResourceProvider
 {

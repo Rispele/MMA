@@ -2,12 +2,12 @@
 using Commons.Core.Models.Filtering;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
+using Commons.Tests.Helpers.SDK;
 using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Queries.Implementations.Equipment;
-using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests.Equipments;
 

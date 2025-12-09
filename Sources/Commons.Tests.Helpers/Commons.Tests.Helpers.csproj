@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <PackageReference Include="AutoFixture" Version="4.18.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Rooms.Core.Interfaces\Rooms.Core.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

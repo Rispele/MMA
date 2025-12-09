@@ -31,7 +31,6 @@
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
         <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>
         <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Rooms.Tests.Helpers\Rooms.Tests.Helpers.csproj"/>
         <ProjectReference Include="..\Sources.AppHost\Sources.AppHost.csproj"/>
         <ProjectReference Include="..\WebApi\WebApi.csproj"/>
     </ItemGroup>

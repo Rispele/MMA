@@ -4,7 +4,7 @@ using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
 using Rooms.Core.Interfaces.Dtos.Equipment.Responses;
 
-namespace Rooms.Tests.Helpers.SDK.Equipments.Parts;
+namespace Commons.Tests.Helpers.SDK.Equipments.Parts;
 
 public partial class EquipmentsSdk
 {

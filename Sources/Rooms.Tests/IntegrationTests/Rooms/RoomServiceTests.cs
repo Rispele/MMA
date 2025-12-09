@@ -1,4 +1,5 @@
 ﻿using Commons.Core.Models.Filtering;
+using Commons.Tests.Helpers.SDK.Rooms;
 using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
@@ -8,7 +9,6 @@ using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Domain.Propagated.Exceptions;
-using Rooms.Tests.Helpers.SDK.Rooms;
 
 namespace Rooms.Tests.IntegrationTests.Rooms;
 

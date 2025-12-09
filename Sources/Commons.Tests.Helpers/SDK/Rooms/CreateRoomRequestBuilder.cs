@@ -2,7 +2,7 @@
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 
-namespace Rooms.Tests.Helpers.SDK.Rooms;
+namespace Commons.Tests.Helpers.SDK.Rooms;
 
 public class CreateRoomRequestBuilder
 {

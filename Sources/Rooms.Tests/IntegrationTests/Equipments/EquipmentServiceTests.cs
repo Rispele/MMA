@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
+using Commons.Tests.Helpers.SDK;
 using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
 using Rooms.Core.Interfaces.Services.Equipments;
-using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests.Equipments;
 

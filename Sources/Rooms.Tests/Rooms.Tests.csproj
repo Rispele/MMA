@@ -27,9 +27,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Commons.Tests.Helpers\Commons.Tests.Helpers.csproj" />
         <ProjectReference Include="..\IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj"/>
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
-        <ProjectReference Include="..\Rooms.Tests.Helpers\Rooms.Tests.Helpers.csproj"/>
+        <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

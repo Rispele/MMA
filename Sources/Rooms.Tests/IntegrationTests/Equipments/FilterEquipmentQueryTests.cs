@@ -3,6 +3,7 @@ using AutoFixture.Dsl;
 using Commons.Core.Models.Filtering;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
+using Commons.Tests.Helpers.SDK;
 using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
@@ -11,7 +12,6 @@ using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Queries.Implementations.Equipment;
 using Rooms.Domain.Propagated.Equipments;
-using Rooms.Tests.Helpers.SDK;
 
 namespace Rooms.Tests.IntegrationTests.Equipments;
 

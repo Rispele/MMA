@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Rooms.Tests.Helpers.SDK.Equipments.Parts;
-using Rooms.Tests.Helpers.SDK.Rooms;
+﻿using Commons.Tests.Helpers.SDK.Equipments.Parts;
+using Commons.Tests.Helpers.SDK.Rooms;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Rooms.Tests.Helpers.SDK;
+namespace Commons.Tests.Helpers.SDK;
 
 public static class SdkServicesConfiguration
 {

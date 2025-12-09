@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Commons.Tests.Helpers.SDK.Rooms;
+using FluentAssertions;
 using IntegrationTestInfrastructure;
 using IntegrationTestInfrastructure.ContainerBasedTests;
 using Microsoft.AspNetCore.JsonPatch;
@@ -6,7 +7,6 @@ using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Domain.Propagated.Exceptions;
-using Rooms.Tests.Helpers.SDK.Rooms;
 using WebApi.ModelConverters;
 using WebApi.Models.Requests;
 using WebApi.Models.Requests.Filtering;

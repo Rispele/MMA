@@ -2,7 +2,7 @@
 using Rooms.Core.Interfaces.Dtos.Room.Responses;
 using Rooms.Core.Interfaces.Services.Rooms;
 
-namespace Rooms.Tests.Helpers.SDK.Rooms;
+namespace Commons.Tests.Helpers.SDK.Rooms;
 
 public class RoomsSdk(IRoomService roomService)
 {

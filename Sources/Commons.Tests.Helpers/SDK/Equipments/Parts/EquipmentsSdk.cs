@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Rooms.Core.Interfaces.Services.Equipments;
 
-namespace Rooms.Tests.Helpers.SDK.Equipments.Parts;
+namespace Commons.Tests.Helpers.SDK.Equipments.Parts;
 
 [UsedImplicitly]
 public partial class EquipmentsSdk(

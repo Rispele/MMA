@@ -16,6 +16,7 @@
         <PackageReference Include="NUnit" Version="4.3.2"/>
         <PackageReference Include="NUnit.Analyzers" Version="4.7.0"/>
         <PackageReference Include="NUnit3TestAdapter" Version="5.0.0"/>
+        <PackageReference Include="SkbKontur.NUnit.Middlewares" Version="0.1.11" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,7 +26,9 @@
     <ItemGroup>
       <ProjectReference Include="..\Booking.Core.Interfaces\Booking.Core.Interfaces.csproj" />
       <ProjectReference Include="..\Booking.Core\Booking.Core.csproj" />
+      <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />
       <ProjectReference Include="..\Commons.Tests.Helpers\Commons.Tests.Helpers.csproj" />
+      <ProjectReference Include="..\IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj" />
     </ItemGroup>
 
 </Project>
