@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Booking.Domain.Models.BookingRequests;
-using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Booking.Domain.Models.InstituteCoordinators;
 using Booking.Domain.Propagated.BookingRequests;
 using Booking.Infrastructure.EFCore;
@@ -27,8 +26,35 @@ namespace Booking.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_frequency", new[] { "everyday", "undefined", "weekly" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_schedule_status", new[] { "booked", "booking_approved", "booking_cancel_error", "booking_cancelled", "not_sent" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_status", new[] { "approved", "error", "event_finished", "in_approve", "new", "rejected", "sed_rejected", "under_moderation" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_status", new[] { "approved_by_moderator", "error", "event_finished", "new", "rejected_by_moderator", "rejected_in_edms", "sent_for_approval_in_edms", "sent_for_moderation" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Booking.Domain.Events.BookingEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookingRequestId")
+                        .HasColumnType("integer")
+                        .HasColumnName("booking_request_id");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("payload");
+
+                    b.HasKey("Id")
+                        .HasName("pk_booking_events");
+
+                    b.HasIndex("BookingRequestId")
+                        .HasDatabaseName("ix_booking_events_booking_request_id");
+
+                    b.ToTable("booking_events", (string)null);
+                });
 
             modelBuilder.Entity("Booking.Domain.Models.BookingRequests.BookingRequest", b =>
                 {
@@ -79,7 +105,7 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("reason");
 
-                    b.Property<IRoomEventCoordinator>("RoomEventCoordinator")
+                    b.Property<string>("RoomEventCoordinator")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("room_event_coordinator");
@@ -127,6 +153,16 @@ namespace Booking.Infrastructure.Migrations
                         .HasName("pk_institute_coordinators");
 
                     b.ToTable("institute_coordinators", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.Events.BookingEvent", b =>
+                {
+                    b.HasOne("Booking.Domain.Models.BookingRequests.BookingRequest", null)
+                        .WithMany()
+                        .HasForeignKey("BookingRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_booking_events_booking_requests_booking_request_id");
                 });
 
             modelBuilder.Entity("Booking.Domain.Models.BookingRequests.BookingRequest", b =>

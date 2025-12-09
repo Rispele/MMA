@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Booking.Infrastructure.EFCore.EntityConfigurations;
 
-public class BookingRequestEventEntityTypeConfiguration : IEntityTypeConfiguration<BookingRequestEvent>
+public class BookingEventEntityTypeConfiguration : IEntityTypeConfiguration<BookingEvent>
 {
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         TypeInfoResolver = new DefaultJsonTypeInfoResolver()
     };
 
-    public void Configure(EntityTypeBuilder<BookingRequestEvent> builder)
+    public void Configure(EntityTypeBuilder<BookingEvent> builder)
     {
-        builder.HasKey(t => t.EventId);
-        builder.Property(t => t.EventId).HasField(BookingRequestEventFieldNames.EventId);
+        builder.HasKey(t => t.Id);
+        builder.Property(t => t.Id).ValueGeneratedOnAdd();
 
         builder
             .Property(t => t.Payload)
             .HasColumnType("jsonb")
             .HasConversion(
                 coordinator => JsonSerializer.Serialize(coordinator, JsonSerializerOptions),
-                json => JsonSerializer.Deserialize<IBookingRequestEventPayload>(json, JsonSerializerOptions)!);
+                json => JsonSerializer.Deserialize<IBookingEventPayload>(json, JsonSerializerOptions)!);
 
         builder.HasOne<BookingRequest>().WithMany().HasForeignKey(t => t.BookingRequestId);
     }

@@ -103,11 +103,11 @@ public class BookingRequest
         roomIds = roomsToSet;
     }
 
-    public BookingRequestEvent SendForApprovalInEdms()
+    public BookingEvent SendForApprovalInEdms()
     {
         ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
 
-        return new BookingRequestEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload());
+        return new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload());
     }
 
     private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)

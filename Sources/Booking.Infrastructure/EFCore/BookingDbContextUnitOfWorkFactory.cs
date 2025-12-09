@@ -9,6 +9,8 @@ internal class BookingDbContextUnitOfWorkFactory(IDbContextFactory<BookingDbCont
 {
     public async Task<IUnitOfWork> Create(CancellationToken cancellationToken = default)
     {
-        return new BookingDbContextUnitOfWork(await dbContextFactory.CreateDbContextAsync(cancellationToken), mediator);
+        var dbContext = await dbContextFactory.CreateDbContextAsync(cancellationToken);
+        
+        return new BookingDbContextUnitOfWork(dbContext, mediator);
     }
 }

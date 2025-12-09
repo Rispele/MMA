@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Booking.Orchestrator-41754204-5039-4b01-ac63-9988684b1c5c</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0-rc.1.25451.107"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Booking.Core.Interfaces\Booking.Core.Interfaces.csproj" />
+      <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />
+      <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
+    </ItemGroup>
+</Project>

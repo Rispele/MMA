@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Booking.Domain.Models.BookingRequests;
-using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Booking.Domain.Models.InstituteCoordinators;
 using Booking.Domain.Propagated.BookingRequests;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -20,7 +19,7 @@ namespace Booking.Infrastructure.Migrations
             migrationBuilder.AlterDatabase()
                 .Annotation("Npgsql:Enum:booking_frequency", "everyday,undefined,weekly")
                 .Annotation("Npgsql:Enum:booking_schedule_status", "booked,booking_approved,booking_cancel_error,booking_cancelled,not_sent")
-                .Annotation("Npgsql:Enum:booking_status", "approved,error,event_finished,in_approve,new,rejected,sed_rejected,under_moderation");
+                .Annotation("Npgsql:Enum:booking_status", "approved_by_moderator,error,event_finished,new,rejected_by_moderator,rejected_in_edms,sent_for_approval_in_edms,sent_for_moderation");
 
             migrationBuilder.CreateTable(
                 name: "booking_requests",
@@ -35,7 +34,7 @@ namespace Booking.Infrastructure.Migrations
                     participants_count = table.Column<int>(type: "integer", nullable: false),
                     tech_employee_required = table.Column<bool>(type: "boolean", nullable: false),
                     event_host_full_name = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    room_event_coordinator = table.Column<IRoomEventCoordinator>(type: "jsonb", nullable: false),
+                    room_event_coordinator = table.Column<string>(type: "jsonb", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamptz", nullable: false),
                     event_name = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     status = table.Column<BookingStatus>(type: "booking_status", nullable: false),
@@ -62,16 +61,44 @@ namespace Booking.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_institute_coordinators", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "booking_events",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    booking_request_id = table.Column<int>(type: "integer", nullable: false),
+                    payload = table.Column<string>(type: "jsonb", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_booking_events", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_booking_events_booking_requests_booking_request_id",
+                        column: x => x.booking_request_id,
+                        principalTable: "booking_requests",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_booking_events_booking_request_id",
+                table: "booking_events",
+                column: "booking_request_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "booking_requests");
+                name: "booking_events");
 
             migrationBuilder.DropTable(
                 name: "institute_coordinators");
+
+            migrationBuilder.DropTable(
+                name: "booking_requests");
         }
     }
 }

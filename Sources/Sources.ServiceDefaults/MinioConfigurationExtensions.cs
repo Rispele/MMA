@@ -1,6 +1,8 @@
-﻿using Minio;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Minio;
 
-namespace WebApi.Startup.ConfigurationExtensions;
+namespace Sources.ServiceDefaults;
 
 public static class MinioConfigurationExtensions
 {

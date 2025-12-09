@@ -13,6 +13,7 @@ public static class KnownResources
 
     public static readonly ResourceSpecification RoomsMigrationService = new("roomsMigration");
     public static readonly ResourceSpecification BookingsMigrationService = new("bookingsMigration");
+    public static readonly ResourceSpecification BookingOrchestrator = new("bookingOrchestrator");
 
     public static readonly ResourceSpecification PostgresService =
         new(Name: "postgress", [new EndpointSpecification(KnownEndpoints.Http, TargetPort: 5432)]);

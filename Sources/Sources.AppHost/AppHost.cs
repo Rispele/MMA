@@ -31,10 +31,13 @@ switch (testingProfile)
     }
     case "Testing.Core":
     {
-        builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
-        builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
+        var roomsMigrationResource = builder.AddRoomsMigration(KnownResources.RoomsMigrationService, postgresResource);
+        var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
 
-        builder.AddMinio(KnownResources.Minio, configuration);
+        var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
+        builder
+            .AddBookingOrchestrator(KnownResources.BookingOrchestrator, minioResourceParameters)
+            .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
         break;
     }
     case "Testing.WebApi":
@@ -45,12 +48,13 @@ switch (testingProfile)
 
         var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
 
-        builder.AddWebApi(
-            KnownResources.WebApiService,
-            minioResourceParameters,
-            postgresResource,
-            roomsMigrationResource,
-            bookingMigrationResource);
+        builder
+            .AddBookingOrchestrator(KnownResources.BookingOrchestrator, minioResourceParameters)
+            .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
+
+        builder
+            .AddWebApi(KnownResources.WebApiService, minioResourceParameters)
+            .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
         break;
     }
     default:
