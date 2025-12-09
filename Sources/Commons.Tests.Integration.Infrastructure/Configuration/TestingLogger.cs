@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using NUnit.Framework.Internal;
 
-namespace IntegrationTestInfrastructure.Configuration;
+namespace Commons.Tests.Integration.Infrastructure.Configuration;
 
 public class TestingLogger : Microsoft.Extensions.Logging.ILogger
 {

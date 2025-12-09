@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj" />
+      <ProjectReference Include="..\Commons.Tests.Integration.Infrastructure\Commons.Tests.Integration.Infrastructure.csproj" />
       <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
     </ItemGroup>
 

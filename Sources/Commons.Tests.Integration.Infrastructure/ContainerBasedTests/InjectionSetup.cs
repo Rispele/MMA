@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework.Interfaces;
 using SkbKontur.NUnit.Middlewares;
 
-namespace IntegrationTestInfrastructure.ContainerBasedTests;
+namespace Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 
 [UsedImplicitly]
 public class InjectionSetup : ISetup

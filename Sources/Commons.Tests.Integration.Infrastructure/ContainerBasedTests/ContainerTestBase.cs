@@ -1,6 +1,6 @@
 ﻿using SkbKontur.NUnit.Middlewares;
 
-namespace IntegrationTestInfrastructure.ContainerBasedTests;
+namespace Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 
 public class ContainerTestBase : SimpleTestBase
 {

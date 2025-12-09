@@ -25,7 +25,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />
-      <ProjectReference Include="..\IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj" />
+      <ProjectReference Include="..\Commons.Tests.Integration.Infrastructure\Commons.Tests.Integration.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

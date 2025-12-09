@@ -1,7 +1,7 @@
 ﻿using Commons.Tests.Helpers.SDK.Rooms;
 using FluentAssertions;
-using IntegrationTestInfrastructure;
-using IntegrationTestInfrastructure.ContainerBasedTests;
+using Commons.Tests.Integration.Infrastructure;
+using Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 using Microsoft.AspNetCore.JsonPatch;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;

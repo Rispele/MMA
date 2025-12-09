@@ -3,7 +3,7 @@ using Booking.Infrastructure.Configuration;
 using Booking.Infrastructure.EFCore;
 using Commons.Domain.Queries.Factories;
 using Commons.Tests.Helpers.SDK;
-using IntegrationTestInfrastructure.Configuration;
+using Commons.Tests.Integration.Infrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

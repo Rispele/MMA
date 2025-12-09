@@ -4,8 +4,8 @@ using Booking.Core.Interfaces.Services.BookingRequests;
 using Booking.Tests.UnitTests;
 using Commons.Tests.Helpers.SDK;
 using FluentAssertions;
-using IntegrationTestInfrastructure;
-using IntegrationTestInfrastructure.ContainerBasedTests;
+using Commons.Tests.Integration.Infrastructure;
+using Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 
 namespace Booking.Tests.IntegrationTests.Services;
 

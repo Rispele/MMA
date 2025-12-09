@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace IntegrationTestInfrastructure.Configuration;
+namespace Commons.Tests.Integration.Infrastructure.Configuration;
 
 public class TestingContainerFactory
 {

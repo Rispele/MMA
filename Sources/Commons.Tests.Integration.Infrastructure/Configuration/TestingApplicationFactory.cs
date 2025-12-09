@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Projects;
 
-namespace IntegrationTestInfrastructure.Configuration;
+namespace Commons.Tests.Integration.Infrastructure.Configuration;
 
 public class TestingApplicationFactory(string testingProfile) : DistributedApplicationFactory(typeof(Sources_AppHost))
 {

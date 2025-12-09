@@ -4,8 +4,8 @@ using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
 using Commons.Tests.Helpers.SDK;
 using FluentAssertions;
-using IntegrationTestInfrastructure;
-using IntegrationTestInfrastructure.ContainerBasedTests;
+using Commons.Tests.Integration.Infrastructure;
+using Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Queries.Implementations.Equipment;
 

@@ -1,5 +1,5 @@
 ﻿using Commons.Tests.Helpers.SDK.Rooms;
-using IntegrationTestInfrastructure.Configuration;
+using Commons.Tests.Integration.Infrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

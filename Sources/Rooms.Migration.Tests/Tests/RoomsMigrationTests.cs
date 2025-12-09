@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using IntegrationTestInfrastructure;
-using IntegrationTestInfrastructure.ContainerBasedTests;
+using Commons.Tests.Integration.Infrastructure;
+using Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 using Microsoft.EntityFrameworkCore;
 using Rooms.Infrastructure.EFCore;
 
