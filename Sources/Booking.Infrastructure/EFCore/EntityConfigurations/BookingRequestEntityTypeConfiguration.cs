@@ -1,4 +1,7 @@
-﻿using Booking.Domain.Models.BookingRequests;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using Booking.Domain.Models.BookingRequests;
+using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -6,6 +9,11 @@ namespace Booking.Infrastructure.EFCore.EntityConfigurations;
 
 public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<BookingRequest>
 {
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        TypeInfoResolver = new DefaultJsonTypeInfoResolver()
+    };
+    
     public void Configure(EntityTypeBuilder<BookingRequest> builder)
     {
         builder.HasKey(x => x.Id);
@@ -24,7 +32,12 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.ParticipantsCount).IsRequired();
         builder.Property(x => x.TechEmployeeRequired).IsRequired();
         builder.Property(x => x.EventHostFullName).IsRequired().HasMaxLength(500);
-        builder.Property(x => x.RoomEventCoordinator).HasColumnType("jsonb");
+        builder
+            .Property(x => x.RoomEventCoordinator)
+            .HasColumnType("jsonb")
+            .HasConversion(
+                coordinator => JsonSerializer.Serialize(coordinator, JsonSerializerOptions),
+                json => JsonSerializer.Deserialize<IRoomEventCoordinator>(json, JsonSerializerOptions)!);
         builder.Property(x => x.CreatedAt).HasColumnType("timestamptz");
         builder.Property(x => x.EventName).IsRequired().HasMaxLength(500);
 

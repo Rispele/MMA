@@ -9,9 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoFixture" Version="4.18.1" />
         <PackageReference Include="coverlet.collector" Version="6.0.4"/>
-        <PackageReference Include="FluentAssertions" Version="8.8.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0"/>
         <PackageReference Include="NUnit" Version="4.4.0" />
         <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
@@ -19,7 +17,6 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="NUnit3TestAdapter" Version="6.0.0" />
-        <PackageReference Include="SkbKontur.NUnit.Middlewares" Version="0.1.11" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,12 +24,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Booking.Core.Interfaces\Booking.Core.Interfaces.csproj" />
-      <ProjectReference Include="..\Booking.Core\Booking.Core.csproj" />
       <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />
-      <ProjectReference Include="..\Commons.Tests.Helpers\Commons.Tests.Helpers.csproj" />
       <ProjectReference Include="..\IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj" />
-      <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

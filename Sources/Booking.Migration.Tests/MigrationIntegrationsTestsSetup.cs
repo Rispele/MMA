@@ -1,21 +1,16 @@
-﻿using Aspire.Hosting.ApplicationModel;
-using Booking.Infrastructure.Configuration;
-using Booking.Infrastructure.EFCore;
-using Commons.Domain.Queries.Factories;
-using Commons.Tests.Helpers.SDK;
+﻿using Booking.Infrastructure.Configuration;
 using IntegrationTestInfrastructure.Configuration;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework.Interfaces;
-using Rooms.Infrastructure.Configuration;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
 
-namespace Booking.Tests.IntegrationTests;
+namespace Booking.Migration.Tests;
 
 [UsedImplicitly]
-public class BookingIntegrationsTestsSetup : ISetup
+public class MigrationIntegrationsTestsSetup : ISetup
 {
     public async Task SetUpAsync(ITest test)
     {
@@ -39,33 +34,25 @@ public class BookingIntegrationsTestsSetup : ISetup
 
     private static async Task<TestingApplicationFactory> BuildApplication()
     {
-        var testingApplicationFactory = new TestingApplicationFactory("Testing.Core");
+        var testingApplicationFactory = new TestingApplicationFactory("Testing.Migration");
         await testingApplicationFactory.StartAsync();
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceAsync(
-            KnownResources.BookingsMigrationService.Name,
-            KnownResourceStates.Finished,
-            cts.Token);
+        await testingApplicationFactory.Application.ResourceNotifications.WaitForResourceHealthyAsync(KnownResources.PostgresService.Name, cts.Token);
 
         return testingApplicationFactory;
     }
 
     private static async Task<IServiceProvider> BuildServiceProvider(TestingApplicationFactory testingApplicationFactory)
     {
-        var connectionString = await testingApplicationFactory
+        var roomsDbContextConnectionString = await testingApplicationFactory
             .GetConnectionString(KnownResources.MmrDb.Name) ?? throw new InvalidOperationException("Database connection string is not set");
 
         return new TestingContainerFactory()
             .ConfigureServices(t => t
-                .AddScoped<IUnitOfWorkFactory, BookingDbContextUnitOfWorkFactory>()
-                .ConfigureServicesForRooms()
-                .ConfigureServicesForBooking()
-                .ConfigureBookingDbContextForTests(connectionString)
-                .ConfigureRoomsDbContextForTests(connectionString)
-                .AddLogging(builder => builder.AddConsole())
-                .AddSdkServices())
+                .ConfigureBookingDbContextForTests(roomsDbContextConnectionString)
+                .AddLogging(builder => builder.AddConsole()))
             .BuildServiceProvider();
     }
 }
