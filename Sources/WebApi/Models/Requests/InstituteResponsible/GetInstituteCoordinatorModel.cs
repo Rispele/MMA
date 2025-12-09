@@ -2,7 +2,7 @@
 
 namespace WebApi.Models.Requests.InstituteResponsible;
 
-public record GetInstituteResponsibleModel
+public record GetInstituteCoordinatorModel
 {
     [Range(minimum: 1, int.MaxValue, ErrorMessage = "Номер страницы не может быть меньше 1")]
     public int Page { get; init; }
@@ -11,5 +11,5 @@ public record GetInstituteResponsibleModel
     public int PageSize { get; init; }
 
     public int AfterInstituteResponsibleId { get; init; }
-    public InstituteResponsibleFilterModel? Filter { get; init; }
+    public InstituteCoordinatorFilterModel? Filter { get; init; }
 }

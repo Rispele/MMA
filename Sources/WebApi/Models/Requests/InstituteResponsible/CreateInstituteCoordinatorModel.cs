@@ -2,7 +2,7 @@
 
 namespace WebApi.Models.Requests.InstituteResponsible;
 
-public record CreateInstituteResponsibleModel
+public record CreateInstituteCoordinatorModel
 {
     public required string Institute { get; init; }
     public required CoordinatorModel[] Coordinators { get; init; }

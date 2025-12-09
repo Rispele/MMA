@@ -2,7 +2,7 @@
 
 namespace WebApi.Models.Requests.InstituteResponsible;
 
-public record InstituteResponsibleFilterModel
+public record InstituteCoordinatorFilterModel
 {
     public FilterParameterModel<string>? Institute { get; init; }
     public FilterParameterModel<string>? Responsible { get; init; }

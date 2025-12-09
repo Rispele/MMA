@@ -10,16 +10,16 @@ namespace WebApi.Services.Implementations;
 public class InstituteResponsibleService(IInstituteCoordinatorsService instituteCoordinatorService) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(
-        GetInstituteResponsibleModel model,
+        GetInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
-        var getInstituteResponsibleRequest = InstituteResponsibleModelMapper.MapGetInstituteCoordinatorFromModel(model);
+        var getInstituteResponsibleRequest = InstituteCoordinatorModelMapper.MapGetInstituteCoordinatorFromModel(model);
 
         var batch = await instituteCoordinatorService.FilterInstituteResponsible(getInstituteResponsibleRequest, cancellationToken);
 
         return new InstituteResponsibleResponseModel
         {
-            InstituteResponsible = batch.InstituteResponsible.Select(InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel).ToArray(),
+            InstituteResponsible = batch.InstituteResponsible.Select(InstituteCoordinatorModelMapper.MapInstituteCoordinatorToModel).ToArray(),
             Count = batch.Count
         };
     }
@@ -28,7 +28,7 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
     {
         var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleById(id, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
+        return InstituteCoordinatorModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
     }
 
     public async Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken)
@@ -46,14 +46,14 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
     }
 
     public async Task<InstituteCoordinatorModel> CreateInstituteResponsibleAsync(
-        CreateInstituteResponsibleModel model,
+        CreateInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = InstituteResponsibleModelMapper.MapCreateInstituteCoordinatorFromModel(model);
+        var innerRequest = InstituteCoordinatorModelMapper.MapCreateInstituteCoordinatorFromModel(model);
 
         var instituteResponsible = await instituteCoordinatorService.CreateInstituteResponsible(innerRequest, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
+        return InstituteCoordinatorModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
     }
 
     public async Task<PatchInstituteCoordinatorModel> GetInstituteResponsiblePatchModel(
@@ -62,7 +62,7 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
     {
         var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleById(instituteResponsibleId, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToPatchModel(instituteResponsible);
+        return InstituteCoordinatorModelMapper.MapInstituteCoordinatorToPatchModel(instituteResponsible);
     }
 
     public async Task<InstituteCoordinatorModel> PatchInstituteResponsibleAsync(
@@ -70,10 +70,10 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
         PatchInstituteCoordinatorModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = InstituteResponsibleModelMapper.MapPatchInstituteCoordinatorTypeFromModel(patchModel);
+        var patchRequest = InstituteCoordinatorModelMapper.MapPatchInstituteCoordinatorTypeFromModel(patchModel);
 
         var patched = await instituteCoordinatorService.PatchInstituteResponsible(instituteResponsibleId, patchRequest, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel(patched);
+        return InstituteCoordinatorModelMapper.MapInstituteCoordinatorToModel(patched);
     }
 }

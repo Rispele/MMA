@@ -15,13 +15,13 @@ public class GetInstituteResponsibleRequestModelBinder : IModelBinder
         var pageSize = ParseIntOrDefault(q["pageSize"], defaultValue: 10);
         var afterInstituteResponsibleId = ParseIntOrDefault(q["afterInstituteResponsibleId"], defaultValue: 0);
 
-        InstituteResponsibleFilterModel? filter = null;
+        InstituteCoordinatorFilterModel? filter = null;
         if (q.TryGetValue(key: "filter", out var filterValues) && filterValues.Count > 0)
         {
             var json = filterValues[0];
             try
             {
-                filter = JsonSerializer.Deserialize<InstituteResponsibleFilterModel>(json, new JsonSerializerOptions
+                filter = JsonSerializer.Deserialize<InstituteCoordinatorFilterModel>(json, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
@@ -34,7 +34,7 @@ public class GetInstituteResponsibleRequestModelBinder : IModelBinder
             }
         }
 
-        var result = new GetInstituteResponsibleModel
+        var result = new GetInstituteCoordinatorModel
         {
             Page = page,
             PageSize = pageSize,
