@@ -6,11 +6,11 @@ namespace WebApi.Services.Interfaces;
 
 public interface IInstituteResponsibleService
 {
-    Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(GetInstituteResponsibleModel model, CancellationToken cancellationToken);
+    Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(GetInstituteCoordinatorModel model, CancellationToken cancellationToken);
     Task<InstituteCoordinatorModel> GetInstituteResponsibleByIdAsync(int id, CancellationToken cancellationToken);
     Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken);
     Task<Dictionary<string, string>> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken); // обернуть в модельку ответ
-    Task<InstituteCoordinatorModel> CreateInstituteResponsibleAsync(CreateInstituteResponsibleModel model, CancellationToken cancellationToken);
+    Task<InstituteCoordinatorModel> CreateInstituteResponsibleAsync(CreateInstituteCoordinatorModel model, CancellationToken cancellationToken);
     Task<PatchInstituteCoordinatorModel> GetInstituteResponsiblePatchModel(int instituteResponsibleId, CancellationToken cancellationToken);
 
     Task<InstituteCoordinatorModel> PatchInstituteResponsibleAsync(

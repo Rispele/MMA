@@ -34,7 +34,7 @@ public class GetInstituteResponsibleRequestModelBinder : IModelBinder
             }
         }
 
-        var result = new GetInstituteResponsibleModel
+        var result = new GetInstituteCoordinatorModel
         {
             Page = page,
             PageSize = pageSize,

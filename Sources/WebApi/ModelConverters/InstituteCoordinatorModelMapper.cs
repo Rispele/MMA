@@ -8,22 +8,22 @@ using WebApi.Models.Requests.InstituteResponsible;
 namespace WebApi.ModelConverters;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
-public static partial class InstituteResponsibleModelMapper
+public static partial class InstituteCoordinatorModelMapper
 {
     public static partial InstituteCoordinatorModel MapInstituteCoordinatorToModel(InstituteCoordinatorDto instituteCoordinator);
 
     [MapperIgnoreSource(nameof(InstituteCoordinatorDto.Id))]
     public static partial PatchInstituteCoordinatorModel MapInstituteCoordinatorToPatchModel(InstituteCoordinatorDto instituteCoordinator);
 
-    public static partial CreateInstituteCoordinatorDto MapCreateInstituteCoordinatorFromModel(CreateInstituteResponsibleModel instituteResponsible);
+    public static partial CreateInstituteCoordinatorDto MapCreateInstituteCoordinatorFromModel(CreateInstituteCoordinatorModel instituteCoordinator);
 
     public static partial PatchInstituteCoordinatorDto MapPatchInstituteCoordinatorTypeFromModel(PatchInstituteCoordinatorModel instituteCoordinator);
 
-    [MapProperty(nameof(GetInstituteResponsibleModel.AfterInstituteResponsibleId), nameof(GetInstituteCoordinatorDto.AfterInstituteResponsibleId))]
-    [MapProperty(nameof(GetInstituteResponsibleModel.PageSize), nameof(GetInstituteCoordinatorDto.BatchSize))]
+    [MapProperty(nameof(GetInstituteCoordinatorModel.AfterInstituteResponsibleId), nameof(GetInstituteCoordinatorDto.AfterInstituteResponsibleId))]
+    [MapProperty(nameof(GetInstituteCoordinatorModel.PageSize), nameof(GetInstituteCoordinatorDto.BatchSize))]
     [MapProperty(
-        nameof(GetInstituteResponsibleModel.Page),
+        nameof(GetInstituteCoordinatorModel.Page),
         nameof(GetInstituteCoordinatorDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetInstituteCoordinatorDto MapGetInstituteCoordinatorFromModel(GetInstituteResponsibleModel model);
+    public static partial GetInstituteCoordinatorDto MapGetInstituteCoordinatorFromModel(GetInstituteCoordinatorModel model);
 }

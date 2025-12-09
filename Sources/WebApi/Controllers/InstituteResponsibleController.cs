@@ -21,7 +21,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     [HttpGet]
     public async Task<ActionResult<InstituteResponsibleResponseModel>> GetInstituteResponsible(
         [ModelBinder(BinderType = typeof(GetInstituteResponsibleRequestModelBinder))]
-        GetInstituteResponsibleModel model,
+        GetInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
         var result = await instituteResponsibleService.GetInstituteResponsibleAsync(model, cancellationToken);
@@ -75,7 +75,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <returns>Созданный ответственный от института/подразделения</returns>
     [HttpPost]
     public async Task<IActionResult> CreateInstituteResponsible(
-        [FromBody] CreateInstituteResponsibleModel model,
+        [FromBody] CreateInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
         var created = await instituteResponsibleService.CreateInstituteResponsibleAsync(model, cancellationToken);
