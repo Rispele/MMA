@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApi.Models.Requests.RoomSchedule;
-using WebApi.Models.Responses;
-using WebApi.Models.RoomSchedule;
-using WebApi.Services.Interfaces;
+using WebApi.Core.Models.Requests.RoomSchedule;
+using WebApi.Core.Models.Responses;
+using WebApi.Core.Models.RoomSchedule;
+using WebApi.Core.Services.Interfaces;
 
 namespace WebApi.Controllers;
 

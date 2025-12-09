@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Core.Models.Equipment;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.EquipmentTypes;
+using WebApi.Core.Models.Responses;
+using WebApi.Core.Services.Interfaces;
 using WebApi.ModelBinders;
-using WebApi.Models.Equipment;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Responses;
-using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers;
 

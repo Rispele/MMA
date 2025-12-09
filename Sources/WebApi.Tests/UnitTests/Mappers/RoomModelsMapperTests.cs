@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using WebApi.ModelConverters;
+using WebApi.Core.ModelConverters;
 using WebApi.Tests.UnitTests.Mappers.Helpers;
 
 namespace WebApi.Tests.UnitTests.Mappers;

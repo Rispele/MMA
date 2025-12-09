@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Booking.Core.Interfaces\Booking.Core.Interfaces.csproj" />
+      <ProjectReference Include="..\Commons\Commons.csproj" />
+      <ProjectReference Include="..\Rooms.Core.Interfaces\Rooms.Core.Interfaces.csproj" />
+      <ProjectReference Include="..\Rooms.Domain.Propagated\Rooms.Domain.Propagated.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.10" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+      <PackageReference Include="Riok.Mapperly" Version="4.3.0" />
+    </ItemGroup>
+
+</Project>

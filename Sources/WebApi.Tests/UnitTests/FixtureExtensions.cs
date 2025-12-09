@@ -2,7 +2,7 @@
 using AutoFixture.Kernel;
 using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
 using Commons.Tests.Helpers.Customizations;
-using WebApi.Models.BookingRequest.RoomEventCoordinator;
+using WebApi.Core.Models.BookingRequest.RoomEventCoordinator;
 
 namespace WebApi.Tests.UnitTests;
 

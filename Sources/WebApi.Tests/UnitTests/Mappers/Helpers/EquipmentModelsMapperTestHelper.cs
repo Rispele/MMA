@@ -4,12 +4,12 @@ using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
 using Rooms.Domain.Propagated.Equipments;
-using WebApi.Models.Equipment;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.Equipments;
-using WebApi.Models.Requests.EquipmentSchemas;
-using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Requests.Filtering;
+using WebApi.Core.Models.Equipment;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.Equipments;
+using WebApi.Core.Models.Requests.EquipmentSchemas;
+using WebApi.Core.Models.Requests.EquipmentTypes;
+using WebApi.Core.Models.Requests.Filtering;
 
 namespace WebApi.Tests.UnitTests.Mappers.Helpers;
 

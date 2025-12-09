@@ -2,7 +2,7 @@
 using Commons.Optional;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using WebApi.Models.Requests;
+using WebApi.Core.Models.Requests;
 
 namespace WebApi.ModelBinders;
 

@@ -7,13 +7,13 @@ using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Domain.Propagated.Exceptions;
-using WebApi.ModelConverters;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.Filtering;
-using WebApi.Models.Requests.Rooms;
-using WebApi.Models.Room.Fix;
-using WebApi.Models.Room.Parameters;
-using WebApi.Services.Interfaces;
+using WebApi.Core.ModelConverters;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.Filtering;
+using WebApi.Core.Models.Requests.Rooms;
+using WebApi.Core.Models.Room.Fix;
+using WebApi.Core.Models.Room.Parameters;
+using WebApi.Core.Services.Interfaces;
 
 namespace WebApi.Tests.IntegrationTests;
 

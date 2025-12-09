@@ -2,11 +2,11 @@
 using Commons.ExternalClients.LkUsers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.InstituteResponsible;
+using WebApi.Core.Models.Responses;
+using WebApi.Core.Services.Interfaces;
 using WebApi.ModelBinders;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.InstituteResponsible;
-using WebApi.Models.Responses;
-using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers;
 

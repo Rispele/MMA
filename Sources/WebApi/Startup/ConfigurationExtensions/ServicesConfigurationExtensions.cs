@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Booking.Infrastructure.Configuration;
 using Rooms.Infrastructure.Configuration;
-using WebApi.Services.Implementations;
-using WebApi.Services.Interfaces;
+using WebApi.Core.Services.Implementations;
+using WebApi.Core.Services.Interfaces;
 using WebApi.Startup.InputFormatters;
 
 namespace WebApi.Startup.ConfigurationExtensions;

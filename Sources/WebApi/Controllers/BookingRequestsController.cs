@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Core.Models.BookingRequest;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.BookingRequests;
+using WebApi.Core.Models.Responses;
+using WebApi.Core.Services.Interfaces;
 using WebApi.ModelBinders;
-using WebApi.Models.BookingRequest;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.BookingRequests;
-using WebApi.Models.Responses;
-using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers;
 

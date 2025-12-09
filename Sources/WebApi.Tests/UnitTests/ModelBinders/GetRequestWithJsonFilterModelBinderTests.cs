@@ -1,15 +1,15 @@
 ﻿using System.Text.Json;
 using AutoFixture;
 using FluentAssertions;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.BookingRequests;
+using WebApi.Core.Models.Requests.Equipments;
+using WebApi.Core.Models.Requests.EquipmentSchemas;
+using WebApi.Core.Models.Requests.EquipmentTypes;
+using WebApi.Core.Models.Requests.InstituteResponsible;
+using WebApi.Core.Models.Requests.OperatorDepartments;
+using WebApi.Core.Models.Requests.Rooms;
 using WebApi.ModelBinders;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.BookingRequests;
-using WebApi.Models.Requests.Equipments;
-using WebApi.Models.Requests.EquipmentSchemas;
-using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Requests.InstituteResponsible;
-using WebApi.Models.Requests.OperatorDepartments;
-using WebApi.Models.Requests.Rooms;
 
 namespace WebApi.Tests.UnitTests.ModelBinders;
 

@@ -3,11 +3,11 @@ using Booking.Core.Interfaces.Dtos.BookingRequest;
 using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
 using Commons.Tests.Helpers.Customizations;
 using FluentAssertions;
-using WebApi.ModelConverters;
-using WebApi.Models.BookingRequest;
-using WebApi.Models.BookingRequest.RoomEventCoordinator;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.BookingRequests;
+using WebApi.Core.ModelConverters;
+using WebApi.Core.Models.BookingRequest;
+using WebApi.Core.Models.BookingRequest.RoomEventCoordinator;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.BookingRequests;
 using WebApi.Tests.UnitTests.Mappers.Helpers;
 
 namespace WebApi.Tests.UnitTests.Mappers;

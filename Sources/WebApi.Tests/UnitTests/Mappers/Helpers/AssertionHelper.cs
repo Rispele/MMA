@@ -1,6 +1,6 @@
 ﻿using Commons.Core.Models.Filtering;
 using FluentAssertions;
-using WebApi.Models.Requests.Filtering;
+using WebApi.Core.Models.Requests.Filtering;
 
 namespace WebApi.Tests.UnitTests.Mappers.Helpers;
 

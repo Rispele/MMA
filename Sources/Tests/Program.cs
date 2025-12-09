@@ -1,15 +1,15 @@
 ﻿using FluentAssertions;
 using Rooms.Domain.Propagated.Equipments;
-using WebApi.Models.Equipment;
-using WebApi.Models.OperatorDepartments;
-using WebApi.Models.Requests.Equipments;
-using WebApi.Models.Requests.EquipmentSchemas;
-using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Requests.OperatorDepartments;
-using WebApi.Models.Requests.Rooms;
-using WebApi.Models.Room;
-using WebApi.Models.Room.Fix;
-using WebApi.Models.Room.Parameters;
+using WebApi.Core.Models.Equipment;
+using WebApi.Core.Models.OperatorDepartments;
+using WebApi.Core.Models.Requests.Equipments;
+using WebApi.Core.Models.Requests.EquipmentSchemas;
+using WebApi.Core.Models.Requests.EquipmentTypes;
+using WebApi.Core.Models.Requests.OperatorDepartments;
+using WebApi.Core.Models.Requests.Rooms;
+using WebApi.Core.Models.Room;
+using WebApi.Core.Models.Room.Fix;
+using WebApi.Core.Models.Room.Parameters;
 
 namespace Tests;
 

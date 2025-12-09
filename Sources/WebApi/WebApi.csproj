@@ -23,6 +23,7 @@
         <ProjectReference Include="..\Commons\Commons.csproj"/>
         <ProjectReference Include="..\Rooms.Infrastructure\Rooms.Infrastructure.csproj"/>
         <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\WebApi.Core\WebApi.Core.csproj" />
     </ItemGroup>
 
 </Project>

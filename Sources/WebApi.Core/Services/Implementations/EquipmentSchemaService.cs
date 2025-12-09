@@ -1,0 +1,75 @@
+using Rooms.Core.Interfaces.Services.Spreadsheets;
+using WebApi.Core.ModelConverters;
+using WebApi.Core.Models.Equipment;
+using WebApi.Core.Models.Files;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.EquipmentSchemas;
+using WebApi.Core.Models.Responses;
+using WebApi.Core.Services.Interfaces;
+
+namespace WebApi.Core.Services.Implementations;
+
+public class EquipmentSchemaService(Rooms.Core.Interfaces.Services.Equipments.IEquipmentSchemaService equipmentSchemaService,
+    ISpreadsheetService spreadsheetService) : IEquipmentSchemaService
+{
+    public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(GetRequest<EquipmentSchemasFilterModel> model, CancellationToken cancellationToken)
+    {
+        var getEquipmentSchemasRequest = EquipmentSchemaModelsMapper.MapGetEquipmentSchemaFromModel(model);
+
+        var batch = await equipmentSchemaService.FilterEquipmentSchemas(getEquipmentSchemasRequest, cancellationToken);
+
+        return new EquipmentSchemasResponseModel
+        {
+            EquipmentSchemas = batch.EquipmentSchemas.Select(EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel).ToArray(),
+            Count = batch.Count
+        };
+    }
+
+    public async Task<EquipmentSchemaModel> GetEquipmentSchemaByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        var equipmentSchema = await equipmentSchemaService.GetEquipmentSchemaById(id, cancellationToken);
+
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(equipmentSchema);
+    }
+
+    public async Task<EquipmentSchemaModel> CreateEquipmentSchemaAsync(
+        CreateEquipmentSchemaModel model,
+        CancellationToken cancellationToken)
+    {
+        var innerRequest = EquipmentSchemaModelsMapper.MapCreateEquipmentSchemaFromModel(model);
+
+        var equipmentSchema = await equipmentSchemaService.CreateEquipmentSchema(innerRequest, cancellationToken);
+
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(equipmentSchema);
+    }
+
+    public async Task<PatchEquipmentSchemaModel> GetEquipmentSchemaPatchModel(int equipmentSchemaId, CancellationToken cancellationToken)
+    {
+        var equipmentSchema = await equipmentSchemaService.GetEquipmentSchemaById(equipmentSchemaId, cancellationToken);
+
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToPatchModel(equipmentSchema);
+    }
+
+    public async Task<EquipmentSchemaModel> PatchEquipmentSchemaAsync(
+        int equipmentSchemaId,
+        PatchEquipmentSchemaModel patchModel,
+        CancellationToken cancellationToken)
+    {
+        var patchRequest = EquipmentSchemaModelsMapper.MapPatchEquipmentSchemaFromModel(patchModel);
+
+        var patched = await equipmentSchemaService.PatchEquipmentSchema(equipmentSchemaId, patchRequest, cancellationToken);
+
+        return EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel(patched);
+    }
+
+    public async Task<FileExportModel> ExportEquipmentSchemaRegistry(Stream outputStream, CancellationToken cancellationToken)
+    {
+        var fileData = await spreadsheetService.ExportEquipmentSchemaRegistry(outputStream, cancellationToken);
+        return new FileExportModel
+        {
+            FileName = fileData.FileName,
+            ContentType = fileData.ContentType,
+            Flush = fileData.Flush,
+        };
+    }
+}

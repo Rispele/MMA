@@ -4,13 +4,13 @@ using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
-using WebApi.Models.Files;
-using WebApi.Models.Requests;
-using WebApi.Models.Requests.Filtering;
-using WebApi.Models.Requests.Rooms;
-using WebApi.Models.Room;
-using WebApi.Models.Room.Fix;
-using WebApi.Models.Room.Parameters;
+using WebApi.Core.Models.Files;
+using WebApi.Core.Models.Requests;
+using WebApi.Core.Models.Requests.Filtering;
+using WebApi.Core.Models.Requests.Rooms;
+using WebApi.Core.Models.Room;
+using WebApi.Core.Models.Room.Fix;
+using WebApi.Core.Models.Room.Parameters;
 
 namespace WebApi.Tests.UnitTests.Mappers.Helpers;
 

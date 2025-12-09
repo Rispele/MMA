@@ -1,12 +1,12 @@
 ﻿using System.Net.Http.Json;
-using WebApi.Models.Equipment;
-using WebApi.Models.OperatorDepartments;
-using WebApi.Models.Requests.Equipments;
-using WebApi.Models.Requests.EquipmentSchemas;
-using WebApi.Models.Requests.EquipmentTypes;
-using WebApi.Models.Requests.OperatorDepartments;
-using WebApi.Models.Requests.Rooms;
-using WebApi.Models.Room;
+using WebApi.Core.Models.Equipment;
+using WebApi.Core.Models.OperatorDepartments;
+using WebApi.Core.Models.Requests.Equipments;
+using WebApi.Core.Models.Requests.EquipmentSchemas;
+using WebApi.Core.Models.Requests.EquipmentTypes;
+using WebApi.Core.Models.Requests.OperatorDepartments;
+using WebApi.Core.Models.Requests.Rooms;
+using WebApi.Core.Models.Room;
 
 namespace Tests;
 
