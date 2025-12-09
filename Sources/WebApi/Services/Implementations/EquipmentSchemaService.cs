@@ -2,6 +2,7 @@ using Rooms.Core.Interfaces.Services.Spreadsheets;
 using WebApi.ModelConverters;
 using WebApi.Models.Equipment;
 using WebApi.Models.Files;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -11,9 +12,7 @@ namespace WebApi.Services.Implementations;
 public class EquipmentSchemaService(Rooms.Core.Interfaces.Services.Equipments.IEquipmentSchemaService equipmentSchemaService,
     ISpreadsheetService spreadsheetService) : IEquipmentSchemaService
 {
-    public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(
-        GetEquipmentSchemasModel model,
-        CancellationToken cancellationToken)
+    public async Task<EquipmentSchemasResponseModel> GetEquipmentSchemasAsync(GetRequest<EquipmentSchemasFilterModel> model, CancellationToken cancellationToken)
     {
         var getEquipmentSchemasRequest = EquipmentSchemaModelsMapper.MapGetEquipmentSchemaFromModel(model);
 

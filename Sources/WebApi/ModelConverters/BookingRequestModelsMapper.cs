@@ -5,6 +5,7 @@ using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
 using Riok.Mapperly.Abstractions;
 using WebApi.Models.BookingRequest;
 using WebApi.Models.BookingRequest.RoomEventCoordinator;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.BookingRequests;
 using WebApi.Models.Responses;
 
@@ -19,13 +20,12 @@ public static partial class BookingRequestModelsMapper
     [MapProperty(nameof(BookingRequestDto.RoomEventCoordinator), nameof(PatchBookingRequestModel.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorFromDto))]
     public static partial PatchBookingRequestModel MapBookingRequestToPatchModel(BookingRequestDto bookingRequest);
 
-    [MapProperty(nameof(GetBookingRequestsModel.AfterId), nameof(GetBookingRequestsDto.AfterId))]
-    [MapProperty(nameof(GetBookingRequestsModel.PageSize), nameof(GetBookingRequestsDto.BatchSize))]
+    [MapProperty(nameof(GetRequest<BookingRequestsFilterModel>.PageSize), nameof(GetBookingRequestsDto.BatchSize))]
     [MapProperty(
-        nameof(GetBookingRequestsModel.Page),
-        nameof(GetBookingRequestsDto.BatchNumber),
+        source: nameof(GetRequest<BookingRequestsFilterModel>.Page),
+        target: nameof(GetBookingRequestsDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetBookingRequestsDto MapGetBookingRequestFromModel(GetBookingRequestsModel model);
+    public static partial GetBookingRequestsDto MapGetBookingRequestFromModel(GetRequest<BookingRequestsFilterModel> model);
 
     [MapProperty(nameof(CreateBookingRequestModel.RoomEventCoordinator), nameof(CreateBookingRequestDto.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorToDto))]
     public static partial CreateBookingRequestDto MapCreateBookingRequestFromModel(CreateBookingRequestModel bookingRequest);

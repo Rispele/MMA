@@ -6,6 +6,7 @@ using FluentAssertions;
 using WebApi.ModelConverters;
 using WebApi.Models.BookingRequest;
 using WebApi.Models.BookingRequest.RoomEventCoordinator;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.BookingRequests;
 using WebApi.Tests.UnitTests.Mappers.Helpers;
 
@@ -121,7 +122,7 @@ public class BookingRequestModelsMapperTests
     public void Map_GetBookingRequestModel_To_GetBookingRequestDto_ShouldCorrectlyMap()
     {
         var fixture = new Fixture().WithBookingRequestCustomization();
-        var initial = fixture.Create<GetBookingRequestsModel>();
+        var initial = fixture.Create<GetRequest<BookingRequestsFilterModel>>();
 
         var mapped = BookingRequestModelsMapper.MapGetBookingRequestFromModel(initial);
 

@@ -5,6 +5,7 @@ using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
 using Rooms.Domain.Propagated.Equipments;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
@@ -69,9 +70,9 @@ public static class EquipmentModelsMapperTestHelper
         };
     }
 
-    public static GetEquipmentsModel CreateGetEquipmentsModel()
+    public static GetRequest<EquipmentsFilterModel> CreateGetEquipmentsModel()
     {
-        return new GetEquipmentsModel
+        return new GetRequest<EquipmentsFilterModel>
         {
             AfterId = EquipmentId,
             Page = Page,
@@ -83,8 +84,6 @@ public static class EquipmentModelsMapperTestHelper
                 Schemas = new FilterMultiParameterModel<int> { Values = [SchemaId] },
                 InventoryNumber = new FilterParameterModel<string> { Value = InventoryNumber },
                 SerialNumber = new FilterParameterModel<string> { Value = SerialNumber },
-                // NetworkEquipmentIp = new FilterParameterModel<string> { Value = NetworkEquipmentIp },
-                // Comment = new FilterParameterModel<string> { Value = Comment },
                 Statuses = new FilterMultiParameterModel<EquipmentStatus> { Values = [Status] }
             }
         };
@@ -198,9 +197,9 @@ public static class EquipmentModelsMapperTestHelper
         };
     }
 
-    public static GetEquipmentSchemasModel CreateGetEquipmentSchemasModel()
+    public static GetRequest<EquipmentSchemasFilterModel> CreateGetEquipmentSchemasModel()
     {
-        return new GetEquipmentSchemasModel
+        return new GetRequest<EquipmentSchemasFilterModel>
         {
             AfterId = EquipmentId,
             Page = Page,
@@ -311,9 +310,9 @@ public static class EquipmentModelsMapperTestHelper
         };
     }
 
-    public static GetEquipmentTypesModel CreateGetEquipmentTypesModel()
+    public static GetRequest<EquipmentTypesFilterModel> CreateGetEquipmentTypesModel()
     {
-        return new GetEquipmentTypesModel
+        return new GetRequest<EquipmentTypesFilterModel>
         {
             AfterId = TypeId,
             Page = Page,

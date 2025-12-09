@@ -2,7 +2,9 @@
 using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.EquipmentTypes;
+
 // ReSharper disable RedundantVerbatimPrefix
 
 namespace WebApi.ModelConverters;
@@ -19,11 +21,10 @@ public static partial class EquipmentTypeModelsMapper
 
     public static partial PatchEquipmentTypeDto MapPatchEquipmentTypeFromModel(PatchEquipmentTypeModel equipmentType);
 
-    [MapProperty(nameof(GetEquipmentTypesModel.AfterId), nameof(GetEquipmentTypesDto.AfterId))]
-    [MapProperty(nameof(GetEquipmentTypesModel.PageSize), nameof(GetEquipmentTypesDto.BatchSize))]
+    [MapProperty(nameof(GetRequest<EquipmentTypesFilterModel>.PageSize), nameof(GetEquipmentTypesDto.BatchSize))]
     [MapProperty(
-        nameof(GetEquipmentTypesModel.Page),
+        nameof(GetRequest<EquipmentTypesFilterModel>.Page),
         nameof(GetEquipmentTypesDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetEquipmentTypesDto MapGetEquipmentTypesFromModel(GetEquipmentTypesModel model);
+    public static partial GetEquipmentTypesDto MapGetEquipmentTypesFromModel(GetRequest<EquipmentTypesFilterModel> model);
 }

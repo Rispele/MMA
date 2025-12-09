@@ -2,6 +2,7 @@
 using WebApi.ModelConverters;
 using WebApi.Models.Equipment;
 using WebApi.Models.Files;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -13,7 +14,7 @@ public class EquipmentService(
     ISpreadsheetService spreadsheetService) : IEquipmentService
 {
     public async Task<EquipmentsResponseModel> GetEquipmentsAsync(
-        GetEquipmentsModel model,
+        GetRequest<EquipmentsFilterModel> model,
         CancellationToken cancellationToken)
     {
         var getEquipmentsRequest = EquipmentModelsMapper.MapGetEquipmentFromModel(model);

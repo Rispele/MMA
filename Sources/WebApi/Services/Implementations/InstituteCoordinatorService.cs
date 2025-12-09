@@ -2,6 +2,7 @@
 using Commons.ExternalClients.LkUsers;
 using WebApi.ModelConverters;
 using WebApi.Models.InstituteCoordinator;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -11,7 +12,7 @@ namespace WebApi.Services.Implementations;
 public class InstituteCoordinatorService(IInstituteCoordinatorsService instituteCoordinatorService) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(
-        GetInstituteCoordinatorModel model,
+        GetRequest<InstituteCoordinatorFilterModel>  model,
         CancellationToken cancellationToken)
     {
         var getInstituteResponsibleRequest = InstituteCoordinatorModelMapper.MapGetInstituteCoordinatorFromModel(model);

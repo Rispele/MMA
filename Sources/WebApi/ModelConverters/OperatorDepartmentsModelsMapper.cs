@@ -2,6 +2,7 @@
 using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
 using Rooms.Core.Interfaces.Dtos.OperatorDepartments.Requests;
 using WebApi.Models.OperatorDepartments;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.OperatorDepartments;
 
 namespace WebApi.ModelConverters;
@@ -9,11 +10,10 @@ namespace WebApi.ModelConverters;
 [Mapper]
 public static partial class OperatorDepartmentsModelsMapper
 {
-    [MapProperty(nameof(GetOperatorDepartmentsModel.AfterId), nameof(GetOperatorDepartmentsDto.AfterId))]
-    [MapProperty(nameof(GetOperatorDepartmentsModel.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]
-    [MapProperty(nameof(GetOperatorDepartmentsModel.Page), nameof(GetOperatorDepartmentsDto.BatchNumber),
+    [MapProperty(nameof(GetRequest<OperatorDepartmentsFilterModel>.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]
+    [MapProperty(nameof(GetRequest<OperatorDepartmentsFilterModel>.Page), nameof(GetOperatorDepartmentsDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetOperatorDepartmentsDto Convert(GetOperatorDepartmentsModel model);
+    public static partial GetOperatorDepartmentsDto Convert(GetRequest<OperatorDepartmentsFilterModel> model);
 
     public static partial OperatorDepartmentModel Convert(OperatorDepartmentDto entity);
 

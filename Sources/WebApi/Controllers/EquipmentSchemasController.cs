@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ModelBinders.GetRequestWithJsonFilter;
-using WebApi.ModelBinders.GetRequestWithJsonFilter.Specifications;
+using WebApi.ModelBinders;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -21,8 +21,8 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
     /// <returns>Список записей о моделях оборудования</returns>
     [HttpGet]
     public async Task<ActionResult<EquipmentSchemasResponseModel>> GetEquipmentSchemas(
-        [GetRequestWithJsonFilterModelBinder<GetEquipmentSchemasModel, EquipmentSchemasFilterModel, GetEquipmentSchemasSpecification>]
-        GetEquipmentSchemasModel model,
+        [GetRequestWithJsonFilterModelBinder<EquipmentSchemasFilterModel>]
+        GetRequest<EquipmentSchemasFilterModel> model,
         CancellationToken cancellationToken)
     {
         var result = await equipmentSchemaService.GetEquipmentSchemasAsync(model, cancellationToken);

@@ -2,6 +2,7 @@
 using Rooms.Core.Interfaces.Services.Spreadsheets;
 using WebApi.ModelConverters;
 using WebApi.Models.Files;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -11,7 +12,7 @@ namespace WebApi.Services.Implementations;
 
 public class RoomService(Rooms.Core.Interfaces.Services.Rooms.IRoomService roomService, ISpreadsheetService spreadsheetService) : IRoomService
 {
-    public async Task<RoomsResponseModel> GetRoomsAsync(GetRoomsModel model, CancellationToken cancellationToken)
+    public async Task<RoomsResponseModel> GetRoomsAsync(GetRequest<RoomsFilterModel> model, CancellationToken cancellationToken)
     {
         var getRoomsRequest = RoomModelsMapper.Map(model);
 

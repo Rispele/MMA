@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ModelBinders.GetRequestWithJsonFilter;
-using WebApi.ModelBinders.GetRequestWithJsonFilter.Specifications;
+using WebApi.ModelBinders;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -21,8 +21,8 @@ public class EquipmentTypesController(IEquipmentTypeService equipmentTypeService
     /// <returns>Список записей о типах оборудования</returns>
     [HttpGet]
     public async Task<ActionResult<EquipmentTypesResponseModel>> GetEquipmentTypes(
-        [GetRequestWithJsonFilterModelBinder<GetEquipmentTypesModel, EquipmentTypesFilterModel, GetEquipmentTypesSpecification>]
-        GetEquipmentTypesModel model,
+        [GetRequestWithJsonFilterModelBinder<EquipmentTypesFilterModel>]
+        GetRequest<EquipmentTypesFilterModel> model,
         CancellationToken cancellationToken)
     {
         var result = await equipmentTypeService.GetEquipmentTypesAsync(model, cancellationToken);

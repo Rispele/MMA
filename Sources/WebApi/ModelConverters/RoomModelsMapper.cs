@@ -2,6 +2,7 @@
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Interfaces.Dtos.Room.Responses;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Responses;
 using WebApi.Models.Room;
@@ -12,10 +13,9 @@ namespace WebApi.ModelConverters;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class RoomModelsMapper
 {
-    [MapProperty(nameof(GetRoomsModel.AfterId), nameof(GetRoomsRequestDto.AfterId))]
-    [MapProperty(nameof(GetRoomsModel.PageSize), nameof(GetRoomsRequestDto.BatchSize))]
-    [MapProperty(nameof(GetRoomsModel.Page), nameof(GetRoomsRequestDto.BatchNumber), Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetRoomsRequestDto Map(GetRoomsModel dto);
+    [MapProperty(nameof(GetRequest<RoomsFilterModel>.PageSize), nameof(GetRoomsRequestDto.BatchSize))]
+    [MapProperty(nameof(GetRequest<RoomsFilterModel>.Page), nameof(GetRoomsRequestDto.BatchNumber), Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
+    public static partial GetRoomsRequestDto Map(GetRequest<RoomsFilterModel> dto);
 
     public static partial PatchRoomDto Map(PatchRoomModel model);
 

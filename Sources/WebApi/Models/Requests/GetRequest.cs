@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models.Requests.EquipmentSchemas;
+namespace WebApi.Models.Requests;
 
-public record GetEquipmentSchemasModel
+public record GetRequest<TFilter>
 {
     [Range(minimum: 1, int.MaxValue, ErrorMessage = "Номер страницы не может быть меньше 1")]
     public int Page { get; init; }
@@ -11,5 +11,6 @@ public record GetEquipmentSchemasModel
     public int PageSize { get; init; }
 
     public int AfterId { get; init; }
-    public EquipmentSchemasFilterModel? Filter { get; init; }
+    
+    public TFilter? Filter { get; init; }
 }

@@ -2,6 +2,7 @@
 using Booking.Core.Interfaces.Dtos.InstituteCoordinator.Requests;
 using Riok.Mapperly.Abstractions;
 using WebApi.Models.InstituteCoordinator;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.InstituteResponsible;
 // ReSharper disable RedundantVerbatimPrefix
 
@@ -19,11 +20,10 @@ public static partial class InstituteCoordinatorModelMapper
 
     public static partial PatchInstituteCoordinatorDto MapPatchInstituteCoordinatorTypeFromModel(PatchInstituteCoordinatorModel instituteCoordinator);
 
-    [MapProperty(nameof(GetInstituteCoordinatorModel.AfterId), nameof(GetInstituteCoordinatorDto.AfterId))]
-    [MapProperty(nameof(GetInstituteCoordinatorModel.PageSize), nameof(GetInstituteCoordinatorDto.BatchSize))]
+    [MapProperty(nameof(GetRequest<InstituteCoordinatorFilterModel>.PageSize), nameof(GetInstituteCoordinatorDto.BatchSize))]
     [MapProperty(
-        nameof(GetInstituteCoordinatorModel.Page),
+        nameof(GetRequest<InstituteCoordinatorFilterModel>.Page),
         nameof(GetInstituteCoordinatorDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetInstituteCoordinatorDto MapGetInstituteCoordinatorFromModel(GetInstituteCoordinatorModel model);
+    public static partial GetInstituteCoordinatorDto MapGetInstituteCoordinatorFromModel(GetRequest<InstituteCoordinatorFilterModel> model);
 }

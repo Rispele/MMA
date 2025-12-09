@@ -3,7 +3,7 @@
 public record Optional<TValue>(TValue? Value)
     where TValue : class
 {
-    public Optional<TResult> Map<TResult>(Func<TValue, TResult> map)
+    public Optional<TResult> Map<TResult>(Func<TValue, TResult?> map)
         where TResult : class
     {
         return Value is null

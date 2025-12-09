@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ModelBinders.GetRequestWithJsonFilter;
-using WebApi.ModelBinders.GetRequestWithJsonFilter.Specifications;
+using WebApi.ModelBinders;
 using WebApi.Models.OperatorDepartments;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.OperatorDepartments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -21,8 +21,8 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
     /// <returns>Список записей об операторских</returns>
     [HttpGet]
     public async Task<ActionResult<OperatorDepartmentsResponseModel>> GetOperatorDepartments(
-        [GetRequestWithJsonFilterModelBinder<GetOperatorDepartmentsModel, OperatorDepartmentsFilterModel, GetOperatorDepartmentsSpecification>]
-        GetOperatorDepartmentsModel model,
+        [GetRequestWithJsonFilterModelBinder<OperatorDepartmentsFilterModel>]
+        GetRequest<OperatorDepartmentsFilterModel> model,
         CancellationToken cancellationToken)
     {
         var result = await operatorDepartmentService.GetOperatorDepartmentsAsync(model, cancellationToken);

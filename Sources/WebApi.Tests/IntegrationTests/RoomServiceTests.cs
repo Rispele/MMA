@@ -8,6 +8,7 @@ using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Domain.Propagated.Exceptions;
 using Rooms.Tests.Helpers.SDK.Rooms;
 using WebApi.ModelConverters;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room.Fix;
@@ -62,7 +63,7 @@ public class RoomServiceTests : ContainerTestBase
     public async Task FilterRoom_ByComment_ShouldReturnCorrect(
         Action<CreateRoomRequestBuilder> createRoomOfParameter1,
         Action<CreateRoomRequestBuilder> createRoomOfParameter2,
-        GetRoomsModel roomsRequest)
+        GetRequest<RoomsFilterModel> roomsRequest)
     {
         var room1Name = Guid.NewGuid().ToString();
         var room2Name = Guid.NewGuid().ToString();
@@ -129,7 +130,7 @@ public class RoomServiceTests : ContainerTestBase
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment11)),
                 (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment12)),
-                new GetRoomsModel
+                new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel { Comment = new FilterParameterModel<string> { Value = comment11 } }
@@ -141,7 +142,7 @@ public class RoomServiceTests : ContainerTestBase
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment21)),
                 (Action<CreateRoomRequestBuilder>)(b => b.Comment(comment22)),
-                new GetRoomsModel
+                new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel
@@ -154,7 +155,7 @@ public class RoomServiceTests : ContainerTestBase
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Computer)),
                 (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Multimedia)),
-                new GetRoomsModel
+                new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel
@@ -167,7 +168,7 @@ public class RoomServiceTests : ContainerTestBase
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wired)),
                 (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wireless)),
-                new GetRoomsModel
+                new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel
@@ -180,7 +181,7 @@ public class RoomServiceTests : ContainerTestBase
         yield return new TestCaseData(
                 (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
                 (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Flat)),
-                new GetRoomsModel
+                new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel

@@ -1,5 +1,6 @@
 ﻿using WebApi.ModelConverters;
 using WebApi.Models.BookingRequest;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.BookingRequests;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -9,7 +10,7 @@ namespace WebApi.Services.Implementations;
 public class BookingRequestService(Booking.Core.Interfaces.Services.BookingRequests.IBookingRequestService bookingRequestService) : IBookingRequestService
 {
     public async Task<BookingRequestsResponseModel> GetBookingRequestsAsync(
-        GetBookingRequestsModel model,
+        GetRequest<BookingRequestsFilterModel> model,
         CancellationToken cancellationToken)
     {
         var getBookingRequestsRequest = BookingRequestModelsMapper.MapGetBookingRequestFromModel(model);

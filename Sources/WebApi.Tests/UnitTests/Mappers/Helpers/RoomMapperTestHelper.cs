@@ -5,6 +5,7 @@ using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using WebApi.Models.Files;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.Filtering;
 using WebApi.Models.Requests.Rooms;
 using WebApi.Models.Room;
@@ -242,9 +243,9 @@ public static class RoomMapperTestHelper
         };
     }
 
-    public static GetRoomsModel CreateGetRoomsModel()
+    public static GetRequest<RoomsFilterModel> CreateGetRoomsModel()
     {
-        return new GetRoomsModel
+        return new GetRequest<RoomsFilterModel>
         {
             Page = Page,
             PageSize = PageSize,

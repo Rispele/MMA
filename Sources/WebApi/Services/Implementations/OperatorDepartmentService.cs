@@ -1,5 +1,6 @@
 ﻿using WebApi.ModelConverters;
 using WebApi.Models.OperatorDepartments;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.OperatorDepartments;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -10,7 +11,7 @@ public class OperatorDepartmentService(Rooms.Core.Interfaces.Services.OperatorDe
     : IOperatorDepartmentService
 {
     public async Task<OperatorDepartmentsResponseModel> GetOperatorDepartmentsAsync(
-        GetOperatorDepartmentsModel model,
+        GetRequest<OperatorDepartmentsFilterModel> model,
         CancellationToken cancellationToken)
     {
         var getOperatorDepartmentsRequest = OperatorDepartmentsModelsMapper.Convert(model);

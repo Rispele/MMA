@@ -2,8 +2,8 @@
 using Commons.ExternalClients.LkUsers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ModelBinders.GetRequestWithJsonFilter;
-using WebApi.ModelBinders.GetRequestWithJsonFilter.Specifications;
+using WebApi.ModelBinders;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;
 using WebApi.Services.Interfaces;
@@ -22,8 +22,8 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
     /// <returns>Список записей об ответсвенных от институтов/подразделений</returns>
     [HttpGet]
     public async Task<ActionResult<InstituteResponsibleResponseModel>> GetInstituteCoordinator(
-        [GetRequestWithJsonFilterModelBinder<GetInstituteCoordinatorModel, InstituteCoordinatorFilterModel, GetInstituteCoordinatorsSpecification>]
-        GetInstituteCoordinatorModel model,
+        [GetRequestWithJsonFilterModelBinder<InstituteCoordinatorFilterModel>]
+        GetRequest<InstituteCoordinatorFilterModel> model,
         CancellationToken cancellationToken)
     {
         var result = await instituteCoordinatorService.GetInstituteResponsibleAsync(model, cancellationToken);

@@ -2,6 +2,7 @@
 using Rooms.Core.Interfaces.Dtos.Equipment;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using WebApi.Models.Equipment;
+using WebApi.Models.Requests;
 using WebApi.Models.Requests.EquipmentSchemas;
 // ReSharper disable RedundantVerbatimPrefix
 
@@ -21,11 +22,10 @@ public static partial class EquipmentSchemaModelsMapper
 
     public static partial PatchEquipmentSchemaDto MapPatchEquipmentSchemaFromModel(PatchEquipmentSchemaModel equipmentSchema);
 
-    [MapProperty(nameof(GetEquipmentSchemasModel.AfterId), nameof(GetEquipmentSchemasDto.AfterId))]
-    [MapProperty(nameof(GetEquipmentSchemasModel.PageSize), nameof(GetEquipmentSchemasDto.BatchSize))]
+    [MapProperty(nameof(GetRequest<EquipmentSchemasFilterModel>.PageSize), nameof(GetEquipmentSchemasDto.BatchSize))]
     [MapProperty(
-        nameof(GetEquipmentSchemasModel.Page),
+        nameof(GetRequest<EquipmentSchemasFilterModel>.Page),
         nameof(GetEquipmentSchemasDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
-    public static partial GetEquipmentSchemasDto MapGetEquipmentSchemaFromModel(GetEquipmentSchemasModel model);
+    public static partial GetEquipmentSchemasDto MapGetEquipmentSchemaFromModel(GetRequest<EquipmentSchemasFilterModel> model);
 }
