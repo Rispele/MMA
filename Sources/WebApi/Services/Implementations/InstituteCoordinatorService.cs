@@ -1,4 +1,5 @@
 ﻿using Booking.Core.Interfaces.Services.InstituteCoordinators;
+using Commons.ExternalClients.LkUsers;
 using WebApi.ModelConverters;
 using WebApi.Models.InstituteCoordinator;
 using WebApi.Models.Requests.InstituteResponsible;
@@ -31,9 +32,9 @@ public class InstituteCoordinatorService(IInstituteCoordinatorsService institute
         return InstituteCoordinatorModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
     }
 
-    public async Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken)
+    public async Task<LkEmployeeDto[]> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken)
     {
-        var responsible = await instituteCoordinatorService.GetAvailableInstituteDepartments(cancellationToken);
+        var responsible = await instituteCoordinatorService.GetAvailableInstituteResponsible(cancellationToken);
 
         return responsible;
     }

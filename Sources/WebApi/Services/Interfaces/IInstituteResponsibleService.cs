@@ -1,4 +1,5 @@
-﻿using WebApi.Models.InstituteCoordinator;
+﻿using Commons.ExternalClients.LkUsers;
+using WebApi.Models.InstituteCoordinator;
 using WebApi.Models.Requests.InstituteResponsible;
 using WebApi.Models.Responses;
 
@@ -8,7 +9,7 @@ public interface IInstituteResponsibleService
 {
     Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(GetInstituteCoordinatorModel model, CancellationToken cancellationToken);
     Task<InstituteCoordinatorModel> GetInstituteResponsibleByIdAsync(int id, CancellationToken cancellationToken);
-    Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken);
+    Task<LkEmployeeDto[]> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken);
     Task<Dictionary<string, string>> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken); // обернуть в модельку ответ
     Task<InstituteCoordinatorModel> CreateInstituteResponsibleAsync(CreateInstituteCoordinatorModel model, CancellationToken cancellationToken);
     Task<PatchInstituteCoordinatorModel> GetInstituteResponsiblePatchModel(int instituteResponsibleId, CancellationToken cancellationToken);

@@ -1,4 +1,5 @@
 ﻿using Booking.Domain.Models.InstituteCoordinators;
+using Commons.ExternalClients.LkUsers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.ModelBinders;
@@ -49,7 +50,7 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора ответственных лиц</returns>
     [HttpGet("responsible")]
-    public async Task<ActionResult<Dictionary<string, string>>> GetAvailableCoordinators(CancellationToken cancellationToken)
+    public async Task<ActionResult<Task<LkEmployeeDto[]>>> GetAvailableCoordinators(CancellationToken cancellationToken)
     {
         var responsible = await instituteCoordinatorService.GetAvailableInstituteResponsibleAsync(cancellationToken);
         return Ok(responsible);
