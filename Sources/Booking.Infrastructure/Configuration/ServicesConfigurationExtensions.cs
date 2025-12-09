@@ -3,7 +3,7 @@ using Booking.Core.Interfaces.Services.BookingRequests;
 using Booking.Core.Interfaces.Services.InstituteCoordinators;
 using Booking.Core.Interfaces.Services.LkUser;
 using Booking.Core.Interfaces.Services.Schedule;
-using Booking.Core.Services.Booking.BookingRequests;
+using Booking.Core.Services.BookingRequests;
 using Booking.Core.Services.InstituteCoordinators;
 using Booking.Core.Services.LkUser;
 using Booking.Core.Services.Schedule;

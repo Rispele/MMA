@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Booking.Domain.Propagated\Booking.Domain.Propagated.csproj" />
+        <ProjectReference Include="..\Commons.Domain\Commons.Domain.csproj" />
         <ProjectReference Include="..\PrivateFieldNamesExposingGenerator\PrivateFieldNamesExposingGenerator\PrivateFieldNamesExposingGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
     </ItemGroup>
 

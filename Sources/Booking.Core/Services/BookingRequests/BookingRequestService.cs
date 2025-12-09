@@ -5,7 +5,7 @@ using Booking.Core.Interfaces.Dtos.BookingRequest.Responses;
 using Booking.Core.Interfaces.Services.BookingRequests;
 using Booking.Core.Interfaces.Services.LkUser;
 using Booking.Core.Queries.BookingRequest;
-using Booking.Core.Services.Booking.BookingRequests.Mappers;
+using Booking.Core.Services.BookingRequests.Mappers;
 using Booking.Domain.Models.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;
@@ -13,7 +13,7 @@ using Commons.Domain.Queries.Factories;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Services.Rooms;
 
-namespace Booking.Core.Services.Booking.BookingRequests;
+namespace Booking.Core.Services.BookingRequests;
 
 public class BookingRequestService(
     [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,

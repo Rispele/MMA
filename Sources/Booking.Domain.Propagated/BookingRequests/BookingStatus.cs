@@ -8,23 +8,23 @@ public enum BookingStatus
     New = 1,
 
     [Description("На согласовании")]
-    InApprove = 2,
-
-    [Description("На модерации")]
-    UnderModeration = 3,
-
-    [Description("Отклонена")]
-    Rejected = 4,
+    SentForApprovalInEdms = 2,
 
     [Description("Согласование в СЭД отклонено")]
-    SedRejected = 5,
+    RejectedInEdms = 3,
+
+    [Description("На модерации")]
+    SentForModeration = 4,
+
+    [Description("Отклонена")]
+    RejectedByModerator = 5,
 
     [Description("Подтверждена")]
-    Approved = 6,
+    ApprovedByModerator = 6,
 
     [Description("Мероприятие завершено")]
     EventFinished = 7,
 
     [Description("Ошибка")]
-    Error = 8,
+    Error = 8
 }

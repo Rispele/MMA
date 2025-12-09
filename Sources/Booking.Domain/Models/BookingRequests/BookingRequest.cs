@@ -1,4 +1,7 @@
-﻿using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
+﻿using Booking.Domain.Events;
+using Booking.Domain.Events.Payloads;
+using Booking.Domain.Exceptions;
+using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Booking.Domain.Propagated.BookingRequests;
 using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
@@ -8,7 +11,7 @@ namespace Booking.Domain.Models.BookingRequests;
 [GenerateFieldNames]
 public class BookingRequest
 {
-    private readonly int? id = null;
+    private readonly int? id;
     private List<int> roomIds = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
@@ -76,6 +79,8 @@ public class BookingRequest
         string? moderatorComment,
         BookingScheduleStatus? bookingScheduleStatus)
     {
+        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет изменить её.");
+
         Creator = creator;
         Reason = reason;
         ParticipantsCount = participantsCount;
@@ -92,8 +97,32 @@ public class BookingRequest
 
     public void SetRooms(List<int> roomsToSet)
     {
+        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет изменить её.");
+
         roomIds.Clear();
         roomIds = roomsToSet;
+    }
+
+    public BookingRequestEvent SendForApprovalInEdms()
+    {
+        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
+
+        return new BookingRequestEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload());
+    }
+
+    private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)
+    {
+        if (Status == expectedStatus)
+        {
+            return;
+        }
+
+        throw new InvalidBookingRequestState(EnhanceMessageWithStatus(errorMessage));
+
+        string EnhanceMessageWithStatus(string message)
+        {
+            return message.Trim() + $" Текущий статус заявки: [{Status}]";
+        }
     }
 
     # region ForTests
