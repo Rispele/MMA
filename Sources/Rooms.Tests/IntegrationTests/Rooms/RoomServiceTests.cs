@@ -140,7 +140,7 @@ public class RoomServiceTests : ContainerTestBase
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
-                    AfterRoomId = -1,
+                    AfterId = -1,
                     Filter = new RoomsFilterDto
                     {
                         Comment = new FilterParameterDto<string>(
@@ -159,7 +159,7 @@ public class RoomServiceTests : ContainerTestBase
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
-                    AfterRoomId = -1,
+                    AfterId = -1,
                     Filter = new RoomsFilterDto
                     {
                         Comment = new FilterParameterDto<string>(
@@ -176,7 +176,7 @@ public class RoomServiceTests : ContainerTestBase
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
-                    AfterRoomId = -1,
+                    AfterId = -1,
                     Filter = new RoomsFilterDto
                     {
                         RoomTypes = new FilterMultiParameterDto<RoomTypeDto>(
@@ -193,7 +193,7 @@ public class RoomServiceTests : ContainerTestBase
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
-                    AfterRoomId = -1,
+                    AfterId = -1,
                     Filter = new RoomsFilterDto
                     {
                         NetTypes = new FilterMultiParameterDto<RoomNetTypeDto>(
@@ -210,7 +210,7 @@ public class RoomServiceTests : ContainerTestBase
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
-                    AfterRoomId = -1,
+                    AfterId = -1,
                     Filter = new RoomsFilterDto
                     {
                         RoomLayout = new FilterMultiParameterDto<RoomLayoutDto>(

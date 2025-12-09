@@ -46,7 +46,7 @@ public class InstituteCoordinatorsService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterInstituteCoordinatorsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterInstituteResponsibleId, dto.Filter);
+        var query = new FilterInstituteCoordinatorsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
 
         var instituteResponsible = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 

@@ -40,7 +40,7 @@ internal class RoomService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : 
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterRoomId, requestDto.Filter);
+        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterId, requestDto.Filter);
 
         var rooms = await (await unitOfWork.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 

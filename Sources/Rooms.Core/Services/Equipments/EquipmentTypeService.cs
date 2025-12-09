@@ -30,7 +30,7 @@ internal class EquipmentTypeService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterEquipmentTypesQuery(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentTypeId, dto.Filter);
+        var query = new FilterEquipmentTypesQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
 
         var equipmentTypes = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 

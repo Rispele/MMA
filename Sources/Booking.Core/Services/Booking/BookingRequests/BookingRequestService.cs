@@ -40,7 +40,7 @@ public class BookingRequestService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterBookingRequestsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterBookingRequestId, dto.Filter);
+        var query = new FilterBookingRequestsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
 
         var bookingRequests = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 

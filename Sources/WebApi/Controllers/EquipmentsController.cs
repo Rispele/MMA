@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ModelBinders;
+using WebApi.ModelBinders.GetRequestWithJsonFilter;
+using WebApi.ModelBinders.GetRequestWithJsonFilter.Specifications;
 using WebApi.Models.Equipment;
 using WebApi.Models.Requests.Equipments;
 using WebApi.Models.Responses;
@@ -20,7 +21,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     /// <returns>Список записей о единицах оборудования</returns>
     [HttpGet]
     public async Task<ActionResult<EquipmentsResponseModel>> GetEquipments(
-        [ModelBinder(BinderType = typeof(GetEquipmentsRequestModelBinder))]
+        [GetRequestWithJsonFilterModelBinder<GetEquipmentsModel, EquipmentsFilterModel, GetEquipmentsSpecification>]
         GetEquipmentsModel model,
         CancellationToken cancellationToken)
     {

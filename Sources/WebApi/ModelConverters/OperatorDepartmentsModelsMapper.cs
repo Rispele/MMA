@@ -9,7 +9,7 @@ namespace WebApi.ModelConverters;
 [Mapper]
 public static partial class OperatorDepartmentsModelsMapper
 {
-    [MapProperty(nameof(GetOperatorDepartmentsModel.AfterOperatorDepartmentId), nameof(GetOperatorDepartmentsDto.AfterOperatorDepartmentId))]
+    [MapProperty(nameof(GetOperatorDepartmentsModel.AfterId), nameof(GetOperatorDepartmentsDto.AfterId))]
     [MapProperty(nameof(GetOperatorDepartmentsModel.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]
     [MapProperty(nameof(GetOperatorDepartmentsModel.Page), nameof(GetOperatorDepartmentsDto.BatchNumber),
         Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]

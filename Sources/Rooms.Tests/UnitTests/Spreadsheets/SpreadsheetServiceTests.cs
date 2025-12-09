@@ -48,7 +48,7 @@ public class SpreadsheetServiceTests
 
         spreadsheetServiceContext.RoomService.Setup(t => t
                 .FilterRooms(
-                    It.Is<GetRoomsRequestDto>(roomRequest => roomRequest.AfterRoomId == -1
+                    It.Is<GetRoomsRequestDto>(roomRequest => roomRequest.AfterId == -1
                                                              && roomRequest.BatchNumber == 0
                                                              && roomRequest.BatchSize == SpreadsheetService.ExportLimit
                                                              && roomRequest.Filter == null),

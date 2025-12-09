@@ -10,6 +10,6 @@ public record GetInstituteCoordinatorModel
     [Range(minimum: 10, maximum: 100, ErrorMessage = "Размер страницы не может быть меньше 10 и больше 100")]
     public int PageSize { get; init; }
 
-    public int AfterInstituteResponsibleId { get; init; }
+    public int AfterId { get; init; }
     public InstituteCoordinatorFilterModel? Filter { get; init; }
 }

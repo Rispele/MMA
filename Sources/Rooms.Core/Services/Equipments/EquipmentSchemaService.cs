@@ -27,7 +27,7 @@ internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWork
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterEquipmentSchemasQuery(dto.BatchSize, dto.BatchNumber, dto.AfterEquipmentSchemaId, dto.Filter);
+        var query = new FilterEquipmentSchemasQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
 
         var equipmentSchemas = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 

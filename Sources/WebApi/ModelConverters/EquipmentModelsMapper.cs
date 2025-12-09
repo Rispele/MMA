@@ -16,7 +16,7 @@ public static partial class EquipmentModelsMapper
     [MapperIgnoreSource(nameof(EquipmentDto.Id))]
     public static partial PatchEquipmentModel MapEquipmentToPatchModel(EquipmentDto equipment);
 
-    [MapProperty(nameof(GetEquipmentsModel.AfterEquipmentId), nameof(GetEquipmentsDto.AfterEquipmentId))]
+    [MapProperty(nameof(GetEquipmentsModel.AfterId), nameof(GetEquipmentsDto.AfterId))]
     [MapProperty(nameof(GetEquipmentsModel.PageSize), nameof(GetEquipmentsDto.BatchSize))]
     [MapProperty(
         nameof(GetEquipmentsModel.Page),

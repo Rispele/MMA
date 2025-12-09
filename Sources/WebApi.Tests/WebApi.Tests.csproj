@@ -36,4 +36,8 @@
         <ProjectReference Include="..\WebApi\WebApi.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UnitTests\Services\" />
+    </ItemGroup>
+
 </Project>

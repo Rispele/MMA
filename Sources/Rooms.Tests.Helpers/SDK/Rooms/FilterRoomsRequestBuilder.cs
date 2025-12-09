@@ -43,7 +43,7 @@ public class FilterRoomsRequestBuilder
         {
             BatchNumber = batchNumber,
             BatchSize = batchSize,
-            AfterRoomId = afterRoomId,
+            AfterId = afterRoomId,
             Filter = filter
         };
     }

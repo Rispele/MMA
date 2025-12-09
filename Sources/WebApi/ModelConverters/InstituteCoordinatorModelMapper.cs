@@ -19,7 +19,7 @@ public static partial class InstituteCoordinatorModelMapper
 
     public static partial PatchInstituteCoordinatorDto MapPatchInstituteCoordinatorTypeFromModel(PatchInstituteCoordinatorModel instituteCoordinator);
 
-    [MapProperty(nameof(GetInstituteCoordinatorModel.AfterInstituteResponsibleId), nameof(GetInstituteCoordinatorDto.AfterInstituteResponsibleId))]
+    [MapProperty(nameof(GetInstituteCoordinatorModel.AfterId), nameof(GetInstituteCoordinatorDto.AfterId))]
     [MapProperty(nameof(GetInstituteCoordinatorModel.PageSize), nameof(GetInstituteCoordinatorDto.BatchSize))]
     [MapProperty(
         nameof(GetInstituteCoordinatorModel.Page),

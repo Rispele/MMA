@@ -73,7 +73,7 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new GetEquipmentsModel
         {
-            AfterEquipmentId = EquipmentId,
+            AfterId = EquipmentId,
             Page = Page,
             PageSize = PageSize,
             Filter = new EquipmentsFilterModel
@@ -202,7 +202,7 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new GetEquipmentSchemasModel
         {
-            AfterEquipmentSchemaId = EquipmentId,
+            AfterId = EquipmentId,
             Page = Page,
             PageSize = PageSize,
             Filter = new EquipmentSchemasFilterModel
@@ -315,7 +315,7 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new GetEquipmentTypesModel
         {
-            AfterEquipmentTypeId = TypeId,
+            AfterId = TypeId,
             Page = Page,
             PageSize = PageSize,
             Filter = new EquipmentTypesFilterModel

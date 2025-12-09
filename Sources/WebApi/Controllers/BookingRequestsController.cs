@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ModelBinders;
+using WebApi.ModelBinders.GetRequestWithJsonFilter;
+using WebApi.ModelBinders.GetRequestWithJsonFilter.Specifications;
 using WebApi.Models.BookingRequest;
 using WebApi.Models.Requests.BookingRequests;
 using WebApi.Models.Responses;
@@ -20,7 +21,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <returns>Список записей о заявках на бронирование аудиторий</returns>
     [HttpGet]
     public async Task<ActionResult<BookingRequestsResponseModel>> GetBookingRequests(
-        [ModelBinder(BinderType = typeof(GetBookingRequestsRequestModelBinder))]
+        [GetRequestWithJsonFilterModelBinder<GetBookingRequestsModel, BookingRequestsFilterModel, GetBookingRequestSpecification>]
         GetBookingRequestsModel model,
         CancellationToken cancellationToken)
     {

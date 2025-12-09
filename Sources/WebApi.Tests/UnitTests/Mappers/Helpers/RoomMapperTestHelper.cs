@@ -220,7 +220,7 @@ public static class RoomMapperTestHelper
         {
             BatchNumber = Page - 1,
             BatchSize = PageSize,
-            AfterRoomId = AfterRoomId,
+            AfterId = AfterRoomId,
             Filter = new RoomsFilterDto
             {
                 Name = CreateFilterParameterDto(AscendingSortDirectionDto, RoomName),
@@ -248,7 +248,7 @@ public static class RoomMapperTestHelper
         {
             Page = Page,
             PageSize = PageSize,
-            AfterRoomId = AfterRoomId,
+            AfterId = AfterRoomId,
             Filter = new RoomsFilterModel
             {
                 Name = CreateFilterParameterModel(AscendingSortDirectionModel, RoomName),

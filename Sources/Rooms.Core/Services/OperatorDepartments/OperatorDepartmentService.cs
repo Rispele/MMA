@@ -46,7 +46,7 @@ internal class OperatorDepartmentService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterOperatorDepartmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterOperatorDepartmentId, dto.Filter);
+        var query = new FilterOperatorDepartmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
 
         var operatorDepartments = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 

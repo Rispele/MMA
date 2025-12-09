@@ -19,7 +19,7 @@ public static partial class BookingRequestModelsMapper
     [MapProperty(nameof(BookingRequestDto.RoomEventCoordinator), nameof(PatchBookingRequestModel.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorFromDto))]
     public static partial PatchBookingRequestModel MapBookingRequestToPatchModel(BookingRequestDto bookingRequest);
 
-    [MapProperty(nameof(GetBookingRequestsModel.AfterBookingRequestId), nameof(GetBookingRequestsDto.AfterBookingRequestId))]
+    [MapProperty(nameof(GetBookingRequestsModel.AfterId), nameof(GetBookingRequestsDto.AfterId))]
     [MapProperty(nameof(GetBookingRequestsModel.PageSize), nameof(GetBookingRequestsDto.BatchSize))]
     [MapProperty(
         nameof(GetBookingRequestsModel.Page),

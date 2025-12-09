@@ -21,7 +21,7 @@ public static partial class EquipmentSchemaModelsMapper
 
     public static partial PatchEquipmentSchemaDto MapPatchEquipmentSchemaFromModel(PatchEquipmentSchemaModel equipmentSchema);
 
-    [MapProperty(nameof(GetEquipmentSchemasModel.AfterEquipmentSchemaId), nameof(GetEquipmentSchemasDto.AfterEquipmentSchemaId))]
+    [MapProperty(nameof(GetEquipmentSchemasModel.AfterId), nameof(GetEquipmentSchemasDto.AfterId))]
     [MapProperty(nameof(GetEquipmentSchemasModel.PageSize), nameof(GetEquipmentSchemasDto.BatchSize))]
     [MapProperty(
         nameof(GetEquipmentSchemasModel.Page),
