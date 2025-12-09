@@ -9,8 +9,8 @@ using WebApi.Services.Interfaces;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Route("webapi/institute-responsible")]
-public class InstituteResponsibleController(IInstituteResponsibleService instituteResponsibleService) : ControllerBase
+[Route("webapi/institute-coordinator")]
+public class InstituteCoordinatorsController(IInstituteResponsibleService instituteCoordinatorService) : ControllerBase
 {
     /// <summary>
     /// Получить записи об ответственных от институтов/подразделений
@@ -19,12 +19,12 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <param name="cancellationToken"></param>
     /// <returns>Список записей об ответсвенных от институтов/подразделений</returns>
     [HttpGet]
-    public async Task<ActionResult<InstituteResponsibleResponseModel>> GetInstituteResponsible(
+    public async Task<ActionResult<InstituteResponsibleResponseModel>> GetInstituteCoordinator(
         [ModelBinder(BinderType = typeof(GetInstituteResponsibleRequestModelBinder))]
         GetInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
-        var result = await instituteResponsibleService.GetInstituteResponsibleAsync(model, cancellationToken);
+        var result = await instituteCoordinatorService.GetInstituteResponsibleAsync(model, cancellationToken);
         return Ok(result);
     }
 
@@ -35,11 +35,11 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <param name="cancellationToken"></param>
     /// <returns>Ответственный от института/подразделения</returns>
     [HttpGet("{instituteResponsibleId:int}")]
-    public async Task<ActionResult<InstituteCoordinator>> GetInstituteResponsibleById(
+    public async Task<ActionResult<InstituteCoordinator>> GetInstituteCoordinatorById(
         int instituteResponsibleId,
         CancellationToken cancellationToken)
     {
-        var instituteResponsible = await instituteResponsibleService.GetInstituteResponsibleByIdAsync(instituteResponsibleId, cancellationToken);
+        var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleByIdAsync(instituteResponsibleId, cancellationToken);
         return Ok(instituteResponsible);
     }
 
@@ -49,9 +49,9 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора ответственных лиц</returns>
     [HttpGet("responsible")]
-    public async Task<ActionResult<Dictionary<string, string>>> GetAvailableResponsible(CancellationToken cancellationToken)
+    public async Task<ActionResult<Dictionary<string, string>>> GetAvailableCoordinators(CancellationToken cancellationToken)
     {
-        var responsible = await instituteResponsibleService.GetAvailableInstituteResponsibleAsync(cancellationToken);
+        var responsible = await instituteCoordinatorService.GetAvailableInstituteResponsibleAsync(cancellationToken);
         return Ok(responsible);
     }
 
@@ -63,7 +63,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     [HttpGet("departments")]
     public async Task<ActionResult<Dictionary<string, string>>> GetAvailableDepartments(CancellationToken cancellationToken)
     {
-        var departments = await instituteResponsibleService.GetAvailableInstituteDepartmentsAsync(cancellationToken);
+        var departments = await instituteCoordinatorService.GetAvailableInstituteDepartmentsAsync(cancellationToken);
         return Ok(departments);
     }
 
@@ -74,11 +74,11 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <param name="cancellationToken"></param>
     /// <returns>Созданный ответственный от института/подразделения</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateInstituteResponsible(
+    public async Task<IActionResult> CreateInstituteCoordinator(
         [FromBody] CreateInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
-        var created = await instituteResponsibleService.CreateInstituteResponsibleAsync(model, cancellationToken);
+        var created = await instituteCoordinatorService.CreateInstituteResponsibleAsync(model, cancellationToken);
         return Ok(created);
     }
 
@@ -92,7 +92,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{instituteResponsibleId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchInstituteResponsible(
+    public async Task<IActionResult> PatchInstituteCoordinator(
         int instituteResponsibleId,
         [FromBody] JsonPatchDocument<PatchInstituteCoordinatorModel> patch,
         CancellationToken cancellationToken)
@@ -104,7 +104,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
             throw new BadHttpRequestException(string.Join(separator: "; ", errorMessage));
         }
 
-        var patchModel = await instituteResponsibleService.GetInstituteResponsiblePatchModel(instituteResponsibleId, cancellationToken);
+        var patchModel = await instituteCoordinatorService.GetInstituteResponsiblePatchModel(instituteResponsibleId, cancellationToken);
 
         patch.ApplyTo(patchModel);
 
@@ -113,7 +113,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
             return ValidationProblem(ModelState);
         }
 
-        var updated = await instituteResponsibleService.PatchInstituteResponsibleAsync(instituteResponsibleId, patchModel, cancellationToken);
+        var updated = await instituteCoordinatorService.PatchInstituteResponsibleAsync(instituteResponsibleId, patchModel, cancellationToken);
 
         return Ok(updated);
     }

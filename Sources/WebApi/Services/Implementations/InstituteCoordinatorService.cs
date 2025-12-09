@@ -7,7 +7,7 @@ using WebApi.Services.Interfaces;
 
 namespace WebApi.Services.Implementations;
 
-public class InstituteResponsibleService(IInstituteCoordinatorsService instituteCoordinatorService) : IInstituteResponsibleService
+public class InstituteCoordinatorService(IInstituteCoordinatorsService instituteCoordinatorService) : IInstituteResponsibleService
 {
     public async Task<InstituteResponsibleResponseModel> GetInstituteResponsibleAsync(
         GetInstituteCoordinatorModel model,
