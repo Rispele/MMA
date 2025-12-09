@@ -10,7 +10,7 @@ using WebApi.Models.Requests.EquipmentSchemas;
 using WebApi.Models.Requests.EquipmentTypes;
 using WebApi.Models.Requests.Filtering;
 
-namespace WebApi.Tests.UnitTests;
+namespace WebApi.Tests.UnitTests.Mappers.Helpers;
 
 public static class EquipmentModelsMapperTestHelper
 {

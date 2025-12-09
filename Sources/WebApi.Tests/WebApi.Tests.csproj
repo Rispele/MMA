@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Commons.Tests.Helpers\Commons.Tests.Helpers.csproj" />
         <ProjectReference Include="..\IntegrationTestInfrastructure\IntegrationTestInfrastructure.csproj"/>
         <ProjectReference Include="..\Rooms.Core\Rooms.Core.csproj"/>
         <ProjectReference Include="..\Rooms.Domain\Rooms.Domain.csproj"/>

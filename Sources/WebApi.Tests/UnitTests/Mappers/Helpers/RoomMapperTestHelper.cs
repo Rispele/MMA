@@ -11,7 +11,7 @@ using WebApi.Models.Room;
 using WebApi.Models.Room.Fix;
 using WebApi.Models.Room.Parameters;
 
-namespace WebApi.Tests.UnitTests;
+namespace WebApi.Tests.UnitTests.Mappers.Helpers;
 
 public static class RoomMapperTestHelper
 {

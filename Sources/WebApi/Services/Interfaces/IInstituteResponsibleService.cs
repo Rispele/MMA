@@ -11,10 +11,10 @@ public interface IInstituteResponsibleService
     Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken);
     Task<Dictionary<string, string>> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken); // обернуть в модельку ответ
     Task<InstituteCoordinatorModel> CreateInstituteResponsibleAsync(CreateInstituteResponsibleModel model, CancellationToken cancellationToken);
-    Task<PatchInstituteResponsibleModel> GetInstituteResponsiblePatchModel(int instituteResponsibleId, CancellationToken cancellationToken);
+    Task<PatchInstituteCoordinatorModel> GetInstituteResponsiblePatchModel(int instituteResponsibleId, CancellationToken cancellationToken);
 
     Task<InstituteCoordinatorModel> PatchInstituteResponsibleAsync(
         int instituteResponsibleId,
-        PatchInstituteResponsibleModel request,
+        PatchInstituteCoordinatorModel request,
         CancellationToken cancellationToken);
 }

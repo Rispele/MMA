@@ -94,7 +94,7 @@ public class InstituteResponsibleController(IInstituteResponsibleService institu
     [Consumes("application/json-patch+json")]
     public async Task<IActionResult> PatchInstituteResponsible(
         int instituteResponsibleId,
-        [FromBody] JsonPatchDocument<PatchInstituteResponsibleModel> patch,
+        [FromBody] JsonPatchDocument<PatchInstituteCoordinatorModel> patch,
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)

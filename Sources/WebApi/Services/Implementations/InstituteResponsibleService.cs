@@ -13,13 +13,13 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
         GetInstituteResponsibleModel model,
         CancellationToken cancellationToken)
     {
-        var getInstituteResponsibleRequest = InstituteResponsibleModelMapper.MapGetInstituteResponsibleFromModel(model);
+        var getInstituteResponsibleRequest = InstituteResponsibleModelMapper.MapGetInstituteCoordinatorFromModel(model);
 
         var batch = await instituteCoordinatorService.FilterInstituteResponsible(getInstituteResponsibleRequest, cancellationToken);
 
         return new InstituteResponsibleResponseModel
         {
-            InstituteResponsible = batch.InstituteResponsible.Select(InstituteResponsibleModelMapper.MapInstituteResponsibleToModel).ToArray(),
+            InstituteResponsible = batch.InstituteResponsible.Select(InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel).ToArray(),
             Count = batch.Count
         };
     }
@@ -28,7 +28,7 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
     {
         var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleById(id, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(instituteResponsible);
+        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
     }
 
     public async Task<Dictionary<string, string>> GetAvailableInstituteResponsibleAsync(CancellationToken cancellationToken)
@@ -49,31 +49,31 @@ public class InstituteResponsibleService(IInstituteCoordinatorsService institute
         CreateInstituteResponsibleModel model,
         CancellationToken cancellationToken)
     {
-        var innerRequest = InstituteResponsibleModelMapper.MapCreateInstituteResponsibleFromModel(model);
+        var innerRequest = InstituteResponsibleModelMapper.MapCreateInstituteCoordinatorFromModel(model);
 
         var instituteResponsible = await instituteCoordinatorService.CreateInstituteResponsible(innerRequest, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(instituteResponsible);
+        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel(instituteResponsible);
     }
 
-    public async Task<PatchInstituteResponsibleModel> GetInstituteResponsiblePatchModel(
+    public async Task<PatchInstituteCoordinatorModel> GetInstituteResponsiblePatchModel(
         int instituteResponsibleId,
         CancellationToken cancellationToken)
     {
         var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleById(instituteResponsibleId, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteResponsibleToPatchModel(instituteResponsible);
+        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToPatchModel(instituteResponsible);
     }
 
     public async Task<InstituteCoordinatorModel> PatchInstituteResponsibleAsync(
         int instituteResponsibleId,
-        PatchInstituteResponsibleModel patchModel,
+        PatchInstituteCoordinatorModel patchModel,
         CancellationToken cancellationToken)
     {
-        var patchRequest = InstituteResponsibleModelMapper.MapPatchInstituteResponsibleTypeFromModel(patchModel);
+        var patchRequest = InstituteResponsibleModelMapper.MapPatchInstituteCoordinatorTypeFromModel(patchModel);
 
         var patched = await instituteCoordinatorService.PatchInstituteResponsible(instituteResponsibleId, patchRequest, cancellationToken);
 
-        return InstituteResponsibleModelMapper.MapInstituteResponsibleToModel(patched);
+        return InstituteResponsibleModelMapper.MapInstituteCoordinatorToModel(patched);
     }
 }

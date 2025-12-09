@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
 using WebApi.ModelConverters;
+using WebApi.Tests.UnitTests.Mappers.Helpers;
 
-namespace WebApi.Tests.UnitTests;
+namespace WebApi.Tests.UnitTests.Mappers;
 
 [TestFixture]
 public class EquipmentModelsMapperTests
