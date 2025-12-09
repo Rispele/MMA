@@ -36,7 +36,8 @@ switch (testingProfile)
 
         var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
         builder
-            .AddBookingOrchestrator(KnownResources.BookingOrchestrator, minioResourceParameters)
+            .AddBookingOrchestrator(KnownResources.BookingOrchestrator)
+            .ReferenceMinio(minioResourceParameters)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
         break;
     }
@@ -49,12 +50,14 @@ switch (testingProfile)
         var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
 
         builder
-            .AddBookingOrchestrator(KnownResources.BookingOrchestrator, minioResourceParameters)
+            .AddBookingOrchestrator(KnownResources.BookingOrchestrator)
+            .ReferenceMinio(minioResourceParameters)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
 
         builder
             .AddWebApi(KnownResources.WebApiService, minioResourceParameters)
-            .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
+            .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource)
+            .ReferenceMinio(minioResourceParameters);
         break;
     }
     default:

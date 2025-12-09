@@ -7,15 +7,25 @@ namespace Sources.AppHost.Resources.Project;
 public static class ProjectResourcesBuildExtensions
 {
     public static IResourceBuilder<ProjectResource> WaitForMigrations(
-        this IResourceBuilder<ProjectResource> distributedApplicationBuilder,
+        this IResourceBuilder<ProjectResource> resourceBuilder,
         IResourceBuilder<PostgresDatabaseResource> postgresResource,
         IResourceBuilder<ProjectResource> roomsMigrationResource,
         IResourceBuilder<ProjectResource> bookingMigrationResource)
     {
-        return distributedApplicationBuilder
+        return resourceBuilder
             .WithReference(postgresResource)
             .WaitForCompletion(roomsMigrationResource)
             .WaitForCompletion(bookingMigrationResource);
+    }
+
+    public static IResourceBuilder<ProjectResource> ReferenceMinio(
+        this IResourceBuilder<ProjectResource> resourceBuilder,
+        MinioResourceParameters minioResourceParameters)
+    {
+        return resourceBuilder
+            .WithEnvironment(name: "MINIO_ACCESS_KEY", minioResourceParameters.Username)
+            .WithEnvironment(name: "MINIO_SECRET_KEY", minioResourceParameters.Password)
+            .WithReference(minioResourceParameters.Name);
     }
 
     public static IResourceBuilder<ProjectResource> AddRoomsMigration(
@@ -42,14 +52,9 @@ public static class ProjectResourcesBuildExtensions
 
     public static IResourceBuilder<ProjectResource> AddBookingOrchestrator(
         this IDistributedApplicationBuilder distributedApplicationBuilder,
-        ResourceSpecification resourceSpecification,
-        MinioResourceParameters minioResourceParameters)
+        ResourceSpecification resourceSpecification)
     {
-        return distributedApplicationBuilder
-            .AddProject<Booking_Orchestrator>(resourceSpecification.Name)
-            .WithEnvironment(name: "MINIO_ACCESS_KEY", minioResourceParameters.Username)
-            .WithEnvironment(name: "MINIO_SECRET_KEY", minioResourceParameters.Password)
-            .WithReference(minioResourceParameters.Name);
+        return distributedApplicationBuilder.AddProject<Booking_Orchestrator>(resourceSpecification.Name);
     }
 
     public static IResourceBuilder<ProjectResource> AddWebApi(
@@ -59,16 +64,6 @@ public static class ProjectResourcesBuildExtensions
     {
         return distributedApplicationBuilder
             .AddProject<WebApi>(resourceSpecification.Name)
-            .WithExternalHttpEndpoints()
-            // .WithHttpEndpoint(httpEndpoint.TargetPort)
-            // .WithHttpsEndpoint(httpsEndpoint.TargetPort)
-
-            #region Minio
-
-            .WithEnvironment(name: "MINIO_ACCESS_KEY", minioResourceParameters.Username)
-            .WithEnvironment(name: "MINIO_SECRET_KEY", minioResourceParameters.Password)
-            .WithReference(minioResourceParameters.Name);
-
-        #endregion
+            .WithExternalHttpEndpoints();
     }
 }
