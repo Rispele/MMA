@@ -95,4 +95,41 @@ public class BookingRequest
         roomIds.Clear();
         roomIds = roomsToSet;
     }
+
+    # region ForTests
+
+    public BookingRequest(
+        int id,
+        BookingCreator creator,
+        string reason,
+        int participantsCount,
+        bool techEmployeeRequired,
+        string eventHostFullName,
+        IRoomEventCoordinator roomEventCoordinator,
+        DateTime createdAt,
+        string eventName,
+        IEnumerable<BookingTime> bookingSchedule,
+        BookingStatus status,
+        string? moderatorComment,
+        BookingScheduleStatus? bookingScheduleStatus,
+        List<int> roomIds) :
+        this(
+            creator,
+            reason,
+            participantsCount,
+            techEmployeeRequired,
+            eventHostFullName,
+            roomEventCoordinator,
+            createdAt,
+            eventName,
+            bookingSchedule,
+            status,
+            moderatorComment,
+            bookingScheduleStatus,
+            roomIds)
+    {
+        this.id = id;
+    }
+
+    # endregion
 }

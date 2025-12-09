@@ -8,6 +8,4 @@ namespace Booking.Core.Services.InstituteCoordinators.Mappers;
 public static partial class InstituteCoordinatorsDtoMapper
 {
     public static partial InstituteCoordinatorDto MapInstituteResponsibleToDto(InstituteCoordinator instituteCoordinator);
-
-    public static partial InstituteCoordinator MapInstituteResponsibleFromDto(InstituteCoordinatorDto instituteCoordinator);
 }
