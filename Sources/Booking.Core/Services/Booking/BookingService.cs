@@ -7,21 +7,25 @@ namespace Booking.Core.Services.Booking;
 public class BookingService(
     [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory) : IBookingService
 {
-    public async Task SendBookingRequestForApprovalInEdms(int bookingRequestId, CancellationToken cancellationToken)
+    public async Task InitiateBookingRequest(int bookingRequestId, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
-        
+
         var bookingRequest = await unitOfWork.ApplyQuery(new GetBookingRequestByIdQuery(bookingRequestId), cancellationToken);
 
-        var bookingEvent = bookingRequest.SendForApprovalInEdms();
-        
-        unitOfWork.Add(bookingEvent);
-        
+        bookingRequest.Initiate();
+
         await unitOfWork.Commit(cancellationToken);
     }
 
-    public Task SaveEdmsApprovingResult(int bookingRequestId, CancellationToken cancellationToken)
+    public async Task SaveModerationResult(int bookingRequestId, bool isApproved, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
+
+        var bookingRequest = await unitOfWork.ApplyQuery(new GetBookingRequestByIdQuery(bookingRequestId), cancellationToken);
+
+        bookingRequest.SaveModerationResult(isApproved);
+
+        await unitOfWork.Commit(cancellationToken);
     }
 }

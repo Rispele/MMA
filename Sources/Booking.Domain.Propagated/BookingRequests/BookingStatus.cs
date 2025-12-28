@@ -6,25 +6,31 @@ public enum BookingStatus
 {
     [Description("Новая")]
     New = 1,
+    
+    [Description("Инициирован процесс бронирования")]
+    Initiated = 10,
 
     [Description("На согласовании")]
     SentForApprovalInEdms = 2,
 
     [Description("Согласование в СЭД отклонено")]
     RejectedInEdms = 3,
+    
+    [Description("Согласование в СЭД отклонено")]
+    ApprovedInEdms = 4,
 
     [Description("На модерации")]
-    SentForModeration = 4,
+    SentForModeration = 5,
 
     [Description("Отклонена")]
-    RejectedByModerator = 5,
+    RejectedByModerator = 6,
 
     [Description("Подтверждена")]
-    ApprovedByModerator = 6,
+    ApprovedByModerator = 7,
 
     [Description("Мероприятие завершено")]
-    EventFinished = 7,
+    EventFinished = 8,
 
     [Description("Ошибка")]
-    Error = 8
+    Error = 9
 }

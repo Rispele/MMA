@@ -40,6 +40,7 @@ public static class ServicesConfigurationExtensions
     {
         return serviceCollection
             .AddScoped<IBookingEventsSynchronizer, BookingEventsSynchronizer>()
-            .AddSingleton<IBookingEventProcessor<IBookingEventPayload>, BookingRequestSentForApprovalInEdmsEventProcessor>();
+            .AddSingleton<IBookingEventProcessor<IBookingEventPayload>, BookingRequestSentForApprovalInEdmsEventProcessor>()
+            .AddSingleton<IBookingEventProcessor<IBookingEventPayload>, BookingRequestResolvedInEdmsEventProcessor>();
     }
 }

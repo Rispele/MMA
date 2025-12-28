@@ -23,4 +23,10 @@ public class BookingEvent
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
     public int BookingRequestId { get; }
     public IBookingEventPayload Payload { get; } = null!;
+    public bool RolledBack { get; private set; }
+
+    public void Rollback()
+    {
+        RolledBack = true;
+    }
 }

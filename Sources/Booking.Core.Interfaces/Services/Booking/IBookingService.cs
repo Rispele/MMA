@@ -2,7 +2,7 @@
 
 public interface IBookingService
 {
-    public Task SendBookingRequestForApprovalInEdms(int bookingRequestId, CancellationToken cancellationToken);
-    
-    public Task SaveEdmsApprovingResult(int bookingRequestId, CancellationToken cancellationToken);
+    public Task InitiateBookingRequest(int bookingRequestId, CancellationToken cancellationToken);
+
+    public Task SaveModerationResult(int bookingRequestId, bool isApproved, CancellationToken cancellationToken);
 }

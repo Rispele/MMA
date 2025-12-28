@@ -1,4 +1,5 @@
-﻿using Booking.Domain.Events;
+﻿using Booking.Core.Services.Booking.KnownProcessors.Result;
+using Booking.Domain.Events;
 using Booking.Domain.Events.Payloads;
 using Commons.Domain.Queries.Abstractions;
 
@@ -9,5 +10,7 @@ public interface IBookingEventProcessor<out TEventPayload>
 {
     public Type PayloadType { get; }
     
-    public Task ProcessEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
+    public Task<ProcessorResult> ProcessEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
+    
+    public Task RollbackEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
 }

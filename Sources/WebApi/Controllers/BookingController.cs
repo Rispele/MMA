@@ -8,9 +8,9 @@ namespace WebApi.Controllers;
 public class BookingController(IBookingService bookingService) : ControllerBase
 {
     [HttpPost]
-    [Route("approval/{bookingRequestId:int}")]
-    public Task SendForApprovalInEdms([FromQuery] int bookingRequestId, CancellationToken cancellationToken)
+    [Route("initiate/{bookingRequestId:int}")]
+    public Task Initiate([FromQuery] int bookingRequestId, CancellationToken cancellationToken)
     {
-        return bookingService.SendBookingRequestForApprovalInEdms(bookingRequestId, cancellationToken);
+        return bookingService.InitiateBookingRequest(bookingRequestId, cancellationToken);
     }
 }

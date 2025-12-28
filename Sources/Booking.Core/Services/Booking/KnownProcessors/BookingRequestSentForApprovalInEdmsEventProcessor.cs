@@ -1,4 +1,5 @@
-﻿using Booking.Domain.Events;
+﻿using Booking.Core.Services.Booking.KnownProcessors.Result;
+using Booking.Domain.Events;
 using Booking.Domain.Events.Payloads;
 using Commons.Domain.Queries.Abstractions;
 using Microsoft.Extensions.Logging;
@@ -10,12 +11,30 @@ public class BookingRequestSentForApprovalInEdmsEventProcessor(ILogger<BookingRe
 {
     public Type PayloadType => typeof(BookingRequestSentForApprovalInEdmsEventPayload);
 
-    public Task ProcessEvent(IUnitOfWork _, BookingEvent bookingEvent, CancellationToken cancellationToken)
+    public Task<ProcessorResult> ProcessEvent(IUnitOfWork _, BookingEvent bookingEvent, CancellationToken cancellationToken)
     {
-        logger.LogInformation(
-            "Sending booking request [{BookingRequestId}] for approval in edms...",
-            bookingEvent.BookingRequestId);
+        try
+        {
+            logger.LogInformation(
+                "Sending booking request [{BookingRequestId}] for approval in edms...",
+                bookingEvent.BookingRequestId);
+            return Task.FromResult(new ProcessorResult(bookingEvent, ResultType.Success));
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error processing event: [{EventId}]", bookingEvent.Id);
+            return Task.FromResult(new ProcessorResult(bookingEvent, ResultType.Failure));
+        }
+    }
 
-        return Task.CompletedTask;
+    public async Task RollbackEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken)
+    {
+        if (bookingEvent.RolledBack)
+        {
+            return;
+        }
+        
+        logger.LogInformation("Rollback sending booking request for approval in edms event... BookingEvent: [{BookingEventId}]", bookingEvent.Id);
+        bookingEvent.Rollback();
     }
 }

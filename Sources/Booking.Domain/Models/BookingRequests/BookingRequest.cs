@@ -1,6 +1,7 @@
 ﻿using Booking.Domain.Events;
 using Booking.Domain.Events.Payloads;
 using Booking.Domain.Exceptions;
+using Booking.Domain.Models.BookingProcesses;
 using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Booking.Domain.Propagated.BookingRequests;
 using JetBrains.Annotations;
@@ -64,6 +65,9 @@ public class BookingRequest
 
     public IEnumerable<int> RoomIds => roomIds;
     public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
+    public BookingProcess? BookingProcess { get; private set; }
+
+    #region Update Actions
 
     public void Update(
         BookingCreator creator,
@@ -103,12 +107,63 @@ public class BookingRequest
         roomIds = roomsToSet;
     }
 
-    public BookingEvent SendForApprovalInEdms()
-    {
-        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
+    #endregion
 
-        return new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload());
+    public void Initiate()
+    {
+        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет инициировать процесс бронирования");
+
+        Status = BookingStatus.Initiated;
+        
+        BookingProcess = new BookingProcess(Id);
+        BookingProcess.AddEvent(new BookingEvent(Id, new BookingRequestInitiatedEventPayload()));
     }
+
+    #region Edms
+
+    public void SendForApprovalInEdms()
+    {
+        ValidateStatus(BookingStatus.Initiated, errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
+
+        Status = BookingStatus.SentForApprovalInEdms;
+        BookingProcess!.AddEvent(new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload()));
+    }
+
+    public void SaveEdmsResolutionResult(bool isApproved)
+    {
+        ValidateStatus(
+            BookingStatus.SentForApprovalInEdms,
+            isApproved
+                ? "Текущее состояние заявки не позволяет согласовать в СЭД."
+                : "Текущее состояние заявки не позволяет отказать в согласовании в СЭД.");
+
+        Status = isApproved ? BookingStatus.ApprovedInEdms : BookingStatus.RejectedInEdms;
+    }
+
+    #endregion
+
+    #region Moderation
+
+    public void SendForModeration()
+    {
+        ValidateStatus(BookingStatus.ApprovedInEdms, errorMessage: "Текущее состояние заявки не позволяет отправить её на модерацию.");
+
+        Status = BookingStatus.SentForModeration;
+        // return new BookingEvent(Id, new BookingRequestSentForModerationEventPayload());
+    }
+
+    public void SaveModerationResult(bool isApproved)
+    {
+        ValidateStatus(
+            BookingStatus.SentForModeration,
+            isApproved
+                ? "Текущее состояние заявки не позволяет подтвердить модератором."
+                : "Текущее состояние заявки не позволяет отказать в согласовании модератором.");
+
+        Status = isApproved ? BookingStatus.ApprovedByModerator : BookingStatus.RejectedByModerator;
+    }
+
+    #endregion
 
     private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)
     {
