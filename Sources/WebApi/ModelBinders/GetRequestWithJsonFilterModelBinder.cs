@@ -17,7 +17,7 @@ file static class BinderSerializerOption
 public class GetRequestWithJsonFilterModelBinder<TFilter> : ModelBinderAttribute<GetRequestWithJsonFilterModelBinder<TFilter>>, IModelBinder
     where TFilter : class
 {
-    public Task BindModelAsync(ModelBindingContext bindingContext)
+    public async Task BindModelAsync(ModelBindingContext bindingContext)
     {
         var query = bindingContext.HttpContext.Request.Query;
 
@@ -27,7 +27,7 @@ public class GetRequestWithJsonFilterModelBinder<TFilter> : ModelBinderAttribute
             filter = serializedFilters[0];
         }
 
-        return BindModelInner(
+        bindingContext.Result = await BindModelInner(
             page: query["page"],
             pageSize: query["pageSize"],
             afterId: query["afterId"],
