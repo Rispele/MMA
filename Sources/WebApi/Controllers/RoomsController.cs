@@ -81,8 +81,8 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         var (model, isOk) = await roomService.PatchRoomAsync(roomId, patch, TryValidateModel, cancellationToken);
 
         return isOk
-            ? ValidationProblem(ModelState)
-            : Ok(model);
+            ? Ok(model)
+            : ValidationProblem(ModelState);
     }
 
     /// <summary>

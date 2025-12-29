@@ -154,7 +154,7 @@ internal class RoomService(
 
         var room = roomInfos.Result!
                        .Where(t => t.Title == dto.RoomNumber)
-                       .FirstOrDefault(t => t.Location == dto.Address)
+                       .FirstOrDefault(t => t.Location.Contains(dto.Address))
                    ?? throw new InvalidScheduleAddress("Could not find room with specified number and address");
 
         roomToPatch.SetScheduleAddress(dto.RoomNumber, dto.Address, room.Id);
