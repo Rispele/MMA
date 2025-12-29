@@ -65,8 +65,6 @@ switch (testingProfile)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource)
             .ReferenceMinio(minioResourceParameters);
 
-        builder.AddViteApp("frontend", "../../../frontend");
-
         break;
     }
     default:
