@@ -14,6 +14,7 @@ using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Infrastructure.EFCore;
 using Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
 using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
 using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.DependencyInjection;
 

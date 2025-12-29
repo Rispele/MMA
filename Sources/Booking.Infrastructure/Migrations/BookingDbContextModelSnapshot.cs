@@ -26,10 +26,10 @@ namespace Booking.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_frequency", new[] { "everyday", "undefined", "weekly" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_schedule_status", new[] { "booked", "booking_approved", "booking_cancel_error", "booking_cancelled", "not_sent" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_status", new[] { "approved_by_moderator", "error", "event_finished", "new", "rejected_by_moderator", "rejected_in_edms", "sent_for_approval_in_edms", "sent_for_moderation" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "booking_status", new[] { "approved_by_moderator", "approved_in_edms", "error", "event_finished", "initiated", "new", "rejected_by_moderator", "rejected_in_edms", "sent_for_approval_in_edms", "sent_for_moderation" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Booking.Domain.Events.BookingEvent", b =>
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.BookingProcess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,18 +42,98 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("booking_request_id");
 
+                    b.Property<DateTime?>("RollbackAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("rollback_at");
+
+                    b.Property<int>("RollbackAttempt")
+                        .HasColumnType("integer")
+                        .HasColumnName("rollback_attempt");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer")
+                        .HasColumnName("state");
+
+                    b.HasKey("Id")
+                        .HasName("pk_booking_process");
+
+                    b.HasIndex("BookingRequestId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_booking_process_booking_request_id");
+
+                    b.ToTable("booking_process", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.Events.BookingEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BookingProcessId")
+                        .HasColumnType("integer")
+                        .HasColumnName("booking_process_id");
+
+                    b.Property<int>("BookingRequestId")
+                        .HasColumnType("integer")
+                        .HasColumnName("booking_request_id");
+
                     b.Property<string>("Payload")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("payload");
 
+                    b.Property<bool>("RolledBack")
+                        .HasColumnType("boolean")
+                        .HasColumnName("rolled_back");
+
                     b.HasKey("Id")
                         .HasName("pk_booking_events");
+
+                    b.HasIndex("BookingProcessId")
+                        .HasDatabaseName("ix_booking_events_booking_process_id");
 
                     b.HasIndex("BookingRequestId")
                         .HasDatabaseName("ix_booking_events_booking_request_id");
 
                     b.ToTable("booking_events", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.Events.BookingEventRetryContext", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Attempt")
+                        .HasColumnType("integer")
+                        .HasColumnName("attempt");
+
+                    b.Property<int?>("BookingProcessId")
+                        .HasColumnType("integer")
+                        .HasColumnName("booking_process_id");
+
+                    b.Property<DateTime>("RetryAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("retry_at");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer")
+                        .HasColumnName("state");
+
+                    b.HasKey("Id")
+                        .HasName("pk_booking_event_retry_context");
+
+                    b.HasIndex("BookingProcessId")
+                        .HasDatabaseName("ix_booking_event_retry_context_booking_process_id");
+
+                    b.ToTable("booking_event_retry_context", (string)null);
                 });
 
             modelBuilder.Entity("Booking.Domain.Models.BookingRequests.BookingRequest", b =>
@@ -155,14 +235,37 @@ namespace Booking.Infrastructure.Migrations
                     b.ToTable("institute_coordinators", (string)null);
                 });
 
-            modelBuilder.Entity("Booking.Domain.Events.BookingEvent", b =>
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.BookingProcess", b =>
                 {
+                    b.HasOne("Booking.Domain.Models.BookingRequests.BookingRequest", null)
+                        .WithOne("BookingProcess")
+                        .HasForeignKey("Booking.Domain.Models.BookingProcesses.BookingProcess", "BookingRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_booking_process_booking_requests_booking_request_id");
+                });
+
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.Events.BookingEvent", b =>
+                {
+                    b.HasOne("Booking.Domain.Models.BookingProcesses.BookingProcess", null)
+                        .WithMany("bookingEvents")
+                        .HasForeignKey("BookingProcessId")
+                        .HasConstraintName("fk_booking_events_booking_process_booking_process_id");
+
                     b.HasOne("Booking.Domain.Models.BookingRequests.BookingRequest", null)
                         .WithMany()
                         .HasForeignKey("BookingRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_booking_events_booking_requests_booking_request_id");
+                });
+
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.Events.BookingEventRetryContext", b =>
+                {
+                    b.HasOne("Booking.Domain.Models.BookingProcesses.BookingProcess", null)
+                        .WithMany("retryContexts")
+                        .HasForeignKey("BookingProcessId")
+                        .HasConstraintName("fk_booking_event_retry_context_booking_process_booking_process");
                 });
 
             modelBuilder.Entity("Booking.Domain.Models.BookingRequests.BookingRequest", b =>
@@ -202,6 +305,18 @@ namespace Booking.Infrastructure.Migrations
 
                     b.Navigation("Creator")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.BookingProcess", b =>
+                {
+                    b.Navigation("bookingEvents");
+
+                    b.Navigation("retryContexts");
+                });
+
+            modelBuilder.Entity("Booking.Domain.Models.BookingRequests.BookingRequest", b =>
+                {
+                    b.Navigation("BookingProcess");
                 });
 #pragma warning restore 612, 618
         }

@@ -354,6 +354,10 @@ namespace Rooms.Infrastructure.Migrations
                                 .HasColumnType("character varying(32)")
                                 .HasColumnName("schedule_address_room_number");
 
+                            b1.Property<int>("ScheduleRoomId")
+                                .HasColumnType("integer")
+                                .HasColumnName("schedule_address_schedule_room_id");
+
                             b1.HasKey("RoomId");
 
                             b1.ToTable("rooms");

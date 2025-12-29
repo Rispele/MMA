@@ -28,7 +28,7 @@ namespace Rooms.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    parameters = table.Column<IReadOnlyList<EquipmentParameterDescriptor>>(type: "jsonb", nullable: false),
+                    parameters = table.Column<IEnumerable<EquipmentParameterDescriptor>>(type: "jsonb", nullable: false),
                     name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -82,6 +82,7 @@ namespace Rooms.Infrastructure.Migrations
                     description = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     schedule_address_room_number = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
                     schedule_address_address = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
+                    schedule_address_schedule_room_id = table.Column<int>(type: "integer", nullable: true),
                     parameters_type = table.Column<RoomType>(type: "room_type", nullable: false),
                     parameters_layout = table.Column<RoomLayout>(type: "room_layout", nullable: false),
                     parameters_net_type = table.Column<RoomNetType>(type: "room_net_type", nullable: false),

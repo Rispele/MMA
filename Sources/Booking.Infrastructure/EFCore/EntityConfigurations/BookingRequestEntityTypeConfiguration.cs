@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
+using Booking.Domain.Models.BookingProcesses;
 using Booking.Domain.Models.BookingRequests;
 using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Microsoft.EntityFrameworkCore;
@@ -46,5 +47,7 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.ModeratorComment).HasMaxLength(500);
         builder.Property(x => x.BookingScheduleStatus);
         builder.Property(t => t.RoomIds);
+
+        builder.HasOne(t => t.BookingProcess).WithOne().HasForeignKey<BookingProcess>(x => x.BookingRequestId);
     }
 }

@@ -20,6 +20,8 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options) : DbCo
         modelBuilder.ApplyConfiguration(new BookingEventEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new BookingRequestEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new InstituteCoordinatorEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new BookingProcessEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new BookingEventRetryContextEntityTypeConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

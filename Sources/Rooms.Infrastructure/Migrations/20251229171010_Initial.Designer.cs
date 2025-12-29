@@ -16,7 +16,7 @@ using Rooms.Infrastructure.EFCore;
 namespace Rooms.Infrastructure.Migrations
 {
     [DbContext(typeof(RoomsDbContext))]
-    [Migration("20251207163707_Initial")]
+    [Migration("20251229171010_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -134,7 +134,7 @@ namespace Rooms.Infrastructure.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
-                    b.Property<IReadOnlyList<EquipmentParameterDescriptor>>("Parameters")
+                    b.Property<IEnumerable<EquipmentParameterDescriptor>>("Parameters")
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("parameters");
@@ -356,6 +356,10 @@ namespace Rooms.Infrastructure.Migrations
                                 .HasMaxLength(32)
                                 .HasColumnType("character varying(32)")
                                 .HasColumnName("schedule_address_room_number");
+
+                            b1.Property<int>("ScheduleRoomId")
+                                .HasColumnType("integer")
+                                .HasColumnName("schedule_address_schedule_room_id");
 
                             b1.HasKey("RoomId");
 
