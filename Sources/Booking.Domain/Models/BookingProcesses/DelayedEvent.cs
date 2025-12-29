@@ -33,7 +33,7 @@ public class DelayedEvent
 
     public bool MarkAttemptSucceeded()
     {
-        
+        return true;
     }
     
     public bool MarkAttemptFailed()

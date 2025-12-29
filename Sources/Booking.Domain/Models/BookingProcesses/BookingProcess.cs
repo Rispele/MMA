@@ -58,7 +58,7 @@ public class BookingProcess
         }
     }
 
-    public void SetRollingBack()
+    private void SetRollingBack()
     {
         State = BookingProcessState.RollingBack;
     }
