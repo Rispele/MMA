@@ -11,7 +11,10 @@ public class BookingProcessEntityTypeConfiguration : IEntityTypeConfiguration<Bo
     {
         builder.HasKey(t => t.Id);
 
-        builder.HasMany(BookingProcessFieldNames.BookingEvents).WithOne();
-        builder.HasMany(BookingProcessFieldNames.RetryContexts).WithOne();
+        builder.Navigation(t => t.BookingEvents).HasField(BookingProcessFieldNames.BookingEvents).AutoInclude();
+        builder.Navigation(t => t.BookingRetryContexts).HasField(BookingProcessFieldNames.RetryContexts).AutoInclude();
+
+        builder.HasMany(t => t.BookingEvents).WithOne();
+        builder.HasMany(t => t.BookingRetryContexts).WithOne();
     }
 }

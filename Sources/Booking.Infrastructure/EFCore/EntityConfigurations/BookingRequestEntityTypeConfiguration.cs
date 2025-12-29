@@ -48,6 +48,10 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.BookingScheduleStatus);
         builder.Property(t => t.RoomIds);
 
-        builder.HasOne(t => t.BookingProcess).WithOne().HasForeignKey<BookingProcess>(x => x.BookingRequestId);
+        builder.Navigation(t => t.BookingProcess).AutoInclude();
+        builder
+            .HasOne(t => t.BookingProcess)
+            .WithOne()
+            .HasForeignKey<BookingProcess>(x => x.BookingRequestId);
     }
 }

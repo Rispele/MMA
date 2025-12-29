@@ -5,6 +5,7 @@ using Booking.Core.Services.Booking.KnownProcessors;
 using Booking.Core.Services.Booking.KnownProcessors.Result;
 using Booking.Domain.Models.BookingProcesses.Events;
 using Booking.Domain.Models.BookingProcesses.Events.Payloads;
+using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
 using Microsoft.Extensions.Logging;
@@ -23,11 +24,11 @@ public class BookingEventsSynchronizer(
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var events = await unitOfWork.ApplyQuery(new ReadBookingEventsQuery(fromEventId, batchSize), cancellationToken);
+        var events = await (await unitOfWork.ApplyQuery(new ReadBookingEventsQuery(fromEventId, batchSize), cancellationToken)).ToListAsync(cancellationToken);
 
         var nextOffset = fromEventId;
         var eventsProcessed = 0;
-        await foreach (var @event in events.WithCancellation(cancellationToken))
+        foreach (var @event in events)
         {
             var result = await ProcessEvent(unitOfWork, @event, cancellationToken);
             await ProcessResult(unitOfWork, result, @event, cancellationToken);

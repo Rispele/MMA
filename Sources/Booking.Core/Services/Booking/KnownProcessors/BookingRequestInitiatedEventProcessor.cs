@@ -220,6 +220,7 @@ public class BookingRequestInitiatedEventProcessor(
             if (time.Frequency is BookingFrequency.Undefined)
             {
                 yield return new BookingPeriod(time.Key, 0, time.Date, time.TimeFrom, time.TimeTo, time.RoomId);
+                yield break;
             }
 
             var currentDate = time.Date;

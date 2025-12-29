@@ -248,7 +248,7 @@ namespace Booking.Infrastructure.Migrations
             modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.Events.BookingEvent", b =>
                 {
                     b.HasOne("Booking.Domain.Models.BookingProcesses.BookingProcess", null)
-                        .WithMany("bookingEvents")
+                        .WithMany("BookingEvents")
                         .HasForeignKey("BookingProcessId")
                         .HasConstraintName("fk_booking_events_booking_process_booking_process_id");
 
@@ -263,7 +263,7 @@ namespace Booking.Infrastructure.Migrations
             modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.Events.BookingEventRetryContext", b =>
                 {
                     b.HasOne("Booking.Domain.Models.BookingProcesses.BookingProcess", null)
-                        .WithMany("retryContexts")
+                        .WithMany("BookingRetryContexts")
                         .HasForeignKey("BookingProcessId")
                         .HasConstraintName("fk_booking_event_retry_context_booking_process_booking_process");
                 });
@@ -309,9 +309,9 @@ namespace Booking.Infrastructure.Migrations
 
             modelBuilder.Entity("Booking.Domain.Models.BookingProcesses.BookingProcess", b =>
                 {
-                    b.Navigation("bookingEvents");
+                    b.Navigation("BookingEvents");
 
-                    b.Navigation("retryContexts");
+                    b.Navigation("BookingRetryContexts");
                 });
 
             modelBuilder.Entity("Booking.Domain.Models.BookingRequests.BookingRequest", b =>

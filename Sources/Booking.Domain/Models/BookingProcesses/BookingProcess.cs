@@ -33,6 +33,9 @@ public class BookingProcess
 
     public int RollbackAttempt { get; private set; }
     public DateTime? RollbackAt { get; private set; }
+    
+    public IEnumerable<BookingEvent> BookingEvents => bookingEvents;
+    public IEnumerable<BookingEventRetryContext> BookingRetryContexts => retryContexts;
 
     public void AddBookingEvent(BookingEvent @event)
     {
