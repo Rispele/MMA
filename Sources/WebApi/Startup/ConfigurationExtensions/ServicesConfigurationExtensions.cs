@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Text.Json.Serialization;
 using Booking.Infrastructure.Configuration;
 using Commons.ExternalClients.Booking;
 using Rooms.Infrastructure.Configuration;
@@ -14,11 +15,16 @@ public static class ServicesConfigurationExtensions
     {
         // serviceCollection.AddOpenApi();
 
-        serviceCollection.AddControllers(options =>
-        {
-            options.InputFormatters.Insert(index: 0, new StreamInputFormatter());
-            options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
-        });
+        serviceCollection
+            .AddControllers(options =>
+            {
+                options.InputFormatters.Insert(index: 0, new StreamInputFormatter());
+                options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
+            })
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
         serviceCollection.AddEndpointsApiExplorer();
         serviceCollection.AddSwaggerGen(opt =>

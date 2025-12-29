@@ -61,6 +61,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
 
     /// <summary>
     /// Создать заявку на бронирование аудиторий
+    /// В RoomEventCoordinator нужно указывать "$type" == "OtherRoomEventCoordinatorModel" или "ScientificRoomEventCoordinatorModel" или "StudentRoomEventCoordinatorModel"
     /// </summary>
     /// <param name="model">Модель создания заявки</param>
     /// <param name="cancellationToken"></param>
