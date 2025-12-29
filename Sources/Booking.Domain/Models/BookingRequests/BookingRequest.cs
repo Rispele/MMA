@@ -13,7 +13,6 @@ namespace Booking.Domain.Models.BookingRequests;
 public class BookingRequest
 {
     private readonly int? id;
-    private List<int> roomIds = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()
@@ -27,27 +26,21 @@ public class BookingRequest
         bool techEmployeeRequired,
         string eventHostFullName,
         IRoomEventCoordinator roomEventCoordinator,
-        DateTime createdAt,
         string eventName,
-        IEnumerable<BookingTime> bookingSchedule,
-        BookingStatus status,
-        string? moderatorComment,
-        BookingScheduleStatus? bookingScheduleStatus,
-        List<int> roomIds)
+        IEnumerable<BookingTime> bookingSchedule)
     {
         Creator = creator;
         Reason = reason;
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
         EventHostFullName = eventHostFullName;
-        CreatedAt = createdAt;
         RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
-        Status = status;
-        ModeratorComment = moderatorComment;
-        BookingScheduleStatus = bookingScheduleStatus;
-        this.roomIds = roomIds;
+        Status = BookingStatus.New;
+        BookingScheduleStatus = Propagated.BookingRequests.BookingScheduleStatus.NotSent;
+        ModeratorComment = null;
+        CreatedAt = DateTime.Now;
     }
 
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
@@ -63,7 +56,6 @@ public class BookingRequest
     public string? ModeratorComment { get; private set; }
     public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
 
-    public IEnumerable<int> RoomIds => roomIds;
     public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
     public BookingProcess? BookingProcess { get; private set; }
 
@@ -76,12 +68,8 @@ public class BookingRequest
         bool techEmployeeRequired,
         string eventHostFullName,
         IRoomEventCoordinator roomEventCoordinator,
-        DateTime createdAt,
         string eventName,
-        IEnumerable<BookingTime> bookingSchedule,
-        BookingStatus status,
-        string? moderatorComment,
-        BookingScheduleStatus? bookingScheduleStatus)
+        IEnumerable<BookingTime> bookingSchedule)
     {
         ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет изменить её.");
 
@@ -91,20 +79,8 @@ public class BookingRequest
         TechEmployeeRequired = techEmployeeRequired;
         EventHostFullName = eventHostFullName;
         RoomEventCoordinator = roomEventCoordinator;
-        CreatedAt = createdAt;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
-        Status = status;
-        ModeratorComment = moderatorComment;
-        BookingScheduleStatus = bookingScheduleStatus;
-    }
-
-    public void SetRooms(List<int> roomsToSet)
-    {
-        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет изменить её.");
-
-        roomIds.Clear();
-        roomIds = roomsToSet;
     }
 
     #endregion
@@ -212,13 +188,8 @@ public class BookingRequest
         bool techEmployeeRequired,
         string eventHostFullName,
         IRoomEventCoordinator roomEventCoordinator,
-        DateTime createdAt,
         string eventName,
-        IEnumerable<BookingTime> bookingSchedule,
-        BookingStatus status,
-        string? moderatorComment,
-        BookingScheduleStatus? bookingScheduleStatus,
-        List<int> roomIds) :
+        IEnumerable<BookingTime> bookingSchedule) :
         this(
             creator,
             reason,
@@ -226,13 +197,8 @@ public class BookingRequest
             techEmployeeRequired,
             eventHostFullName,
             roomEventCoordinator,
-            createdAt,
             eventName,
-            bookingSchedule,
-            status,
-            moderatorComment,
-            bookingScheduleStatus,
-            roomIds)
+            bookingSchedule)
     {
         this.id = id;
     }

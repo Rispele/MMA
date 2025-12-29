@@ -7,6 +7,7 @@ using Booking.Core.Interfaces.Services.LkUser;
 using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.BookingRequests.Mappers;
 using Booking.Domain.Models.BookingRequests;
+using Booking.Domain.Propagated.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
@@ -54,7 +55,7 @@ public class BookingRequestService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var rooms = await GetRooms(dto.RoomIds, cancellationToken);
+        await GetRooms(dto.BookingSchedule.Select(t => t.RoomId).ToArray(), cancellationToken);
 
         var bookingRequest = new BookingRequest(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
@@ -63,13 +64,8 @@ public class BookingRequestService(
             dto.TechEmployeeRequired,
             dto.EventHostFullName,
             BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
-            dto.CreatedAt,
             dto.EventName,
-            dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
-            dto.Status,
-            dto.ModeratorComment,
-            dto.BookingScheduleStatus,
-            rooms.Select(t => t.Id).ToList());
+            dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray());
 
         context.Add(bookingRequest);
 
@@ -86,13 +82,7 @@ public class BookingRequestService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var bookingRequestToPatch = await GetBookingRequestByIdInner(bookingRequestId, cancellationToken, context);
-        var rooms = await GetRooms(dto.RoomIds, cancellationToken);
-
-        if (rooms.Length < dto.RoomIds.Length)
-        {
-            var roomIdsNotFound = dto.RoomIds.Where(t => rooms.All(r => r.Id != t)).JoinStrings(", ");
-            throw new InvalidRequestException($"Several rooms was not found: [{roomIdsNotFound}]");
-        }
+        await GetRooms(dto.BookingSchedule.Select(t => t.RoomId).ToArray(), cancellationToken);
 
         bookingRequestToPatch.Update(
             BookingRequestDtoMapper.MapBookingCreatorFromDto(dto.Creator),
@@ -101,13 +91,8 @@ public class BookingRequestService(
             dto.TechEmployeeRequired,
             dto.EventHostFullName,
             BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
-            dto.CreatedAt,
             dto.EventName,
-            dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray(),
-            dto.Status,
-            dto.ModeratorComment,
-            dto.BookingScheduleStatus);
-        bookingRequestToPatch.SetRooms(rooms.Select(t => t.Id).ToList());
+            dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray());
 
         await context.Commit(cancellationToken);
 

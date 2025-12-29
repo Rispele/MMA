@@ -60,7 +60,6 @@ public class BookingRequestModelsMapperTests
         mapped.EventHostFullName.Should().Be(dto.EventHostFullName);
         mapped.CreatedAt.Should().Be(dto.CreatedAt);
         mapped.EventName.Should().Be(dto.EventName);
-        mapped.RoomIds.Should().BeEquivalentTo(dto.RoomIds);
         mapped.Status.Should().Be(dto.Status);
         mapped.ModeratorComment.Should().Be(dto.ModeratorComment);
         mapped.BookingScheduleStatus.Should().Be(dto.BookingScheduleStatus);
@@ -84,7 +83,6 @@ public class BookingRequestModelsMapperTests
         mapped.EventHostFullName.Should().Be(dto.EventHostFullName);
         mapped.CreatedAt.Should().Be(dto.CreatedAt);
         mapped.EventName.Should().Be(dto.EventName);
-        mapped.RoomIds.Should().BeEquivalentTo(dto.RoomIds);
         mapped.Status.Should().Be(dto.Status);
         mapped.ModeratorComment.Should().Be(dto.ModeratorComment);
         mapped.BookingScheduleStatus.Should().Be(dto.BookingScheduleStatus);
@@ -106,12 +104,7 @@ public class BookingRequestModelsMapperTests
         mapped.ParticipantsCount.Should().Be(patchModel.ParticipantsCount);
         mapped.TechEmployeeRequired.Should().Be(patchModel.TechEmployeeRequired);
         mapped.EventHostFullName.Should().Be(patchModel.EventHostFullName);
-        mapped.CreatedAt.Should().Be(patchModel.CreatedAt);
         mapped.EventName.Should().Be(patchModel.EventName);
-        mapped.RoomIds.Should().BeEquivalentTo(patchModel.RoomIds);
-        mapped.Status.Should().Be(patchModel.Status);
-        mapped.ModeratorComment.Should().Be(patchModel.ModeratorComment);
-        mapped.BookingScheduleStatus.Should().Be(patchModel.BookingScheduleStatus);
 
         AssertCreators(mapped.Creator, patchModel.Creator);
         AssertCoordinators(mapped.RoomEventCoordinator, patchModel.RoomEventCoordinator);
@@ -158,12 +151,7 @@ public class BookingRequestModelsMapperTests
         actual.ParticipantsCount.Should().Be(expected.ParticipantsCount);
         actual.TechEmployeeRequired.Should().Be(expected.TechEmployeeRequired);
         actual.EventHostFullName.Should().Be(expected.EventHostFullName);
-        actual.CreatedAt.Should().Be(expected.CreatedAt);
         actual.EventName.Should().Be(expected.EventName);
-        actual.RoomIds.Should().BeEquivalentTo(expected.RoomIds);
-        actual.Status.Should().Be(expected.Status);
-        actual.ModeratorComment.Should().Be(expected.ModeratorComment);
-        actual.BookingScheduleStatus.Should().Be(expected.BookingScheduleStatus);
 
         AssertCreators(actual.Creator, expected.Creator);
         AssertCoordinators(actual.RoomEventCoordinator, expected.RoomEventCoordinator);

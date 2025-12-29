@@ -46,7 +46,6 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.Status).IsRequired();
         builder.Property(x => x.ModeratorComment).HasMaxLength(500);
         builder.Property(x => x.BookingScheduleStatus);
-        builder.Property(t => t.RoomIds);
 
         builder.Navigation(t => t.BookingProcess).AutoInclude();
         builder

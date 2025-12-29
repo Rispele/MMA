@@ -56,13 +56,8 @@ public class BookingRequestModelsMapperTests
             fixture.Create<bool>(),
             fixture.Create<string>(),
             fixture.Create<IRoomEventCoordinator>(),
-            fixture.Create<DateTime>(),
             fixture.Create<string>(),
-            fixture.Create<BookingTime[]>(),
-            fixture.Create<BookingStatus>(),
-            fixture.Create<string>(),
-            fixture.Create<BookingScheduleStatus>(),
-            fixture.Create<List<int>>());
+            fixture.Create<BookingTime[]>());
 
         var expected = BookingRequestDtoMapper.MapBookingRequestToDto(actual);
 
@@ -72,7 +67,6 @@ public class BookingRequestModelsMapperTests
         expected.EventHostFullName.Should().Be(actual.EventHostFullName);
         expected.CreatedAt.Should().Be(actual.CreatedAt);
         expected.EventName.Should().Be(actual.EventName);
-        expected.RoomIds.Should().BeEquivalentTo(actual.RoomIds);
         expected.Status.Should().Be(actual.Status);
         expected.ModeratorComment.Should().Be(actual.ModeratorComment);
         expected.BookingScheduleStatus.Should().Be(actual.BookingScheduleStatus);

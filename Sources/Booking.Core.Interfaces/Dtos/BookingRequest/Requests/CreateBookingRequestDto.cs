@@ -11,11 +11,6 @@ public record CreateBookingRequestDto
     public required bool TechEmployeeRequired { get; init; }
     public required string EventHostFullName { get; init; }
     public required IRoomEventCoordinatorDto RoomEventCoordinator { get; init; }
-    public required DateTime CreatedAt { get; init; }
     public required string EventName { get; init; }
-    public required int[] RoomIds { get; init; }
     public required BookingTimeDto[] BookingSchedule { get; init; }
-    public required BookingStatus Status { get; init; }
-    public required string ModeratorComment { get; init; }
-    public required BookingScheduleStatus? BookingScheduleStatus { get; init; }
 }
