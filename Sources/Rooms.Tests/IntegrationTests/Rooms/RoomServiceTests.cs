@@ -15,11 +15,9 @@ namespace Rooms.Tests.IntegrationTests.Rooms;
 [Parallelizable(ParallelScope.Fixtures)]
 public class RoomServiceTests : ContainerTestBase
 {
-    [Inject]
-    private readonly IRoomService roomService = null!;
+    [Inject] private readonly IRoomService roomService = null!;
 
-    [Inject]
-    private readonly RoomsSdk roomsSdk = null!;
+    [Inject] private readonly RoomsSdk roomsSdk = null!;
 
     [Test]
     public async Task CreateRoom_ShouldBeCreated()
@@ -107,7 +105,7 @@ public class RoomServiceTests : ContainerTestBase
             {
                 Name = "new name",
                 Description = "new description",
-                ScheduleAddress = new ScheduleAddressDto(RoomNumber: "123", Address: "123"),
+                ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber: "123", Address: "123"),
                 Type = RoomTypeDto.Multimedia,
                 Layout = RoomLayoutDto.Amphitheater,
                 Seats = 12,

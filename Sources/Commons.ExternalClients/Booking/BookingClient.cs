@@ -101,8 +101,8 @@ public class BookingClient : IBookingClient
             return BookingResponse.Ok();
         }
 
-        var (shouldRetry, errors) = await ResolveErrorData(response, cancellationToken);
-        return BookingResponse.FromErrors(errors, shouldRetry);
+        var (shouldRetry, deduplicated, errors) = await ResolveErrorData(response, cancellationToken);
+        return BookingResponse.FromErrors(errors, shouldRetry, deduplicated);
     }
 
     private static async Task<BookingResponse<TResult>> ProcessResponse<TResult>(
@@ -111,8 +111,8 @@ public class BookingClient : IBookingClient
     {
         if (!response.IsSuccessStatusCode)
         {
-            var (shouldRetry, errors) = await ResolveErrorData(response, cancellationToken);
-            return BookingResponse.FromErrors<TResult>(errors, shouldRetry);
+            var (shouldRetry, deduplicated, errors) = await ResolveErrorData(response, cancellationToken);
+            return BookingResponse.FromErrors<TResult>(errors, shouldRetry, deduplicated);
         }
 
         var result = await response.Content.ReadFromJsonAsync<TResult>(cancellationToken)
@@ -120,17 +120,18 @@ public class BookingClient : IBookingClient
         return BookingResponse.FromResult(result);
     }
 
-    private static async Task<(bool shouldRetry, string[] errors)> ResolveErrorData(
+    private static async Task<(bool shouldRetry, bool deduplicated, string[] errors)> ResolveErrorData(
         HttpResponseMessage response,
         CancellationToken cancellationToken)
     {
         var statusCode = response.StatusCode;
         var statusCodeGroup = (int)statusCode / 100;
         var shouldRetry = statusCodeGroup == 5 || statusCode is HttpStatusCode.TooManyRequests;
+        var deduplicated = statusCode is HttpStatusCode.UnprocessableEntity;
         var errors = statusCodeGroup == 5
             ? []
             : (await response.Content.ReadFromJsonAsync<BookingErrorResponse>(cancellationToken: cancellationToken))
             ?.Errors ?? [];
-        return (shouldRetry, errors);
+        return (shouldRetry, deduplicated, errors);
     }
 }

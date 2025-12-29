@@ -9,7 +9,8 @@ namespace Booking.Core.Services.BookingRequests.Mappers;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
 public static partial class BookingRequestDtoMapper
 {
-    [MapProperty(nameof(BookingRequest.RoomEventCoordinator), nameof(BookingRequestDto.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorToDto))]
+    [MapProperty(nameof(BookingRequest.RoomEventCoordinator), nameof(BookingRequestDto.RoomEventCoordinator),
+        Use = nameof(MapRoomEventCoordinatorToDto))]
     public static partial BookingRequestDto MapBookingRequestToDto(BookingRequest bookingRequest);
 
     public static partial BookingCreatorDto MapBookingCreatorToDto(BookingCreator bookingCreator);
@@ -18,7 +19,19 @@ public static partial class BookingRequestDtoMapper
 
     public static partial BookingTimeDto MapBookingTimeToDto(BookingTime bookingTime);
 
-    public static partial BookingTime MapBookingTimeFromDto(BookingTimeDto bookingTime);
+    public static BookingTime MapBookingTimeFromDto(BookingTimeDto bookingTime)
+    {
+        return new BookingTime
+        {
+            Key = Guid.NewGuid(),
+            RoomId = bookingTime.RoomId,
+            Date = bookingTime.Date,
+            TimeFrom = bookingTime.TimeFrom,
+            TimeTo = bookingTime.TimeTo,
+            BookingFinishDate = bookingTime.BookingFinishDate,
+            Frequency = bookingTime.Frequency
+        };
+    }
 
     public static IRoomEventCoordinator MapRoomEventCoordinatorFromDto(IRoomEventCoordinatorDto coordinator)
     {

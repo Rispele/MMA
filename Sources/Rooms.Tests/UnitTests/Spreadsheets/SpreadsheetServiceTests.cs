@@ -42,7 +42,7 @@ public class SpreadsheetServiceTests
             },
             Rooms =
             [
-                new OperatorDepartmentRoomInfoDto(1, new ScheduleAddressDto("1", "2"))
+                new OperatorDepartmentRoomInfoDto(1, new ScheduleAddressDto("1", "2", 1))
             ]
         };
 

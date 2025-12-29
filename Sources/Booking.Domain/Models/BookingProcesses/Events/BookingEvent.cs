@@ -25,7 +25,7 @@ public class BookingEvent
     public IBookingEventPayload Payload { get; } = null!;
     public bool RolledBack { get; private set; }
 
-    public void Rollback()
+    internal void Rollback()
     {
         RolledBack = true;
     }

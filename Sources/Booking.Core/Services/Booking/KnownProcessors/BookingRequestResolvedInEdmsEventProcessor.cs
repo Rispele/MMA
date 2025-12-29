@@ -13,7 +13,7 @@ public class BookingRequestResolvedInEdmsEventProcessor(
 {
     public Type PayloadType => typeof(BookingRequestResolvedInEdmsEventPayload);
 
-    public async Task<ProcessorResult> ProcessEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken)
+    public async Task<SynchronizeEventProcessorResult> ProcessEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken)
     {
         try
         {
@@ -23,21 +23,42 @@ public class BookingRequestResolvedInEdmsEventProcessor(
             var payload = bookingEvent.Payload.GetPayload<BookingRequestResolvedInEdmsEventPayload>();
 
             var result = await SaveEdmsResolutionResult(unitOfWork, bookingRequestId, payload, cancellationToken);
-            return new ProcessorResult(bookingEvent, result);
+            return new SynchronizeEventProcessorResult(bookingEvent, result);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error processing edms resolution result. Booking request [{BookingRequestId}]...", bookingEvent.BookingRequestId);
-            return new ProcessorResult(bookingEvent, ResultType.Retry);
+            return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Retry);
         }
     }
 
-    public Task RollbackEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken)
+    public async Task<RollBackEventResultType> RollbackEvent(
+        IUnitOfWork unitOfWork,
+        BookingEvent bookingEvent,
+        CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        if (bookingEvent.RolledBack)
+        {
+            return RollBackEventResultType.RolledBack;
+        }
+
+        try
+        {
+            var bookingRequest = await unitOfWork.ApplyQuery(
+                new GetBookingRequestByIdQuery(bookingEvent.BookingRequestId),
+                cancellationToken);
+
+            bookingRequest.BookingProcess!.RollBackEvent(bookingEvent.Id);
+            return RollBackEventResultType.RolledBack;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error occured while rolling back event: [{EventId}]", bookingEvent.Id);
+            return RollBackEventResultType.Failed;
+        }
     }
 
-    private static async Task<ResultType> SaveEdmsResolutionResult(
+    private static async Task<SynchronizeEventResultType> SaveEdmsResolutionResult(
         IUnitOfWork unitOfWork,
         int bookingRequestId,
         BookingRequestResolvedInEdmsEventPayload payload,
@@ -48,11 +69,11 @@ public class BookingRequestResolvedInEdmsEventProcessor(
         bookingRequest.SaveEdmsResolutionResult(payload.IsApproved);
         if (!payload.IsApproved)
         {
-            return ResultType.Rollback;
+            return SynchronizeEventResultType.Rollback;
         }
 
         bookingRequest.SendForModeration();
 
-        return ResultType.Success;
+        return SynchronizeEventResultType.Success;
     }
 }

@@ -17,6 +17,7 @@ internal static class RoomTestHelper
     private const string RoomDescription = "Description";
     private const string RoomNumber = "Room Number";
     private const string RoomAddress = "Room Address";
+    private const int ScheduleAddressId = 1;
     private const int Seats = 10;
     private const int ComputerSeats = 20;
     private const bool HasConditioning = true;
@@ -64,7 +65,7 @@ internal static class RoomTestHelper
             FixInfo = new RoomFixStatusDto(ToRoomStatus, FixDeadline, FixComment),
             Equipments = [],
             Parameters = new RoomParametersDto(ToRoomType, ToRoomLayout, ToRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress, ScheduleAddressId),
             OperatorDepartmentId = operatorDepartmentId
         };
     }
@@ -98,7 +99,7 @@ internal static class RoomTestHelper
             },
             AllowBooking);
 
-        room.SetScheduleAddress(RoomNumber, RoomAddress, 1);
+        room.SetScheduleAddress(RoomNumber, RoomAddress, ScheduleAddressId);
 
         return room;
     }

@@ -3,6 +3,7 @@
 public enum BookingProcessState
 {
     Executing,
+    Finished,
     Retrying,
     RollingBack,
     RolledBack

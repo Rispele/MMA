@@ -7,6 +7,8 @@ namespace Booking.Domain.Models.BookingProcesses;
 [GenerateFieldNames]
 public class BookingProcess
 {
+    private const int RollbackTimeout = 2;
+
     private readonly int? id = null!;
     private readonly List<BookingEvent> bookingEvents = null!;
     private readonly List<BookingEventRetryContext> retryContexts = null!;
@@ -29,9 +31,24 @@ public class BookingProcess
     public int BookingRequestId { get; }
     public BookingProcessState State { get; private set; }
 
+    public int RollbackAttempt { get; private set; }
+    public DateTime? RollbackAt { get; private set; }
+
     public void AddBookingEvent(BookingEvent @event)
     {
         bookingEvents.Add(@event);
+    }
+
+    public IEnumerable<BookingEvent> GetEventsOfType<TEventPayload>()
+    {
+        return bookingEvents.Where(e => e.Payload.GetType() == typeof(TEventPayload));
+    }
+
+    #region Event Processing
+
+    public void SetProcessAsFinished()
+    {
+        State = BookingProcessState.Finished;
     }
 
     public IEnumerable<BookingEvent> GetEventsToRetry()
@@ -56,12 +73,52 @@ public class BookingProcess
         var context = GetOrCreateRetryContext(eventId);
         context.MarkAttemptFailed();
 
-        State = context.State switch
+        switch (context.State)
         {
-            BookingEventRetryContextState.Failed => BookingProcessState.RollingBack,
-            BookingEventRetryContextState.Retrying => BookingProcessState.Retrying,
-            _ => State
-        };
+            case BookingEventRetryContextState.Failed:
+                State = BookingProcessState.RollingBack;
+
+                RollbackAttempt = 0;
+                UpdateRollbackAtTime();
+                break;
+            case BookingEventRetryContextState.Retrying:
+                State = BookingProcessState.Retrying;
+                break;
+            case BookingEventRetryContextState.Succeeded:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    #endregion
+
+    #region Rolling Back
+
+    public void RollBackEvent(int eventId)
+    {
+        ValidateState(BookingProcessState.RollingBack, "Could not rollback event when not in rolling back state");
+
+        var @event = bookingEvents.FirstOrDefault(e => e.Id == eventId);
+        @event?.Rollback();
+
+        if (bookingEvents.All(t => t.RolledBack))
+        {
+            State = BookingProcessState.RolledBack;
+        }
+    }
+
+    public void SetRollbackAttemptAsFailed(int eventId)
+    {
+        RollbackAttempt++;
+        UpdateRollbackAtTime();
+    }
+
+    #endregion
+
+    private void UpdateRollbackAtTime()
+    {
+        RollbackAt = DateTime.UtcNow + TimeSpan.FromSeconds(Math.Pow(RollbackTimeout, RollbackAttempt));
     }
 
     private BookingEventRetryContext GetOrCreateRetryContext(int eventId)

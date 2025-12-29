@@ -30,7 +30,6 @@ public class BookingEventsSynchronizer(
         await foreach (var @event in events.WithCancellation(cancellationToken))
         {
             var result = await ProcessEvent(unitOfWork, @event, cancellationToken);
-
             await ProcessResult(unitOfWork, result, @event, cancellationToken);
 
             eventsProcessed++;
@@ -43,28 +42,30 @@ public class BookingEventsSynchronizer(
         return nextOffset;
     }
 
-    private async Task<ProcessorResult> ProcessEvent(
+    private async Task<SynchronizeEventProcessorResult> ProcessEvent(
         IUnitOfWork unitOfWork,
         BookingEvent bookingEvent,
         CancellationToken cancellationToken)
     {
         var processor = processors.FirstOrDefault(t => t.PayloadType == bookingEvent.Payload.GetType());
 
-        if (processor is null)
+        if (processor is not null)
         {
-            throw new InvalidOperationException($"No processor found for {bookingEvent.Payload.GetType().Name}");
+            return await processor.ProcessEvent(unitOfWork, bookingEvent, cancellationToken);
         }
 
-        return await processor.ProcessEvent(unitOfWork, bookingEvent, cancellationToken);
+        logger.LogInformation("No processor found for {Name}", bookingEvent.Payload.GetType().Name);
+
+        return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Skipped);
     }
 
     private static async Task ProcessResult(
         IUnitOfWork unitOfWork,
-        ProcessorResult result,
+        SynchronizeEventProcessorResult result,
         BookingEvent @event,
         CancellationToken cancellationToken)
     {
-        if (result.Result is ResultType.Retry)
+        if (result.Result is SynchronizeEventResultType.Retry)
         {
             var getBookingRequest = new GetBookingRequestByIdQuery(@event.BookingRequestId);
             var bookingRequest = await unitOfWork.ApplyQuery(getBookingRequest, cancellationToken);

@@ -21,6 +21,7 @@ public static class RoomMapperTestHelper
     private const string RoomDescription = "Description";
     private const string RoomNumber = "Room Number";
     private const string RoomAddress = "Room Address";
+    private const int ScheduleAddressId = 1;
     private const int Seats = 10;
     private const int ComputerSeats = 20;
     private const bool HasConditioning = true;
@@ -81,7 +82,7 @@ public static class RoomMapperTestHelper
             //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
             Equipments = [],
             Parameters = new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress)
+            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress, ScheduleAddressId)
         };
     }
 
@@ -198,7 +199,7 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress),
+            ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber, RoomAddress),
             Type = FromRoomType,
             Layout = FromRoomLayout,
             NetType = FromRoomNetType,

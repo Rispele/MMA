@@ -10,7 +10,7 @@ public interface IBookingEventProcessor<out TEventPayload>
 {
     public Type PayloadType { get; }
     
-    public Task<ProcessorResult> ProcessEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
+    public Task<SynchronizeEventProcessorResult> ProcessEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
     
-    public Task RollbackEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
+    public Task<RollBackEventResultType> RollbackEvent(IUnitOfWork unitOfWork, BookingEvent bookingEvent, CancellationToken cancellationToken);
 }

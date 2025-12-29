@@ -4,7 +4,7 @@ namespace Booking.Core.Interfaces.Dtos.BookingRequest;
 
 public class BookingTimeDto
 {
-    public string RoomId { get; set; } = null!;
+    public int RoomId { get; set; }
     public DateOnly Date { get; set; }
     public TimeOnly TimeFrom { get; set; }
     public TimeOnly TimeTo { get; set; }

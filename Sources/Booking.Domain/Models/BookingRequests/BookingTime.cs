@@ -4,7 +4,8 @@ namespace Booking.Domain.Models.BookingRequests;
 
 public record BookingTime
 {
-    public required string RoomId { get; init; }
+    public required Guid Key { get; init; }
+    public required int RoomId { get; init; }
     public required DateOnly Date { get; init; }
     public required TimeOnly TimeFrom { get; init; }
     public required TimeOnly TimeTo { get; init; }
