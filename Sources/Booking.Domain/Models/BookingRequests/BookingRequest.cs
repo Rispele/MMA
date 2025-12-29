@@ -39,7 +39,7 @@ public class BookingRequest
         BookingSchedule = bookingSchedule;
         Status = BookingStatus.New;
         BookingScheduleStatus = Propagated.BookingRequests.BookingScheduleStatus.NotSent;
-        ModeratorComment = null;
+        ModeratorComment = string.Empty;
         CreatedAt = DateTime.UtcNow;
     }
 
