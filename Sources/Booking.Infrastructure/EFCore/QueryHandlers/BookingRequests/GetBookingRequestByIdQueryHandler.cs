@@ -1,7 +1,5 @@
 ﻿using Booking.Core.Queries.BookingRequest;
 using Booking.Domain.Exceptions;
-using Booking.Domain.Models.BookingProcesses;
-using Booking.Domain.Models.BookingProcesses.Events;
 using Booking.Domain.Models.BookingRequests;
 using Commons.Infrastructure.EFCore.QueryHandlers;
 using Microsoft.EntityFrameworkCore;

@@ -46,11 +46,11 @@ public class BookingEventRetryContext
         if (Attempt != AttemptsCount)
         {
             Attempt++;
-            State = BookingEventRetryContextState.Failed;
+            RetryAt = DateTime.UtcNow + TimeSpan.FromSeconds(Math.Pow(2, Attempt));
         }
         else
         {
-            RetryAt = DateTime.UtcNow + TimeSpan.FromSeconds(Math.Pow(2, Attempt));
+            State = BookingEventRetryContextState.Failed;
         }
     }
 

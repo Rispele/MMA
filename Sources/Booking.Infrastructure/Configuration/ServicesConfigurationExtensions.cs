@@ -14,7 +14,6 @@ using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Infrastructure.EFCore;
 using Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
 using Commons.Domain.Queries.Factories;
-using Commons.ExternalClients.Booking;
 using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,6 +39,7 @@ public static class ServicesConfigurationExtensions
     private static IServiceCollection AddBookingEventSynchronizer(this IServiceCollection serviceCollection)
     {
         return serviceCollection
+            .AddScoped<IBookingEventRetriesSynchronizer, BookingEventRetriesSynchronizer>()
             .AddScoped<IBookingEventsSynchronizer, BookingEventsSynchronizer>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestSentForApprovalInEdmsEventProcessor>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestResolvedInEdmsEventProcessor>()

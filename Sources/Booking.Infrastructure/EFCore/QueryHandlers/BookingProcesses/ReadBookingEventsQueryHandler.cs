@@ -1,9 +1,9 @@
-﻿using Booking.Core.Queries.BookingEvents;
+﻿using Booking.Core.Queries.BookingProcesses;
 using Booking.Domain.Models.BookingProcesses.Events;
 using Commons.Infrastructure.EFCore.QueryHandlers;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Infrastructure.EFCore.QueryHandlers.BookingEvents;
+namespace Booking.Infrastructure.EFCore.QueryHandlers.BookingProcesses;
 
 internal class ReadBookingEventsQueryHandler : IQueryHandler<BookingDbContext, ReadBookingEventsQuery, BookingEvent>
 {

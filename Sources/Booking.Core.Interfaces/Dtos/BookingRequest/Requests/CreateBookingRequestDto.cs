@@ -1,5 +1,4 @@
 ﻿using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
-using Booking.Domain.Propagated.BookingRequests;
 
 namespace Booking.Core.Interfaces.Dtos.BookingRequest.Requests;
 

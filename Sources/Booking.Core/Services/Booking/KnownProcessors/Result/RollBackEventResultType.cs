@@ -2,6 +2,7 @@
 
 public enum RollBackEventResultType
 {
+    Skipped,
     Failed,
-    RolledBack
+    RolledBack,
 }

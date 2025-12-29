@@ -18,7 +18,9 @@ builder.Services
     .ConfigureServicesForRooms()
     .ConfigureServicesForBooking();
 
-builder.Services.AddHostedService<BookingOrchestrator>();
+builder.Services
+    .AddHostedService<BookingOrchestrator>()
+    .AddHostedService<BookingRetriesOrchestrator>();
 
 var host = builder.Build();
 host.Run();

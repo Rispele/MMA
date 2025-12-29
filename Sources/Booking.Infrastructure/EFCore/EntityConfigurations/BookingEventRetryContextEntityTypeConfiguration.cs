@@ -9,5 +9,7 @@ public class BookingEventRetryContextEntityTypeConfiguration : IEntityTypeConfig
     public void Configure(EntityTypeBuilder<BookingEventRetryContext> builder)
     {
         builder.HasKey(t => t.Id);
+
+        builder.Property(t => t.EventId);
     }
 }

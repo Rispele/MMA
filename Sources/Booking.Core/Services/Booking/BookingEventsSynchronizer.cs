@@ -1,5 +1,5 @@
 ﻿using Booking.Core.Interfaces.Services.Booking;
-using Booking.Core.Queries.BookingEvents;
+using Booking.Core.Queries.BookingProcesses;
 using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.Booking.KnownProcessors;
 using Booking.Core.Services.Booking.KnownProcessors.Result;
@@ -43,7 +43,7 @@ public class BookingEventsSynchronizer(
         return nextOffset;
     }
 
-    private async Task<SynchronizeEventProcessorResult> ProcessEvent(
+    public async Task<SynchronizeEventProcessorResult> ProcessEvent(
         IUnitOfWork unitOfWork,
         BookingEvent bookingEvent,
         CancellationToken cancellationToken)

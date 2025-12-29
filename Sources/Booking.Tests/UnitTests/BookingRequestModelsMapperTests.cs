@@ -3,7 +3,6 @@ using Booking.Core.Interfaces.Dtos.BookingRequest;
 using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
 using Booking.Domain.Models.BookingRequests;
 using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
-using Booking.Domain.Propagated.BookingRequests;
 using Commons.Tests.Helpers.Customizations;
 using FluentAssertions;
 using BookingRequestDtoMapper = Booking.Core.Services.BookingRequests.Mappers.BookingRequestDtoMapper;

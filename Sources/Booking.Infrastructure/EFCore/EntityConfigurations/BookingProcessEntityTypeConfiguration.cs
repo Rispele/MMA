@@ -1,5 +1,4 @@
 ﻿using Booking.Domain.Models.BookingProcesses;
-using Booking.Domain.Models.BookingProcesses.Events;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
