@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sources.AppHost.Resources;
+using Sources.AppHost.Resources.ClientSettings;
 using Sources.AppHost.Resources.Docker;
 using Sources.AppHost.Resources.Project;
 

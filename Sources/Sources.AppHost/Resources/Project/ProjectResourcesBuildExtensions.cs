@@ -59,8 +59,7 @@ public static class ProjectResourcesBuildExtensions
 
     public static IResourceBuilder<ProjectResource> AddWebApi(
         this IDistributedApplicationBuilder distributedApplicationBuilder,
-        ResourceSpecification resourceSpecification,
-        MinioResourceParameters minioResourceParameters)
+        ResourceSpecification resourceSpecification)
     {
         return distributedApplicationBuilder
             .AddProject<WebApi>(resourceSpecification.Name)
