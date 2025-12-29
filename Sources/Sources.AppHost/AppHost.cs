@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sources.AppHost.Resources;
+using Sources.AppHost.Resources.ClientSettings;
 using Sources.AppHost.Resources.Docker;
 using Sources.AppHost.Resources.Project;
 
@@ -16,6 +17,10 @@ var configuration = new ConfigurationBuilder()
         reloadOnChange: true)
     .AddJsonFile(
         path: "Config/TestDoubleLkUserApiConfig.json",
+        optional: false,
+        reloadOnChange: true)
+    .AddJsonFile(
+        path: "Config/ScheduleApiConfig.json",
         optional: false,
         reloadOnChange: true)
     .Build();
@@ -48,14 +53,16 @@ switch (testingProfile)
         var bookingMigrationResource = builder.AddBookingsMigration(KnownResources.BookingsMigrationService, postgresResource);
 
         var minioResourceParameters = builder.AddMinio(KnownResources.Minio, configuration);
-
+        var scheduleApiParameters = builder.AddScheduleApiClientSettingsParameters(configuration);
         builder
             .AddBookingOrchestrator(KnownResources.BookingOrchestrator)
+            .AddScheduleApiClientSettings(scheduleApiParameters)
             .ReferenceMinio(minioResourceParameters)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
 
         builder
             .AddWebApi(KnownResources.WebApiService, minioResourceParameters)
+            .AddScheduleApiClientSettings(scheduleApiParameters)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource)
             .ReferenceMinio(minioResourceParameters);
         break;

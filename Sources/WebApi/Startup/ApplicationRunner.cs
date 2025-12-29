@@ -15,6 +15,7 @@ public static class ApplicationRunner
             .AddServiceDefaults()
             .AddRoomsDbContext()
             .AddBookingDbContext()
+            .AddScheduleApiClientSettings()
             .AddMinio();
 
         builder
