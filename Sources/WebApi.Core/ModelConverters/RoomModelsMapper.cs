@@ -36,6 +36,7 @@ public static partial class RoomModelsMapper
     [MapperIgnoreSource(nameof(RoomDto.Id))]
     [MapperIgnoreSource(nameof(RoomDto.Equipments))]
     [MapperIgnoreSource(nameof(RoomDto.OperatorDepartmentId))]
+    [MapperIgnoreSource(nameof(RoomDto.ScheduleAddress.ScheduleRoomId))]
     public static partial PatchRoomModel MapToPatchRoomModel(RoomDto dto);
 
     public static partial RoomsResponseModel Map(RoomsResponseDto dto);

@@ -16,7 +16,7 @@ public record PatchRoomDto
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]
     public string? Description { get; init; }
 
-    public ScheduleAddressDto? ScheduleAddress { get; init; }
+    public ScheduleAddressPatchDto? ScheduleAddress { get; init; }
     public RoomTypeDto Type { get; init; }
     public RoomLayoutDto Layout { get; init; }
 

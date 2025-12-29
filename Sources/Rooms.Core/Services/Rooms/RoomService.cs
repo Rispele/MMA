@@ -143,7 +143,7 @@ internal class RoomService(
         return RoomDtoMapper.Map(roomToPatch);
     }
 
-    private async Task UpdateScheduleAddress(ScheduleAddressDto dto, CancellationToken cancellationToken, Room roomToPatch)
+    private async Task UpdateScheduleAddress(ScheduleAddressPatchDto dto, CancellationToken cancellationToken, Room roomToPatch)
     {
         var roomInfos = await bookingClient.GetAllRooms(cancellationToken);
 
