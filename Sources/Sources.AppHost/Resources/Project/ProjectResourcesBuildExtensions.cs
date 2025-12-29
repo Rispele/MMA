@@ -59,14 +59,11 @@ public static class ProjectResourcesBuildExtensions
 
     public static IResourceBuilder<ProjectResource> AddWebApi(
         this IDistributedApplicationBuilder distributedApplicationBuilder,
-        ResourceSpecification resourceSpecification)
+        ResourceSpecification resourceSpecification,
+        MinioResourceParameters minioResourceParameters)
     {
-        var webApiPort = resourceSpecification.GetHttpEndpoint().TargetPort;
         return distributedApplicationBuilder
             .AddProject<WebApi>(resourceSpecification.Name)
-            .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
-            .WithHttpEndpoint(port: webApiPort, targetPort: webApiPort, name: "WebApiPort")
-            .WithHttpEndpoint(port: 5049, targetPort: 5049, name: "WebApiExternalPort")
             .WithExternalHttpEndpoints();
     }
 }

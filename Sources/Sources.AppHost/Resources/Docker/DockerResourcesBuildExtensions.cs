@@ -17,15 +17,12 @@ public static class DockerResourcesBuildExtensions
         var postgresUserName = distributedApplicationBuilder.AddParameter(name: "PostgresUserName", secret: true);
         var postgresPassword = distributedApplicationBuilder.AddParameter(name: "PostgresUserPassword", secret: true);
 
-        var postgresPort = postgresSpecification.GetHttpEndpoint().TargetPort;
         var postgresService1 = distributedApplicationBuilder
             .AddPostgres(
                 postgresSpecification.Name,
                 postgresUserName,
                 postgresPassword,
-                postgresPort)
-            .WithHttpEndpoint(port: postgresPort, targetPort: postgresPort, name: "PostgresPort")
-            .WithExternalHttpEndpoints()
+                postgresSpecification.GetHttpEndpoint().TargetPort)
             .AddDatabase(dbSpecification.Name);
         return postgresService1;
     }
@@ -68,8 +65,6 @@ public static class DockerResourcesBuildExtensions
             .WithEnvironment(name: "MINIO_ADDRESS", value: ":9000")
             .WithEnvironment(name: "MINIO_CONSOLE_ADDRESS", value: ":9001")
             .WithEnvironment(name: "MINIO_PROMETHEUS_AUTH_TYPE", value: "public")
-            .WithEnvironment(name: "MINIO_ROOT_USER", rootUser)
-            .WithEnvironment(name: "MINIO_ROOT_PASSWORD", rootPassword)
             .WithHttpEndpoint(
                 name: KnownEndpoints.Http,
                 port: minioPort,
@@ -78,7 +73,8 @@ public static class DockerResourcesBuildExtensions
                 name: KnownEndpoints.Admin,
                 port: minioAdminPort,
                 targetPort: specification.GetAdminEndpoint().TargetPort)
-            .WithExternalHttpEndpoints()
+            .WithEnvironment(name: "MINIO_ROOT_USER", rootUser)
+            .WithEnvironment(name: "MINIO_ROOT_PASSWORD", rootPassword)
             .WithArgs("server", config.Storage);
     }
 
