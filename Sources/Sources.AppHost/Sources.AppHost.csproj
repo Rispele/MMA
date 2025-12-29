@@ -30,6 +30,9 @@
         <None Update="Config\TestDoubleLkUserApiConfig.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="Config\ScheduleApiConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>
