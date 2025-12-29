@@ -7,6 +7,12 @@ using Sources.AppHost.Resources.Project;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+builder.AddDockerComposeEnvironment("dev")
+    .WithDashboard(dashboard =>
+    {
+        dashboard.WithHostPort(19199).WithForwardedHeaders(enabled: true);
+    });
+
 var serviceCollection = builder.Services;
 serviceCollection.AddOptions();
 
@@ -61,10 +67,13 @@ switch (testingProfile)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource);
 
         builder
-            .AddWebApi(KnownResources.WebApiService, minioResourceParameters)
+            .AddWebApi(KnownResources.WebApiService)
             .AddScheduleApiClientSettings(scheduleApiParameters)
             .WaitForMigrations(postgresResource, roomsMigrationResource, bookingMigrationResource)
             .ReferenceMinio(minioResourceParameters);
+
+        builder.AddViteApp("frontend", "../../../frontend");
+
         break;
     }
     default:
