@@ -10,7 +10,7 @@ using Booking.Core.Services.BookingRequests;
 using Booking.Core.Services.InstituteCoordinators;
 using Booking.Core.Services.LkUser;
 using Booking.Core.Services.Schedule;
-using Booking.Domain.Events.Payloads;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Infrastructure.EFCore;
 using Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
 using Commons.Domain.Queries.Factories;

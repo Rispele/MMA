@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
-using Booking.Domain.Events;
-using Booking.Domain.Events.Payloads;
+using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Domain.Models.BookingRequests;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

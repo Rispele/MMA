@@ -1,7 +1,7 @@
-﻿using Booking.Domain.Events;
-using Booking.Domain.Events.Payloads;
-using Booking.Domain.Exceptions;
+﻿using Booking.Domain.Exceptions;
 using Booking.Domain.Models.BookingProcesses;
+using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Booking.Domain.Propagated.BookingRequests;
 using JetBrains.Annotations;
@@ -109,14 +109,14 @@ public class BookingRequest
 
     #endregion
 
-    public void Initiate()
+    public void InitiateBookingProcess()
     {
         ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет инициировать процесс бронирования");
 
         Status = BookingStatus.Initiated;
         
         BookingProcess = new BookingProcess(Id);
-        BookingProcess.AddEvent(new BookingEvent(Id, new BookingRequestInitiatedEventPayload()));
+        BookingProcess.AddBookingEvent(new BookingEvent(Id, new BookingRequestInitiatedEventPayload()));
     }
 
     #region Edms
@@ -126,7 +126,7 @@ public class BookingRequest
         ValidateStatus(BookingStatus.Initiated, errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
 
         Status = BookingStatus.SentForApprovalInEdms;
-        BookingProcess!.AddEvent(new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload()));
+        BookingProcess!.AddBookingEvent(new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload()));
     }
 
     public void SaveEdmsResolutionResult(bool isApproved)
@@ -164,6 +164,28 @@ public class BookingRequest
     }
 
     #endregion
+    
+    public void MarkEventProcessAttemptSucceeded(int eventId)
+    {
+        ValidateBookingProcessInitiated();
+
+        BookingProcess!.MarkEventProcessAttemptSucceeded(eventId);
+    }
+    
+    public void MarkEventProcessAttemptFailed(int eventId)
+    {
+        ValidateBookingProcessInitiated();
+
+        BookingProcess!.MarkEventProcessAttemptFailed(eventId);
+    }
+
+    private void ValidateBookingProcessInitiated()
+    {
+        if (BookingProcess is null)
+        {
+            throw new InvalidOperationException("Booking process is not initiated");
+        }
+    }
 
     private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)
     {

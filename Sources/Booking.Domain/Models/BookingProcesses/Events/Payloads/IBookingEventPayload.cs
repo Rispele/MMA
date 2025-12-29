@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Booking.Domain.Events.Payloads;
+namespace Booking.Domain.Models.BookingProcesses.Events.Payloads;
 
 [JsonDerivedType(typeof(BookingRequestSentForApprovalInEdmsEventPayload), nameof(BookingRequestSentForApprovalInEdmsEventPayload))]
 public interface IBookingEventPayload

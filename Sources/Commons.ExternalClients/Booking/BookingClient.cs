@@ -24,6 +24,13 @@ public class BookingClient : IBookingClient
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
     }
 
+    public async Task<BookingResponse<RoomInfo[]>> GetAllRooms(CancellationToken cancellationToken)
+    {
+        var response = await httpClient.GetAsync("sked/api/auditory/all", cancellationToken);
+
+        return await ProcessResponse<RoomInfo[]>(response, cancellationToken);
+    }
+
     public async Task<BookingResponse<FreeRoomInfo[]>> GetRoomsAvailableForBooking(
         GetFreeRoomsRequest request,
         CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
 ﻿using Booking.Core.Services.Booking.KnownProcessors.Result;
-using Booking.Domain.Events;
-using Booking.Domain.Events.Payloads;
+using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Commons.Domain.Queries.Abstractions;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +23,7 @@ public class BookingRequestSentForApprovalInEdmsEventProcessor(ILogger<BookingRe
         catch (Exception e)
         {
             logger.LogError(e, "Error processing event: [{EventId}]", bookingEvent.Id);
-            return Task.FromResult(new ProcessorResult(bookingEvent, ResultType.Failure));
+            return Task.FromResult(new ProcessorResult(bookingEvent, ResultType.Retry));
         }
     }
 

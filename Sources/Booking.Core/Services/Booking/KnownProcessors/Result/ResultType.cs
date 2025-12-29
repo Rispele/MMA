@@ -3,6 +3,6 @@
 public enum ResultType
 {
     Success,
-    Failure,
-    RollbackInitiated
+    Retry,
+    Rollback
 }

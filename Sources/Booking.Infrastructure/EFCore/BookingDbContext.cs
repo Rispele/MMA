@@ -1,4 +1,4 @@
-﻿using Booking.Domain.Events;
+﻿using Booking.Domain.Models.BookingProcesses.Events;
 using Booking.Domain.Models.BookingRequests;
 using Booking.Domain.Models.InstituteCoordinators;
 using Booking.Infrastructure.EFCore.EntityConfigurations;

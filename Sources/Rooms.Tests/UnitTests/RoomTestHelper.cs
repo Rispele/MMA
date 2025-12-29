@@ -98,7 +98,7 @@ internal static class RoomTestHelper
             },
             AllowBooking);
 
-        room.SetScheduleAddress(RoomNumber, RoomAddress);
+        room.SetScheduleAddress(RoomNumber, RoomAddress, 1);
 
         return room;
     }

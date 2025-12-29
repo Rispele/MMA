@@ -1,7 +1,7 @@
 ﻿using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.Booking.KnownProcessors.Result;
-using Booking.Domain.Events;
-using Booking.Domain.Events.Payloads;
+using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Commons.Domain.Queries.Abstractions;
 using Microsoft.Extensions.Logging;
 
@@ -28,7 +28,7 @@ public class BookingRequestResolvedInEdmsEventProcessor(
         catch (Exception e)
         {
             logger.LogError(e, "Error processing edms resolution result. Booking request [{BookingRequestId}]...", bookingEvent.BookingRequestId);
-            return new ProcessorResult(bookingEvent, ResultType.Failure);
+            return new ProcessorResult(bookingEvent, ResultType.Retry);
         }
     }
 
@@ -48,7 +48,7 @@ public class BookingRequestResolvedInEdmsEventProcessor(
         bookingRequest.SaveEdmsResolutionResult(payload.IsApproved);
         if (!payload.IsApproved)
         {
-            return ResultType.RollbackInitiated;
+            return ResultType.Rollback;
         }
 
         bookingRequest.SendForModeration();

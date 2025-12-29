@@ -13,7 +13,7 @@ public class BookingService(
 
         var bookingRequest = await unitOfWork.ApplyQuery(new GetBookingRequestByIdQuery(bookingRequestId), cancellationToken);
 
-        bookingRequest.Initiate();
+        bookingRequest.InitiateBookingProcess();
 
         await unitOfWork.Commit(cancellationToken);
     }

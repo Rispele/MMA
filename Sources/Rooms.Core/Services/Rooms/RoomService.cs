@@ -1,6 +1,7 @@
 ﻿using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Interfaces.Dtos.Room.Responses;
@@ -15,7 +16,9 @@ using Rooms.Domain.Propagated.Exceptions;
 
 namespace Rooms.Core.Services.Rooms;
 
-internal class RoomService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : IRoomService
+internal class RoomService(
+    [RoomsScope] IUnitOfWorkFactory unitOfWorkFactory,
+    IBookingClient bookingClient) : IRoomService
 {
     public async Task<RoomDto> GetRoomById(int roomId, CancellationToken cancellationToken)
     {
@@ -40,7 +43,8 @@ internal class RoomService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : 
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterId, requestDto.Filter);
+        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterId,
+            requestDto.Filter);
 
         var rooms = await (await unitOfWork.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
 
@@ -50,7 +54,9 @@ internal class RoomService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : 
         return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
     }
 
-    public async Task<IEnumerable<AutocompleteRoomResponseDto>> AutocompleteRoom(string roomName, CancellationToken cancellationToken)
+    public async Task<IEnumerable<AutocompleteRoomResponseDto>> AutocompleteRoom(
+        string roomName,
+        CancellationToken cancellationToken)
     {
         // todo
         return [new AutocompleteRoomResponseDto { RoomId = 1, ViewRoomName = Guid.NewGuid().ToString() }];
@@ -129,14 +135,29 @@ internal class RoomService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactory) : 
 
         if (dto.ScheduleAddress is not null)
         {
-            roomToPatch.SetScheduleAddress(
-                dto.ScheduleAddress.RoomNumber,
-                dto.ScheduleAddress.Address);
+            await UpdateScheduleAddress(dto.ScheduleAddress, cancellationToken, roomToPatch);
         }
 
         await unitOfWork.Commit(cancellationToken);
 
         return RoomDtoMapper.Map(roomToPatch);
+    }
+
+    private async Task UpdateScheduleAddress(ScheduleAddressDto dto, CancellationToken cancellationToken, Room roomToPatch)
+    {
+        var roomInfos = await bookingClient.GetAllRooms(cancellationToken);
+
+        if (!roomInfos.IsOk)
+        {
+            throw new Exception("Could not get room infos");
+        }
+
+        var room = roomInfos.Result!
+                       .Where(t => t.Title == dto.RoomNumber)
+                       .FirstOrDefault(t => t.Location == dto.Address)
+                   ?? throw new InvalidScheduleAddress("Could not find room with specified number and address");
+
+        roomToPatch.SetScheduleAddress(dto.RoomNumber, dto.Address, room.Id);
     }
 
     private async Task<Room> GetRoomByIdInner(IUnitOfWork unitOfWork, int roomId, CancellationToken cancellationToken)

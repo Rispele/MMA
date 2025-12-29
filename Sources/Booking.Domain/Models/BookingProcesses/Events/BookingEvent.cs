@@ -1,8 +1,8 @@
-﻿using Booking.Domain.Events.Payloads;
+﻿using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 
-namespace Booking.Domain.Events;
+namespace Booking.Domain.Models.BookingProcesses.Events;
 
 [GenerateFieldNames]
 public class BookingEvent

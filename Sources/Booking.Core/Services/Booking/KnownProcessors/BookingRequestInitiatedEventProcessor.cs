@@ -1,7 +1,7 @@
 ﻿using Booking.Core.Queries.BookingRequest;
 using Booking.Core.Services.Booking.KnownProcessors.Result;
-using Booking.Domain.Events;
-using Booking.Domain.Events.Payloads;
+using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Commons.Domain.Queries.Abstractions;
 using Microsoft.Extensions.Logging;
 
@@ -26,7 +26,7 @@ public class BookingRequestInitiatedEventProcessor(ILogger<BookingRequestInitiat
         catch (Exception e)
         {
             logger.LogError(e, "Error processing event: [{EventId}]", bookingEvent.Id);
-            return new ProcessorResult(bookingEvent, ResultType.Failure);
+            return new ProcessorResult(bookingEvent, ResultType.Retry);
         }
     }
 

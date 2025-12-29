@@ -1,3 +1,6 @@
 ﻿namespace Rooms.Domain.Models.Rooms;
 
-internal record RoomScheduleAddress(string RoomNumber, string Address);
+internal record RoomScheduleAddress(
+    string RoomNumber,
+    string Address,
+    int ScheduleRoomId);

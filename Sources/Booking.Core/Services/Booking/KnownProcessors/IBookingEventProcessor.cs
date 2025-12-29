@@ -1,6 +1,6 @@
 ﻿using Booking.Core.Services.Booking.KnownProcessors.Result;
-using Booking.Domain.Events;
-using Booking.Domain.Events.Payloads;
+using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Commons.Domain.Queries.Abstractions;
 
 namespace Booking.Core.Services.Booking.KnownProcessors;

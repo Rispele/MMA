@@ -23,6 +23,7 @@ internal class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
             {
                 b.Property(x => x.Address).HasMaxLength(64);
                 b.Property(x => x.RoomNumber).HasMaxLength(32);
+                b.Property(x => x.ScheduleRoomId).IsRequired();
             });
 
         builder.OwnsOne(

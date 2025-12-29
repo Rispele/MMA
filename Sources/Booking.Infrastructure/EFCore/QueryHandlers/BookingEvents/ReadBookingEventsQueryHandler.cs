@@ -1,5 +1,5 @@
 ﻿using Booking.Core.Queries.BookingEvents;
-using Booking.Domain.Events;
+using Booking.Domain.Models.BookingProcesses.Events;
 using Commons.Infrastructure.EFCore.QueryHandlers;
 using Microsoft.EntityFrameworkCore;
 

@@ -69,9 +69,9 @@ internal class Room
         AllowBooking = allowBooking;
     }
 
-    public void SetScheduleAddress(string number, string address)
+    public void SetScheduleAddress(string number, string address, int scheduleRoomId)
     {
-        ScheduleAddress = new RoomScheduleAddress(number, address);
+        ScheduleAddress = new RoomScheduleAddress(number, address, scheduleRoomId);
     }
 
     #region For Tests

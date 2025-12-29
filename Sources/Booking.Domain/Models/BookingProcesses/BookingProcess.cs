@@ -1,4 +1,4 @@
-﻿using Booking.Domain.Events;
+﻿using Booking.Domain.Models.BookingProcesses.Events;
 using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 
@@ -9,7 +9,7 @@ public class BookingProcess
 {
     private readonly int? id = null!;
     private readonly List<BookingEvent> bookingEvents = null!;
-    private readonly List<DelayedEvent> delayedEvents = null!;
+    private readonly List<BookingEventRetryContext> retryContexts = null!;
 
     [UsedImplicitly]
     private BookingProcess()
@@ -19,7 +19,7 @@ public class BookingProcess
     public BookingProcess(int bookingRequestId)
     {
         bookingEvents = [];
-        delayedEvents = [];
+        retryContexts = [];
 
         BookingRequestId = bookingRequestId;
         State = BookingProcessState.Executing;
@@ -28,38 +28,67 @@ public class BookingProcess
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
     public int BookingRequestId { get; }
     public BookingProcessState State { get; private set; }
-    
-    public IEnumerable<BookingEvent> BookingEvents => bookingEvents;
-    public BookingEvent LastEvent => bookingEvents[^1];
 
-    public void AddEvent(BookingEvent @event)
+    public void AddBookingEvent(BookingEvent @event)
     {
         bookingEvents.Add(@event);
     }
 
-    public void MarkDelayedEventAsRetried()
+    public IEnumerable<BookingEvent> GetEventsToRetry()
     {
-        
+        return retryContexts
+            .Where(t => t.State is BookingEventRetryContextState.Retrying)
+            .SelectMany(t => bookingEvents.Where(e => e.Id == t.EventId));
     }
 
-    public void MarkAsCrashed(int eventId)
+    public void MarkEventProcessAttemptSucceeded(int eventId)
     {
-        var delayed = delayedEvents.FirstOrDefault(e => e.EventId == eventId);
-        if (delayed is not null)
-        {
-            if (!delayed.MarkAttemptFailed())
-            {
-                SetRollingBack();                
-            }
-        }
-        else
-        {
-            delayedEvents.Add(new DelayedEvent(eventId, Id));
-        }
+        ValidateState(BookingProcessState.Retrying, "Process is not retrying now");
+
+        var context = FindRetryContext(eventId);
+        context?.MarkAttemptSucceeded();
+
+        State = BookingProcessState.Executing;
     }
 
-    private void SetRollingBack()
+    public void MarkEventProcessAttemptFailed(int eventId)
     {
-        State = BookingProcessState.RollingBack;
+        var context = GetOrCreateRetryContext(eventId);
+        context.MarkAttemptFailed();
+
+        State = context.State switch
+        {
+            BookingEventRetryContextState.Failed => BookingProcessState.RollingBack,
+            BookingEventRetryContextState.Retrying => BookingProcessState.Retrying,
+            _ => State
+        };
+    }
+
+    private BookingEventRetryContext GetOrCreateRetryContext(int eventId)
+    {
+        var context = FindRetryContext(eventId);
+
+        if (context is not null)
+        {
+            return context;
+        }
+
+        context = new BookingEventRetryContext(eventId, Id);
+        retryContexts.Add(context);
+
+        return context;
+    }
+
+    private BookingEventRetryContext? FindRetryContext(int eventId)
+    {
+        return retryContexts.FirstOrDefault(e => e.EventId == eventId);
+    }
+
+    public void ValidateState(BookingProcessState expected, string errorMessage)
+    {
+        if (State != expected)
+        {
+            throw new InvalidOperationException(errorMessage);
+        }
     }
 }
