@@ -224,7 +224,7 @@ public class BookingRequestInitiatedEventProcessor(
             }
 
             var currentDate = time.Date;
-            for (var number = 0; currentDate <= time.BookingFinishDate; currentDate = currentDate.AddDays(1))
+            for (var number = 0; currentDate <= time.BookingFinishDate; number++, currentDate = currentDate.AddDays(1))
             {
                 yield return new BookingPeriod(time.Key, number, currentDate, time.TimeFrom, time.TimeTo, time.RoomId);
             }
