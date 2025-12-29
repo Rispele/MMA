@@ -40,7 +40,7 @@ public class BookingRequest
         Status = BookingStatus.New;
         BookingScheduleStatus = Propagated.BookingRequests.BookingScheduleStatus.NotSent;
         ModeratorComment = null;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
