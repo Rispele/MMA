@@ -33,7 +33,7 @@ public class BookingProcess
 
     public int RollbackAttempt { get; private set; }
     public DateTime? RollbackAt { get; private set; }
-    
+
     public IEnumerable<BookingEvent> BookingEvents => bookingEvents;
     public IEnumerable<BookingEventRetryContext> BookingRetryContexts => retryContexts;
 
@@ -47,28 +47,31 @@ public class BookingProcess
         return bookingEvents.Where(e => e.Payload.GetType() == typeof(TEventPayload));
     }
 
-    #region Event Processing
-
     public void SetProcessAsFinished()
     {
         State = BookingProcessState.Finished;
     }
+    
+    #region Event Processing
 
     public IEnumerable<BookingEvent> GetEventsToRetry()
     {
+        var now = DateTime.UtcNow;
         return retryContexts
             .Where(t => t.State is BookingEventRetryContextState.Retrying)
+            .Where(t => t.RetryAt < now)
             .SelectMany(t => bookingEvents.Where(e => e.Id == t.EventId));
     }
 
     public void MarkEventProcessAttemptSucceeded(int eventId)
     {
-        ValidateState(BookingProcessState.Retrying, "Process is not retrying now");
-
         var context = FindRetryContext(eventId);
         context?.MarkAttemptSucceeded();
 
-        State = BookingProcessState.Executing;
+        if (!GetEventsToRetry().Any())
+        {
+            State = BookingProcessState.Executing;
+        }
     }
 
     public void MarkEventProcessAttemptFailed(int eventId)
@@ -79,16 +82,12 @@ public class BookingProcess
         switch (context.State)
         {
             case BookingEventRetryContextState.Failed:
-                State = BookingProcessState.RollingBack;
-
-                RollbackAttempt = 0;
-                UpdateRollbackAtTime();
+                InitiateRollback();
                 break;
             case BookingEventRetryContextState.Retrying:
                 State = BookingProcessState.Retrying;
                 break;
             case BookingEventRetryContextState.Succeeded:
-                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -98,6 +97,19 @@ public class BookingProcess
 
     #region Rolling Back
 
+    public void InitiateRollback()
+    {
+        State = BookingProcessState.RollingBack;
+
+        RollbackAttempt = 0;
+        UpdateRollbackAtTime();
+    }
+
+    public IEnumerable<BookingEvent> GetEventsToRollback()
+    {
+        return bookingEvents.Where(t => !t.RolledBack);
+    }
+    
     public void RollBackEvent(int eventId)
     {
         ValidateState(BookingProcessState.RollingBack, "Could not rollback event when not in rolling back state");
@@ -111,18 +123,18 @@ public class BookingProcess
         }
     }
 
-    public void SetRollbackAttemptAsFailed(int eventId)
+    public void MarkRollbackAttemptFailed()
     {
         RollbackAttempt++;
         UpdateRollbackAtTime();
     }
 
-    #endregion
-
     private void UpdateRollbackAtTime()
     {
         RollbackAt = DateTime.UtcNow + TimeSpan.FromSeconds(Math.Pow(RollbackTimeout, RollbackAttempt));
     }
+
+    #endregion
 
     private BookingEventRetryContext GetOrCreateRetryContext(int eventId)
     {

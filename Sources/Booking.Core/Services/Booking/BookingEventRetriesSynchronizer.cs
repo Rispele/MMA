@@ -1,9 +1,5 @@
 ﻿using Booking.Core.Interfaces.Services.Booking;
 using Booking.Core.Queries.BookingProcesses;
-using Booking.Core.Services.Booking.KnownProcessors;
-using Booking.Core.Services.Booking.KnownProcessors.Result;
-using Booking.Domain.Models.BookingProcesses.Events;
-using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Domain.Models.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;
@@ -14,7 +10,7 @@ namespace Booking.Core.Services.Booking;
 
 public class BookingEventRetriesSynchronizer(
     [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,
-    IEnumerable<IBookingEventProcessor<IBookingEventPayload>> processors,
+    BookingEventProcessor bookingEventProcessor,
     ILogger<BookingEventsSynchronizer> logger) : IBookingEventRetriesSynchronizer
 {
     public async Task RetryFailedProcesses(int batchSize, CancellationToken cancellationToken)
@@ -22,7 +18,7 @@ public class BookingEventRetriesSynchronizer(
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
         var bookingRequests = await (await unitOfWork.ApplyQuery(
-                new GetBookingRequestsWithRetryingBookingProcesses(batchSize),
+                new GetBookingRequestsToRetry(batchSize),
                 cancellationToken))
             .ToListAsync(cancellationToken);
 
@@ -47,41 +43,7 @@ public class BookingEventRetriesSynchronizer(
 
         foreach (var eventToRetry in eventsToRetry)
         {
-            var result = await ProcessEvent(unitOfWork, eventToRetry, cancellationToken);
-            ProcessResult(bookingRequest, result, eventToRetry);
-        }
-    }
-
-    private async Task<SynchronizeEventProcessorResult> ProcessEvent(
-        IUnitOfWork unitOfWork,
-        BookingEvent bookingEvent,
-        CancellationToken cancellationToken)
-    {
-        var processor = processors.FirstOrDefault(t => t.PayloadType == bookingEvent.Payload.GetType());
-
-        if (processor is not null)
-        {
-            return await processor.ProcessEvent(unitOfWork, bookingEvent, cancellationToken);
-        }
-
-        logger.LogInformation("No processor found for {Name}", bookingEvent.Payload.GetType().Name);
-
-        return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Skipped);
-    }
-
-    private static void ProcessResult(
-        BookingRequest bookingRequest,
-        SynchronizeEventProcessorResult result,
-        BookingEvent @event)
-    {
-        if (result.Result is SynchronizeEventResultType.Retry)
-        {
-            bookingRequest.MarkEventProcessAttemptFailed(@event.Id);
-        }
-
-        if (result.Result is SynchronizeEventResultType.Success)
-        {
-            bookingRequest.MarkEventProcessAttemptSucceeded(@event.Id);
+            await bookingEventProcessor.ProcessEvent(unitOfWork, eventToRetry, cancellationToken);
         }
     }
 }

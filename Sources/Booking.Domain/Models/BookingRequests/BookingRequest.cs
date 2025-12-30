@@ -85,21 +85,12 @@ public class BookingRequest
 
     #endregion
 
-    public void InitiateBookingProcess()
-    {
-        ValidateStatus(BookingStatus.New, errorMessage: "Текущее состояние заявки не позволяет инициировать процесс бронирования");
-
-        Status = BookingStatus.Initiated;
-        
-        BookingProcess = new BookingProcess(Id);
-        BookingProcess.AddBookingEvent(new BookingEvent(Id, new BookingRequestInitiatedEventPayload()));
-    }
-
     #region Edms
 
     public void SendForApprovalInEdms()
     {
-        ValidateStatus(BookingStatus.Initiated, errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
+        ValidateStatus(BookingStatus.Initiated,
+            errorMessage: "Текущее состояние заявки не позволяет отправить её на согласование в СЭД.");
 
         Status = BookingStatus.SentForApprovalInEdms;
         BookingProcess!.AddBookingEvent(new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload()));
@@ -122,7 +113,8 @@ public class BookingRequest
 
     public void SendForModeration()
     {
-        ValidateStatus(BookingStatus.ApprovedInEdms, errorMessage: "Текущее состояние заявки не позволяет отправить её на модерацию.");
+        ValidateStatus(BookingStatus.ApprovedInEdms,
+            errorMessage: "Текущее состояние заявки не позволяет отправить её на модерацию.");
 
         Status = BookingStatus.SentForModeration;
         // return new BookingEvent(Id, new BookingRequestSentForModerationEventPayload());
@@ -140,14 +132,27 @@ public class BookingRequest
     }
 
     #endregion
-    
+
+    #region Booking Process
+
+    public void InitiateBookingProcess()
+    {
+        ValidateStatus(BookingStatus.New,
+            errorMessage: "Текущее состояние заявки не позволяет инициировать процесс бронирования");
+
+        Status = BookingStatus.Initiated;
+
+        BookingProcess = new BookingProcess(Id);
+        BookingProcess.AddBookingEvent(new BookingEvent(Id, new BookingRequestInitiatedEventPayload()));
+    }
+
     public void MarkEventProcessAttemptSucceeded(int eventId)
     {
         ValidateBookingProcessInitiated();
 
         BookingProcess!.MarkEventProcessAttemptSucceeded(eventId);
     }
-    
+
     public void MarkEventProcessAttemptFailed(int eventId)
     {
         ValidateBookingProcessInitiated();
@@ -155,6 +160,20 @@ public class BookingRequest
         BookingProcess!.MarkEventProcessAttemptFailed(eventId);
     }
 
+    public void InitiateBookingProcessRollback()
+    {
+        ValidateBookingProcessInitiated();
+        
+        BookingProcess!.InitiateRollback();
+    }
+
+    public IEnumerable<BookingEvent> GetEventsToRollback()
+    {
+        ValidateBookingProcessInitiated();
+        
+        return BookingProcess!.GetEventsToRollback();
+    }
+    
     private void ValidateBookingProcessInitiated()
     {
         if (BookingProcess is null)
@@ -162,6 +181,9 @@ public class BookingRequest
             throw new InvalidOperationException("Booking process is not initiated");
         }
     }
+
+    #endregion
+
 
     private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)
     {

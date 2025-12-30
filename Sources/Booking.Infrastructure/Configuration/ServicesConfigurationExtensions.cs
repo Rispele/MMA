@@ -39,8 +39,10 @@ public static class ServicesConfigurationExtensions
     private static IServiceCollection AddBookingEventSynchronizer(this IServiceCollection serviceCollection)
     {
         return serviceCollection
+            .AddScoped<BookingEventProcessor>()
             .AddScoped<IBookingEventRetriesSynchronizer, BookingEventRetriesSynchronizer>()
             .AddScoped<IBookingEventsSynchronizer, BookingEventsSynchronizer>()
+            .AddScoped<IBookingProcessRollbackSynchronizer, BookingProcessRollbackSynchronizer>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestSentForApprovalInEdmsEventProcessor>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestResolvedInEdmsEventProcessor>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestInitiatedEventProcessor>();

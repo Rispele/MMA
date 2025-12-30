@@ -20,7 +20,8 @@ builder.Services
 
 builder.Services
     .AddHostedService<BookingOrchestrator>()
-    .AddHostedService<BookingRetriesOrchestrator>();
+    .AddHostedService<BookingRetriesOrchestrator>()
+    .AddHostedService<BookingRollbackOrchestrator>();
 
 var host = builder.Build();
 host.Run();

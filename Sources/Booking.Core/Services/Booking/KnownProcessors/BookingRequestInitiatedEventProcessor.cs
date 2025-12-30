@@ -133,8 +133,6 @@ public class BookingRequestInitiatedEventProcessor(
 
                 bookingProcess.RollBackEvent(@event.Id);
             }
-
-            bookingProcess.RollBackEvent(bookingEvent.Id);
         }
         catch (Exception e)
         {
