@@ -11,6 +11,6 @@ public record GetRequest<TFilter>
     public int PageSize { get; init; }
 
     public int AfterId { get; init; }
-    
+
     public TFilter? Filter { get; init; }
 }

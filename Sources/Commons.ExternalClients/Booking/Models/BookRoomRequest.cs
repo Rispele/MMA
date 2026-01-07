@@ -9,7 +9,7 @@ public record BookRoomRequest(
     string Group,
     string LoadType,
     string? TeacherPkey);
-    
+
 internal record BookRoomInnerRequest(
     string Date,
     string Auditory,

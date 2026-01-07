@@ -24,7 +24,7 @@ public static class FixtureExtensions
 
             return fixture;
         }
-        
+
         public IFixture WithCoordinatorCustomization(Type coordinatorType)
         {
             fixture.Customizations.Add(new TypeRelay(typeof(IRoomEventCoordinator), coordinatorType));

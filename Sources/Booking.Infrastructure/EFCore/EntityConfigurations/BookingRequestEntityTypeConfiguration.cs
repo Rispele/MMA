@@ -14,7 +14,7 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
     {
         TypeInfoResolver = new DefaultJsonTypeInfoResolver()
     };
-    
+
     public void Configure(EntityTypeBuilder<BookingRequest> builder)
     {
         builder.HasKey(x => x.Id);

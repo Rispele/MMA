@@ -18,13 +18,13 @@ public class BookingService(
         await unitOfWork.Commit(cancellationToken);
     }
 
-    public async Task SaveModerationResult(int bookingRequestId, bool isApproved, CancellationToken cancellationToken)
+    public async Task SaveModerationResult(int bookingRequestId, bool isApproved, string moderatorComment, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
         var bookingRequest = await unitOfWork.ApplyQuery(new GetBookingRequestByIdQuery(bookingRequestId), cancellationToken);
 
-        bookingRequest.SaveModerationResult(isApproved);
+        bookingRequest.SaveModerationResult(isApproved, moderatorComment);
 
         await unitOfWork.Commit(cancellationToken);
     }

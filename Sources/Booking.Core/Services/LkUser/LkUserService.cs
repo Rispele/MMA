@@ -9,7 +9,7 @@ public class LkUserService(ILkUsersClient lkUsersClient) : ILkUserService
     {
         var employees = await GetEmployees(cancellationToken);
 
-        return employees.Where(t => t.Post.Contains("Преподаватель")).ToArray();
+        return employees.Where(t => t.Post.Contains("Преподаватель") && !string.IsNullOrEmpty(t.TeacherKey)).ToArray();
     }
 
     public async Task<LkEmployeeDto[]> GetEmployees(CancellationToken cancellationToken)

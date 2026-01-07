@@ -4,7 +4,7 @@ namespace WebApi.Core.Models.BookingRequest;
 
 public class BookingTimeModel
 {
-    public int RoomId { get; set; } 
+    public int RoomId { get; set; }
     public DateOnly Date { get; set; }
     public TimeOnly TimeFrom { get; set; }
     public TimeOnly TimeTo { get; set; }

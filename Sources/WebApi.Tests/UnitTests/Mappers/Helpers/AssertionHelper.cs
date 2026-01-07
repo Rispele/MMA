@@ -58,7 +58,7 @@ public static class AssertionHelper
             mappedValues.Should().BeEquivalentTo(initialValues);
         }
     }
-    
+
     public static void AssertFilterParameter<TActual, TExpected>(
         FilterParameterDto<TActual>? actual,
         FilterParameterModel<TExpected>? expected)

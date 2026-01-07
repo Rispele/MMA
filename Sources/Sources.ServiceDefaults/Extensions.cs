@@ -95,6 +95,16 @@ public static class Extensions
         //     options.AllowedSchemes = ["https"];
         // });
 
+        builder.Services.AddCors(opt =>
+        {
+            opt.AddDefaultPolicy(policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
         return builder;
     }
 

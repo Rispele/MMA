@@ -120,7 +120,7 @@ public class BookingRequest
         // return new BookingEvent(Id, new BookingRequestSentForModerationEventPayload());
     }
 
-    public void SaveModerationResult(bool isApproved)
+    public void SaveModerationResult(bool isApproved, string moderatorComment)
     {
         ValidateStatus(
             BookingStatus.SentForModeration,
@@ -129,6 +129,7 @@ public class BookingRequest
                 : "Текущее состояние заявки не позволяет отказать в согласовании модератором.");
 
         Status = isApproved ? BookingStatus.ApprovedByModerator : BookingStatus.RejectedByModerator;
+        ModeratorComment = moderatorComment;
     }
 
     #endregion
@@ -163,17 +164,17 @@ public class BookingRequest
     public void InitiateBookingProcessRollback()
     {
         ValidateBookingProcessInitiated();
-        
+
         BookingProcess!.InitiateRollback();
     }
 
     public IEnumerable<BookingEvent> GetEventsToRollback()
     {
         ValidateBookingProcessInitiated();
-        
+
         return BookingProcess!.GetEventsToRollback();
     }
-    
+
     private void ValidateBookingProcessInitiated()
     {
         if (BookingProcess is null)

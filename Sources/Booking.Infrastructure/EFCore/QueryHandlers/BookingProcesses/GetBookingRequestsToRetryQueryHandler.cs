@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.EFCore.QueryHandlers.BookingProcesses;
 
-internal class GetBookingRequestsToRetryQueryHandler 
+internal class GetBookingRequestsToRetryQueryHandler
     : IQueryHandler<BookingDbContext, GetBookingRequestsToRetry, BookingRequest>
 {
     public Task<IAsyncEnumerable<BookingRequest>> Handle(EntityQuery<BookingDbContext, GetBookingRequestsToRetry, IAsyncEnumerable<BookingRequest>> request, CancellationToken cancellationToken)
@@ -14,10 +14,10 @@ internal class GetBookingRequestsToRetryQueryHandler
         var now = DateTime.UtcNow;
         var enumerable = request.Context.BookingRequests
             .Where(t => t.BookingProcess != null && t.BookingProcess.State == BookingProcessState.Retrying)
-            .Where(t => t.BookingProcess.BookingRetryContexts.Any(e => e.RetryAt < now))
+            .Where(t => t.BookingProcess!.BookingRetryContexts.Any(e => e.RetryAt < now))
             .Take(request.Query.BatchSize)
             .AsAsyncEnumerable();
-        
+
         return Task.FromResult(enumerable);
     }
 }

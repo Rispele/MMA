@@ -10,7 +10,7 @@ namespace Booking.Infrastructure.EFCore;
 public class BookingDbContext(DbContextOptions<BookingDbContext> options) : DbContext(options)
 {
     public DbSet<BookingEvent> BookingEvents { get; [UsedImplicitly] private set; }
-    
+
     public DbSet<BookingRequest> BookingRequests { get; [UsedImplicitly] private set; }
 
     public DbSet<InstituteCoordinator> InstituteCoordinators { get; [UsedImplicitly] private set; }

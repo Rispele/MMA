@@ -35,7 +35,7 @@ public class InstituteCoordinatorsService(
         return responsible;
     }
 
-    public async Task<Dictionary<string, string>> GetAvailableInstituteDepartments(CancellationToken cancellationToken)
+    public async Task<InstituteDepartmentResponseDto[]> GetAvailableInstituteDepartments(CancellationToken cancellationToken)
     {
         var departments = await instituteDepartmentClient.GetAvailableInstituteDepartments();
 

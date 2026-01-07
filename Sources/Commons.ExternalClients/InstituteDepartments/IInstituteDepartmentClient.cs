@@ -2,5 +2,5 @@
 
 public interface IInstituteDepartmentClient
 {
-    Task<Dictionary<string, string>> GetAvailableInstituteDepartments();
+    Task<InstituteDepartmentResponseDto[]> GetAvailableInstituteDepartments();
 }

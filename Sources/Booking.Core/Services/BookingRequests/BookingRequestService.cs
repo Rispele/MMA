@@ -32,8 +32,11 @@ public class BookingRequestService(
     public async Task<IEnumerable<AutocompleteEventHostResponseDto>> AutocompleteEventHostName(string name, CancellationToken cancellationToken)
     {
         var employees = await lkUserService.GetTeachers(cancellationToken);
+        var nameTokens = name.Split();
 
-        return employees.Select(employee => new AutocompleteEventHostResponseDto(employee.UserId, employee.FullName));
+        return employees
+            .Where(x => nameTokens.All(y => x.FullName.Contains(y)))
+            .Select(employee => new AutocompleteEventHostResponseDto(employee.UserId, employee.FullName));
     }
 
     public async Task<BookingRequestsResponseDto> FilterBookingRequests(GetBookingRequestsDto dto, CancellationToken cancellationToken)

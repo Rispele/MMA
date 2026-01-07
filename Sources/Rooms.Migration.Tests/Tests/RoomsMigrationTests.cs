@@ -17,7 +17,7 @@ public class RoomsMigrationTests : ContainerTestBase
     public async Task ApplyAllMigrations_ShouldSucceed()
     {
         await dbContext.Database.EnsureDeletedAsync();
-        
+
         var migration = () => dbContext.Database.MigrateAsync();
 
         await migration.Should().NotThrowAsync();

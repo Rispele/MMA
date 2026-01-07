@@ -8,7 +8,7 @@ public record BookingResponse(bool IsOk, string[]? Errors, bool ShouldRetry, boo
     {
         return new BookingResponse<TResult>(IsOk: false, Result: default, errors, shouldRetry, deduplicated);
     }
-    
+
     public static BookingResponse FromErrors(string[] errors, bool shouldRetry, bool deduplicated)
     {
         return new BookingResponse(IsOk: false, errors, shouldRetry, deduplicated);
@@ -17,10 +17,10 @@ public record BookingResponse(bool IsOk, string[]? Errors, bool ShouldRetry, boo
     public static BookingResponse<TResult> FromResult<TResult>(TResult result)
     {
         return new BookingResponse<TResult>(IsOk: true, result, Errors: null, ShouldRetry: false, Deduplicated: false);
-    } 
-    
+    }
+
     public static BookingResponse Ok()
     {
         return new BookingResponse(IsOk: true, Errors: null, ShouldRetry: false, Deduplicated: false);
-    } 
+    }
 }

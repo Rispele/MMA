@@ -51,7 +51,7 @@ public class BookingProcess
     {
         State = BookingProcessState.Finished;
     }
-    
+
     #region Event Processing
 
     public IEnumerable<BookingEvent> GetEventsToRetry()
@@ -109,7 +109,7 @@ public class BookingProcess
     {
         return bookingEvents.Where(t => !t.RolledBack);
     }
-    
+
     public void RollBackEvent(int eventId)
     {
         ValidateState(BookingProcessState.RollingBack, "Could not rollback event when not in rolling back state");

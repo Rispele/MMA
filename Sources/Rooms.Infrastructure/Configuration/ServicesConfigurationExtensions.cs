@@ -27,7 +27,7 @@ public static class ServicesConfigurationExtensions
         return serviceCollection
             .AddKeyedScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>(KnownScopes.Rooms)
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })
-            .AddScoped<IInstituteDepartmentClient, InstituteDepartmentClient>()
+            .AddScoped<IInstituteDepartmentClient, TestInstituteDepartmentClient>()
             .AddScoped<IRoomAttachmentsService, RoomAttachmentsService>()
             .AddScoped<ILkUsersClient, TestLkUserClient>()
             .AddScoped<IObjectStorageService, MinioObjectStorageService>()

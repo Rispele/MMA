@@ -30,27 +30,27 @@ public class BookingClientTests
 
         bookingResponse.IsOk.Should().BeTrue();
     }
-    
+
     [Test]
     public async Task DeclineBooking_ShouldSucceed()
     {
         var client = SetupClient();
 
         var bookingResponse = await BookRoom(client);
-        
+
         bookingResponse.IsOk.Should().BeTrue();
 
         var response = await client.DeclineBooking(bookingResponse.Result, CancellationToken.None);
         response.IsOk.Should().BeTrue();
     }
-    
+
     [Test]
     public async Task ConfirmBooking_ShouldSucceed()
     {
         var client = SetupClient();
 
         var bookingResponse = await BookRoom(client);
-        
+
         bookingResponse.IsOk.Should().BeTrue();
 
         var response = await client.ConfirmBooking(bookingResponse.Result, CancellationToken.None);

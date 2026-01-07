@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.EFCore.QueryHandlers.BookingProcesses;
 
-internal class GetBookingRequestsToRollbackQueryHandler 
+internal class GetBookingRequestsToRollbackQueryHandler
     : IQueryHandler<BookingDbContext, GetBookingRequestsToRollback, BookingRequest>
 {
     public Task<IAsyncEnumerable<BookingRequest>> Handle(EntityQuery<BookingDbContext, GetBookingRequestsToRollback, IAsyncEnumerable<BookingRequest>> request, CancellationToken cancellationToken)
     {
         var now = DateTime.UtcNow;
         var enumerable = request.Context.BookingRequests
-            .Where(t => t.BookingProcess != null 
+            .Where(t => t.BookingProcess != null
                         && t.BookingProcess.State == BookingProcessState.RollingBack
                         && t.BookingProcess.RollbackAt < now)
             .Take(request.Query.BatchSize)
             .AsAsyncEnumerable();
-        
+
         return Task.FromResult(enumerable);
     }
 }

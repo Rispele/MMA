@@ -20,7 +20,7 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
         equipmentSchemas = Filters(equipmentSchemas, request.Query.Filter);
         equipmentSchemas = Sort(equipmentSchemas, request.Query.Filter);
         equipmentSchemas = Paginate(equipmentSchemas, request.Query);
-        
+
         Console.WriteLine(equipmentSchemas.ToQueryString());
 
         return Task.FromResult(equipmentSchemas.AsAsyncEnumerable());

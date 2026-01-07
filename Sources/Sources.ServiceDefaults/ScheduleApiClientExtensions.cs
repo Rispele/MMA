@@ -18,7 +18,7 @@ public static class ScheduleApiClientExtensions
             password ??  throw new InvalidOperationException("Password is null"));
 
         builder.Services.AddSingleton(settings);
-        
+
         return builder;
     }
 }

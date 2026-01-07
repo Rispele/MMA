@@ -1,4 +1,5 @@
 ﻿using Booking.Core.Interfaces.Services.InstituteCoordinators;
+using Commons.ExternalClients.InstituteDepartments;
 using Commons.ExternalClients.LkUsers;
 using WebApi.Core.ModelConverters;
 using WebApi.Core.Models.InstituteCoordinator;
@@ -40,7 +41,7 @@ public class InstituteCoordinatorService(IInstituteCoordinatorsService institute
         return responsible;
     }
 
-    public async Task<Dictionary<string, string>> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken)
+    public async Task<InstituteDepartmentResponseDto[]> GetAvailableInstituteDepartmentsAsync(CancellationToken cancellationToken)
     {
         var departments = await instituteCoordinatorService.GetAvailableInstituteDepartments(cancellationToken);
 

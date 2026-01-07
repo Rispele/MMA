@@ -6,7 +6,7 @@ public enum BookingStatus
 {
     [Description("Новая")]
     New = 1,
-    
+
     [Description("Инициирован процесс бронирования")]
     Initiated = 10,
 
@@ -15,8 +15,8 @@ public enum BookingStatus
 
     [Description("Согласование в СЭД отклонено")]
     RejectedInEdms = 3,
-    
-    [Description("Согласование в СЭД отклонено")]
+
+    [Description("Согласование в СЭД подтверждено")]
     ApprovedInEdms = 4,
 
     [Description("На модерации")]

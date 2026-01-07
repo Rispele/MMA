@@ -29,7 +29,7 @@ public class GetRequestWithJsonFilterModelBinderTests
             AfterId = AfterId,
             Filter = filter
         };
-        
+
         var mapped = await binder.BindModelInner(
             Page.ToString(),
             PageSize.ToString(),

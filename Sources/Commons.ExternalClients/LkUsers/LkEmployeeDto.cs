@@ -7,4 +7,5 @@ public record LkEmployeeDto(
     string InstituteId,
     string Institute,
     string Category,
-    string Post);
+    string Post,
+    string TeacherKey);

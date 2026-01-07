@@ -25,4 +25,16 @@ public class InstituteDepartmentsTestData
                                 5623a60f-e7a3-44a6-b81b-ad949ba478b6,Радиоэлектроники и информационных технологий - РТФ,
                                 9a1e5e19-d6cd-407b-b610-13fba5753ad5,Физико-технологический,
                                 """;
+
+    public static InstituteDepartmentResponseDto[] GetInstituteDepartments()
+    {
+        return Data
+            .Split(Environment.NewLine)
+            .Select(line => line.Split(","))
+            .Select(chunks => new InstituteDepartmentResponseDto(
+                chunks[0],
+                chunks[1],
+                chunks.Length == 3 && !string.IsNullOrEmpty(chunks[2]) ? chunks[2] : null))
+            .ToArray();
+    }
 }

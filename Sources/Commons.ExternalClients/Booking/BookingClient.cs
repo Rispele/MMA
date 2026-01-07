@@ -63,9 +63,9 @@ public class BookingClient : IBookingClient
             request.Group,
             request.LoadType,
             request.TeacherPkey);
-        
+
         var response = await httpClient.PostAsJsonAsync(
-            requestUri: "sked/api/order", 
+            requestUri: "sked/api/order",
             innerRequest,
             cancellationToken);
 
