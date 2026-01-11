@@ -8,5 +8,9 @@ public interface IBookingClient
     public Task<BookingResponse<FreeRoomInfo[]>> GetRoomsAvailableForBooking(GetFreeRoomsRequest request, CancellationToken cancellationToken);
     public Task<BookingResponse<long>> BookRoom(BookRoomRequest request, CancellationToken cancellationToken);
     public Task<BookingResponse> DeclineBooking(long eventId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Идемпотентный метод
+    /// </summary>
     public Task<BookingResponse> ConfirmBooking(long eventId, CancellationToken cancellationToken);
 }
