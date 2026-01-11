@@ -1,5 +1,6 @@
 ﻿using Booking.Core.Interfaces.Services.Booking;
 using Booking.Core.Queries.BookingRequest;
+using Booking.Domain.Models.BookingProcesses.Events;
 using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Domain.Models.BookingRequests;
 using Commons.Domain.Queries.Factories;
@@ -31,7 +32,18 @@ public class BookingService(
         await ConfirmBookings(bookingRequest, cancellationToken);
 
         bookingRequest.SaveModerationResult(isApproved, moderatorComment);
-        
+
+        await unitOfWork.Commit(cancellationToken);
+    }
+
+    public async Task SaveEdmsResolutionResult(int bookingRequestId, bool isApproved, CancellationToken cancellationToken)
+    {
+        await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
+
+        var @event = new BookingEvent(bookingRequestId, new BookingRequestResolvedInEdmsEventPayload(isApproved));
+
+        unitOfWork.Add(@event);
+
         await unitOfWork.Commit(cancellationToken);
     }
 

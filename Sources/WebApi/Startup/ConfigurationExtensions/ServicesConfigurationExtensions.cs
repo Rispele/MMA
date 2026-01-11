@@ -47,6 +47,7 @@ public static class ServicesConfigurationExtensions
             .ConfigureServicesForBooking()
 
             // WebApi
+            .AddScoped<IInternalApiService, InternalApiService>()
             .AddScoped<IRoomService, RoomService>()
             .AddScoped<IEquipmentService, EquipmentService>()
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
