@@ -1,11 +1,15 @@
 ﻿using Booking.Core.Interfaces.Services.Booking;
 using Booking.Core.Queries.BookingRequest;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
+using Booking.Domain.Models.BookingRequests;
 using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
 
 namespace Booking.Core.Services.Booking;
 
 public class BookingService(
-    [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory) : IBookingService
+    [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,
+    IBookingClient bookingClient) : IBookingService
 {
     public async Task InitiateBookingRequest(int bookingRequestId, CancellationToken cancellationToken)
     {
@@ -24,8 +28,23 @@ public class BookingService(
 
         var bookingRequest = await unitOfWork.ApplyQuery(new GetBookingRequestByIdQuery(bookingRequestId), cancellationToken);
 
-        bookingRequest.SaveModerationResult(isApproved, moderatorComment);
+        await ConfirmBookings(bookingRequest, cancellationToken);
 
+        bookingRequest.SaveModerationResult(isApproved, moderatorComment);
+        
         await unitOfWork.Commit(cancellationToken);
+    }
+
+    private async Task ConfirmBookings(BookingRequest bookingRequest, CancellationToken cancellationToken)
+    {
+        var eventIds = bookingRequest.BookingProcess!
+            .GetEventsOfType<BookingRequestRoomBookedForDayEventPayload>()
+            .Select(t => t.Payload.GetPayload<BookingRequestRoomBookedForDayEventPayload>())
+            .Select(t => t.EventId);
+
+        foreach (var eventId in eventIds)
+        {
+            await bookingClient.ConfirmBooking(eventId, cancellationToken);
+        }
     }
 }

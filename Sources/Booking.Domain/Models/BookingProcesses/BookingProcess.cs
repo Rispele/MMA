@@ -1,4 +1,5 @@
 ﻿using Booking.Domain.Models.BookingProcesses.Events;
+using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 
@@ -43,6 +44,7 @@ public class BookingProcess
     }
 
     public IEnumerable<BookingEvent> GetEventsOfType<TEventPayload>()
+        where TEventPayload: IBookingEventPayload
     {
         return bookingEvents.Where(e => e.Payload.GetType() == typeof(TEventPayload));
     }
