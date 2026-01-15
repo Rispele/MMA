@@ -16,7 +16,9 @@ internal class FilterRoomsQueryHandler : IQueryHandler<RoomsDbContext, FilterRoo
         EntityQuery<RoomsDbContext, FilterRoomsQuery, IAsyncEnumerable<Room>> request,
         CancellationToken cancellationToken)
     {
-        IQueryable<Room> rooms = request.Context.Rooms.Include(room => room.Equipments);
+        IQueryable<Room> rooms = request.Context.Rooms
+            .Include(room => room.Equipments)
+            .Include(room => room.OperatorDepartment);
 
         rooms = Filters(rooms, request.Query.Filter);
         rooms = Sort(rooms, request.Query.Filter);

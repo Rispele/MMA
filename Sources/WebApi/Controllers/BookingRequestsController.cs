@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Commons.ExternalClients.Booking.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Core.Models.BookingRequest;
 using WebApi.Core.Models.Requests;
@@ -109,5 +110,20 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
         var updated = await bookingRequestService.PatchBookingRequestAsync(bookingRequestId, patchModel, cancellationToken);
 
         return Ok(updated);
+    }
+
+    /// <summary>
+    /// Получить список доступных для бронирования на указанное время аудиторий
+    /// </summary>
+    /// <param name="model">Модель создания заявки</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданная заявка</returns>
+    [HttpPost("/available")]
+    public async Task<IActionResult> GetAvailableForBookingRooms(
+        [FromBody] GetFreeRoomsRequest model,
+        CancellationToken cancellationToken)
+    {
+        var created = await bookingRequestService.GetAvailableForBookingRooms(model, cancellationToken);
+        return Ok(created);
     }
 }

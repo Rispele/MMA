@@ -61,7 +61,7 @@ public class InstituteCoordinatorsService(
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var instituteResponsible = new InstituteCoordinator(
-            dto.Institute,
+            dto.InstituteId,
             dto.Coordinators.Select(t => new Coordinator(t.Id, t.FullName)).ToArray());
 
         context.Add(instituteResponsible);
@@ -81,7 +81,7 @@ public class InstituteCoordinatorsService(
         var instituteResponsibleToPatch = await GetInstituteResponsibleByIdInner(instituteResponsibleId, cancellationToken, context);
 
         instituteResponsibleToPatch.Update(
-            dto.Institute,
+            dto.InstituteId,
             dto.Coordinators.Select(t => new Coordinator(t.Id, t.FullName)).ToArray());
 
         await context.Commit(cancellationToken);

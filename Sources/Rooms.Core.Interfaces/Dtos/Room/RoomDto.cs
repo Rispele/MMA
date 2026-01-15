@@ -1,10 +1,11 @@
 ﻿using Rooms.Core.Interfaces.Dtos.Equipment;
+using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 
 namespace Rooms.Core.Interfaces.Dtos.Room;
 
-public record RoomDto
+public class RoomDto
 {
     public required int Id { get; init; }
     public required string Name { get; init; }
@@ -17,4 +18,5 @@ public record RoomDto
     public bool AllowBooking { get; init; }
     public required EquipmentDto[] Equipments { get; init; }
     public int? OperatorDepartmentId { get; init; }
+    public OperatorDepartmentDto? OperatorDepartment { get; init; }
 }

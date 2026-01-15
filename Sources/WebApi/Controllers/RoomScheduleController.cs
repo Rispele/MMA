@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Core.Models.Requests.RoomSchedule;
 using WebApi.Core.Models.Responses;
-using WebApi.Core.Models.RoomSchedule;
 using WebApi.Core.Services.Interfaces;
 
 namespace WebApi.Controllers;
@@ -35,7 +34,7 @@ public class RoomScheduleController(
     /// <param name="cancellationToken"></param>
     /// <returns>Список занятий в выбранной аудитории на дату</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RoomScheduleModel>>> GetRoomSchedule(
+    public async Task<ActionResult<RoomScheduleResponseModel>> GetRoomSchedule(
         [FromQuery] int roomId,
         [FromQuery] DateOnly date,
         CancellationToken cancellationToken)

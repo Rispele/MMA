@@ -1,4 +1,5 @@
-﻿using WebApi.Core.ModelConverters;
+﻿using Commons.ExternalClients.Booking.Models;
+using WebApi.Core.ModelConverters;
 using WebApi.Core.Models.BookingRequest;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.BookingRequests;
@@ -66,5 +67,12 @@ public class BookingRequestService(Booking.Core.Interfaces.Services.BookingReque
         var patched = await bookingRequestService.PatchBookingRequest(bookingRequestId, patchRequest, cancellationToken);
 
         return BookingRequestModelsMapper.MapBookingRequestToModel(patched);
+    }
+
+    public async Task<FreeRoomInfo[]?> GetAvailableForBookingRooms(
+        GetFreeRoomsRequest model,
+        CancellationToken cancellationToken)
+    {
+        return await bookingRequestService.GetAvailableForBookingRooms(model, cancellationToken);
     }
 }

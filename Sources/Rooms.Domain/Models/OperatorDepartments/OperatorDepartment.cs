@@ -28,6 +28,7 @@ internal class OperatorDepartment
         Name = name;
         Contacts = contacts;
         this.operators = operators;
+        rooms = [];
     }
 
     public void Update(

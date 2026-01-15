@@ -2,4 +2,8 @@
 
 namespace Rooms.Core.Interfaces.Dtos.OperatorDepartments;
 
-public record OperatorDepartmentRoomInfoDto(int RoomId, ScheduleAddressDto ScheduleAddress);
+public class OperatorDepartmentRoomInfoDto
+{
+    public int RoomId { get; set; }
+    public ScheduleAddressDto? ScheduleAddress { get; set; }
+}

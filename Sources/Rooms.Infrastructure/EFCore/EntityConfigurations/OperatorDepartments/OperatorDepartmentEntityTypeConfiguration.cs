@@ -18,10 +18,6 @@ internal class OperatorDepartmentEntityTypeConfiguration : IEntityTypeConfigurat
         builder.Property(OperatorDepartmentFieldNames.Operators).HasColumnType("jsonb");
 
         builder
-            .HasMany(department => department.Rooms)
-            .WithOne()
-            .HasForeignKey(department => department.OperatorDepartmentId);
-        builder
             .Navigation(department => department.Rooms)
             .HasField(OperatorDepartmentFieldNames.Rooms);
     }

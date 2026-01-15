@@ -2,4 +2,8 @@
 
 namespace WebApi.Core.Models.OperatorDepartments;
 
-public record OperatorDepartmentRoomInfoModel(int RoomId, ScheduleAddressModel ScheduleAddress);
+public class OperatorDepartmentRoomInfoModel
+{
+    public int RoomId { get; set; }
+    public ScheduleAddressModel? ScheduleAddress { get; set; }
+}

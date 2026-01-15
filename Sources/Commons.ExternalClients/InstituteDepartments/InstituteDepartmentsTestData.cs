@@ -29,7 +29,7 @@ public class InstituteDepartmentsTestData
     public static InstituteDepartmentResponseDto[] GetInstituteDepartments()
     {
         return Data
-            .Split(Environment.NewLine)
+            .Split(["\r\n", "\r", "\n", Environment.NewLine], StringSplitOptions.None)
             .Select(line => line.Split(","))
             .Select(chunks => new InstituteDepartmentResponseDto(
                 chunks[0],

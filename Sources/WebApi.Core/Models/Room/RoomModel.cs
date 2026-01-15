@@ -1,4 +1,5 @@
 ﻿using WebApi.Core.Models.Equipment;
+using WebApi.Core.Models.OperatorDepartments;
 using WebApi.Core.Models.Room.Fix;
 using WebApi.Core.Models.Room.Parameters;
 
@@ -17,4 +18,5 @@ public record RoomModel
     public bool AllowBooking { get; init; }
     public IEnumerable<EquipmentModel> Equipments { get; init; } = Enumerable.Empty<EquipmentModel>();
     public int? OperatorDepartmentId { get; init; }
+    public OperatorDepartmentModel? OperatorDepartment { get; init; }
 }

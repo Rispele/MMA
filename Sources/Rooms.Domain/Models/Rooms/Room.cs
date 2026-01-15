@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using PrivateFieldNamesExposingGenerator.Attributes;
 using Rooms.Domain.Models.Equipments;
+using Rooms.Domain.Models.OperatorDepartments;
 using Rooms.Domain.Models.Rooms.Fix;
 using Rooms.Domain.Models.Rooms.Parameters;
 
@@ -46,10 +47,9 @@ internal class Room
     public string? Owner { get; private set; }
     public RoomFixInfo FixInfo { get; private set; } = null!;
     public bool AllowBooking { get; private set; }
-
     public IEnumerable<Equipment> Equipments => equipments;
-
     public int? OperatorDepartmentId { get; [UsedImplicitly] private set; }
+    public OperatorDepartment? OperatorDepartment { get; private set; }
 
     public void Update(
         string name,

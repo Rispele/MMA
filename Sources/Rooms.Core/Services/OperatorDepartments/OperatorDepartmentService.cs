@@ -37,9 +37,11 @@ internal class OperatorDepartmentService(
         return response.ToBlockingEnumerable(cancellationToken).Select(OperatorDepartmentsDtoMapper.Map).ToArray();
     }
 
-    public async Task<Dictionary<Guid, string>> GetAvailableOperators(CancellationToken cancellationToken)
+    public async Task<LkEmployeeDto[]> GetAvailableOperators(CancellationToken cancellationToken)
     {
-        return [];
+        var operators = await lkUsersClient.GetEmployees(cancellationToken);
+
+        return operators;
     }
 
     public async Task<OperatorDepartmentsResponseDto> FilterOperatorDepartments(GetOperatorDepartmentsDto dto, CancellationToken cancellationToken)

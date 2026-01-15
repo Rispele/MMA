@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Commons.ExternalClients.LkUsers;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Core.Models.OperatorDepartments;
 using WebApi.Core.Models.Requests;
@@ -50,7 +51,7 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора оперторов</returns>
     [HttpGet("operators")]
-    public async Task<ActionResult<Dictionary<string, string>>> GetAvailableOperators(CancellationToken cancellationToken)
+    public async Task<ActionResult<LkEmployeeDto[]>> GetAvailableOperators(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentService.GetAvailableOperatorsAsync(cancellationToken);
         return Ok(operators);

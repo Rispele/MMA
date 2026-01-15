@@ -1,6 +1,7 @@
 ﻿using Booking.Core.Queries.InstituteCoordinators;
 using Booking.Domain.Models.InstituteCoordinators;
 using Commons.Infrastructure.EFCore.QueryHandlers;
+using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.EFCore.QueryHandlers.InstituteCoordinators;
 
@@ -8,6 +9,8 @@ internal class FilterInstituteCoordinatorsQueryHandler : IQueryHandler<BookingDb
 {
     public Task<IAsyncEnumerable<InstituteCoordinator>> Handle(EntityQuery<BookingDbContext, FilterInstituteCoordinatorsQuery, IAsyncEnumerable<InstituteCoordinator>> request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        IQueryable<InstituteCoordinator> instituteCoordinators = request.Context.InstituteCoordinators;
+
+        return Task.FromResult(instituteCoordinators.AsAsyncEnumerable());
     }
 }

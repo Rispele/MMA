@@ -10,6 +10,8 @@ using Booking.Domain.Models.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
+using Commons.ExternalClients.Booking.Models;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Services.Rooms;
 
@@ -18,7 +20,8 @@ namespace Booking.Core.Services.BookingRequests;
 public class BookingRequestService(
     [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,
     IRoomService roomService,
-    ILkUserService lkUserService) : IBookingRequestService
+    ILkUserService lkUserService,
+    IBookingClient bookingClient) : IBookingRequestService
 {
     public async Task<BookingRequestDto> GetBookingRequestById(int bookingRequestId, CancellationToken cancellationToken)
     {
@@ -100,6 +103,12 @@ public class BookingRequestService(
 
         return BookingRequestDtoMapper.MapBookingRequestToDto(bookingRequestToPatch);
     }
+
+    public async Task<FreeRoomInfo[]?> GetAvailableForBookingRooms(GetFreeRoomsRequest dto, CancellationToken cancellationToken)
+    {
+        return (await bookingClient.GetRoomsAvailableForBooking(dto, cancellationToken)).Result;
+    }
+
 
     private async Task<RoomDto[]> GetRooms(int[] roomIds, CancellationToken cancellationToken)
     {

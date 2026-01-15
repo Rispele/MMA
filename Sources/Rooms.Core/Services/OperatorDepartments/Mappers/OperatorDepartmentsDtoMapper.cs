@@ -14,9 +14,16 @@ internal static class OperatorDepartmentsDtoMapper
             Id = entity.Id,
             Name = entity.Name,
             Rooms = entity.Rooms
-                .Select(t => new OperatorDepartmentRoomInfoDto(
-                    t.Id,
-                    t.ScheduleAddress.Map(a => new ScheduleAddressDto(a.RoomNumber, a.Address, a.ScheduleRoomId))))
+                .Select(t => new OperatorDepartmentRoomInfoDto
+                {
+                    RoomId = t.Id,
+                    ScheduleAddress = t.ScheduleAddress?.Map(a => new ScheduleAddressDto
+                    {
+                        RoomNumber = a.RoomNumber,
+                        Address = a.Address,
+                        ScheduleRoomId = a.ScheduleRoomId,
+                    })
+                })
                 .ToArray(),
             Operators = entity.Operators,
             Contacts = entity.Contacts

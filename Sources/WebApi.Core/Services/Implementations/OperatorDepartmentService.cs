@@ -1,4 +1,5 @@
-﻿using WebApi.Core.ModelConverters;
+﻿using Commons.ExternalClients.LkUsers;
+using WebApi.Core.ModelConverters;
 using WebApi.Core.Models.OperatorDepartments;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.OperatorDepartments;
@@ -32,7 +33,7 @@ public class OperatorDepartmentService(Rooms.Core.Interfaces.Services.OperatorDe
         return OperatorDepartmentsModelsMapper.Convert(operatorDepartment);
     }
 
-    public async Task<Dictionary<Guid, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken)
+    public async Task<LkEmployeeDto[]> GetAvailableOperatorsAsync(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentService.GetAvailableOperators(cancellationToken);
 

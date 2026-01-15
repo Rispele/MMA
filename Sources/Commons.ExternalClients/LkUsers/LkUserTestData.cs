@@ -204,7 +204,7 @@ public static class LkUserTestData
     public static LkUserDto[] GetUsers()
     {
         return UsersData
-            .Split(Environment.NewLine)
+            .Split(["\r\n", "\r", "\n", Environment.NewLine], StringSplitOptions.None)
             .Select(line => line.Split(","))
             .Select(chunks => new LkUserDto(
                 chunks[0],
@@ -220,7 +220,7 @@ public static class LkUserTestData
     public static LkEmployeeDto[] GetEmployees()
     {
         return EmployeesData
-            .Split(Environment.NewLine)
+            .Split(["\r\n", "\r", "\n", Environment.NewLine], StringSplitOptions.None)
             .Select(line => line.Split(","))
             .Select(chunks => new LkEmployeeDto(
                 chunks[0],
