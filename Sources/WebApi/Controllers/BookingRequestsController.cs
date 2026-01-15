@@ -118,7 +118,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <param name="model">Модель создания заявки</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная заявка</returns>
-    [HttpPost("/available")]
+    [HttpPost("available")]
     public async Task<IActionResult> GetAvailableForBookingRooms(
         [FromBody] GetFreeRoomsRequest model,
         CancellationToken cancellationToken)
