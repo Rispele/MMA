@@ -68,7 +68,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная заявка</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateBookingRequest(
+    public async Task<ActionResult<BookingRequestModel>> CreateBookingRequest(
         [FromBody] CreateBookingRequestModel model,
         CancellationToken cancellationToken)
     {
@@ -86,7 +86,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{bookingRequestId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchBookingRequest(
+    public async Task<ActionResult<BookingRequestModel>> PatchBookingRequest(
         int bookingRequestId,
         [FromBody] JsonPatchDocument<PatchBookingRequestModel> patch,
         CancellationToken cancellationToken)
@@ -119,7 +119,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная заявка</returns>
     [HttpPost("available")]
-    public async Task<IActionResult> GetAvailableForBookingRooms(
+    public async Task<ActionResult<FreeRoomInfo[]?>> GetAvailableForBookingRooms(
         [FromBody] GetFreeRoomsRequest model,
         CancellationToken cancellationToken)
     {

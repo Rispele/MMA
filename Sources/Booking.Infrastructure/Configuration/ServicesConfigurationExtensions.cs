@@ -29,7 +29,7 @@ public static class ServicesConfigurationExtensions
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterBookingRequestsQueryHandler>(); })
             .AddScoped<IBookingService, BookingService>()
             .AddScoped<IRoomScheduleClient, RoomScheduleClient>()
-            .AddScoped<IInstituteCoordinatorsService, InstituteCoordinatorsService>()
+            .AddScoped<IInstituteCoordinatorService, InstituteCoordinatorService>()
             .AddScoped<IBookingRequestService, BookingRequestService>()
             .AddScoped<ILkUserService, LkUserService>()
             .AddScoped<IScheduleService, ScheduleService>()

@@ -6,5 +6,4 @@ namespace Rooms.Core.Queries.Implementations.Equipment;
 internal sealed record FilterEquipmentsQuery(
     int BatchSize,
     int BatchNumber,
-    int AfterEquipmentId,
-    EquipmentsFilterDto? Filter) : IQuerySpecification<FilterEquipmentsQuery, Domain.Models.Equipments.Equipment>;
+    EquipmentsFilterDto? Filter) : IPaginatedQuerySpecification<FilterEquipmentsQuery, Domain.Models.Equipments.Equipment>;

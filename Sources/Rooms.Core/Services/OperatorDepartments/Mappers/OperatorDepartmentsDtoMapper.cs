@@ -1,32 +1,34 @@
 ﻿using Commons;
+using Riok.Mapperly.Abstractions;
 using Rooms.Core.Interfaces.Dtos.OperatorDepartments;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Domain.Models.OperatorDepartments;
+using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Core.Services.OperatorDepartments.Mappers;
 
-internal static class OperatorDepartmentsDtoMapper
+[Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
+public static partial class OperatorDepartmentsDtoMapper
 {
-    public static OperatorDepartmentDto Map(OperatorDepartment entity)
+    [MapProperty(nameof(OperatorDepartment.Id), nameof(OperatorDepartmentDto.Id))]
+    [MapProperty(nameof(OperatorDepartment.Name), nameof(OperatorDepartmentDto.Name))]
+    [MapProperty(nameof(OperatorDepartment.Operators), nameof(OperatorDepartmentDto.Operators))]
+    [MapProperty(nameof(OperatorDepartment.Contacts), nameof(OperatorDepartmentDto.Contacts))]
+    [MapProperty(nameof(OperatorDepartment.Rooms), nameof(OperatorDepartmentDto.Rooms), Use = nameof(MapRooms))]
+    public static partial OperatorDepartmentDto MapOperatorDepartmentToDto(OperatorDepartment entity);
+
+    private static OperatorDepartmentRoomInfoDto[] MapRooms(IEnumerable<Room> rooms)
     {
-        return new OperatorDepartmentDto
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            Rooms = entity.Rooms
-                .Select(t => new OperatorDepartmentRoomInfoDto
+        return rooms.Select(t => new OperatorDepartmentRoomInfoDto
+            {
+                RoomId = t.Id,
+                ScheduleAddress = t.ScheduleAddress?.Map(a => new ScheduleAddressDto
                 {
-                    RoomId = t.Id,
-                    ScheduleAddress = t.ScheduleAddress?.Map(a => new ScheduleAddressDto
-                    {
-                        RoomNumber = a.RoomNumber,
-                        Address = a.Address,
-                        ScheduleRoomId = a.ScheduleRoomId,
-                    })
+                    RoomNumber = a.RoomNumber,
+                    Address = a.Address,
+                    ScheduleRoomId = a.ScheduleRoomId,
                 })
-                .ToArray(),
-            Operators = entity.Operators,
-            Contacts = entity.Contacts
-        };
+            })
+            .ToArray();
     }
 }

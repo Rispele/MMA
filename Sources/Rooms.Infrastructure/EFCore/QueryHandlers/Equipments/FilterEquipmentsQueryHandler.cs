@@ -9,10 +9,10 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
 
-internal class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, FilterEquipmentsQuery, Equipment>
+internal class FilterEquipmentsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, FilterEquipmentsQuery, Equipment>
 {
-    public Task<IAsyncEnumerable<Equipment>> Handle(
-        EntityQuery<RoomsDbContext, FilterEquipmentsQuery, IAsyncEnumerable<Equipment>> request,
+    public Task<(IAsyncEnumerable<Equipment>, int)> Handle(
+        EntityQuery<RoomsDbContext, FilterEquipmentsQuery, (IAsyncEnumerable<Equipment>, int)> request,
         CancellationToken cancellationToken)
     {
         IQueryable<Equipment> equipments = request.Context.Equipments
@@ -23,7 +23,7 @@ internal class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, Filt
         equipments = Sort(equipments, request.Query.Filter);
         equipments = Paginate(equipments, request.Query);
 
-        return Task.FromResult(equipments.AsAsyncEnumerable());
+        return Task.FromResult((equipments.AsAsyncEnumerable(), request.Context.Equipments.Count()));
     }
 
     private IQueryable<Equipment> Filters(IQueryable<Equipment> equipments, EquipmentsFilterDto? filter)
@@ -147,7 +147,7 @@ internal class FilterEquipmentsQueryHandler : IQueryHandler<RoomsDbContext, Filt
     private IQueryable<Equipment> Paginate(IQueryable<Equipment> equipments, FilterEquipmentsQuery requestQuery)
     {
         return equipments
-            .Where(t => t.Id > requestQuery.AfterEquipmentId)
+            .OrderBy(t => t.Id)
             .Skip(requestQuery.BatchSize * requestQuery.BatchNumber)
             .Take(requestQuery.BatchSize);
     }

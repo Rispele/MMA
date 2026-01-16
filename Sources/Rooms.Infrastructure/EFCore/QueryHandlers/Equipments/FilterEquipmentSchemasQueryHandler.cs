@@ -9,10 +9,10 @@ using Rooms.Domain.Models.Equipments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
 
-internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext, FilterEquipmentSchemasQuery, EquipmentSchema>
+internal class FilterEquipmentSchemasQueryHandler : IPaginatedQueryHandler<RoomsDbContext, FilterEquipmentSchemasQuery, EquipmentSchema>
 {
-    public Task<IAsyncEnumerable<EquipmentSchema>> Handle(
-        EntityQuery<RoomsDbContext, FilterEquipmentSchemasQuery, IAsyncEnumerable<EquipmentSchema>> request,
+    public Task<(IAsyncEnumerable<EquipmentSchema>, int)> Handle(
+        EntityQuery<RoomsDbContext, FilterEquipmentSchemasQuery, (IAsyncEnumerable<EquipmentSchema>, int)> request,
         CancellationToken cancellationToken)
     {
         IQueryable<EquipmentSchema> equipmentSchemas = request.Context.EquipmentSchemas.Include(x => x.Type);
@@ -23,7 +23,7 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
 
         Console.WriteLine(equipmentSchemas.ToQueryString());
 
-        return Task.FromResult(equipmentSchemas.AsAsyncEnumerable());
+        return Task.FromResult((equipmentSchemas.AsAsyncEnumerable(), request.Context.EquipmentSchemas.Count()));
     }
 
     private IQueryable<EquipmentSchema> Filters(IQueryable<EquipmentSchema> equipmentSchemas, EquipmentSchemasFilterDto? filter)
@@ -106,7 +106,7 @@ internal class FilterEquipmentSchemasQueryHandler : IQueryHandler<RoomsDbContext
     private IQueryable<EquipmentSchema> Paginate(IQueryable<EquipmentSchema> equipmentSchemas, FilterEquipmentSchemasQuery query)
     {
         return equipmentSchemas
-            .Where(t => t.Id > query.AfterEquipmentSchemaId)
+            .OrderBy(t => t.Id)
             .Skip(query.BatchSize * query.BatchNumber)
             .Take(query.BatchSize);
     }

@@ -2,7 +2,7 @@
 
 namespace Rooms.Domain.Models.Rooms;
 
-internal class RoomAttachments
+public class RoomAttachments
 {
     public FileDescriptor? PdfRoomScheme { get; set; }
     public FileDescriptor? Photo { get; set; }

@@ -121,7 +121,6 @@ public class BookingRequestModelsMapperTests
 
         mapped.BatchNumber.Should().Be(initial.Page - 1);
         mapped.BatchSize.Should().Be(initial.PageSize);
-        mapped.AfterId.Should().Be(initial.AfterId);
 
         var mappedFilter = mapped.Filter;
         var initialFilter = initial.Filter;

@@ -65,7 +65,10 @@ internal static class RoomTestHelper
             FixInfo = new RoomFixStatusDto(ToRoomStatus, FixDeadline, FixComment),
             Equipments = [],
             Parameters = new RoomParametersDto(ToRoomType, ToRoomLayout, ToRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress, ScheduleAddressId),
+            ScheduleAddress = new ScheduleAddressDto
+            {
+                RoomNumber = RoomNumber, Address = RoomAddress, ScheduleRoomId = ScheduleAddressId
+            },
             OperatorDepartmentId = operatorDepartmentId
         };
     }

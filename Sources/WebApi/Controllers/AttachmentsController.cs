@@ -21,7 +21,7 @@ public class AttachmentsController(IRoomAttachmentsService roomAttachmentsServic
     [HttpPost]
     [Consumes("application/octet-stream")]
     [Produces("application/json")]
-    public async Task<ActionResult> StoreFile(
+    public async Task<ActionResult<FileDescriptorModel>> StoreFile(
         [FromQuery] Guid id,
         [FromQuery] string fileName,
         [FromHeader(Name = "Content-Length")] long contentLength,
@@ -52,7 +52,7 @@ public class AttachmentsController(IRoomAttachmentsService roomAttachmentsServic
     /// <returns>Временная ссылка на файл</returns>
     [HttpGet]
     [Produces("application/json")]
-    public async Task<IActionResult> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket)
+    public async Task<ActionResult<TempFileUrlDto?>> GetAttachment([FromQuery] Guid id, [FromQuery] string bucket)
     {
         if (id == Guid.Empty || string.IsNullOrWhiteSpace(bucket))
         {

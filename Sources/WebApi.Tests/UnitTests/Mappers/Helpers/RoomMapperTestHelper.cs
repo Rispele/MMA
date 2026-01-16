@@ -51,7 +51,6 @@ public static class RoomMapperTestHelper
 
     private const int Page = 10;
     private const int PageSize = 11;
-    private const int AfterRoomId = 12;
 
     private const SortDirectionDto AscendingSortDirectionDto = SortDirectionDto.Ascending;
     private const SortDirectionDto DescendingSortDirectionDto = SortDirectionDto.Descending;
@@ -82,7 +81,10 @@ public static class RoomMapperTestHelper
             //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
             Equipments = [],
             Parameters = new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
-            ScheduleAddress = new ScheduleAddressDto(RoomNumber, RoomAddress, ScheduleAddressId)
+            ScheduleAddress = new ScheduleAddressDto
+            {
+                RoomNumber = RoomNumber, Address = RoomAddress, ScheduleRoomId = ScheduleAddressId
+            }
         };
     }
 
@@ -116,7 +118,8 @@ public static class RoomMapperTestHelper
             ScheduleAddress = new ScheduleAddressModel
             {
                 Address = RoomAddress,
-                RoomNumber = RoomNumber
+                RoomNumber = RoomNumber,
+                ScheduleRoomId = 0,
             }
         };
     }
@@ -176,7 +179,8 @@ public static class RoomMapperTestHelper
             ScheduleAddress = new ScheduleAddressModel
             {
                 Address = RoomAddress,
-                RoomNumber = RoomNumber
+                RoomNumber = RoomNumber,
+                ScheduleRoomId = 0,
             },
             Layout = ToRoomLayout,
             NetType = ToRoomNetType,
@@ -199,7 +203,7 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
-            ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber, RoomAddress),
+            ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber, RoomAddress, 0),
             Type = FromRoomType,
             Layout = FromRoomLayout,
             NetType = FromRoomNetType,
@@ -222,7 +226,6 @@ public static class RoomMapperTestHelper
         {
             BatchNumber = Page - 1,
             BatchSize = PageSize,
-            AfterId = AfterRoomId,
             Filter = new RoomsFilterDto
             {
                 Name = CreateFilterParameterDto(AscendingSortDirectionDto, RoomName),
@@ -250,7 +253,6 @@ public static class RoomMapperTestHelper
         {
             Page = Page,
             PageSize = PageSize,
-            AfterId = AfterRoomId,
             Filter = new RoomsFilterModel
             {
                 Name = CreateFilterParameterModel(AscendingSortDirectionModel, RoomName),

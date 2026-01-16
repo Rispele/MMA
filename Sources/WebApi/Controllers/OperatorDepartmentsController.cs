@@ -1,5 +1,4 @@
-﻿using Commons.ExternalClients.LkUsers;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Core.Models.OperatorDepartments;
 using WebApi.Core.Models.Requests;
@@ -51,7 +50,7 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора оперторов</returns>
     [HttpGet("operators")]
-    public async Task<ActionResult<LkEmployeeDto[]>> GetAvailableOperators(CancellationToken cancellationToken)
+    public async Task<ActionResult<OperatorModel[]>> GetAvailableOperators(CancellationToken cancellationToken)
     {
         var operators = await operatorDepartmentService.GetAvailableOperatorsAsync(cancellationToken);
         return Ok(operators);
@@ -64,7 +63,7 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная операторская</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateOperatorDepartment(
+    public async Task<ActionResult<OperatorDepartmentModel>> CreateOperatorDepartment(
         [FromBody] CreateOperatorDepartmentModel model,
         CancellationToken cancellationToken)
     {
@@ -82,7 +81,7 @@ public class OperatorDepartmentsController(IOperatorDepartmentService operatorDe
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{id:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchOperatorDepartment(
+    public async Task<ActionResult<OperatorDepartmentModel>> PatchOperatorDepartment(
         int id,
         [FromBody] JsonPatchDocument<PatchOperatorDepartmentModel> patch,
         CancellationToken cancellationToken)

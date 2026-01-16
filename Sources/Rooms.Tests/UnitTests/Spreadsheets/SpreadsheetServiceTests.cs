@@ -42,18 +42,26 @@ public class SpreadsheetServiceTests
             },
             Rooms =
             [
-                new OperatorDepartmentRoomInfoDto(1, new ScheduleAddressDto("1", "2", 1))
+                new OperatorDepartmentRoomInfoDto
+                {
+                    RoomId = 1,
+                    ScheduleAddress = new ScheduleAddressDto
+                    {
+                        Address = "1",
+                        RoomNumber = "2",
+                        ScheduleRoomId = 1
+                    }
+                }
             ]
         };
 
         spreadsheetServiceContext.RoomService.Setup(t => t
                 .FilterRooms(
-                    It.Is<GetRoomsRequestDto>(roomRequest => roomRequest.AfterId == -1
-                                                             && roomRequest.BatchNumber == 0
+                    It.Is<GetRoomsRequestDto>(roomRequest => roomRequest.BatchNumber == 0
                                                              && roomRequest.BatchSize == SpreadsheetService.ExportLimit
                                                              && roomRequest.Filter == null),
                     It.IsAny<CancellationToken>()))
-            .ReturnsAsync(() => new RoomsResponseDto([room], Count: 1, LastRoomId: 1));
+            .ReturnsAsync(() => new RoomsResponseDto([room], TotalCount: 1));
 
         spreadsheetServiceContext.OperatorDepartmentService.Setup(t => t
                 .GetOperatorDepartmentsById(
@@ -88,9 +96,9 @@ public class SpreadsheetServiceTests
 
         spreadsheetServiceContext.EquipmentService
             .Setup(t => t.FilterEquipments(
-                new GetEquipmentsDto(0, SpreadsheetService.ExportLimit, -1, null),
+                new GetEquipmentsDto(0, SpreadsheetService.ExportLimit, null),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new EquipmentsResponseDto([equipment], 1, 1));
+            .ReturnsAsync(new EquipmentsResponseDto([equipment], 1));
 
         spreadsheetServiceContext.RoomService
             .Setup(t => t.FindRoomByIds(
@@ -128,9 +136,9 @@ public class SpreadsheetServiceTests
         var equipmentSchema = EquipmentsTestHelper.CreateEquipmentSchemaDto();
         spreadsheetServiceContext.EquipmentSchemaService
             .Setup(t => t.FilterEquipmentSchemas(
-                new GetEquipmentSchemasDto(0, SpreadsheetService.ExportLimit, -1, null),
+                new GetEquipmentSchemasDto(0, SpreadsheetService.ExportLimit, null),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new EquipmentSchemasResponseDto([equipmentSchema], 1, 1));
+            .ReturnsAsync(new EquipmentSchemasResponseDto([equipmentSchema], 1));
 
         var exportModel = new EquipmentSchemaRegistrySpreadsheetExportDto
         {
@@ -158,9 +166,9 @@ public class SpreadsheetServiceTests
         var equipmentType = EquipmentsTestHelper.CreateEquipmentTypeDto();
         spreadsheetServiceContext.EquipmentTypeService
             .Setup(t => t.FilterEquipmentTypes(
-                new GetEquipmentTypesDto(0, SpreadsheetService.ExportLimit, -1, null),
+                new GetEquipmentTypesDto(0, SpreadsheetService.ExportLimit, null),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new EquipmentTypesResponseDto([equipmentType], 1, 1));
+            .ReturnsAsync(new EquipmentTypesResponseDto([equipmentType], 1));
 
         var exportModel = new EquipmentTypeRegistrySpreadsheetExportDto
         {

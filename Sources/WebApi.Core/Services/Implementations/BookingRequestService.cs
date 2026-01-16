@@ -18,11 +18,9 @@ public class BookingRequestService(Booking.Core.Interfaces.Services.BookingReque
 
         var batch = await bookingRequestService.FilterBookingRequests(getBookingRequestsRequest, cancellationToken);
 
-        return new BookingRequestsResponseModel
-        {
-            BookingRequests = batch.BookingRequests.Select(BookingRequestModelsMapper.MapBookingRequestToModel).ToArray(),
-            Count = batch.Count
-        };
+        return new BookingRequestsResponseModel(
+            batch.BookingRequests.Select(BookingRequestModelsMapper.MapBookingRequestToModel).ToArray(),
+            batch.TotalCount);
     }
 
     public async Task<BookingRequestModel> GetBookingRequestByIdAsync(int id, CancellationToken cancellationToken)

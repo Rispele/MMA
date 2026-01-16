@@ -12,7 +12,7 @@ using WebApi.Core.Models.Room;
 namespace WebApi.Core.ModelConverters;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName)]
-public static partial class RoomModelsMapper
+public static partial class RoomModelMapper
 {
     [MapProperty(nameof(GetRequest<RoomsFilterModel>.PageSize), nameof(GetRoomsRequestDto.BatchSize))]
     [MapProperty(nameof(GetRequest<RoomsFilterModel>.Page), nameof(GetRoomsRequestDto.BatchNumber), Use = nameof(@PageIndexingConverter.MapPageNumberToBatchNumber))]
@@ -36,7 +36,7 @@ public static partial class RoomModelsMapper
     [MapperIgnoreSource(nameof(RoomDto.Id))]
     [MapperIgnoreSource(nameof(RoomDto.Equipments))]
     [MapperIgnoreSource(nameof(RoomDto.OperatorDepartmentId))]
-    [MapperIgnoreSource(nameof(RoomDto.ScheduleAddress.ScheduleRoomId))]
+    [MapperIgnoreSource(nameof(RoomDto.OperatorDepartment))]
     public static partial PatchRoomModel MapToPatchRoomModel(RoomDto dto);
 
     public static partial RoomsResponseModel Map(RoomsResponseDto dto);

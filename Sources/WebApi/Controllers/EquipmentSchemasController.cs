@@ -51,7 +51,7 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная модель оборудования</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateEquipmentSchema(
+    public async Task<ActionResult<EquipmentSchemaModel>> CreateEquipmentSchema(
         [FromBody] CreateEquipmentSchemaModel model,
         CancellationToken cancellationToken)
     {
@@ -69,7 +69,7 @@ public class EquipmentSchemasController(IEquipmentSchemaService equipmentSchemaS
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{equipmentSchemaId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchEquipmentSchema(
+    public async Task<ActionResult<EquipmentSchemaModel>> PatchEquipmentSchema(
         int equipmentSchemaId,
         [FromBody] JsonPatchDocument<PatchEquipmentSchemaModel> patch,
         CancellationToken cancellationToken)

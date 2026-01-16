@@ -1,5 +1,4 @@
-﻿using Commons.ExternalClients.LkUsers;
-using WebApi.Core.Models.OperatorDepartments;
+﻿using WebApi.Core.Models.OperatorDepartments;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.OperatorDepartments;
 using WebApi.Core.Models.Responses;
@@ -13,7 +12,7 @@ public interface IOperatorDepartmentService
         CancellationToken cancellationToken);
 
     Task<OperatorDepartmentModel> GetOperatorDepartmentByIdAsync(int id, CancellationToken cancellationToken);
-    Task<LkEmployeeDto[]> GetAvailableOperatorsAsync(CancellationToken cancellationToken);
+    Task<OperatorModel[]> GetAvailableOperatorsAsync(CancellationToken cancellationToken);
     Task<OperatorDepartmentModel> CreateOperatorDepartmentAsync(CreateOperatorDepartmentModel model, CancellationToken cancellationToken);
     Task<PatchOperatorDepartmentModel> GetOperatorDepartmentPatchModel(int operatorDepartmentId, CancellationToken cancellationToken);
 

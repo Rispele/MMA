@@ -4,7 +4,7 @@ using PrivateFieldNamesExposingGenerator.Attributes;
 namespace Rooms.Domain.Models.OperatorDepartments;
 
 [GenerateFieldNames]
-internal class OperatorDepartment
+public class OperatorDepartment
 {
     private readonly int? id;
 

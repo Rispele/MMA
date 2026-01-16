@@ -7,6 +7,5 @@ namespace Booking.Core.Queries.InstituteCoordinators;
 internal sealed record FilterInstituteCoordinatorsQuery(
     int BatchSize,
     int BatchNumber,
-    int AfterInstituteResponsibleId,
     InstituteCoordinatorFilterDto? Filter)
-    : IQuerySpecification<FilterInstituteCoordinatorsQuery, InstituteCoordinator>;
+    : IPaginatedQuerySpecification<FilterInstituteCoordinatorsQuery, InstituteCoordinator>;

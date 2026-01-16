@@ -46,14 +46,14 @@ public class BookingRequestService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterBookingRequestsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
+        var query = new FilterBookingRequestsQuery(dto.BatchSize, dto.BatchNumber, dto.Filter);
 
-        var bookingRequests = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (bookingRequestsEnumerable, totalCount) = await context.ApplyQuery(query, cancellationToken);
+        var bookingRequests = await bookingRequestsEnumerable.ToListAsync(cancellationToken);
 
         var convertedBookingRequests = bookingRequests.Select(BookingRequestDtoMapper.MapBookingRequestToDto).ToArray();
-        int? lastBookingRequestId = convertedBookingRequests.Length == 0 ? null : convertedBookingRequests.Select(t => t.Id).Max();
 
-        return new BookingRequestsResponseDto(convertedBookingRequests, convertedBookingRequests.Length, lastBookingRequestId);
+        return new BookingRequestsResponseDto(convertedBookingRequests, totalCount);
     }
 
     public async Task<BookingRequestDto> CreateBookingRequest(CreateBookingRequestDto dto, CancellationToken cancellationToken)

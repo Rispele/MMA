@@ -6,14 +6,6 @@ using WebApi.Core.Models.Requests;
 
 namespace WebApi.ModelBinders;
 
-file static class BinderSerializerOption
-{
-    public static readonly JsonSerializerOptions SerializerOptions = new()
-    {
-        PropertyNameCaseInsensitive = true
-    };
-}
-
 public class GetRequestWithJsonFilterModelBinder<TFilter> : ModelBinderAttribute<GetRequestWithJsonFilterModelBinder<TFilter>>, IModelBinder
     where TFilter : class
 {
@@ -21,61 +13,41 @@ public class GetRequestWithJsonFilterModelBinder<TFilter> : ModelBinderAttribute
     {
         var query = bindingContext.HttpContext.Request.Query;
 
-        string? filter = null;
-        if (query.TryGetValue("filter", out var serializedFilters) && serializedFilters.Count > 0)
-        {
-            filter = serializedFilters[0];
-        }
-
-        bindingContext.Result = await BindModelInner(
-            page: query["page"],
-            pageSize: query["pageSize"],
-            afterId: query["afterId"],
-            filter,
-            bindingContext.ModelState.AddModelError);
-    }
-
-    public Task<ModelBindingResult> BindModelInner(
-        string? page,
-        string? pageSize,
-        string? afterId,
-        string? filter,
-        Action<string, string> addModelError)
-    {
-        var pageParsed = ParseIntOrDefault(page, defaultValue: 1);
-        var pageSizeParsed = ParseIntOrDefault(pageSize, defaultValue: 10);
-        var afterIdParsed = ParseIntOrDefault(afterId, defaultValue: 0);
-
+        query.TryGetValue("model", out var queryValue);
+        var stringValue = queryValue.ToString();
+        var formattedStringValue = stringValue.Substring(1, stringValue.Length - 2).Replace("\\\"", "\"");
         try
         {
-            return Bind(
-                pageParsed,
-                pageSizeParsed,
-                afterIdParsed,
-                filter.AsOptional().Map(t => JsonSerializer.Deserialize<TFilter>(t, BinderSerializerOption.SerializerOptions)));
+            var parsedValue = JsonSerializer.Deserialize<GetRequest<TFilter>>(formattedStringValue, JsonSerializerOptions.Web);
+            bindingContext.Result = await BindModelInner(
+                page: parsedValue!.Page,
+                pageSize: parsedValue.PageSize,
+                filter: parsedValue.Filter);
         }
         catch (JsonException exception)
         {
-            addModelError("filter", "Filter parameter is invalid JSON." + Environment.NewLine + exception.Message);
-            return Task.FromResult(ModelBindingResult.Failed());
+            bindingContext.ModelState.AddModelError("filter", "Filter parameter is invalid JSON." + Environment.NewLine + exception.Message);
+            bindingContext.Result = ModelBindingResult.Failed();
         }
     }
 
-    private static Task<ModelBindingResult> Bind(int page, int pageSize, int afterId, TFilter? filter)
+    public Task<ModelBindingResult> BindModelInner(
+        int page,
+        int pageSize,
+        TFilter? filter)
+    {
+        return Bind(page, pageSize, filter.AsOptional());
+    }
+
+    private static Task<ModelBindingResult> Bind(int page, int pageSize, TFilter? filter)
     {
         var request = new GetRequest<TFilter>
         {
             Page = page,
             PageSize = pageSize,
-            AfterId = afterId,
             Filter = filter
         };
 
         return Task.FromResult(ModelBindingResult.Success(request));
-    }
-
-    private static int ParseIntOrDefault(string? value, int defaultValue)
-    {
-        return int.TryParse(value, out var v) ? v : defaultValue;
     }
 }

@@ -6,6 +6,5 @@ namespace Booking.Core.Queries.BookingRequest;
 internal sealed record FilterBookingRequestsQuery(
     int BatchSize,
     int BatchNumber,
-    int AfterBookingRequestId,
     BookingRequestsFilterDto? Filter)
-    : IQuerySpecification<FilterBookingRequestsQuery, Domain.Models.BookingRequests.BookingRequest>;
+    : IPaginatedQuerySpecification<FilterBookingRequestsQuery, Domain.Models.BookingRequests.BookingRequest>;

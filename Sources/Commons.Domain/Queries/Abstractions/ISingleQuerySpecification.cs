@@ -7,6 +7,6 @@ public interface ISingleQuerySpecification<out TSelf, out TEntity>
     {
         return this as TSelf ??
                throw new InvalidCastException(
-                   $"Invalid query specification configuration. TSelf must be [{GetType().Name}], but was [{typeof(TSelf).Name}]");
+                   $"Invalid single query specification configuration. TSelf must be [{GetType().Name}], but was [{typeof(TSelf).Name}]");
     }
 }

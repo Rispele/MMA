@@ -14,6 +14,7 @@ public class BookingRequestModel
     public required IRoomEventCoordinatorModel RoomEventCoordinator { get; set; }
     public DateTime CreatedAt { get; set; }
     public string EventName { get; set; } = null!;
+    public IEnumerable<int> RoomIds { get; set; } = null!;
     public IEnumerable<BookingTimeModel> BookingSchedule { get; set; } = [];
     public BookingStatus Status { get; set; }
     public string? ModeratorComment { get; set; } = null!;

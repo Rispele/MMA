@@ -9,10 +9,10 @@ using Rooms.Domain.Models.OperatorDepartments;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.OperatorDepartments;
 
-internal class FilterOperatorDepartmentsQueryHandler : IQueryHandler<RoomsDbContext, FilterOperatorDepartmentsQuery, OperatorDepartment>
+internal class FilterOperatorDepartmentsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, FilterOperatorDepartmentsQuery, OperatorDepartment>
 {
-    public Task<IAsyncEnumerable<OperatorDepartment>> Handle(
-        EntityQuery<RoomsDbContext, FilterOperatorDepartmentsQuery, IAsyncEnumerable<OperatorDepartment>> request,
+    public Task<(IAsyncEnumerable<OperatorDepartment>, int)> Handle(
+        EntityQuery<RoomsDbContext, FilterOperatorDepartmentsQuery, (IAsyncEnumerable<OperatorDepartment>, int)> request,
         CancellationToken cancellationToken)
     {
         IQueryable<OperatorDepartment> operatorDepartments = request.Context.OperatorDepartments.Include(x => x.Rooms);
@@ -21,7 +21,7 @@ internal class FilterOperatorDepartmentsQueryHandler : IQueryHandler<RoomsDbCont
         operatorDepartments = Sort(operatorDepartments, request.Query.Filter);
         operatorDepartments = Paginate(operatorDepartments, request.Query);
 
-        return Task.FromResult(operatorDepartments.AsAsyncEnumerable());
+        return Task.FromResult((operatorDepartments.AsAsyncEnumerable(), request.Context.OperatorDepartments.Count()));
     }
 
     private IQueryable<OperatorDepartment> Filters(IQueryable<OperatorDepartment> operatorDepartments, OperatorDepartmentsFilterDto? filter)
@@ -89,7 +89,7 @@ internal class FilterOperatorDepartmentsQueryHandler : IQueryHandler<RoomsDbCont
     private IQueryable<OperatorDepartment> Paginate(IQueryable<OperatorDepartment> operatorDepartments, FilterOperatorDepartmentsQuery requestQuery)
     {
         return operatorDepartments
-            .Where(t => t.Id > requestQuery.AfterOperatorDepartmentId)
+            .OrderBy(t => t.Id)
             .Skip(requestQuery.BatchSize * requestQuery.BatchNumber)
             .Take(requestQuery.BatchSize);
     }

@@ -24,7 +24,7 @@ internal class OperatorDepartmentService(
 
         var operatorDepartment = await GetOperatorDepartmentByIdInner(operatorDepartmentId, cancellationToken, context);
 
-        return operatorDepartment.Map(OperatorDepartmentsDtoMapper.Map);
+        return operatorDepartment.Map(OperatorDepartmentsDtoMapper.MapOperatorDepartmentToDto);
     }
 
     public async Task<OperatorDepartmentDto[]> GetOperatorDepartmentsById(int[] operatorDepartmentIds, CancellationToken cancellationToken)
@@ -34,28 +34,36 @@ internal class OperatorDepartmentService(
         var request = new FindOperatorDepartmentByIdsQuery(operatorDepartmentIds);
         var response = await context.ApplyQuery(request, cancellationToken);
 
-        return response.ToBlockingEnumerable(cancellationToken).Select(OperatorDepartmentsDtoMapper.Map).ToArray();
+        return response.ToBlockingEnumerable(cancellationToken).Select(OperatorDepartmentsDtoMapper.MapOperatorDepartmentToDto).ToArray();
     }
 
-    public async Task<LkEmployeeDto[]> GetAvailableOperators(CancellationToken cancellationToken)
+    public async Task<OperatorDto[]> GetAvailableOperators(CancellationToken cancellationToken)
     {
-        var operators = await lkUsersClient.GetEmployees(cancellationToken);
+        var operatorEmployees = await lkUsersClient.GetEmployees(cancellationToken);
+        var operatorEmployeeUserIds = operatorEmployees.Select(x => x.UserId);
+        var operatorUsers = await lkUsersClient.GetUsers(operatorEmployeeUserIds, cancellationToken);
+        var operatorUsersById = operatorUsers.ToDictionary(x => x.UserId);
 
-        return operators;
+        return operatorEmployees.Select(x => new OperatorDto
+        {
+            Email = operatorUsersById[x.UserId].Email,
+            FullName = x.FullName,
+            UserId = x.UserId
+        }).ToArray();
     }
 
     public async Task<OperatorDepartmentsResponseDto> FilterOperatorDepartments(GetOperatorDepartmentsDto dto, CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterOperatorDepartmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
+        var query = new FilterOperatorDepartmentsQuery(dto.BatchSize, dto.BatchNumber, dto.Filter);
 
-        var operatorDepartments = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (operatorDepartmentsEnumerable, totalCount) = await context.ApplyQuery(query, cancellationToken);
+        var operatorDepartments = await operatorDepartmentsEnumerable.ToListAsync(cancellationToken);
 
-        var convertedOperatorDepartments = operatorDepartments.Select(OperatorDepartmentsDtoMapper.Map).ToArray();
-        int? lastOperatorDepartmentId = convertedOperatorDepartments.Length == 0 ? null : convertedOperatorDepartments.Select(t => t.Id).Max();
+        var convertedOperatorDepartments = operatorDepartments.Select(OperatorDepartmentsDtoMapper.MapOperatorDepartmentToDto).ToArray();
 
-        return new OperatorDepartmentsResponseDto(convertedOperatorDepartments, convertedOperatorDepartments.Length, lastOperatorDepartmentId);
+        return new OperatorDepartmentsResponseDto(convertedOperatorDepartments, totalCount);
     }
 
     public async Task<OperatorDepartmentDto> CreateOperatorDepartment(CreateOperatorDepartmentDto dto, CancellationToken cancellationToken)
@@ -74,7 +82,7 @@ internal class OperatorDepartmentService(
 
         await context.Commit(cancellationToken);
 
-        return OperatorDepartmentsDtoMapper.Map(operatorDepartment);
+        return OperatorDepartmentsDtoMapper.MapOperatorDepartmentToDto(operatorDepartment);
     }
 
     public async Task<OperatorDepartmentDto> PatchOperatorDepartment(
@@ -102,7 +110,7 @@ internal class OperatorDepartmentService(
 
         await context.Commit(cancellationToken);
 
-        return OperatorDepartmentsDtoMapper.Map(operatorDepartmentToPatch);
+        return OperatorDepartmentsDtoMapper.MapOperatorDepartmentToDto(operatorDepartmentToPatch);
     }
 
     private async Task<OperatorDepartment> GetOperatorDepartmentByIdInner(

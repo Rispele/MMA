@@ -74,7 +74,6 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new GetRequest<EquipmentsFilterModel>
         {
-            AfterId = EquipmentId,
             Page = Page,
             PageSize = PageSize,
             Filter = new EquipmentsFilterModel
@@ -137,7 +136,6 @@ public static class EquipmentModelsMapperTestHelper
         return new GetEquipmentsDto(
             BatchNumber,
             BatchSize,
-            EquipmentId,
             new EquipmentsFilterDto
             {
                 Rooms = new FilterMultiParameterDto<int>([RoomId], SortDirectionDto.Ascending),
@@ -201,7 +199,6 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new GetRequest<EquipmentSchemasFilterModel>
         {
-            AfterId = EquipmentId,
             Page = Page,
             PageSize = PageSize,
             Filter = new EquipmentSchemasFilterModel
@@ -258,7 +255,6 @@ public static class EquipmentModelsMapperTestHelper
         return new GetEquipmentSchemasDto(
             BatchNumber,
             BatchSize,
-            EquipmentId,
             new EquipmentSchemasFilterDto
             {
                 Name = new FilterParameterDto<string>(SchemaName, SortDirectionDto.None),
@@ -314,7 +310,6 @@ public static class EquipmentModelsMapperTestHelper
     {
         return new GetRequest<EquipmentTypesFilterModel>
         {
-            AfterId = TypeId,
             Page = Page,
             PageSize = PageSize,
             Filter = new EquipmentTypesFilterModel
@@ -357,7 +352,6 @@ public static class EquipmentModelsMapperTestHelper
         return new GetEquipmentTypesDto(
             BatchNumber,
             BatchSize,
-            TypeId,
             new EquipmentTypesFilterDto
             {
                 Name = new FilterParameterDto<string>(SchemaName, SortDirectionDto.None)

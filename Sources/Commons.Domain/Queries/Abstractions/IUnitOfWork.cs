@@ -12,6 +12,11 @@ public interface IUnitOfWork : IAsyncDisposable
         CancellationToken cancellationToken)
         where TQuery : class, ISingleQuerySpecification<TQuery, TEntity>;
 
+    public Task<(IAsyncEnumerable<TEntity>, int)> ApplyQuery<TQuery, TEntity>(
+        IPaginatedQuerySpecification<TQuery, TEntity> querySpecification,
+        CancellationToken cancellationToken)
+        where TQuery : class, IPaginatedQuerySpecification<TQuery, TEntity>;
+
     public void Add<TEntity>(TEntity entity)
         where TEntity : class;
 

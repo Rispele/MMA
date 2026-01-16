@@ -28,14 +28,14 @@ internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactor
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterEquipmentsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
+        var query = new FilterEquipmentsQuery(dto.BatchSize, dto.BatchNumber, dto.Filter);
 
-        var equipments = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (equipmentsEnumerable, totalCount) = await context.ApplyQuery(query, cancellationToken);
+        var equipments = await equipmentsEnumerable.ToListAsync(cancellationToken);
 
         var convertedEquipments = equipments.Select(EquipmentDtoMapper.MapEquipmentToDto).ToArray();
-        int? lastEquipmentId = convertedEquipments.Length == 0 ? null : convertedEquipments.Select(t => t.Id).Max();
 
-        return new EquipmentsResponseDto(convertedEquipments, convertedEquipments.Length, lastEquipmentId);
+        return new EquipmentsResponseDto(convertedEquipments, totalCount);
     }
 
     public async Task<EquipmentDto> CreateEquipment(CreateEquipmentDto dto, CancellationToken cancellationToken)

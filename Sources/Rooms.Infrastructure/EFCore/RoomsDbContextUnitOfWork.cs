@@ -26,6 +26,16 @@ internal class RoomsDbContextUnitOfWork(RoomsDbContext dbContext, IMediator medi
         return mediator.Send(query, cancellationToken);
     }
 
+    public Task<(IAsyncEnumerable<TEntity>, int)> ApplyQuery<TQuery, TEntity>(
+        IPaginatedQuerySpecification<TQuery, TEntity> querySpecification,
+        CancellationToken cancellationToken)
+        where TQuery : class, IPaginatedQuerySpecification<TQuery, TEntity>
+    {
+        var query = new EntityQuery<RoomsDbContext, TQuery, (IAsyncEnumerable<TEntity>, int)>(querySpecification.Self(), dbContext);
+
+        return mediator.Send(query, cancellationToken);
+    }
+
     public void Add<TEntity>(TEntity entity)
         where TEntity : class
     {

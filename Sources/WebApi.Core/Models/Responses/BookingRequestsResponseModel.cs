@@ -2,8 +2,4 @@
 
 namespace WebApi.Core.Models.Responses;
 
-public record BookingRequestsResponseModel
-{
-    public BookingRequestModel[] BookingRequests { get; init; } = [];
-    public int Count { get; init; }
-}
+public record BookingRequestsResponseModel(BookingRequestModel[] BookingRequests, int TotalCount);

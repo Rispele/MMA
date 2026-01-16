@@ -5,7 +5,7 @@ using WebApi.Tests.UnitTests.Mappers.Helpers;
 namespace WebApi.Tests.UnitTests.Mappers;
 
 [TestFixture]
-public class RoomModelsMapperTests
+public class RoomModelMapperTests
 {
     [Test]
     public void Map_RoomDto_To_RoomModel_ShouldCorrectlyMap()
@@ -13,7 +13,7 @@ public class RoomModelsMapperTests
         var dto = RoomMapperTestHelper.CreateRoomDto();
         var model = RoomMapperTestHelper.CreateRoomModel();
 
-        var mapped = RoomModelsMapper.Map(dto);
+        var mapped = RoomModelMapper.Map(dto);
         mapped.Should().BeEquivalentTo(model);
     }
 
@@ -23,7 +23,7 @@ public class RoomModelsMapperTests
         var dto = RoomMapperTestHelper.CreateRoomDto();
         var model = RoomMapperTestHelper.CreatePatchRoomModel();
 
-        var mapped = RoomModelsMapper.MapToPatchRoomModel(dto);
+        var mapped = RoomModelMapper.MapToPatchRoomModel(dto);
         mapped.Should().BeEquivalentTo(model);
     }
 
@@ -33,7 +33,7 @@ public class RoomModelsMapperTests
         var dto = RoomMapperTestHelper.CreatePatchRoomDto();
         var model = RoomMapperTestHelper.CreatePatchRoomModel();
 
-        var mapped = RoomModelsMapper.Map(model);
+        var mapped = RoomModelMapper.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 
@@ -43,7 +43,7 @@ public class RoomModelsMapperTests
         var dto = RoomMapperTestHelper.CreateCreateRoomDto();
         var model = RoomMapperTestHelper.CreateCreateRoomModel();
 
-        var mapped = RoomModelsMapper.Map(model);
+        var mapped = RoomModelMapper.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 
@@ -53,7 +53,7 @@ public class RoomModelsMapperTests
         var dto = RoomMapperTestHelper.CreateGetRoomsRequestDto();
         var model = RoomMapperTestHelper.CreateGetRoomsModel();
 
-        var mapped = RoomModelsMapper.Map(model);
+        var mapped = RoomModelMapper.Map(model);
         mapped.Should().BeEquivalentTo(dto);
     }
 }

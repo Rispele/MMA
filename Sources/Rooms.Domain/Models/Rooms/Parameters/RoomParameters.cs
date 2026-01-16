@@ -2,7 +2,7 @@
 
 namespace Rooms.Domain.Models.Rooms.Parameters;
 
-internal class RoomParameters
+public class RoomParameters
 {
     public RoomType Type { get; set; }
     public RoomLayout Layout { get; set; }

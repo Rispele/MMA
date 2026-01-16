@@ -47,7 +47,7 @@ public partial class EquipmentsSdk
         EquipmentTypesFilterDto? filter = null,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetEquipmentTypesDto(batchNumber, batchSize, -1, filter);
+        var request = new GetEquipmentTypesDto(batchNumber, batchSize, filter);
 
         return equipmentTypeService.FilterEquipmentTypes(request, cancellationToken);
     }

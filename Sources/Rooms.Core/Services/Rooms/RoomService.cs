@@ -43,15 +43,15 @@ internal class RoomService(
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber, requestDto.AfterId,
+        var query = new FilterRoomsQuery(requestDto.BatchSize, requestDto.BatchNumber,
             requestDto.Filter);
 
-        var rooms = await (await unitOfWork.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (roomsEnumerable, totalCount) = await unitOfWork.ApplyQuery(query, cancellationToken);
+        var rooms = await roomsEnumerable.ToListAsync(cancellationToken);
 
         var convertedRooms = rooms.Select(RoomDtoMapper.Map).ToArray();
-        int? lastRoomId = convertedRooms.Length == 0 ? null : convertedRooms.Select(t => t.Id).Max();
 
-        return new RoomsResponseDto(convertedRooms, convertedRooms.Length, lastRoomId);
+        return new RoomsResponseDto(convertedRooms, totalCount);
     }
 
     public async Task<IEnumerable<AutocompleteRoomResponseDto>> AutocompleteRoom(
