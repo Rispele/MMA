@@ -7,6 +7,5 @@ namespace Rooms.Core.Queries.Implementations.OperatorDepartments;
 internal sealed record FilterOperatorDepartmentsQuery(
     int BatchSize,
     int BatchNumber,
-    int AfterOperatorDepartmentId,
     OperatorDepartmentsFilterDto? Filter)
-    : IQuerySpecification<FilterOperatorDepartmentsQuery, OperatorDepartment>;
+    : IPaginatedQuerySpecification<FilterOperatorDepartmentsQuery, OperatorDepartment>;

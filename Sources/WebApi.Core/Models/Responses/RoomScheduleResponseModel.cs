@@ -2,8 +2,4 @@
 
 namespace WebApi.Core.Models.Responses;
 
-public record RoomScheduleResponseModel
-{
-    public RoomScheduleModel[] ScheduleModels { get; init; } = [];
-    public int Count { get; init; }
-}
+public record RoomScheduleResponseModel(RoomScheduleModel[] ScheduleModels);

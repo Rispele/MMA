@@ -5,7 +5,7 @@ using Rooms.Domain.Propagated.Equipments;
 namespace Rooms.Domain.Models.Equipments;
 
 [GenerateFieldNames]
-internal class Equipment
+public class Equipment
 {
     private readonly int? id;
 

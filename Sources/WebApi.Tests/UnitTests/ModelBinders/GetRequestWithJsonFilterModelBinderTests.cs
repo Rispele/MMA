@@ -1,12 +1,11 @@
-﻿using System.Text.Json;
-using AutoFixture;
+﻿using AutoFixture;
 using FluentAssertions;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.BookingRequests;
 using WebApi.Core.Models.Requests.Equipments;
 using WebApi.Core.Models.Requests.EquipmentSchemas;
 using WebApi.Core.Models.Requests.EquipmentTypes;
-using WebApi.Core.Models.Requests.InstituteResponsible;
+using WebApi.Core.Models.Requests.InstituteCoordinators;
 using WebApi.Core.Models.Requests.OperatorDepartments;
 using WebApi.Core.Models.Requests.Rooms;
 using WebApi.ModelBinders;
@@ -16,7 +15,7 @@ namespace WebApi.Tests.UnitTests.ModelBinders;
 [TestFixture]
 public class GetRequestWithJsonFilterModelBinderTests
 {
-    private const int Page = 10, PageSize = 100, AfterId = 1000;
+    private const int Page = 10, PageSize = 100;
 
     [TestCaseSource(nameof(GetRequestWithJsonFilterModelBinderTestsCaseSource))]
     public async Task Test<TFilter>(GetRequestWithJsonFilterModelBinder<TFilter> binder, TFilter? filter)
@@ -26,16 +25,10 @@ public class GetRequestWithJsonFilterModelBinderTests
         {
             Page = Page,
             PageSize = PageSize,
-            AfterId = AfterId,
             Filter = filter
         };
 
-        var mapped = await binder.BindModelInner(
-            Page.ToString(),
-            PageSize.ToString(),
-            AfterId.ToString(),
-            JsonSerializer.Serialize(filter),
-            addModelError: (_, _) => { });
+        var mapped = await binder.BindModelInner(Page, PageSize, filter);
 
         mapped.IsModelSet.Should().BeTrue();
         mapped.Model.Should().BeEquivalentTo(expectedRequest);
@@ -58,8 +51,8 @@ public class GetRequestWithJsonFilterModelBinderTests
             new GetRequestWithJsonFilterModelBinder<EquipmentTypesFilterModel>(),
             fixture.Create<EquipmentTypesFilterModel>());
         yield return new TestCaseData(
-            new GetRequestWithJsonFilterModelBinder<InstituteCoordinatorFilterModel>(),
-            fixture.Create<InstituteCoordinatorFilterModel>());
+            new GetRequestWithJsonFilterModelBinder<InstituteCoordinatorsFilterModel>(),
+            fixture.Create<InstituteCoordinatorsFilterModel>());
         yield return new TestCaseData(
             new GetRequestWithJsonFilterModelBinder<OperatorDepartmentsFilterModel>(),
             fixture.Create<OperatorDepartmentsFilterModel>());

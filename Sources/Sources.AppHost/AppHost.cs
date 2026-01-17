@@ -6,6 +6,8 @@ using Sources.AppHost.Resources.Docker;
 using Sources.AppHost.Resources.Project;
 
 var builder = DistributedApplication.CreateBuilder(args);
+// раскомментить для генерации docker-compose.yaml (требуется подключение Aspire.Hosting.Docker v13.1.0-preview.1.25616.3)
+// builder.AddDockerComposeEnvironment("env");
 
 var serviceCollection = builder.Services;
 serviceCollection.AddOptions();

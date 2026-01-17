@@ -18,11 +18,9 @@ public class EquipmentSchemaService(Rooms.Core.Interfaces.Services.Equipments.IE
 
         var batch = await equipmentSchemaService.FilterEquipmentSchemas(getEquipmentSchemasRequest, cancellationToken);
 
-        return new EquipmentSchemasResponseModel
-        {
-            EquipmentSchemas = batch.EquipmentSchemas.Select(EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel).ToArray(),
-            Count = batch.Count
-        };
+        return new EquipmentSchemasResponseModel(
+            batch.EquipmentSchemas.Select(EquipmentSchemaModelsMapper.MapEquipmentSchemaToModel).ToArray(),
+            batch.TotalCount);
     }
 
     public async Task<EquipmentSchemaModel> GetEquipmentSchemaByIdAsync(int id, CancellationToken cancellationToken)

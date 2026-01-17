@@ -11,12 +11,14 @@ public static partial class BookingRequestDtoMapper
 {
     [MapProperty(nameof(BookingRequest.RoomEventCoordinator), nameof(BookingRequestDto.RoomEventCoordinator),
         Use = nameof(MapRoomEventCoordinatorToDto))]
+    [MapperIgnoreSource(nameof(BookingRequest.BookingProcess))]
     public static partial BookingRequestDto MapBookingRequestToDto(BookingRequest bookingRequest);
 
     public static partial BookingCreatorDto MapBookingCreatorToDto(BookingCreator bookingCreator);
 
     public static partial BookingCreator MapBookingCreatorFromDto(BookingCreatorDto bookingCreator);
 
+    [MapperIgnoreSource(nameof(BookingTime.Key))]
     public static partial BookingTimeDto MapBookingTimeToDto(BookingTime bookingTime);
 
     public static BookingTime MapBookingTimeFromDto(BookingTimeDto bookingTime)

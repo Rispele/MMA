@@ -21,11 +21,9 @@ public class EquipmentService(
 
         var batch = await equipmentService.FilterEquipments(getEquipmentsRequest, cancellationToken);
 
-        return new EquipmentsResponseModel
-        {
-            Equipments = batch.Equipments.Select(EquipmentModelsMapper.MapEquipmentToModel).ToArray(),
-            Count = batch.Count
-        };
+        return new EquipmentsResponseModel(
+            batch.Equipments.Select(EquipmentModelsMapper.MapEquipmentToModel).ToArray(),
+            batch.TotalCount);
     }
 
     public async Task<EquipmentModel> GetEquipmentByIdAsync(int id, CancellationToken cancellationToken)

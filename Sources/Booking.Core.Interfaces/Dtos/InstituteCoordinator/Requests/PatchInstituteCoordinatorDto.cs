@@ -2,6 +2,6 @@
 
 public record PatchInstituteCoordinatorDto
 {
-    public string Institute { get; set; } = null!;
+    public Guid InstituteId { get; set; }
     public CoordinatorDto[] Coordinators { get; set; } = null!;
 }

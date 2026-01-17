@@ -21,11 +21,9 @@ public class EquipmentTypeService(
 
         var batch = await equipmentTypeService.FilterEquipmentTypes(getEquipmentTypesRequest, cancellationToken);
 
-        return new EquipmentTypesResponseModel
-        {
-            EquipmentTypes = batch.EquipmentTypes.Select(EquipmentTypeModelsMapper.MapEquipmentTypeToModel).ToArray(),
-            Count = batch.Count
-        };
+        return new EquipmentTypesResponseModel(
+            batch.EquipmentTypes.Select(EquipmentTypeModelsMapper.MapEquipmentTypeToModel).ToArray(),
+            batch.TotalCount);
     }
 
     public async Task<EquipmentTypeModel> GetEquipmentTypeByIdAsync(int id, CancellationToken cancellationToken)

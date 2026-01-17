@@ -54,14 +54,13 @@ public class FilterEquipmentTypeQueryTests : ContainerTestBase
             return new FilterEquipmentTypesQuery(
                 BatchSize: 1000,
                 BatchNumber: 0,
-                AfterEquipmentTypeId: -1,
                 filterEquipmentsQuery(sortDirection));
         }
     }
 
     private static async Task<int[]> Filter(IUnitOfWork unitOfWork, FilterEquipmentTypesQuery ascendingQuery)
     {
-        return (await unitOfWork.ApplyQuery(ascendingQuery, CancellationToken.None))
+        return (await unitOfWork.ApplyQuery(ascendingQuery, CancellationToken.None)).Item1
             .ToBlockingEnumerable()
             .Select(t => t.Id)
             .ToArray();

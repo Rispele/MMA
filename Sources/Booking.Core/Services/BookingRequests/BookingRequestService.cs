@@ -10,6 +10,8 @@ using Booking.Domain.Models.BookingRequests;
 using Commons;
 using Commons.Domain.Queries.Abstractions;
 using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
+using Commons.ExternalClients.Booking.Models;
 using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Services.Rooms;
 
@@ -18,7 +20,8 @@ namespace Booking.Core.Services.BookingRequests;
 public class BookingRequestService(
     [BookingsScope] IUnitOfWorkFactory unitOfWorkFactory,
     IRoomService roomService,
-    ILkUserService lkUserService) : IBookingRequestService
+    ILkUserService lkUserService,
+    IBookingClient bookingClient) : IBookingRequestService
 {
     public async Task<BookingRequestDto> GetBookingRequestById(int bookingRequestId, CancellationToken cancellationToken)
     {
@@ -43,14 +46,14 @@ public class BookingRequestService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterBookingRequestsQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
+        var query = new FilterBookingRequestsQuery(dto.BatchSize, dto.BatchNumber, dto.Filter);
 
-        var bookingRequests = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (bookingRequestsEnumerable, totalCount) = await context.ApplyQuery(query, cancellationToken);
+        var bookingRequests = await bookingRequestsEnumerable.ToListAsync(cancellationToken);
 
         var convertedBookingRequests = bookingRequests.Select(BookingRequestDtoMapper.MapBookingRequestToDto).ToArray();
-        int? lastBookingRequestId = convertedBookingRequests.Length == 0 ? null : convertedBookingRequests.Select(t => t.Id).Max();
 
-        return new BookingRequestsResponseDto(convertedBookingRequests, convertedBookingRequests.Length, lastBookingRequestId);
+        return new BookingRequestsResponseDto(convertedBookingRequests, totalCount);
     }
 
     public async Task<BookingRequestDto> CreateBookingRequest(CreateBookingRequestDto dto, CancellationToken cancellationToken)
@@ -100,6 +103,12 @@ public class BookingRequestService(
 
         return BookingRequestDtoMapper.MapBookingRequestToDto(bookingRequestToPatch);
     }
+
+    public async Task<FreeRoomInfo[]?> GetAvailableForBookingRooms(GetFreeRoomsRequest dto, CancellationToken cancellationToken)
+    {
+        return (await bookingClient.GetRoomsAvailableForBooking(dto, cancellationToken)).Result;
+    }
+
 
     private async Task<RoomDto[]> GetRooms(int[] roomIds, CancellationToken cancellationToken)
     {

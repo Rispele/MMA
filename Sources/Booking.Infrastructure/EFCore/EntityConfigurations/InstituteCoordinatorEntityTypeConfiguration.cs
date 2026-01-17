@@ -17,6 +17,6 @@ public class InstituteCoordinatorEntityTypeConfiguration : IEntityTypeConfigurat
         builder.Ignore(t => t.Coordinators);
         builder.Property(InstituteCoordinatorFieldNames.Coordinators).HasColumnType("jsonb");
 
-        builder.Property(t => t.Institute).HasMaxLength(500).IsRequired();
+        builder.Property(t => t.InstituteId).IsRequired();
     }
 }

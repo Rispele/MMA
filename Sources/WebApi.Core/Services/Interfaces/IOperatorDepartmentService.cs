@@ -12,7 +12,7 @@ public interface IOperatorDepartmentService
         CancellationToken cancellationToken);
 
     Task<OperatorDepartmentModel> GetOperatorDepartmentByIdAsync(int id, CancellationToken cancellationToken);
-    Task<Dictionary<Guid, string>> GetAvailableOperatorsAsync(CancellationToken cancellationToken);
+    Task<OperatorModel[]> GetAvailableOperatorsAsync(CancellationToken cancellationToken);
     Task<OperatorDepartmentModel> CreateOperatorDepartmentAsync(CreateOperatorDepartmentModel model, CancellationToken cancellationToken);
     Task<PatchOperatorDepartmentModel> GetOperatorDepartmentPatchModel(int operatorDepartmentId, CancellationToken cancellationToken);
 

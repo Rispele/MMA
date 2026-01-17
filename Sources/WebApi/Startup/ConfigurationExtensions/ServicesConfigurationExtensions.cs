@@ -53,7 +53,7 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IEquipmentTypeService, EquipmentTypeService>()
             .AddScoped<IEquipmentSchemaService, EquipmentSchemaService>()
             .AddScoped<IOperatorDepartmentService, OperatorDepartmentService>()
-            .AddScoped<IInstituteResponsibleService, InstituteCoordinatorService>()
+            .AddScoped<IInstituteCoordinatorService, InstituteCoordinatorService>()
             .AddScoped<IRoomScheduleService, RoomScheduleService>()
             .AddScoped<IBookingRequestService, BookingRequestService>();
 

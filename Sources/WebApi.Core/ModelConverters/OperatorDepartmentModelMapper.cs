@@ -8,7 +8,7 @@ using WebApi.Core.Models.Requests.OperatorDepartments;
 namespace WebApi.Core.ModelConverters;
 
 [Mapper]
-public static partial class OperatorDepartmentsModelsMapper
+public static partial class OperatorDepartmentModelMapper
 {
     [MapProperty(nameof(GetRequest<OperatorDepartmentsFilterModel>.PageSize), nameof(GetOperatorDepartmentsDto.BatchSize))]
     [MapProperty(nameof(GetRequest<OperatorDepartmentsFilterModel>.Page), nameof(GetOperatorDepartmentsDto.BatchNumber),
@@ -16,6 +16,8 @@ public static partial class OperatorDepartmentsModelsMapper
     public static partial GetOperatorDepartmentsDto Convert(GetRequest<OperatorDepartmentsFilterModel> model);
 
     public static partial OperatorDepartmentModel Convert(OperatorDepartmentDto entity);
+
+    public static partial OperatorModel Convert(OperatorDto entity);
 
     public static partial PatchOperatorDepartmentDto Convert(PatchOperatorDepartmentModel patchModel);
 

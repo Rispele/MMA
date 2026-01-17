@@ -52,6 +52,7 @@ public class BookingRequest
     public IRoomEventCoordinator RoomEventCoordinator { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public string EventName { get; private set; } = null!;
+    public IEnumerable<int> RoomIds { get; set; } = null!;
     public BookingStatus Status { get; private set; }
     public string? EdmsResolutionComment { get; private set; }
     public string? ModeratorComment { get; private set; }

@@ -80,7 +80,7 @@ public partial class EquipmentsSdk
         EquipmentSchemasFilterDto? filter = null,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetEquipmentSchemasDto(batchNumber, batchSize, -1, filter);
+        var request = new GetEquipmentSchemasDto(batchNumber, batchSize, filter);
 
         return equipmentSchemaService.FilterEquipmentSchemas(request, cancellationToken);
     }

@@ -49,7 +49,7 @@ public partial class EquipmentsSdk
         EquipmentsFilterDto? filter = null,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetEquipmentsDto(batchNumber, batchSize, -1, filter);
+        var request = new GetEquipmentsDto(batchNumber, batchSize, filter);
 
         return equipmentService.FilterEquipments(request, cancellationToken);
     }

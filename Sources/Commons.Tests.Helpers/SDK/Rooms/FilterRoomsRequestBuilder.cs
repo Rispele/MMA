@@ -6,7 +6,6 @@ public class FilterRoomsRequestBuilder
 {
     private readonly int batchNumber;
     private readonly int batchSize;
-    private int afterRoomId;
     private RoomsFilterDto? filter;
 
     private FilterRoomsRequestBuilder(int batchNumber, int batchSize)
@@ -18,12 +17,6 @@ public class FilterRoomsRequestBuilder
     public static FilterRoomsRequestBuilder Create(int batchNumber, int batchSize)
     {
         return new FilterRoomsRequestBuilder(batchNumber, batchSize);
-    }
-
-    public FilterRoomsRequestBuilder AfterRoomId(int roomId)
-    {
-        afterRoomId = roomId;
-        return this;
     }
 
     public FilterRoomsRequestBuilder Filter(Action<RoomsFilterBuilder> action)
@@ -43,7 +36,6 @@ public class FilterRoomsRequestBuilder
         {
             BatchNumber = batchNumber,
             BatchSize = batchSize,
-            AfterId = afterRoomId,
             Filter = filter
         };
     }

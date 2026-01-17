@@ -1,6 +1,6 @@
 ﻿namespace Rooms.Core.Interfaces.Dtos.OperatorDepartments;
 
-public record OperatorDepartmentDto
+public class OperatorDepartmentDto
 {
     public required int Id { get; init; }
     public required string Name { get; init; }

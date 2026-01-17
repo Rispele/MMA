@@ -1,3 +1,8 @@
 ﻿namespace Rooms.Core.Interfaces.Dtos.Room;
 
-public record ScheduleAddressDto(string RoomNumber, string Address, int ScheduleRoomId);
+public class ScheduleAddressDto
+{
+    public string RoomNumber { get; set; } = null!;
+    public string Address { get; set; } = null!;
+    public int ScheduleRoomId { get; set; }
+}

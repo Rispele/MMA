@@ -221,11 +221,9 @@ namespace Booking.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Institute")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
-                        .HasColumnName("institute");
+                    b.Property<Guid>("InstituteId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("institute_id");
 
                     b.Property<List<Coordinator>>("coordinators")
                         .IsRequired()

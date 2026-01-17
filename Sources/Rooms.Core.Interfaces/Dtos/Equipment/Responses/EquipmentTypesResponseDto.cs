@@ -1,3 +1,3 @@
 ﻿namespace Rooms.Core.Interfaces.Dtos.Equipment.Responses;
 
-public record EquipmentTypesResponseDto(EquipmentTypeDto[] EquipmentTypes, int Count, int? LastEquipmentTypeId);
+public record EquipmentTypesResponseDto(EquipmentTypeDto[] EquipmentTypes, int TotalCount);

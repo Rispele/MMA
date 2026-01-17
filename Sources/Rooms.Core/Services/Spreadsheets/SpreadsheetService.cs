@@ -29,7 +29,6 @@ internal class SpreadsheetService(
     {
         var request = new GetRoomsRequestDto
         {
-            AfterId = -1,
             BatchNumber = 0,
             BatchSize = ExportLimit,
             Filter = null
@@ -55,7 +54,7 @@ internal class SpreadsheetService(
 
     public async Task<FileExportDto> ExportEquipmentRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
-        var request = new GetEquipmentsDto(BatchNumber: 0, ExportLimit, AfterId: -1, Filter: null);
+        var request = new GetEquipmentsDto(BatchNumber: 0, ExportLimit, Filter: null);
         var equipments = await equipmentService.FilterEquipments(request, cancellationToken);
 
         var roomsToFetch = equipments.Equipments.Select(t => t.RoomId).Distinct().ToArray();
@@ -84,7 +83,7 @@ internal class SpreadsheetService(
 
     public async Task<FileExportDto> ExportEquipmentSchemaRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
-        var request = new GetEquipmentSchemasDto(BatchNumber: 0, ExportLimit, AfterId: -1, Filter: null);
+        var request = new GetEquipmentSchemasDto(BatchNumber: 0, ExportLimit, Filter: null);
         var types = await equipmentSchemaService.FilterEquipmentSchemas(request, cancellationToken);
         var dataToExport = types.EquipmentSchemas
             .Select(schema => new EquipmentSchemaRegistrySpreadsheetExportDto
@@ -103,7 +102,7 @@ internal class SpreadsheetService(
 
     public async Task<FileExportDto> ExportEquipmentTypeRegistry(Stream outputStream, CancellationToken cancellationToken)
     {
-        var request = new GetEquipmentTypesDto(BatchNumber: 0, ExportLimit, AfterId: -1, Filter: null);
+        var request = new GetEquipmentTypesDto(BatchNumber: 0, ExportLimit, Filter: null);
         var types = await equipmentTypeService.FilterEquipmentTypes(request, cancellationToken);
         var dataToExport = types.EquipmentTypes
             .Select(type => new EquipmentTypeRegistrySpreadsheetExportDto

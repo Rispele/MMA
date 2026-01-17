@@ -51,7 +51,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная единица оборудования</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateEquipment(
+    public async Task<ActionResult<EquipmentModel>> CreateEquipment(
         [FromBody] CreateEquipmentModel model,
         CancellationToken cancellationToken)
     {
@@ -69,7 +69,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{equipmentId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchEquipment(
+    public async Task<ActionResult<EquipmentModel>> PatchEquipment(
         int equipmentId,
         [FromBody] JsonPatchDocument<PatchEquipmentModel> patch,
         CancellationToken cancellationToken)

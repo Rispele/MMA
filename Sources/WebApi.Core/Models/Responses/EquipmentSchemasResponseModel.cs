@@ -2,8 +2,4 @@
 
 namespace WebApi.Core.Models.Responses;
 
-public class EquipmentSchemasResponseModel
-{
-    public EquipmentSchemaModel[] EquipmentSchemas { get; init; } = [];
-    public int Count { get; init; }
-}
+public class EquipmentSchemasResponseModel(EquipmentSchemaModel[] EquipmentSchemas, int TotalCount);

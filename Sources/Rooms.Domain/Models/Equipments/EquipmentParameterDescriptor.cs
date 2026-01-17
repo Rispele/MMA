@@ -1,3 +1,3 @@
 ﻿namespace Rooms.Domain.Models.Equipments;
 
-internal record EquipmentParameterDescriptor(string Name, bool Required);
+public record EquipmentParameterDescriptor(string Name, bool Required);

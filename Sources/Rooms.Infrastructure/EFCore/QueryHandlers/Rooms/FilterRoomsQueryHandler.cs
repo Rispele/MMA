@@ -10,19 +10,21 @@ using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
 
-internal class FilterRoomsQueryHandler : IQueryHandler<RoomsDbContext, FilterRoomsQuery, Room>
+internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, FilterRoomsQuery, Room>
 {
-    public Task<IAsyncEnumerable<Room>> Handle(
-        EntityQuery<RoomsDbContext, FilterRoomsQuery, IAsyncEnumerable<Room>> request,
+    public Task<(IAsyncEnumerable<Room>, int)> Handle(
+        EntityQuery<RoomsDbContext, FilterRoomsQuery, (IAsyncEnumerable<Room>, int)> request,
         CancellationToken cancellationToken)
     {
-        IQueryable<Room> rooms = request.Context.Rooms.Include(room => room.Equipments);
+        IQueryable<Room> rooms = request.Context.Rooms
+            .Include(room => room.Equipments)
+            .Include(room => room.OperatorDepartment);
 
         rooms = Filters(rooms, request.Query.Filter);
         rooms = Sort(rooms, request.Query.Filter);
         rooms = Paginate(rooms, request.Query);
 
-        return Task.FromResult(rooms.AsAsyncEnumerable());
+        return Task.FromResult((rooms.AsAsyncEnumerable(), request.Context.Rooms.Count()));
     }
 
     private IQueryable<Room> Filters(IQueryable<Room> rooms, RoomsFilterDto? filter)
@@ -171,7 +173,7 @@ internal class FilterRoomsQueryHandler : IQueryHandler<RoomsDbContext, FilterRoo
     private IQueryable<Room> Paginate(IQueryable<Room> rooms, FilterRoomsQuery requestQuery)
     {
         return rooms
-            .Where(t => t.Id > requestQuery.AfterRoomId)
+            .OrderBy(t => t.Id)
             .Skip(requestQuery.BatchSize * requestQuery.BatchNumber)
             .Take(requestQuery.BatchSize);
     }

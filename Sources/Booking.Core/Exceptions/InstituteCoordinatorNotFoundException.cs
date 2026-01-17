@@ -2,4 +2,4 @@
 
 namespace Booking.Core.Exceptions;
 
-public class InstituteCoordinatorNotFoundException(string message) : DomainException(code: 404, errorCode: "InstituteResponsibleNotFound", message);
+public class InstituteCoordinatorNotFoundException(string message) : DomainException(code: 404, errorCode: "InstituteCoordinatorNotFound", message);

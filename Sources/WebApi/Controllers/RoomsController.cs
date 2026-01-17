@@ -50,7 +50,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная аудитория</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
+    public async Task<ActionResult<RoomModel>> CreateRoom([FromBody] CreateRoomModel model, CancellationToken cancellationToken)
     {
         var created = await roomService.CreateRoom(model, cancellationToken);
         return Ok(created);
@@ -66,7 +66,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{roomId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchRoom(
+    public async Task<ActionResult<RoomModel>> PatchRoom(
         int roomId,
         [FromBody] JsonPatchDocument<PatchRoomModel> patch,
         CancellationToken cancellationToken)

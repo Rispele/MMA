@@ -27,14 +27,14 @@ internal class EquipmentSchemaService([RoomsScope] IUnitOfWorkFactory unitOfWork
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterEquipmentSchemasQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
+        var query = new FilterEquipmentSchemasQuery(dto.BatchSize, dto.BatchNumber, dto.Filter);
 
-        var equipmentSchemas = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (equipmentSchemasEnumerable, totalCount) = await context.ApplyQuery(query, cancellationToken);
+        var equipmentSchemas = await equipmentSchemasEnumerable.ToListAsync(cancellationToken);
 
         var convertedEquipmentSchemas = equipmentSchemas.Select(EquipmentSchemaDtoMapper.MapEquipmentSchemaToDto).ToArray();
-        int? lastEquipmentSchemaId = convertedEquipmentSchemas.Length == 0 ? null : convertedEquipmentSchemas.Select(t => t.Id).Max();
 
-        return new EquipmentSchemasResponseDto(convertedEquipmentSchemas, convertedEquipmentSchemas.Length, lastEquipmentSchemaId);
+        return new EquipmentSchemasResponseDto(convertedEquipmentSchemas, totalCount);
     }
 
     public async Task<EquipmentSchemaDto> CreateEquipmentSchema(CreateEquipmentSchemaDto dto, CancellationToken cancellationToken)

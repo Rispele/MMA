@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Commons.ExternalClients.Booking.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Core.Models.BookingRequest;
 using WebApi.Core.Models.Requests;
@@ -67,7 +68,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная заявка</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateBookingRequest(
+    public async Task<ActionResult<BookingRequestModel>> CreateBookingRequest(
         [FromBody] CreateBookingRequestModel model,
         CancellationToken cancellationToken)
     {
@@ -85,7 +86,7 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
     /// <exception cref="BadHttpRequestException"></exception>
     [HttpPatch("{bookingRequestId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchBookingRequest(
+    public async Task<ActionResult<BookingRequestModel>> PatchBookingRequest(
         int bookingRequestId,
         [FromBody] JsonPatchDocument<PatchBookingRequestModel> patch,
         CancellationToken cancellationToken)
@@ -109,5 +110,20 @@ public class BookingRequestsController(IBookingRequestService bookingRequestServ
         var updated = await bookingRequestService.PatchBookingRequestAsync(bookingRequestId, patchModel, cancellationToken);
 
         return Ok(updated);
+    }
+
+    /// <summary>
+    /// Получить список доступных для бронирования на указанное время аудиторий
+    /// </summary>
+    /// <param name="model">Модель создания заявки</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Созданная заявка</returns>
+    [HttpPost("available")]
+    public async Task<ActionResult<FreeRoomInfo[]?>> GetAvailableForBookingRooms(
+        [FromBody] GetFreeRoomsRequest model,
+        CancellationToken cancellationToken)
+    {
+        var created = await bookingRequestService.GetAvailableForBookingRooms(model, cancellationToken);
+        return Ok(created);
     }
 }

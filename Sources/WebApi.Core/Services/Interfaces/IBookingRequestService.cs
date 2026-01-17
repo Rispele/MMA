@@ -1,4 +1,5 @@
-﻿using WebApi.Core.Models.BookingRequest;
+﻿using Commons.ExternalClients.Booking.Models;
+using WebApi.Core.Models.BookingRequest;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.BookingRequests;
 using WebApi.Core.Models.Responses;
@@ -17,4 +18,6 @@ public interface IBookingRequestService
         int bookingRequestId,
         PatchBookingRequestModel request,
         CancellationToken cancellationToken);
+
+    Task<FreeRoomInfo[]?> GetAvailableForBookingRooms(GetFreeRoomsRequest model, CancellationToken cancellationToken);
 }

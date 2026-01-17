@@ -258,7 +258,7 @@ namespace Rooms.Infrastructure.Migrations
 
             modelBuilder.Entity("Rooms.Domain.Models.Rooms.Room", b =>
                 {
-                    b.HasOne("Rooms.Domain.Models.OperatorDepartments.OperatorDepartment", null)
+                    b.HasOne("Rooms.Domain.Models.OperatorDepartments.OperatorDepartment", "OperatorDepartment")
                         .WithMany("Rooms")
                         .HasForeignKey("OperatorDepartmentId")
                         .HasConstraintName("fk_rooms_operator_departments_operator_department_id");
@@ -369,6 +369,8 @@ namespace Rooms.Infrastructure.Migrations
 
                     b.Navigation("FixInfo")
                         .IsRequired();
+
+                    b.Navigation("OperatorDepartment");
 
                     b.Navigation("Parameters")
                         .IsRequired();

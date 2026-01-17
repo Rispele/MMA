@@ -1,10 +1,8 @@
-﻿using Booking.Domain.Models.InstituteCoordinators;
-using Commons.ExternalClients.InstituteDepartments;
-using Commons.ExternalClients.LkUsers;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Core.Models.InstituteCoordinator;
 using WebApi.Core.Models.Requests;
-using WebApi.Core.Models.Requests.InstituteResponsible;
+using WebApi.Core.Models.Requests.InstituteCoordinators;
 using WebApi.Core.Models.Responses;
 using WebApi.Core.Services.Interfaces;
 using WebApi.ModelBinders;
@@ -13,7 +11,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("webapi/institute-coordinator")]
-public class InstituteCoordinatorsController(IInstituteResponsibleService instituteCoordinatorService) : ControllerBase
+public class InstituteCoordinatorsController(IInstituteCoordinatorService instituteCoordinatorService) : ControllerBase
 {
     /// <summary>
     /// Получить записи об ответственных от институтов/подразделений
@@ -22,28 +20,28 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
     /// <param name="cancellationToken"></param>
     /// <returns>Список записей об ответсвенных от институтов/подразделений</returns>
     [HttpGet]
-    public async Task<ActionResult<InstituteResponsibleResponseModel>> GetInstituteCoordinator(
-        [GetRequestWithJsonFilterModelBinder<InstituteCoordinatorFilterModel>]
-        GetRequest<InstituteCoordinatorFilterModel> model,
+    public async Task<ActionResult<InstituteCoordinatorsResponseModel>> GetInstituteCoordinator(
+        [GetRequestWithJsonFilterModelBinder<InstituteCoordinatorsFilterModel>]
+        GetRequest<InstituteCoordinatorsFilterModel> model,
         CancellationToken cancellationToken)
     {
-        var result = await instituteCoordinatorService.GetInstituteResponsibleAsync(model, cancellationToken);
+        var result = await instituteCoordinatorService.GetInstituteCoordinatorsAsync(model, cancellationToken);
         return Ok(result);
     }
 
     /// <summary>
     /// Получить ответственного от института/подразделения
     /// </summary>
-    /// <param name="instituteResponsibleId">Идентификатор ответственного</param>
+    /// <param name="instituteCoordinatorId">Идентификатор ответственного</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Ответственный от института/подразделения</returns>
-    [HttpGet("{instituteResponsibleId:int}")]
-    public async Task<ActionResult<InstituteCoordinator>> GetInstituteCoordinatorById(
-        int instituteResponsibleId,
+    [HttpGet("{instituteCoordinatorId:int}")]
+    public async Task<ActionResult<InstituteCoordinatorModel>> GetInstituteCoordinatorById(
+        int instituteCoordinatorId,
         CancellationToken cancellationToken)
     {
-        var instituteResponsible = await instituteCoordinatorService.GetInstituteResponsibleByIdAsync(instituteResponsibleId, cancellationToken);
-        return Ok(instituteResponsible);
+        var instituteCoordinator = await instituteCoordinatorService.GetInstituteCoordinatorByIdAsync(instituteCoordinatorId, cancellationToken);
+        return Ok(instituteCoordinator);
     }
 
     /// <summary>
@@ -51,11 +49,11 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора ответственных лиц</returns>
-    [HttpGet("responsible")]
-    public async Task<ActionResult<Task<LkEmployeeDto[]>>> GetAvailableCoordinators(CancellationToken cancellationToken)
+    [HttpGet("coordinators")]
+    public async Task<ActionResult<Task<InstituteCoordinatorEmployeeModel[]>>> GetAvailableCoordinators(CancellationToken cancellationToken)
     {
-        var responsible = await instituteCoordinatorService.GetAvailableInstituteResponsibleAsync(cancellationToken);
-        return Ok(responsible);
+        var coordinators = await instituteCoordinatorService.GetAvailableInstituteCoordinatorsAsync(cancellationToken);
+        return Ok(coordinators);
     }
 
     /// <summary>
@@ -64,7 +62,7 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора институтов/подразделений</returns>
     [HttpGet("departments")]
-    public async Task<ActionResult<InstituteDepartmentResponseDto[]>> GetAvailableDepartments(CancellationToken cancellationToken)
+    public async Task<ActionResult<InstituteDepartmentResponseModel[]>> GetAvailableDepartments(CancellationToken cancellationToken)
     {
         var departments = await instituteCoordinatorService.GetAvailableInstituteDepartmentsAsync(cancellationToken);
         return Ok(departments);
@@ -77,26 +75,26 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
     /// <param name="cancellationToken"></param>
     /// <returns>Созданный ответственный от института/подразделения</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateInstituteCoordinator(
+    public async Task<ActionResult<InstituteCoordinatorModel>> CreateInstituteCoordinator(
         [FromBody] CreateInstituteCoordinatorModel model,
         CancellationToken cancellationToken)
     {
-        var created = await instituteCoordinatorService.CreateInstituteResponsibleAsync(model, cancellationToken);
+        var created = await instituteCoordinatorService.CreateInstituteCoordinatorAsync(model, cancellationToken);
         return Ok(created);
     }
 
     /// <summary>
     /// Изменить ответственного от института/подразделения
     /// </summary>
-    /// <param name="instituteResponsibleId">Идентификатор ответственного</param>
+    /// <param name="instituteCoordinatorId">Идентификатор ответственного</param>
     /// <param name="patch">Модель изменений ответственного</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Измененный ответственный от института/подразделения</returns>
     /// <exception cref="BadHttpRequestException"></exception>
-    [HttpPatch("{instituteResponsibleId:int}")]
+    [HttpPatch("{instituteCoordinatorId:int}")]
     [Consumes("application/json-patch+json")]
-    public async Task<IActionResult> PatchInstituteCoordinator(
-        int instituteResponsibleId,
+    public async Task<ActionResult<InstituteCoordinatorModel>> PatchInstituteCoordinator(
+        int instituteCoordinatorId,
         [FromBody] JsonPatchDocument<PatchInstituteCoordinatorModel> patch,
         CancellationToken cancellationToken)
     {
@@ -107,7 +105,7 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
             throw new BadHttpRequestException(string.Join(separator: "; ", errorMessage));
         }
 
-        var patchModel = await instituteCoordinatorService.GetInstituteResponsiblePatchModel(instituteResponsibleId, cancellationToken);
+        var patchModel = await instituteCoordinatorService.GetInstituteCoordinatorPatchModel(instituteCoordinatorId, cancellationToken);
 
         patch.ApplyTo(patchModel);
 
@@ -116,7 +114,7 @@ public class InstituteCoordinatorsController(IInstituteResponsibleService instit
             return ValidationProblem(ModelState);
         }
 
-        var updated = await instituteCoordinatorService.PatchInstituteResponsibleAsync(instituteResponsibleId, patchModel, cancellationToken);
+        var updated = await instituteCoordinatorService.PatchInstituteCoordinatorAsync(instituteCoordinatorId, patchModel, cancellationToken);
 
         return Ok(updated);
     }

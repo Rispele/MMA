@@ -40,9 +40,9 @@ public class BookingClient : IBookingClient
         };
 
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-        query["date"] = request.Date.ToString();
-        query["beginTime"] = request.BeginTime.ToString();
-        query["endTime"] = request.EndTime.ToString();
+        query["date"] = request.Date.ToString("dd.MM.yyyy");
+        query["beginTime"] = request.BeginTime.ToString("HH:mm");
+        query["endTime"] = request.EndTime.ToString("HH:mm");
         uriBuilder.Query = query.ToString();
 
         var response = await httpClient.GetAsync(

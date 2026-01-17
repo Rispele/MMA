@@ -10,6 +10,11 @@ public class TestLkUserClient : ILkUsersClient
         return Task.FromResult(Users);
     }
 
+    public Task<LkUserDto[]> GetUsers(IEnumerable<string> userIds, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(Users.Where(x => userIds.Contains(x.UserId)).ToArray());
+    }
+
     public Task<LkEmployeeDto[]> GetEmployees(CancellationToken cancellationToken)
     {
         return Task.FromResult(Employees);

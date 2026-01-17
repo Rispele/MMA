@@ -2,6 +2,6 @@
 
 public record CreateInstituteCoordinatorDto
 {
-    public string Institute { get; set; } = null!;
+    public Guid InstituteId { get; set; }
     public CoordinatorDto[] Coordinators { get; set; } = null!;
 }

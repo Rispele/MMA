@@ -18,9 +18,7 @@ public class RoomScheduleService(IScheduleService roomScheduleService) : IRoomSc
             .GetRoomSchedule(dto, cancellationToken)
             .ToListAsync(cancellationToken);
 
-        return new RoomScheduleResponseModel
-        {
-            ScheduleModels = scheduleResponseDtos.Select(item => new RoomScheduleModel
+        return new RoomScheduleResponseModel(scheduleResponseDtos.Select(item => new RoomScheduleModel
             {
                 Date = item.Date,
                 From = item.From,
@@ -28,8 +26,6 @@ public class RoomScheduleService(IScheduleService roomScheduleService) : IRoomSc
                 Teacher = item.Teacher,
                 GroupTitle = item.GroupTitle,
                 Title = item.Title
-            }).ToArray(),
-            Count = scheduleResponseDtos.Count
-        };
+            }).ToArray());
     }
 }

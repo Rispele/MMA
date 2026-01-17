@@ -14,26 +14,26 @@ public class InstituteCoordinator
     {
     }
 
-    public InstituteCoordinator(string institute, Coordinator[] coordinators)
+    public InstituteCoordinator(Guid instituteId, Coordinator[] coordinators)
     {
-        Institute = institute;
+        InstituteId = instituteId;
         this.coordinators = coordinators.ToList();
     }
 
     public int Id => id ?? throw new InvalidOperationException("Id is not initialized yet");
-    public string Institute { get; private set; } = null!;
+    public Guid InstituteId { get; private set; }
     public IReadOnlyList<Coordinator> Coordinators => coordinators;
 
-    public void Update(string institute, Coordinator[] coordinatorsToSet)
+    public void Update(Guid instituteId, Coordinator[] coordinatorsToSet)
     {
-        Institute = institute;
+        InstituteId = instituteId;
         coordinators = coordinators.ToList();
     }
 
     # region For Tests
 
-    public InstituteCoordinator(int id, string institute, Coordinator[] coordinators)
-        : this(institute, coordinators)
+    public InstituteCoordinator(int id, Guid instituteId, Coordinator[] coordinators)
+        : this(instituteId, coordinators)
     {
         this.id = id;
     }

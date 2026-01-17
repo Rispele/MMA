@@ -59,6 +59,11 @@ internal class RoomEntityTypeConfiguration : IEntityTypeConfiguration<Room>
             .HasForeignKey(t => t.RoomId);
         builder.Navigation(t => t.Equipments).HasField(RoomFieldNames.Equipments);
 
+        // builder
+        //     .HasOne(t => t.OperatorDepartment)
+        //     .WithMany()
+        //     .HasForeignKey(t => t.OperatorDepartmentId);
+
         builder.HasIndex(t => t.Name).IsUnique();
     }
 }

@@ -2,9 +2,4 @@
 
 namespace WebApi.Core.Models.Responses;
 
-public record RoomsResponseModel
-{
-    public RoomModel[] Rooms { get; init; } = [];
-    public int Count { get; init; }
-    public int? LastRoomId { get; init; }
-}
+public record RoomsResponseModel(RoomModel[] Rooms, int TotalCount);

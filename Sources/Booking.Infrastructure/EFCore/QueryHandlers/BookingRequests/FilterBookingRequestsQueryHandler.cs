@@ -1,6 +1,7 @@
 ﻿using Booking.Core.Queries.BookingRequest;
 using Booking.Domain.Models.BookingRequests;
 using Commons.Infrastructure.EFCore.QueryHandlers;
+using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
 
@@ -8,6 +9,8 @@ internal class FilterBookingRequestsQueryHandler : IQueryHandler<BookingDbContex
 {
     public Task<IAsyncEnumerable<BookingRequest>> Handle(EntityQuery<BookingDbContext, FilterBookingRequestsQuery, IAsyncEnumerable<BookingRequest>> request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        IQueryable<BookingRequest> bookingRequests = request.Context.BookingRequests;
+
+        return Task.FromResult(bookingRequests.AsAsyncEnumerable());
     }
 }

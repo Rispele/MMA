@@ -30,14 +30,14 @@ internal class EquipmentTypeService(
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
-        var query = new FilterEquipmentTypesQuery(dto.BatchSize, dto.BatchNumber, dto.AfterId, dto.Filter);
+        var query = new FilterEquipmentTypesQuery(dto.BatchSize, dto.BatchNumber, dto.Filter);
 
-        var equipmentTypes = await (await context.ApplyQuery(query, cancellationToken)).ToListAsync(cancellationToken);
+        var (equipmentTypesEnumerable, totalCount) = await context.ApplyQuery(query, cancellationToken);
+        var equipmentTypes = await equipmentTypesEnumerable.ToListAsync(cancellationToken);
 
         var convertedEquipmentTypes = equipmentTypes.Select(EquipmentTypeDtoMapper.MapEquipmentTypeToDto).ToArray();
-        int? lastEquipmentTypeId = convertedEquipmentTypes.Length == 0 ? null : convertedEquipmentTypes.Select(t => t.Id).Max();
 
-        return new EquipmentTypesResponseDto(convertedEquipmentTypes, convertedEquipmentTypes.Length, lastEquipmentTypeId);
+        return new EquipmentTypesResponseDto(convertedEquipmentTypes, totalCount);
     }
 
     public async Task<EquipmentTypeDto> CreateEquipmentType(CreateEquipmentTypeDto dto, CancellationToken cancellationToken)

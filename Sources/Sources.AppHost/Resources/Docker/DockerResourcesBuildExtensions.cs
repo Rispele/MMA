@@ -17,12 +17,15 @@ public static class DockerResourcesBuildExtensions
         var postgresUserName = distributedApplicationBuilder.AddParameter(name: "PostgresUserName", secret: true);
         var postgresPassword = distributedApplicationBuilder.AddParameter(name: "PostgresUserPassword", secret: true);
 
+        var postgresPort = postgresSpecification.GetHttpEndpoint().TargetPort;
         var postgresService1 = distributedApplicationBuilder
             .AddPostgres(
                 postgresSpecification.Name,
                 postgresUserName,
                 postgresPassword,
-                postgresSpecification.GetHttpEndpoint().TargetPort)
+                postgresPort)
+            .WithHttpEndpoint(port: postgresPort, targetPort: postgresPort, name: "PostgresPort")
+            .WithExternalHttpEndpoints()
             .AddDatabase(dbSpecification.Name);
         return postgresService1;
     }
@@ -53,8 +56,8 @@ public static class DockerResourcesBuildExtensions
         ResourceSpecification specification,
         IResourceBuilder<ParameterResource> rootUser,
         IResourceBuilder<ParameterResource> rootPassword,
-        int minioPort = 9000,
-        int minioAdminPort = 9001)
+        int minioPort = 10000,
+        int minioAdminPort = 10001)
     {
         var minioResource = new MinioResource(specification.Name);
 
@@ -65,6 +68,8 @@ public static class DockerResourcesBuildExtensions
             .WithEnvironment(name: "MINIO_ADDRESS", value: ":9000")
             .WithEnvironment(name: "MINIO_CONSOLE_ADDRESS", value: ":9001")
             .WithEnvironment(name: "MINIO_PROMETHEUS_AUTH_TYPE", value: "public")
+            .WithEnvironment(name: "MINIO_ROOT_USER", rootUser)
+            .WithEnvironment(name: "MINIO_ROOT_PASSWORD", rootPassword)
             .WithHttpEndpoint(
                 name: KnownEndpoints.Http,
                 port: minioPort,
@@ -73,8 +78,7 @@ public static class DockerResourcesBuildExtensions
                 name: KnownEndpoints.Admin,
                 port: minioAdminPort,
                 targetPort: specification.GetAdminEndpoint().TargetPort)
-            .WithEnvironment(name: "MINIO_ROOT_USER", rootUser)
-            .WithEnvironment(name: "MINIO_ROOT_PASSWORD", rootPassword)
+            .WithExternalHttpEndpoints()
             .WithArgs("server", config.Storage);
     }
 
