@@ -38,7 +38,7 @@ public class BookingRequest
         EventName = eventName;
         BookingSchedule = bookingSchedule;
         Status = BookingStatus.New;
-        BookingScheduleStatus = Propagated.BookingRequests.BookingScheduleStatus.NotSent;
+        BookingScheduleStatus = BookingScheduleStatus.NotSent;
         ModeratorComment = string.Empty;
         CreatedAt = DateTime.UtcNow;
     }
@@ -56,7 +56,7 @@ public class BookingRequest
     public BookingStatus Status { get; private set; }
     public string? EdmsResolutionComment { get; private set; }
     public string? ModeratorComment { get; private set; }
-    public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
+    public BookingScheduleStatus BookingScheduleStatus { get; private set; }
 
     public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
     public BookingProcess? BookingProcess { get; private set; }
@@ -83,6 +83,58 @@ public class BookingRequest
         RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
+    }
+
+    #endregion
+
+    #region Booking
+
+    public void SetRoomsBooked()
+    {
+        ValidateBookingScheduleStatus(
+            "Состояние бронирования не позволяет забронировать аудитории",
+            BookingScheduleStatus.NotSent);
+
+        BookingScheduleStatus = BookingScheduleStatus.Booked;
+    }
+
+    public void SetRoomsBookingApproved()
+    {
+        ValidateBookingScheduleStatus(
+            "Состояние бронирования не позволяет подтвердить бронирование",
+            BookingScheduleStatus.Booked);
+
+        BookingScheduleStatus = BookingScheduleStatus.BookingApproved;
+    }
+
+
+    public void SetRoomsBookingCancelled()
+    {
+        ValidateBookingScheduleStatus(
+            "Состояние бронирования не позволяет отменить бронирование",
+            BookingScheduleStatus.Booked);
+
+        BookingScheduleStatus = BookingScheduleStatus.BookingCancelled;
+    }
+
+    public void SetRoomsBookingCancellationErrorOccured()
+    {
+        BookingScheduleStatus = BookingScheduleStatus.BookingCancelError;
+    }
+
+    private void ValidateBookingScheduleStatus(string errorMessage, params BookingScheduleStatus[] expected)
+    {
+        if (expected.Contains(BookingScheduleStatus))
+        {
+            return;
+        }
+
+        throw new InvalidBookingRequestState(EnhanceMessageWithStatus(errorMessage));
+
+        string EnhanceMessageWithStatus(string message)
+        {
+            return message.Trim() + $" Текущий статус бронирования аудитории: [{BookingScheduleStatus}]";
+        }
     }
 
     #endregion
@@ -169,6 +221,7 @@ public class BookingRequest
         ValidateBookingProcessInitiated();
 
         BookingProcess!.InitiateRollback();
+        Status = BookingStatus.Error;
     }
 
     public IEnumerable<BookingEvent> GetEventsToRollback()
@@ -187,7 +240,6 @@ public class BookingRequest
     }
 
     #endregion
-
 
     private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)
     {

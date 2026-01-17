@@ -30,7 +30,7 @@ public class BookingEventProcessor(
             }
             catch (Exception e)
             {
-                logger.LogError(e, "Error processing event: [{EventId}]", bookingEvent.Id);
+                logger.LogError(e, "Unexpected error occured while processing event: [{EventId}]", bookingEvent.Id);
                 await ProcessResult(
                     bookingRequest,
                     new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Retry));

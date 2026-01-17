@@ -58,5 +58,7 @@ public class BookingService(
         {
             await bookingClient.ConfirmBooking(eventId, cancellationToken);
         }
+
+        bookingRequest.SetRoomsBookingApproved();
     }
 }

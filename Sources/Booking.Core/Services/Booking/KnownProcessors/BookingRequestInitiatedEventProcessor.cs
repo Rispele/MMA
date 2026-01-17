@@ -75,6 +75,7 @@ public class BookingRequestInitiatedEventProcessor(
                 bookingProcess.AddBookingEvent(new BookingEvent(bookingRequest.Id, payload));
             }
 
+            bookingRequest.SetRoomsBooked();
             bookingRequest.SendForApprovalInEdms();
 
             return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Success);
@@ -124,15 +125,18 @@ public class BookingRequestInitiatedEventProcessor(
 
                 if (response is { IsOk: false, ShouldRetry: false })
                 {
-                    logger.LogWarning(
-                        "Error occured declining booking with eventId: [{Id}] of event: [{EventId}], errors: [{Errors}]. Set rolled back anyway.",
+                    logger.LogError(
+                        "Error occured declining booking with eventId: [{Id}] of event: [{EventId}], errors: [{Errors}]. Set rolled back anyway. Need admin actions!",
                         scheduleEventId,
                         bookingEvent.Id,
                         response.Errors);
+                    bookingRequest.SetRoomsBookingCancellationErrorOccured();
                 }
 
                 bookingProcess.RollBackEvent(@event.Id);
             }
+
+            bookingRequest.SetRoomsBookingCancelled();
         }
         catch (Exception e)
         {
