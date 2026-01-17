@@ -18,6 +18,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Sources.AppHost\Sources.AppHost.csproj"/>
         <ProjectReference Include="..\Sources.ServiceDefaults\Sources.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\WebApi.Core\WebApi.Core.csproj" />
     </ItemGroup>
 
 </Project>

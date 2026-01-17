@@ -8,7 +8,7 @@ public record PatchBookingRequestDto
     public required string Reason { get; set; } = null!;
     public required int ParticipantsCount { get; set; }
     public required bool TechEmployeeRequired { get; set; }
-    public required string EventHostFullName { get; set; } = null!;
+    public required EventHostDto EventHost { get; init; }
     public required IRoomEventCoordinatorDto RoomEventCoordinator { get; set; }
     public required string EventName { get; set; } = null!;
     public required BookingTimeDto[] BookingSchedule { get; set; } = [];

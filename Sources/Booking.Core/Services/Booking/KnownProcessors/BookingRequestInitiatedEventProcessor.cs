@@ -178,6 +178,10 @@ public class BookingRequestInitiatedEventProcessor(
         CancellationToken cancellationToken)
     {
         var scheduleId = roomIdToScheduleId[dateToBook.RoomId]!.Value;
+        var coordinatorId = bookingRequest.RoomEventCoordinator is ScientificRoomEventCoordinator scientificRoomEventCoordinator
+            ? scientificRoomEventCoordinator.CoordinatorId
+            : null;
+
         var request = new BookRoomRequest(
             dateToBook.Date,
             scheduleId.ToString()!,
@@ -192,9 +196,7 @@ public class BookingRequestInitiatedEventProcessor(
                 RoomEventCoordinatorType.Other => "Прочее мероприятие",
                 _ => throw new ArgumentOutOfRangeException()
             },
-            bookingRequest.RoomEventCoordinator.EventCoordinatorType is RoomEventCoordinatorType.Scientific
-                ? (bookingRequest.RoomEventCoordinator as ScientificRoomEventCoordinator)!.CoordinatorId
-                : null);
+            coordinatorId);
 
         var result = await bookingClient.BookRoom(request, cancellationToken);
         return result;

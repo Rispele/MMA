@@ -24,7 +24,7 @@ public class BookingRequest
         string reason,
         int participantsCount,
         bool techEmployeeRequired,
-        string eventHostFullName,
+        EventHost eventHost,
         IRoomEventCoordinator roomEventCoordinator,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule)
@@ -33,7 +33,7 @@ public class BookingRequest
         Reason = reason;
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
-        EventHostFullName = eventHostFullName;
+        EventHost = eventHost;
         RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
@@ -48,7 +48,7 @@ public class BookingRequest
     public string Reason { get; private set; } = null!;
     public int ParticipantsCount { get; private set; }
     public bool TechEmployeeRequired { get; private set; }
-    public string EventHostFullName { get; private set; } = null!;
+    public EventHost EventHost { get; private set; } = null!;
     public IRoomEventCoordinator RoomEventCoordinator { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public string EventName { get; private set; } = null!;
@@ -67,7 +67,7 @@ public class BookingRequest
         string reason,
         int participantsCount,
         bool techEmployeeRequired,
-        string eventHostFullName,
+        EventHost eventHost,
         IRoomEventCoordinator roomEventCoordinator,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule)
@@ -78,7 +78,7 @@ public class BookingRequest
         Reason = reason;
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
-        EventHostFullName = eventHostFullName;
+        EventHost = eventHost;
         RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
@@ -211,7 +211,7 @@ public class BookingRequest
         string reason,
         int participantsCount,
         bool techEmployeeRequired,
-        string eventHostFullName,
+        string eventHost,
         IRoomEventCoordinator roomEventCoordinator,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule) :
@@ -220,7 +220,7 @@ public class BookingRequest
             reason,
             participantsCount,
             techEmployeeRequired,
-            eventHostFullName,
+            new EventHost("123", eventHost),
             roomEventCoordinator,
             eventName,
             bookingSchedule)

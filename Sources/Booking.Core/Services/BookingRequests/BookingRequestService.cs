@@ -64,7 +64,7 @@ public class BookingRequestService(
             dto.Reason,
             dto.ParticipantsCount,
             dto.TechEmployeeRequired,
-            dto.EventHostFullName,
+            new EventHost(dto.EventHost.Id, dto.EventHost.Name),
             BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
             dto.EventName,
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray());
@@ -91,7 +91,7 @@ public class BookingRequestService(
             dto.Reason,
             dto.ParticipantsCount,
             dto.TechEmployeeRequired,
-            dto.EventHostFullName,
+            new EventHost(dto.EventHost.Id, dto.EventHost.Name),
             BookingRequestDtoMapper.MapRoomEventCoordinatorFromDto(dto.RoomEventCoordinator),
             dto.EventName,
             dto.BookingSchedule.Select(BookingRequestDtoMapper.MapBookingTimeFromDto).ToArray());

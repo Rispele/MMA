@@ -32,7 +32,7 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.Reason).IsRequired().HasMaxLength(500);
         builder.Property(x => x.ParticipantsCount).IsRequired();
         builder.Property(x => x.TechEmployeeRequired).IsRequired();
-        builder.Property(x => x.EventHostFullName).IsRequired().HasMaxLength(500);
+        builder.Property(x => x.EventHost).IsRequired().HasMaxLength(500);
         builder
             .Property(x => x.RoomEventCoordinator)
             .HasColumnType("jsonb")

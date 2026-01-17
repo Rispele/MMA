@@ -9,7 +9,7 @@ public record CreateBookingRequestModel
     public string Reason { get; set; } = null!;
     public int ParticipantsCount { get; set; }
     public bool TechEmployeeRequired { get; set; }
-    public string EventHostFullName { get; set; } = null!;
+    public EventHostModel EventHost { get; set; } = null!;
     public required IRoomEventCoordinatorModel RoomEventCoordinator { get; init; }
     public string EventName { get; set; } = null!;
     public IEnumerable<BookingTimeModel> BookingSchedule { get; set; } = [];
