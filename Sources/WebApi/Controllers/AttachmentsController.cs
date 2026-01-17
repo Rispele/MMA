@@ -13,30 +13,22 @@ public class AttachmentsController(IRoomAttachmentsService roomAttachmentsServic
     /// Сохранить файл в хранилище
     /// </summary>
     /// <param name="id">Идентификатор файла (внутреннее название)</param>
-    /// <param name="fileName">Название файла</param>
-    /// <param name="contentLength">Длина содержимого (заголовок)</param>
-    /// <param name="content">Содержимое файла</param>
+    /// <param name="file">файл</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Модель сохраненного файла</returns>
     [HttpPost]
-    [Consumes("application/octet-stream")]
     [Produces("application/json")]
-    public async Task<ActionResult<FileDescriptorModel>> StoreFile(
-        [FromQuery] Guid id,
-        [FromQuery] string fileName,
-        [FromHeader(Name = "Content-Length")] long contentLength,
-        [FromBody] Stream content,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<FileDescriptorModel>> StoreFile([FromQuery] Guid id, IFormFile file, CancellationToken cancellationToken)
     {
         var descriptor = await roomAttachmentsService.Store(
             id,
-            fileName,
-            content,
-            contentLength,
+            file.FileName,
+            content: file.OpenReadStream(),
+            file.Length,
             cancellationToken);
 
         var response = new FileDescriptorModel(
-            fileName,
+            file.FileName,
             new FileLocationModel(
                 descriptor.Location.Id,
                 descriptor.Location.Bucket));
