@@ -66,7 +66,7 @@ public class BookingRequestResolvedInEdmsEventProcessor(
     {
         var bookingRequest = await unitOfWork.ApplyQuery(new GetBookingRequestByIdQuery(bookingRequestId), cancellationToken);
 
-        bookingRequest.SaveEdmsResolutionResult(payload.IsApproved);
+        bookingRequest.SaveEdmsResolutionResult(payload.IsApproved, payload.ErrorMessage);
         if (!payload.IsApproved)
         {
             return SynchronizeEventResultType.Rollback;

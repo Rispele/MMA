@@ -53,6 +53,7 @@ public class BookingRequest
     public DateTime CreatedAt { get; private set; }
     public string EventName { get; private set; } = null!;
     public BookingStatus Status { get; private set; }
+    public string? EdmsResolutionComment { get; private set; }
     public string? ModeratorComment { get; private set; }
     public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
 
@@ -96,7 +97,7 @@ public class BookingRequest
         BookingProcess!.AddBookingEvent(new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload()));
     }
 
-    public void SaveEdmsResolutionResult(bool isApproved)
+    public void SaveEdmsResolutionResult(bool isApproved, string? errorMessage)
     {
         ValidateStatus(
             BookingStatus.SentForApprovalInEdms,
@@ -105,6 +106,7 @@ public class BookingRequest
                 : "Текущее состояние заявки не позволяет отказать в согласовании в СЭД.");
 
         Status = isApproved ? BookingStatus.ApprovedInEdms : BookingStatus.RejectedInEdms;
+        EdmsResolutionComment = errorMessage;
     }
 
     #endregion

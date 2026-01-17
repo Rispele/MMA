@@ -44,6 +44,7 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
 
         builder.Property(x => x.BookingSchedule).IsRequired().HasColumnType("jsonb");
         builder.Property(x => x.Status).IsRequired();
+        builder.Property(x => x.EdmsResolutionComment).HasMaxLength(500);
         builder.Property(x => x.ModeratorComment).HasMaxLength(500);
         builder.Property(x => x.BookingScheduleStatus);
 
