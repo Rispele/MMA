@@ -2,4 +2,4 @@
 
 namespace WebApi.Core.Models.Responses;
 
-public class OperatorDepartmentsResponseModel(OperatorDepartmentModel[] OperatorDepartments, int TotalCount);
+public record OperatorDepartmentsResponseModel(OperatorDepartmentModel[] OperatorDepartments, int TotalCount);

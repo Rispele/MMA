@@ -2,6 +2,6 @@
 
 public class EquipmentParameterDescriptorModel
 {
-    public string Name { get; init; }
-    public bool Required { get; init; }
+    public required string Name { get; init; }
+    public required bool Required { get; init; }
 }
