@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using System.Text.Json;
+using AutoFixture;
 using FluentAssertions;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.BookingRequests;
@@ -28,7 +29,11 @@ public class GetRequestWithJsonFilterModelBinderTests
             Filter = filter
         };
 
-        var mapped = await binder.BindModelInner(Page, PageSize, filter);
+        var mapped = await binder.BindModelInner(
+            Page.ToString(),
+            PageSize.ToString(),
+            JsonSerializer.Serialize(filter),
+            addModelError: (_, _) => { });
 
         mapped.IsModelSet.Should().BeTrue();
         mapped.Model.Should().BeEquivalentTo(expectedRequest);
