@@ -61,7 +61,7 @@ public class BookingIntegrationsTestsSetup : ISetup
             .ConfigureServices(t => t
                 .AddScoped<IUnitOfWorkFactory, BookingDbContextUnitOfWorkFactory>()
                 .ConfigureServicesForRooms()
-                .ConfigureServicesForBooking()
+                .ConfigureServicesForBooking(true)
                 .ConfigureBookingDbContextForTests(connectionString)
                 .ConfigureRoomsDbContextForTests(connectionString)
                 .AddLogging(builder => builder.AddConsole())
