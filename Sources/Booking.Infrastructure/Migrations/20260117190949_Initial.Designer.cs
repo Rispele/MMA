@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Booking.Infrastructure.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20260117160645_AddEdmsComment")]
-    partial class AddEdmsComment
+    [Migration("20260117190949_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,7 +157,7 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("jsonb")
                         .HasColumnName("booking_schedule");
 
-                    b.Property<BookingScheduleStatus?>("BookingScheduleStatus")
+                    b.Property<BookingScheduleStatus>("BookingScheduleStatus")
                         .HasColumnType("booking_schedule_status")
                         .HasColumnName("booking_schedule_status");
 
@@ -170,11 +170,10 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("edms_resolution_comment");
 
-                    b.Property<string>("EventHostFullName")
+                    b.Property<string>("EventHost")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
-                        .HasColumnName("event_host_full_name");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("event_host");
 
                     b.Property<string>("EventName")
                         .IsRequired()
@@ -202,6 +201,11 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("jsonb")
                         .HasColumnName("room_event_coordinator");
 
+                    b.PrimitiveCollection<int[]>("RoomIds")
+                        .IsRequired()
+                        .HasColumnType("integer[]")
+                        .HasColumnName("room_ids");
+
                     b.Property<BookingStatus>("Status")
                         .HasColumnType("booking_status")
                         .HasColumnName("status");
@@ -225,11 +229,9 @@ namespace Booking.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Institute")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
-                        .HasColumnName("institute");
+                    b.Property<Guid>("InstituteId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("institute_id");
 
                     b.Property<List<Coordinator>>("coordinators")
                         .IsRequired()
