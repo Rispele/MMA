@@ -32,13 +32,18 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
         builder.Property(x => x.Reason).IsRequired().HasMaxLength(500);
         builder.Property(x => x.ParticipantsCount).IsRequired();
         builder.Property(x => x.TechEmployeeRequired).IsRequired();
-        builder.Property(x => x.EventHost).IsRequired().HasMaxLength(500);
         builder
             .Property(x => x.RoomEventCoordinator)
             .HasColumnType("jsonb")
             .HasConversion(
                 coordinator => JsonSerializer.Serialize(coordinator, JsonSerializerOptions),
                 json => JsonSerializer.Deserialize<IRoomEventCoordinator>(json, JsonSerializerOptions)!);
+        builder
+            .Property(x => x.EventHost)
+            .HasColumnType("jsonb")
+            .HasConversion(
+                coordinator => JsonSerializer.Serialize(coordinator, JsonSerializerOptions),
+                json => JsonSerializer.Deserialize<EventHost>(json, JsonSerializerOptions)!);
         builder.Property(x => x.CreatedAt).HasColumnType("timestamptz");
         builder.Property(x => x.EventName).IsRequired().HasMaxLength(500);
 

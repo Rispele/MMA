@@ -16,7 +16,7 @@ builder
 builder.Services
     .AddSingleton<IBookingClient, BookingClient>()
     .ConfigureServicesForRooms()
-    .ConfigureServicesForBooking();
+    .ConfigureServicesForBooking(builder.Environment.IsDevelopment());
 
 builder.Services
     .AddHostedService<BookingOrchestrator>()

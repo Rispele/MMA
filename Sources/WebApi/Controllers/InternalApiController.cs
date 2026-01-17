@@ -8,8 +8,10 @@ namespace WebApi.Controllers;
 /// Экономимим ресурсы. Internal Api поднимаем под вебапи
 /// </summary>
 [Controller]
+[Route("internal")]
 public class InternalApiController(IInternalApiService internalApiService) : ControllerBase
 {
+    [HttpPost("edms-resolution-result")]
     public Task SaveEdmsResolutionResult(int bookingRequestId, EdmsResolutionResult resolutionResult, CancellationToken cancellationToken)
     {
         return internalApiService.SaveEdmsResolutionResult(bookingRequestId, resolutionResult, cancellationToken);

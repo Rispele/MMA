@@ -11,7 +11,7 @@ namespace WebApi.Startup.ConfigurationExtensions;
 
 public static class ServicesConfigurationExtensions
 {
-    public static IServiceCollection ConfigureServicesForWebApi(this IServiceCollection serviceCollection)
+    public static IServiceCollection ConfigureServicesForWebApi(this IServiceCollection serviceCollection, bool isDevelopment)
     {
         // serviceCollection.AddOpenApi();
 
@@ -33,18 +33,18 @@ public static class ServicesConfigurationExtensions
             opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
-        serviceCollection.WithServices();
+        serviceCollection.WithServices(isDevelopment);
 
         return serviceCollection;
     }
 
-    private static IServiceCollection WithServices(this IServiceCollection serviceCollection)
+    private static IServiceCollection WithServices(this IServiceCollection serviceCollection, bool isDevelopment)
     {
         serviceCollection
             // Infrastructure
             .AddSingleton<IBookingClient, BookingClient>()
             .ConfigureServicesForRooms()
-            .ConfigureServicesForBooking()
+            .ConfigureServicesForBooking(isDevelopment)
 
             // WebApi
             .AddScoped<IInternalApiService, InternalApiService>()
