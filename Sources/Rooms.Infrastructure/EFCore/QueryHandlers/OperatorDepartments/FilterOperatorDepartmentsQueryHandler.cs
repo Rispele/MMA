@@ -40,23 +40,23 @@ internal class FilterOperatorDepartmentsQueryHandler : IPaginatedQueryHandler<Ro
                         queryable.Where(t => t.Name != null! && t.Name.ToLower().Contains(parameter.Value.ToLower())));
         }
 
-        if (filter.RoomName != null)
-        {
-            operatorDepartments = filter.RoomName
-                .AsOptional()
-                .Apply(operatorDepartments,
-                    apply: (queryable, parameter) =>
-                        queryable.Where(t => t.Rooms.Any(x => x.Name.ToLower().Contains(parameter.Value.ToLower()))));
-        }
+        // if (filter.RoomName != null)
+        // {
+        //     operatorDepartments = filter.RoomName
+        //         .AsOptional()
+        //         .Apply(operatorDepartments,
+        //             apply: (queryable, parameter) =>
+        //                 queryable.Where(t => t.Rooms.Any(x => x.Name.ToLower().Contains(parameter.Value.ToLower()))));
+        // }
 
-        if (filter.Operator != null)
-        {
-            operatorDepartments = filter.Operator
-                .AsOptional()
-                .Apply(operatorDepartments,
-                    apply: (queryable, parameter) =>
-                        queryable.Where(t => t.Operators.Values.Any(x => x.ToLower().Contains(parameter.Value.ToLower()))));
-        }
+        // if (filter.Operator != null)
+        // {
+        //     operatorDepartments = filter.Operator
+        //         .AsOptional()
+        //         .Apply(operatorDepartments,
+        //             apply: (queryable, parameter) =>
+        //                 queryable.Where(t => t.Operators.Values.Any(x => x.ToLower().Contains(parameter.Value.ToLower()))));
+        // }
 
         return operatorDepartments;
     }
