@@ -1,8 +1,8 @@
 ﻿using Commons;
-using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExcelValueTypes;
 using Rooms.Core.Services.Spreadsheets.ExportModels;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Rooms.Core.Services.Spreadsheets.Specifications;
 
@@ -32,13 +32,13 @@ internal struct RoomRegistrySpreadsheetSpecification
     public string FileName => "Реестр аудиторий.xlsx";
     public IReadOnlyList<ColumnSpecification<RoomRegistrySpreadsheetExportDto>> ColumnSpecifications => Specifications;
 
-    private static string MapFixStatus(RoomStatusDto fixStatus)
+    private static string MapFixStatus(RoomStatus fixStatus)
     {
         return fixStatus switch {
-            RoomStatusDto.Unspecified => "Не указано",
-            RoomStatusDto.Ready => "Готова",
-            RoomStatusDto.PartiallyReady => "Частично готова",
-            RoomStatusDto.Malfunction => "Ничего не работает",
+            RoomStatus.Unspecified => "Не указано",
+            RoomStatus.Ready => "Готова",
+            RoomStatus.PartiallyReady => "Частично готова",
+            RoomStatus.Malfunction => "Ничего не работает",
             _ => throw new ArgumentOutOfRangeException(nameof(fixStatus), fixStatus, null)
         };
     }

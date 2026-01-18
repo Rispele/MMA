@@ -4,6 +4,7 @@ using Rooms.Core.Interfaces.Dtos.Room;
 using Rooms.Core.Interfaces.Dtos.Room.Fix;
 using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
+using Rooms.Domain.Propagated.Rooms;
 using WebApi.Core.Models.Files;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.Filtering;
@@ -39,15 +40,11 @@ public static class RoomMapperTestHelper
     private const string FixComment = "Fix comment";
     private const bool AllowBooking = true;
 
-    private const RoomTypeDto FromRoomType = RoomTypeDto.Computer;
-    private const RoomLayoutDto FromRoomLayout = RoomLayoutDto.Amphitheater;
-    private const RoomNetTypeDto FromRoomNetType = RoomNetTypeDto.WiredAndWireless;
-    private const RoomStatusDto FromRoomStatus = RoomStatusDto.Ready;
+    private const RoomType RoomType = Rooms.Domain.Propagated.Rooms.RoomType.Computer;
+    private const RoomLayout RoomLayout = Rooms.Domain.Propagated.Rooms.RoomLayout.Amphitheater;
+    private const RoomNetType RoomNetType = Rooms.Domain.Propagated.Rooms.RoomNetType.WiredAndWireless;
+    private const RoomStatus RoomStatus = Rooms.Domain.Propagated.Rooms.RoomStatus.Ready;
 
-    private const RoomTypeModel ToRoomType = RoomTypeModel.Computer;
-    private const RoomLayoutModel ToRoomLayout = RoomLayoutModel.Amphitheater;
-    private const RoomNetTypeModel ToRoomNetType = RoomNetTypeModel.WiredAndWireless;
-    private const RoomStatusModel ToRoomStatus = RoomStatusModel.Ready;
 
     private const int Page = 10;
     private const int PageSize = 11;
@@ -73,14 +70,14 @@ public static class RoomMapperTestHelper
                 new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
                 new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket))),
             Owner = Owner,
-            FixInfo = new RoomFixStatusDto(FromRoomStatus, FixDeadline, FixComment),
+            FixInfo = new RoomFixStatusDto(RoomStatus, FixDeadline, FixComment),
             // OperatorDepartment = new RoomOperatorDepartmentModel(
             //     OperatorDepartmentId,
             //     DepartmentName,
             //     Contacts,
             //     [new RoomOperatorModel(OperatorId, OperatorName, OperatorUserId)]),
             Equipments = [],
-            Parameters = new RoomParametersDto(FromRoomType, FromRoomLayout, FromRoomNetType, Seats, ComputerSeats, HasConditioning),
+            Parameters = new RoomParametersDto(RoomType, RoomLayout, RoomNetType, Seats, ComputerSeats, HasConditioning),
             ScheduleAddress = new ScheduleAddressDto
             {
                 RoomNumber = RoomNumber, Address = RoomAddress, ScheduleRoomId = ScheduleAddressId
@@ -100,7 +97,7 @@ public static class RoomMapperTestHelper
                 new FileDescriptorModel(File1Name, new FileLocationModel(File1Id, File1Bucket)),
                 new FileDescriptorModel(File2Name, new FileLocationModel(File2Id, File2Bucket))),
             Owner = Owner,
-            FixInfo = new RoomFixStatusModel(ToRoomStatus, FixDeadline, FixComment),
+            FixInfo = new RoomFixStatusModel(RoomStatus, FixDeadline, FixComment),
             // OperatorDepartment = new RoomOperatorDepartmentModel(
             //     OperatorDepartmentId,
             //     DepartmentName,
@@ -110,10 +107,10 @@ public static class RoomMapperTestHelper
             {
                 ComputerSeats = ComputerSeats,
                 HasConditioning = HasConditioning,
-                Layout = ToRoomLayout,
-                NetType = ToRoomNetType,
+                Layout = RoomLayout,
+                NetType = RoomNetType,
                 Seats = Seats,
-                Type = ToRoomType
+                Type = RoomType
             },
             ScheduleAddress = new ScheduleAddressModel
             {
@@ -130,16 +127,16 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
-            Type = ToRoomType,
-            Layout = ToRoomLayout,
-            NetType = ToRoomNetType,
+            Type = RoomType,
+            Layout = RoomLayout,
+            NetType = RoomNetType,
             Seats = Seats,
             ComputerSeats = ComputerSeats,
             PdfRoomSchemeFile = new FileDescriptorModel(File1Name, new FileLocationModel(File1Id, File1Bucket)),
             PhotoFile = new FileDescriptorModel(File2Name, new FileLocationModel(File2Id, File2Bucket)),
             HasConditioning = HasConditioning,
             Owner = Owner,
-            RoomStatus = ToRoomStatus,
+            RoomStatus = RoomStatus,
             Comment = FixComment,
             FixDeadline = FixDeadline,
             AllowBooking = AllowBooking
@@ -152,16 +149,16 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
-            Type = FromRoomType,
-            Layout = FromRoomLayout,
-            NetType = FromRoomNetType,
+            Type = RoomType,
+            Layout = RoomLayout,
+            NetType = RoomNetType,
             Seats = Seats,
             ComputerSeats = ComputerSeats,
             PdfRoomSchemeFile = new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
             PhotoFile = new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket)),
             HasConditioning = HasConditioning,
             Owner = Owner,
-            RoomStatus = FromRoomStatus,
+            RoomStatus = RoomStatus,
             Comment = FixComment,
             FixDeadline = FixDeadline,
             AllowBooking = AllowBooking
@@ -175,22 +172,22 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
-            Type = ToRoomType,
+            Type = RoomType,
             ScheduleAddress = new ScheduleAddressModel
             {
                 Address = RoomAddress,
                 RoomNumber = RoomNumber,
                 ScheduleRoomId = 0,
             },
-            Layout = ToRoomLayout,
-            NetType = ToRoomNetType,
+            Layout = RoomLayout,
+            NetType = RoomNetType,
             Seats = Seats,
             ComputerSeats = ComputerSeats,
             PdfRoomSchemeFile = new FileDescriptorModel(File1Name, new FileLocationModel(File1Id, File1Bucket)),
             PhotoFile = new FileDescriptorModel(File2Name, new FileLocationModel(File2Id, File2Bucket)),
             HasConditioning = HasConditioning,
             Owner = Owner,
-            RoomStatus = ToRoomStatus,
+            RoomStatus = RoomStatus,
             Comment = FixComment,
             FixDeadline = FixDeadline,
             AllowBooking = AllowBooking
@@ -204,16 +201,16 @@ public static class RoomMapperTestHelper
             Name = RoomName,
             Description = RoomDescription,
             ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber, RoomAddress, 0),
-            Type = FromRoomType,
-            Layout = FromRoomLayout,
-            NetType = FromRoomNetType,
+            Type = RoomType,
+            Layout = RoomLayout,
+            NetType = RoomNetType,
             Seats = Seats,
             ComputerSeats = ComputerSeats,
             PdfRoomSchemeFile = new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
             PhotoFile = new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket)),
             HasConditioning = HasConditioning,
             Owner = Owner,
-            RoomStatus = FromRoomStatus,
+            RoomStatus = RoomStatus,
             Comment = FixComment,
             FixDeadline = FixDeadline,
             AllowBooking = AllowBooking
@@ -230,16 +227,16 @@ public static class RoomMapperTestHelper
             {
                 Name = CreateFilterParameterDto(AscendingSortDirectionDto, RoomName),
                 Description = CreateFilterParameterDto(AscendingSortDirectionDto, RoomDescription),
-                RoomTypes = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomType),
-                RoomLayout = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomLayout),
+                RoomTypes = CreateFilterMultiParameterDto(AscendingSortDirectionDto, RoomType),
+                RoomLayout = CreateFilterMultiParameterDto(AscendingSortDirectionDto, RoomLayout),
                 Seats = CreateFilterParameterDto(AscendingSortDirectionDto, Seats),
                 ComputerSeats = CreateFilterParameterDto(AscendingSortDirectionDto, ComputerSeats),
-                NetTypes = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomNetType),
+                NetTypes = CreateFilterMultiParameterDto(AscendingSortDirectionDto, RoomNetType),
                 Conditioning = CreateFilterParameterDto(AscendingSortDirectionDto, HasConditioning),
                 OperatorDepartments = CreateFilterMultiParameterDto(AscendingSortDirectionDto, OperatorDepartmentId),
                 Operator = CreateFilterParameterDto(AscendingSortDirectionDto, OperatorName),
                 Owner = CreateFilterParameterDto(AscendingSortDirectionDto, Owner),
-                RoomStatuses = CreateFilterMultiParameterDto(AscendingSortDirectionDto, FromRoomStatus),
+                RoomStatuses = CreateFilterMultiParameterDto(AscendingSortDirectionDto, RoomStatus),
                 FixDeadline = CreateFilterParameterDto(AscendingSortDirectionDto, FixDeadline),
                 Comment = CreateFilterParameterDto(AscendingSortDirectionDto, FixComment)
                 // AllowBooking = CreateFilterParameterDto(DescendingSortDirectionDto, AllowBooking),
@@ -257,16 +254,16 @@ public static class RoomMapperTestHelper
             {
                 Name = CreateFilterParameterModel(AscendingSortDirectionModel, RoomName),
                 Description = CreateFilterParameterModel(AscendingSortDirectionModel, RoomDescription),
-                RoomTypes = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomType),
-                RoomLayout = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomLayout),
+                RoomTypes = CreateFilterMultiParameterModel(AscendingSortDirectionModel, RoomType),
+                RoomLayout = CreateFilterMultiParameterModel(AscendingSortDirectionModel, RoomLayout),
                 Seats = CreateFilterParameterModel(AscendingSortDirectionModel, Seats),
                 ComputerSeats = CreateFilterParameterModel(AscendingSortDirectionModel, ComputerSeats),
-                NetTypes = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomNetType),
+                NetTypes = CreateFilterMultiParameterModel(AscendingSortDirectionModel, RoomNetType),
                 Conditioning = CreateFilterParameterModel(AscendingSortDirectionModel, HasConditioning),
                 OperatorDepartments = CreateFilterMultiParameterModel(AscendingSortDirectionModel, OperatorDepartmentId),
                 Operator = CreateFilterParameterModel(AscendingSortDirectionModel, OperatorName),
                 Owner = CreateFilterParameterModel(AscendingSortDirectionModel, Owner),
-                RoomStatuses = CreateFilterMultiParameterModel(AscendingSortDirectionModel, ToRoomStatus),
+                RoomStatuses = CreateFilterMultiParameterModel(AscendingSortDirectionModel, RoomStatus),
                 FixDeadline = CreateFilterParameterModel(AscendingSortDirectionModel, FixDeadline),
                 Comment = CreateFilterParameterModel(AscendingSortDirectionModel, FixComment)
             }

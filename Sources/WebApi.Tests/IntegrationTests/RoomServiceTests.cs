@@ -4,15 +4,12 @@ using Commons.Tests.Integration.Infrastructure;
 using Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 using Microsoft.AspNetCore.JsonPatch;
 using Rooms.Core.Interfaces.Dtos.Room;
-using Rooms.Core.Interfaces.Dtos.Room.Fix;
-using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Domain.Propagated.Exceptions;
+using Rooms.Domain.Propagated.Rooms;
 using WebApi.Core.ModelConverters;
 using WebApi.Core.Models.Requests;
 using WebApi.Core.Models.Requests.Filtering;
 using WebApi.Core.Models.Requests.Rooms;
-using WebApi.Core.Models.Room.Fix;
-using WebApi.Core.Models.Room.Parameters;
 using WebApi.Core.Services.Interfaces;
 
 namespace WebApi.Tests.IntegrationTests;
@@ -153,42 +150,42 @@ public class RoomServiceTests : ContainerTestBase
             .SetName("String: Substring match");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Computer)),
-                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Multimedia)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomType.Computer)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomType.Multimedia)),
                 new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel
                     {
-                        RoomTypes = new FilterMultiParameterModel<RoomTypeModel> { Values = [RoomTypeModel.Computer] }
+                        RoomTypes = new FilterMultiParameterModel<RoomType> { Values = [RoomType.Computer] }
                     }
                 })
             .SetName("Enum: Room type");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wired)),
-                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wireless)),
+                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetType.Wired)),
+                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetType.Wireless)),
                 new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel
                     {
-                        NetTypes = new FilterMultiParameterModel<RoomNetTypeModel> { Values = [RoomNetTypeModel.Wired] }
+                        NetTypes = new FilterMultiParameterModel<RoomNetType> { Values = [RoomNetType.Wired] }
                     }
                 })
             .SetName("Enum: Net type");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
-                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Flat)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayout.Amphitheater)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayout.Flat)),
                 new GetRequest<RoomsFilterModel>
                 {
                     PageSize = 10,
                     Filter = new RoomsFilterModel
                     {
-                        RoomLayout = new FilterMultiParameterModel<RoomLayoutModel>
+                        RoomLayout = new FilterMultiParameterModel<RoomLayout>
                         {
-                            Values = [RoomLayoutModel.Amphitheater]
+                            Values = [RoomLayout.Amphitheater]
                         }
                     }
                 })
@@ -214,27 +211,27 @@ public class RoomServiceTests : ContainerTestBase
             .SetName("FixStatus.Comment");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatusDto.Malfunction)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.RoomStatus, RoomStatusModel.Ready),
-                (Action<RoomDto>)(b => b.FixInfo.Status.Should().Be(RoomStatusDto.Ready)))
+                (Action<CreateRoomRequestBuilder>)(b => b.RoomStatus(RoomStatus.Malfunction)),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.RoomStatus, RoomStatus.Ready),
+                (Action<RoomDto>)(b => b.FixInfo.Status.Should().Be(RoomStatus.Ready)))
             .SetName("FixStatus.Status");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Computer)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Type, RoomTypeModel.Multimedia),
-                (Action<RoomDto>)(b => b.Parameters.Type.Should().Be(RoomTypeDto.Multimedia)))
+                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomType.Computer)),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Type, RoomType.Multimedia),
+                (Action<RoomDto>)(b => b.Parameters.Type.Should().Be(RoomType.Multimedia)))
             .SetName("Parameters.Type");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wired)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.NetType, RoomNetTypeModel.Wireless),
-                (Action<RoomDto>)(b => b.Parameters.NetType.Should().Be(RoomNetTypeDto.Wireless)))
+                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetType.Wired)),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.NetType, RoomNetType.Wireless),
+                (Action<RoomDto>)(b => b.Parameters.NetType.Should().Be(RoomNetType.Wireless)))
             .SetName("Parameters.NetType");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
-                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Layout, RoomLayoutModel.Flat),
-                (Action<RoomDto>)(b => b.Parameters.Layout.Should().Be(RoomLayoutDto.Flat)))
+                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayout.Amphitheater)),
+                new JsonPatchDocument<PatchRoomModel>().Replace(path: t => t.Layout, RoomLayout.Flat),
+                (Action<RoomDto>)(b => b.Parameters.Layout.Should().Be(RoomLayout.Flat)))
             .SetName("Parameters.Layout");
     }
 }

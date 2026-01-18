@@ -73,9 +73,9 @@ internal class RoomService(
             dto.Description,
             new RoomParameters
             {
-                Type = RoomDtoMapper.Map(dto.Type),
-                Layout = RoomDtoMapper.Map(dto.Layout),
-                NetType = RoomDtoMapper.Map(dto.NetType),
+                Type = dto.Type,
+                Layout = dto.Layout,
+                NetType = dto.NetType,
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
                 HasConditioning = dto.HasConditioning
@@ -88,7 +88,7 @@ internal class RoomService(
             dto.Owner,
             new RoomFixInfo
             {
-                Status = RoomDtoMapper.Map(dto.RoomStatus),
+                Status = dto.RoomStatus,
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },
@@ -112,9 +112,9 @@ internal class RoomService(
             dto.Description,
             new RoomParameters
             {
-                Type = RoomDtoMapper.Map(dto.Type),
-                Layout = RoomDtoMapper.Map(dto.Layout),
-                NetType = RoomDtoMapper.Map(dto.NetType),
+                Type = dto.Type,
+                Layout = dto.Layout,
+                NetType = dto.NetType,
                 Seats = dto.Seats,
                 ComputerSeats = dto.ComputerSeats,
                 HasConditioning = dto.HasConditioning
@@ -127,7 +127,7 @@ internal class RoomService(
             dto.Owner,
             new RoomFixInfo
             {
-                Status = RoomDtoMapper.Map(dto.RoomStatus),
+                Status = dto.RoomStatus,
                 FixDeadline = dto.FixDeadline,
                 Comment = dto.Comment
             },

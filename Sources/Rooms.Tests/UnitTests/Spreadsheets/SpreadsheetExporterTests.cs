@@ -10,6 +10,7 @@ using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExportModels;
 using Rooms.Core.Services.Spreadsheets.Specifications;
+using Rooms.Domain.Propagated.Rooms;
 using Rooms.Infrastructure.Services.Spreadsheets;
 
 namespace Rooms.Tests.UnitTests.Spreadsheets;
@@ -137,16 +138,16 @@ public class SpreadsheetExporterTests
                 Attachments = new RoomAttachmentsDto(null, null),
                 Description = random.NextString(),
                 Equipments = [],
-                FixInfo = new RoomFixStatusDto((RoomStatusDto)random.Next(4),
+                FixInfo = new RoomFixStatusDto((RoomStatus)random.Next(4),
                     new DateTime(random.NextInt64(DateTime.MinValue.Ticks, DateTime.MaxValue.Ticks)), random.NextString()),
                 Id = random.Next(),
                 Name = random.NextString(),
                 OperatorDepartmentId = 0,
                 Owner = random.NextString(),
                 Parameters = new RoomParametersDto(
-                    (RoomTypeDto)random.Next(5),
-                    (RoomLayoutDto)random.Next(3),
-                    (RoomNetTypeDto)random.Next(5),
+                    (RoomType)random.Next(5),
+                    (RoomLayout)random.Next(3),
+                    (RoomNetType)random.Next(5),
                     random.Next(),
                     random.Next(),
                     random.NextBoolean())

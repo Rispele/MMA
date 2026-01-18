@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Rooms.Domain.Propagated.Rooms;
 using WebApi.Core.Models.Files;
-using WebApi.Core.Models.Room.Fix;
-using WebApi.Core.Models.Room.Parameters;
 
 namespace WebApi.Core.Models.Requests.Rooms;
 
@@ -16,8 +15,8 @@ public record CreateRoomModel
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]
     public string? Description { get; init; }
 
-    public RoomTypeModel Type { get; init; }
-    public RoomLayoutModel Layout { get; init; }
+    public RoomType Type { get; init; }
+    public RoomLayout Layout { get; init; }
 
     [Range(minimum: 0, int.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? Seats { get; init; }
@@ -27,13 +26,13 @@ public record CreateRoomModel
 
     public FileDescriptorModel? PdfRoomSchemeFile { get; init; }
     public FileDescriptorModel? PhotoFile { get; init; }
-    public RoomNetTypeModel NetType { get; init; }
+    public RoomNetType NetType { get; init; }
     public bool HasConditioning { get; init; }
 
     [Length(minimumLength: 1, maximumLength: 64, ErrorMessage = "Длина владельца должна быть от 1 до 64 символов включительно")]
     public string? Owner { get; init; }
 
-    public RoomStatusModel RoomStatus { get; init; }
+    public RoomStatus RoomStatus { get; init; }
 
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина комментария должна быть от 1 до 256 символов включительно")]
     public string? Comment { get; init; }

@@ -29,15 +29,11 @@ internal static class RoomTestHelper
     private const string FixComment = "Fix comment";
     private const bool AllowBooking = true;
 
-    private const RoomTypeDto ToRoomType = RoomTypeDto.Computer;
-    private const RoomLayoutDto ToRoomLayout = RoomLayoutDto.Amphitheater;
-    private const RoomNetTypeDto ToRoomNetType = RoomNetTypeDto.WiredAndWireless;
-    private const RoomStatusDto ToRoomStatus = RoomStatusDto.Ready;
+    private const RoomType RoomType = Domain.Propagated.Rooms.RoomType.Computer;
+    private const RoomLayout RoomLayout = Domain.Propagated.Rooms.RoomLayout.Amphitheater;
+    private const RoomNetType RoomNetType = Domain.Propagated.Rooms.RoomNetType.WiredAndWireless;
+    private const RoomStatus RoomStatus = Domain.Propagated.Rooms.RoomStatus.Ready;
 
-    private const RoomType FromRoomType = RoomType.Computer;
-    private const RoomLayout FromRoomLayout = RoomLayout.Amphitheater;
-    private const RoomNetType FromRoomNetType = RoomNetType.WiredAndWireless;
-    private const RoomStatus FromRoomStatus = RoomStatus.Ready;
     private static readonly Guid File1Id = Guid.NewGuid();
 
     private static readonly Guid File2Id = Guid.NewGuid();
@@ -62,9 +58,9 @@ internal static class RoomTestHelper
                 new FileDescriptorDto(File1Name, new FileLocationDto(File1Id, File1Bucket)),
                 new FileDescriptorDto(File2Name, new FileLocationDto(File2Id, File2Bucket))),
             Owner = Owner,
-            FixInfo = new RoomFixStatusDto(ToRoomStatus, FixDeadline, FixComment),
+            FixInfo = new RoomFixStatusDto(RoomStatus, FixDeadline, FixComment),
             Equipments = [],
-            Parameters = new RoomParametersDto(ToRoomType, ToRoomLayout, ToRoomNetType, Seats, ComputerSeats, HasConditioning),
+            Parameters = new RoomParametersDto(RoomType, RoomLayout, RoomNetType, Seats, ComputerSeats, HasConditioning),
             ScheduleAddress = new ScheduleAddressDto
             {
                 RoomNumber = RoomNumber, Address = RoomAddress, ScheduleRoomId = ScheduleAddressId
@@ -83,10 +79,10 @@ internal static class RoomTestHelper
             {
                 ComputerSeats = ComputerSeats,
                 HasConditioning = HasConditioning,
-                Layout = FromRoomLayout,
-                NetType = FromRoomNetType,
+                Layout = RoomLayout,
+                NetType = RoomNetType,
                 Seats = Seats,
-                Type = FromRoomType
+                Type = RoomType
             },
             new RoomAttachments
             {
@@ -98,7 +94,7 @@ internal static class RoomTestHelper
             {
                 Comment = FixComment,
                 FixDeadline = FixDeadline,
-                Status = FromRoomStatus
+                Status = RoomStatus
             },
             AllowBooking);
 

@@ -1,7 +1,6 @@
 ﻿using Commons.Core.Models.Filtering;
-using Rooms.Core.Interfaces.Dtos.Room.Fix;
-using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Commons.Tests.Helpers.SDK.Rooms;
 
@@ -12,13 +11,13 @@ public class RoomsFilterBuilder
     private FilterParameterDto<string>? description;
     private FilterParameterDto<DateTime>? fixDeadline;
     private FilterParameterDto<bool>? hasConditioning;
-    private FilterMultiParameterDto<RoomLayoutDto>? layout;
+    private FilterMultiParameterDto<RoomLayout>? layout;
     private FilterParameterDto<string>? name;
-    private FilterMultiParameterDto<RoomNetTypeDto>? netTypes;
+    private FilterMultiParameterDto<RoomNetType>? netTypes;
     private FilterParameterDto<string>? owner;
     private FilterParameterDto<int>? seats;
-    private FilterMultiParameterDto<RoomStatusDto>? status;
-    private FilterMultiParameterDto<RoomTypeDto>? types;
+    private FilterMultiParameterDto<RoomStatus>? status;
+    private FilterMultiParameterDto<RoomType>? types;
 
     public RoomsFilterBuilder Name(string value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
@@ -32,15 +31,15 @@ public class RoomsFilterBuilder
         return this;
     }
 
-    public RoomsFilterBuilder Type(RoomTypeDto[] values, SortDirectionDto sortDirection = SortDirectionDto.None)
+    public RoomsFilterBuilder Type(RoomType[] values, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
-        types = new FilterMultiParameterDto<RoomTypeDto>(values, sortDirection);
+        types = new FilterMultiParameterDto<RoomType>(values, sortDirection);
         return this;
     }
 
-    public RoomsFilterBuilder Layout(RoomLayoutDto[] values, SortDirectionDto sortDirection = SortDirectionDto.None)
+    public RoomsFilterBuilder Layout(RoomLayout[] values, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
-        layout = new FilterMultiParameterDto<RoomLayoutDto>(values, sortDirection);
+        layout = new FilterMultiParameterDto<RoomLayout>(values, sortDirection);
         return this;
     }
 
@@ -56,9 +55,9 @@ public class RoomsFilterBuilder
         return this;
     }
 
-    public RoomsFilterBuilder NetType(RoomNetTypeDto[] values, SortDirectionDto sortDirection = SortDirectionDto.None)
+    public RoomsFilterBuilder NetType(RoomNetType[] values, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
-        netTypes = new FilterMultiParameterDto<RoomNetTypeDto>(values, sortDirection);
+        netTypes = new FilterMultiParameterDto<RoomNetType>(values, sortDirection);
         return this;
     }
 
@@ -74,9 +73,9 @@ public class RoomsFilterBuilder
         return this;
     }
 
-    public RoomsFilterBuilder RoomStatus(RoomStatusDto[] value, SortDirectionDto sortDirection = SortDirectionDto.None)
+    public RoomsFilterBuilder RoomStatus(RoomStatus[] value, SortDirectionDto sortDirection = SortDirectionDto.None)
     {
-        status = new FilterMultiParameterDto<RoomStatusDto>(value, sortDirection);
+        status = new FilterMultiParameterDto<RoomStatus>(value, sortDirection);
         return this;
     }
 

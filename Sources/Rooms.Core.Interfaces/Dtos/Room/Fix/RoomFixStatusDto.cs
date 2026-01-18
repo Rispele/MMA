@@ -1,3 +1,5 @@
-﻿namespace Rooms.Core.Interfaces.Dtos.Room.Fix;
+﻿using Rooms.Domain.Propagated.Rooms;
 
-public record RoomFixStatusDto(RoomStatusDto Status, DateTime? FixDeadline, string? Comment);
+namespace Rooms.Core.Interfaces.Dtos.Room.Fix;
+
+public record RoomFixStatusDto(RoomStatus Status, DateTime? FixDeadline, string? Comment);

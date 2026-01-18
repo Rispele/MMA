@@ -4,11 +4,10 @@ using FluentAssertions;
 using Commons.Tests.Integration.Infrastructure;
 using Commons.Tests.Integration.Infrastructure.ContainerBasedTests;
 using Rooms.Core.Interfaces.Dtos.Room;
-using Rooms.Core.Interfaces.Dtos.Room.Fix;
-using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Interfaces.Services.Rooms;
 using Rooms.Domain.Propagated.Exceptions;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Rooms.Tests.IntegrationTests.Rooms;
 
@@ -106,16 +105,16 @@ public class RoomServiceTests : ContainerTestBase
                 Name = "new name",
                 Description = "new description",
                 ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber: "123", Address: "123", 0),
-                Type = RoomTypeDto.Multimedia,
-                Layout = RoomLayoutDto.Amphitheater,
+                Type = RoomType.Multimedia,
+                Layout = RoomLayout.Amphitheater,
                 Seats = 12,
                 ComputerSeats = 13,
                 PdfRoomSchemeFile = null,
                 PhotoFile = null,
-                NetType = RoomNetTypeDto.WiredAndWireless,
+                NetType = RoomNetType.WiredAndWireless,
                 HasConditioning = true,
                 Owner = "new owner",
-                RoomStatus = RoomStatusDto.Ready,
+                RoomStatus = RoomStatus.Ready,
                 Comment = "new comment",
                 // FixDeadline = DateTime.UtcNow,
                 AllowBooking = false
@@ -166,48 +165,48 @@ public class RoomServiceTests : ContainerTestBase
             .SetName("String: Substring match");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Computer)),
-                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomTypeDto.Multimedia)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomType.Computer)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Type(RoomType.Multimedia)),
                 new GetRoomsRequestDto
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
                     Filter = new RoomsFilterDto
                     {
-                        RoomTypes = new FilterMultiParameterDto<RoomTypeDto>(
-                            [RoomTypeDto.Computer],
+                        RoomTypes = new FilterMultiParameterDto<RoomType>(
+                            [RoomType.Computer],
                             SortDirectionDto.Ascending)
                     }
                 })
             .SetName("Enum: Room type");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wired)),
-                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetTypeDto.Wireless)),
+                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetType.Wired)),
+                (Action<CreateRoomRequestBuilder>)(b => b.NetType(RoomNetType.Wireless)),
                 new GetRoomsRequestDto
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
                     Filter = new RoomsFilterDto
                     {
-                        NetTypes = new FilterMultiParameterDto<RoomNetTypeDto>(
-                            [RoomNetTypeDto.Wired],
+                        NetTypes = new FilterMultiParameterDto<RoomNetType>(
+                            [RoomNetType.Wired],
                             SortDirectionDto.Ascending)
                     }
                 })
             .SetName("Enum: Net type");
 
         yield return new TestCaseData(
-                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Amphitheater)),
-                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayoutDto.Flat)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayout.Amphitheater)),
+                (Action<CreateRoomRequestBuilder>)(b => b.Layout(RoomLayout.Flat)),
                 new GetRoomsRequestDto
                 {
                     BatchNumber = 0,
                     BatchSize = 10,
                     Filter = new RoomsFilterDto
                     {
-                        RoomLayout = new FilterMultiParameterDto<RoomLayoutDto>(
-                            [RoomLayoutDto.Amphitheater],
+                        RoomLayout = new FilterMultiParameterDto<RoomLayout>(
+                            [RoomLayout.Amphitheater],
                             SortDirectionDto.Ascending)
                     }
                 })

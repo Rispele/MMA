@@ -1,6 +1,5 @@
-﻿using Rooms.Core.Interfaces.Dtos.Room.Fix;
-using Rooms.Core.Interfaces.Dtos.Room.Parameters;
-using Rooms.Core.Interfaces.Dtos.Room.Requests;
+﻿using Rooms.Core.Interfaces.Dtos.Room.Requests;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Commons.Tests.Helpers.SDK.Rooms;
 
@@ -13,12 +12,12 @@ public class CreateRoomRequestBuilder
     private string? description;
     private DateTime? fixDeadline;
     private bool hasConditioning;
-    private RoomLayoutDto layout;
-    private RoomNetTypeDto netType;
+    private RoomLayout layout;
+    private RoomNetType netType;
     private string? owner;
-    private RoomStatusDto roomStatus;
+    private RoomStatus roomStatus;
     private int? seats;
-    private RoomTypeDto type;
+    private RoomType type;
 
     private CreateRoomRequestBuilder(string name)
     {
@@ -36,13 +35,13 @@ public class CreateRoomRequestBuilder
         return this;
     }
 
-    public CreateRoomRequestBuilder Type(RoomTypeDto typeToSet)
+    public CreateRoomRequestBuilder Type(RoomType typeToSet)
     {
         type = typeToSet;
         return this;
     }
 
-    public CreateRoomRequestBuilder Layout(RoomLayoutDto roomLayoutToSet)
+    public CreateRoomRequestBuilder Layout(RoomLayout roomLayoutToSet)
     {
         layout = roomLayoutToSet;
         return this;
@@ -60,7 +59,7 @@ public class CreateRoomRequestBuilder
         return this;
     }
 
-    public CreateRoomRequestBuilder NetType(RoomNetTypeDto netTypeToSet)
+    public CreateRoomRequestBuilder NetType(RoomNetType netTypeToSet)
     {
         netType = netTypeToSet;
         return this;
@@ -78,7 +77,7 @@ public class CreateRoomRequestBuilder
         return this;
     }
 
-    public CreateRoomRequestBuilder RoomStatus(RoomStatusDto roomStatusToSet)
+    public CreateRoomRequestBuilder RoomStatus(RoomStatus roomStatusToSet)
     {
         roomStatus = roomStatusToSet;
         return this;

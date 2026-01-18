@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Rooms.Core.Interfaces.Dtos.Files;
-using Rooms.Core.Interfaces.Dtos.Room.Fix;
-using Rooms.Core.Interfaces.Dtos.Room.Parameters;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Rooms.Core.Interfaces.Dtos.Room.Requests;
 
@@ -17,8 +16,8 @@ public record PatchRoomDto
     public string? Description { get; init; }
 
     public ScheduleAddressPatchDto? ScheduleAddress { get; init; }
-    public RoomTypeDto Type { get; init; }
-    public RoomLayoutDto Layout { get; init; }
+    public RoomType Type { get; init; }
+    public RoomLayout Layout { get; init; }
 
     [Range(minimum: 0, double.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? Seats { get; init; }
@@ -30,13 +29,13 @@ public record PatchRoomDto
 
     public FileDescriptorDto? PhotoFile { get; init; }
 
-    public RoomNetTypeDto NetType { get; init; }
+    public RoomNetType NetType { get; init; }
     public bool? HasConditioning { get; init; }
 
     [Length(minimumLength: 1, maximumLength: 64, ErrorMessage = "Длина владельца должна быть от 1 до 64 символов включительно")]
     public string? Owner { get; init; }
 
-    public RoomStatusDto RoomStatus { get; init; }
+    public RoomStatus RoomStatus { get; init; }
 
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина комментария должна быть от 1 до 256 символов включительно")]
     public string? Comment { get; init; }

@@ -1,3 +1,5 @@
-﻿namespace WebApi.Core.Models.Room.Fix;
+﻿using Rooms.Domain.Propagated.Rooms;
 
-public record RoomFixStatusModel(RoomStatusModel Status, DateTime? FixDeadline, string? Comment);
+namespace WebApi.Core.Models.Room.Fix;
+
+public record RoomFixStatusModel(RoomStatus Status, DateTime? FixDeadline, string? Comment);

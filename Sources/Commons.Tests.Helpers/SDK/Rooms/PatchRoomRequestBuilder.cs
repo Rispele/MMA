@@ -1,7 +1,6 @@
 ﻿using Rooms.Core.Interfaces.Dtos.Room;
-using Rooms.Core.Interfaces.Dtos.Room.Fix;
-using Rooms.Core.Interfaces.Dtos.Room.Parameters;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
+using Rooms.Domain.Propagated.Rooms;
 
 namespace Commons.Tests.Helpers.SDK.Rooms;
 
@@ -13,25 +12,25 @@ public class PatchRoomRequestBuilder
     private string? description;
     private DateTime? fixDeadline;
     private bool? hasConditioning;
-    private RoomLayoutDto layout;
+    private RoomLayout layout;
     private string name;
-    private RoomNetTypeDto netType;
+    private RoomNetType netType;
     private string? owner;
-    private RoomStatusDto roomStatus;
+    private RoomStatus roomStatus;
     private int? seats;
-    private RoomTypeDto type;
+    private RoomType type;
 
     private PatchRoomRequestBuilder(
         string name,
         string? description,
-        RoomTypeDto type,
-        RoomLayoutDto layout,
+        RoomType type,
+        RoomLayout layout,
         int? seats,
         int? computerSeats,
-        RoomNetTypeDto netType,
+        RoomNetType netType,
         bool? hasConditioning,
         string? owner,
-        RoomStatusDto roomStatus,
+        RoomStatus roomStatus,
         string? comment,
         DateTime? fixDeadline,
         bool allowBooking)
@@ -81,13 +80,13 @@ public class PatchRoomRequestBuilder
         return this;
     }
 
-    public PatchRoomRequestBuilder Type(RoomTypeDto typeToSet)
+    public PatchRoomRequestBuilder Type(RoomType typeToSet)
     {
         type = typeToSet;
         return this;
     }
 
-    public PatchRoomRequestBuilder Layout(RoomLayoutDto roomLayoutToSet)
+    public PatchRoomRequestBuilder Layout(RoomLayout roomLayoutToSet)
     {
         layout = roomLayoutToSet;
         return this;
@@ -105,7 +104,7 @@ public class PatchRoomRequestBuilder
         return this;
     }
 
-    public PatchRoomRequestBuilder NetType(RoomNetTypeDto netTypeToSet)
+    public PatchRoomRequestBuilder NetType(RoomNetType netTypeToSet)
     {
         netType = netTypeToSet;
         return this;
@@ -123,7 +122,7 @@ public class PatchRoomRequestBuilder
         return this;
     }
 
-    public PatchRoomRequestBuilder RoomStatus(RoomStatusDto roomStatusToSet)
+    public PatchRoomRequestBuilder RoomStatus(RoomStatus roomStatusToSet)
     {
         roomStatus = roomStatusToSet;
         return this;

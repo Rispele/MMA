@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Rooms.Domain.Propagated.Rooms;
 using WebApi.Core.Models.Files;
 using WebApi.Core.Models.Room;
-using WebApi.Core.Models.Room.Fix;
-using WebApi.Core.Models.Room.Parameters;
 
 namespace WebApi.Core.Models.Requests.Rooms;
 
@@ -19,9 +18,9 @@ public class PatchRoomModel
 
     public ScheduleAddressModel? ScheduleAddress { get; set; }
 
-    public RoomTypeModel Type { get; set; }
-    public RoomLayoutModel Layout { get; set; }
-    public RoomNetTypeModel NetType { get; set; }
+    public RoomType Type { get; set; }
+    public RoomLayout Layout { get; set; }
+    public RoomNetType NetType { get; set; }
 
     [Range(minimum: 0, int.MaxValue, ErrorMessage = "Кол-во мест не может быть отрицательным")]
     public int? Seats { get; set; }
@@ -36,7 +35,7 @@ public class PatchRoomModel
     [Length(minimumLength: 1, maximumLength: 64, ErrorMessage = "Длина владельца должна быть от 1 до 64 символов включительно")]
     public string? Owner { get; set; }
 
-    public RoomStatusModel RoomStatus { get; set; }
+    public RoomStatus RoomStatus { get; set; }
 
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина комментария должна быть от 1 до 256 символов включительно")]
     public string? Comment { get; set; }
