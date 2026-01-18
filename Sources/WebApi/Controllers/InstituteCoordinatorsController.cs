@@ -50,7 +50,7 @@ public class InstituteCoordinatorsController(IInstituteCoordinatorService instit
     /// <param name="cancellationToken"></param>
     /// <returns>Список доступных для выбора ответственных лиц</returns>
     [HttpGet("coordinators")]
-    public async Task<ActionResult<Task<InstituteCoordinatorEmployeeModel[]>>> GetAvailableCoordinators(CancellationToken cancellationToken)
+    public async Task<ActionResult<InstituteCoordinatorEmployeeModel[]>> GetAvailableCoordinators(CancellationToken cancellationToken)
     {
         var coordinators = await instituteCoordinatorService.GetAvailableInstituteCoordinatorsAsync(cancellationToken);
         return Ok(coordinators);
