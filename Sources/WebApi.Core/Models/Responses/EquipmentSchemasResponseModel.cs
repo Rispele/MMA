@@ -2,4 +2,4 @@
 
 namespace WebApi.Core.Models.Responses;
 
-public class EquipmentSchemasResponseModel(EquipmentSchemaModel[] EquipmentSchemas, int TotalCount);
+public record EquipmentSchemasResponseModel(EquipmentSchemaModel[] EquipmentSchemas, int TotalCount);

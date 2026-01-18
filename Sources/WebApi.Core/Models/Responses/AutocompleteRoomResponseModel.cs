@@ -1,3 +1,3 @@
 ﻿namespace WebApi.Core.Models.Responses;
 
-public class AutocompleteRoomResponseModel(int RoomId, string ViewRoomName);
+public record AutocompleteRoomResponseModel(int RoomId, string ViewRoomName);

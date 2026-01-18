@@ -10,7 +10,5 @@ public record EquipmentsFilterDto
     public FilterMultiParameterDto<int>? Schemas { get; init; }
     public FilterParameterDto<string>? InventoryNumber { get; init; }
     public FilterParameterDto<string>? SerialNumber { get; init; }
-    // public FilterParameterDto<string>? NetworkEquipmentIp { get; init; }
-    // public FilterParameterDto<string>? Comment { get; init; }
     public FilterMultiParameterDto<EquipmentStatus>? Statuses { get; init; }
 }

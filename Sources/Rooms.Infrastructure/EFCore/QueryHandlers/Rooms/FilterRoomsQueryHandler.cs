@@ -5,7 +5,6 @@ using Commons.Optional;
 using Microsoft.EntityFrameworkCore;
 using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Queries.Implementations.Room;
-using Rooms.Core.Services.Rooms.Mappers;
 using Rooms.Domain.Models.Rooms;
 
 namespace Rooms.Infrastructure.EFCore.QueryHandlers.Rooms;
@@ -34,81 +33,106 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
             return rooms;
         }
 
-        rooms = filter.Name
-            .AsOptional()
-            .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.Name.Contains(parameter.Value)));
+        if (filter.Name != null)
+        {
+            rooms = filter.Name
+                .AsOptional()
+                .Apply(rooms, apply: (queryable, parameter) =>
+                    queryable.Where(t => t.Name.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        rooms = filter.Description
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) =>
-                    queryable.Where(t => t.Description != null && t.Description.Contains(parameter.Value)));
+        if (filter.Description != null)
+        {
+            rooms = filter.Description
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => t.Description != null && t.Description.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        rooms = filter.RoomTypes
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) =>
-                {
-                    var values = parameter.Values.Select(RoomDtoMapper.Map);
-                    return queryable.Where(t => values.Contains(t.Parameters.Type));
-                });
+        if (filter.RoomTypes != null)
+        {
+            rooms = filter.RoomTypes
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => parameter.Values.Any(x => x == t.Parameters.Type)));
+        }
 
-        rooms = filter.RoomLayout
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) =>
-                {
-                    var values = parameter.Values.Select(RoomDtoMapper.Map);
-                    return queryable.Where(t => values.Contains(t.Parameters.Layout));
-                });
+        if (filter.RoomLayout != null)
+        {
+            rooms = filter.RoomLayout
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => parameter.Values.Any(x => x == t.Parameters.Layout)));
+        }
 
-        rooms = filter.Seats
-            .AsOptional()
-            .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.Parameters.Seats >= parameter.Value));
+        if (filter.Seats != null)
+        {
+            rooms = filter.Seats
+                .AsOptional()
+                .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.Parameters.Seats == parameter.Value));
+        }
 
-        rooms = filter.ComputerSeats
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) => queryable.Where(t => t.Parameters.ComputerSeats >= parameter.Value));
+        if (filter.ComputerSeats != null)
+        {
+            rooms = filter.ComputerSeats
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) => queryable.Where(t => t.Parameters.ComputerSeats == parameter.Value));
+        }
 
-        rooms = filter.NetTypes
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) =>
-                {
-                    var values = parameter.Values.Select(RoomDtoMapper.Map);
-                    return queryable.Where(t => values.Contains(t.Parameters.NetType));
-                });
+        if (filter.NetTypes != null)
+        {
+            rooms = filter.NetTypes
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => parameter.Values.Any(x => x == t.Parameters.NetType)));
+        }
 
-        rooms = filter.Conditioning
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) => queryable.Where(t => t.Parameters.HasConditioning == parameter.Value));
+        if (filter.Conditioning != null)
+        {
+            rooms = filter.Conditioning
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) => queryable.Where(t => t.Parameters.HasConditioning == parameter.Value));
+        }
 
-        rooms = filter.Owner
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) => queryable.Where(t => t.Owner != null && t.Owner.Contains(parameter.Value)));
+        if (filter.Owner != null)
+        {
+            rooms = filter.Owner
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => t.Owner != null && t.Owner.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        rooms = filter.RoomStatuses
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) =>
-                {
-                    var values = parameter.Values.Select(RoomDtoMapper.Map);
-                    return queryable.Where(t => values.Contains(t.FixInfo.Status));
-                });
+        if (filter.RoomStatuses != null)
+        {
+            rooms = filter.RoomStatuses
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => parameter.Values.Any(x => x == t.FixInfo.Status)));
+        }
 
-        rooms = filter.FixDeadline
-            .AsOptional()
-            .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.FixInfo.FixDeadline == parameter.Value));
+        if (filter.FixDeadline != null)
+        {
+            rooms = filter.FixDeadline
+                .AsOptional()
+                .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.FixInfo.FixDeadline == parameter.Value));
+        }
 
-
-        rooms = filter.Comment
-            .AsOptional()
-            .Apply(rooms,
-                apply: (queryable, parameter) => queryable.Where(t =>
-                    t.FixInfo.Comment != null && t.FixInfo.Comment.Contains(parameter.Value)));
+        if (filter.Comment != null)
+        {
+            rooms = filter.Comment
+                .AsOptional()
+                .Apply(rooms,
+                    apply: (queryable, parameter) =>queryable.Where(t =>
+                        t.FixInfo.Comment != null && t.FixInfo.Comment.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
         return rooms;
     }
