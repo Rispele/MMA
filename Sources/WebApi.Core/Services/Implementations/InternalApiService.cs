@@ -8,6 +8,10 @@ public class InternalApiService(IBookingService bookingService) : IInternalApiSe
 {
     public Task SaveEdmsResolutionResult(int bookingRequestId, EdmsResolutionResult edmsResolutionResult, CancellationToken cancellationToken)
     {
-        return bookingService.SaveEdmsResolutionResult(bookingRequestId, edmsResolutionResult.IsApproved, cancellationToken);
+        return bookingService.SaveEdmsResolutionResult(
+            bookingRequestId,
+            edmsResolutionResult.IsApproved,
+            edmsResolutionResult.ErrorMessage,
+            cancellationToken);
     }
 }

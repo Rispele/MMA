@@ -20,7 +20,7 @@ public static class ApplicationRunner
 
         builder
             .Services
-            .ConfigureServicesForWebApi()
+            .ConfigureServicesForWebApi(builder.Environment.IsDevelopment())
             .AddOpenApi();
 
         return ConfigureApplication(builder);

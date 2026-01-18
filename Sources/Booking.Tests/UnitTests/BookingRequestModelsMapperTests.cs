@@ -63,7 +63,8 @@ public class BookingRequestModelsMapperTests
         expected.Reason.Should().Be(actual.Reason);
         expected.ParticipantsCount.Should().Be(actual.ParticipantsCount);
         expected.TechEmployeeRequired.Should().Be(actual.TechEmployeeRequired);
-        expected.EventHostFullName.Should().Be(actual.EventHostFullName);
+        expected.EventHost.Name.Should().Be(actual.EventHost.Name);
+        expected.EventHost.Id.Should().Be(actual.EventHost.Id);
         expected.CreatedAt.Should().Be(actual.CreatedAt);
         expected.EventName.Should().Be(actual.EventName);
         expected.Status.Should().Be(actual.Status);

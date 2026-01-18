@@ -13,7 +13,6 @@ namespace Booking.Domain.Models.BookingRequests;
 public class BookingRequest
 {
     private readonly int? id;
-    private readonly List<int> roomIds = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()
@@ -25,7 +24,7 @@ public class BookingRequest
         string reason,
         int participantsCount,
         bool techEmployeeRequired,
-        string eventHostFullName,
+        EventHost eventHost,
         IRoomEventCoordinator roomEventCoordinator,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule)
@@ -34,12 +33,12 @@ public class BookingRequest
         Reason = reason;
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
-        EventHostFullName = eventHostFullName;
+        EventHost = eventHost;
         RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
         Status = BookingStatus.New;
-        BookingScheduleStatus = Propagated.BookingRequests.BookingScheduleStatus.NotSent;
+        BookingScheduleStatus = BookingScheduleStatus.NotSent;
         ModeratorComment = string.Empty;
         CreatedAt = DateTime.UtcNow;
     }
@@ -49,14 +48,14 @@ public class BookingRequest
     public string Reason { get; private set; } = null!;
     public int ParticipantsCount { get; private set; }
     public bool TechEmployeeRequired { get; private set; }
-    public string EventHostFullName { get; private set; } = null!;
+    public EventHost EventHost { get; private set; } = null!;
     public IRoomEventCoordinator RoomEventCoordinator { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public string EventName { get; private set; } = null!;
-    public IEnumerable<int> RoomIds => roomIds;
     public BookingStatus Status { get; private set; }
+    public string? EdmsResolutionComment { get; private set; }
     public string? ModeratorComment { get; private set; }
-    public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
+    public BookingScheduleStatus BookingScheduleStatus { get; private set; }
 
     public IEnumerable<BookingTime> BookingSchedule { get; set; } = [];
     public BookingProcess? BookingProcess { get; private set; }
@@ -68,7 +67,7 @@ public class BookingRequest
         string reason,
         int participantsCount,
         bool techEmployeeRequired,
-        string eventHostFullName,
+        EventHost eventHost,
         IRoomEventCoordinator roomEventCoordinator,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule)
@@ -79,10 +78,62 @@ public class BookingRequest
         Reason = reason;
         ParticipantsCount = participantsCount;
         TechEmployeeRequired = techEmployeeRequired;
-        EventHostFullName = eventHostFullName;
+        EventHost = eventHost;
         RoomEventCoordinator = roomEventCoordinator;
         EventName = eventName;
         BookingSchedule = bookingSchedule;
+    }
+
+    #endregion
+
+    #region Booking
+
+    public void SetRoomsBooked()
+    {
+        ValidateBookingScheduleStatus(
+            "Состояние бронирования не позволяет забронировать аудитории",
+            BookingScheduleStatus.NotSent);
+
+        BookingScheduleStatus = BookingScheduleStatus.Booked;
+    }
+
+    public void SetRoomsBookingApproved()
+    {
+        ValidateBookingScheduleStatus(
+            "Состояние бронирования не позволяет подтвердить бронирование",
+            BookingScheduleStatus.Booked);
+
+        BookingScheduleStatus = BookingScheduleStatus.BookingApproved;
+    }
+
+
+    public void SetRoomsBookingCancelled()
+    {
+        ValidateBookingScheduleStatus(
+            "Состояние бронирования не позволяет отменить бронирование",
+            BookingScheduleStatus.Booked);
+
+        BookingScheduleStatus = BookingScheduleStatus.BookingCancelled;
+    }
+
+    public void SetRoomsBookingCancellationErrorOccured()
+    {
+        BookingScheduleStatus = BookingScheduleStatus.BookingCancelError;
+    }
+
+    private void ValidateBookingScheduleStatus(string errorMessage, params BookingScheduleStatus[] expected)
+    {
+        if (expected.Contains(BookingScheduleStatus))
+        {
+            return;
+        }
+
+        throw new InvalidBookingRequestState(EnhanceMessageWithStatus(errorMessage));
+
+        string EnhanceMessageWithStatus(string message)
+        {
+            return message.Trim() + $" Текущий статус бронирования аудитории: [{BookingScheduleStatus}]";
+        }
     }
 
     #endregion
@@ -98,7 +149,7 @@ public class BookingRequest
         BookingProcess!.AddBookingEvent(new BookingEvent(Id, new BookingRequestSentForApprovalInEdmsEventPayload()));
     }
 
-    public void SaveEdmsResolutionResult(bool isApproved)
+    public void SaveEdmsResolutionResult(bool isApproved, string? errorMessage)
     {
         ValidateStatus(
             BookingStatus.SentForApprovalInEdms,
@@ -107,6 +158,7 @@ public class BookingRequest
                 : "Текущее состояние заявки не позволяет отказать в согласовании в СЭД.");
 
         Status = isApproved ? BookingStatus.ApprovedInEdms : BookingStatus.RejectedInEdms;
+        EdmsResolutionComment = errorMessage;
     }
 
     #endregion
@@ -168,6 +220,7 @@ public class BookingRequest
         ValidateBookingProcessInitiated();
 
         BookingProcess!.InitiateRollback();
+        Status = BookingStatus.Error;
     }
 
     public IEnumerable<BookingEvent> GetEventsToRollback()
@@ -186,7 +239,6 @@ public class BookingRequest
     }
 
     #endregion
-
 
     private void ValidateStatus(BookingStatus expectedStatus, string errorMessage)
     {
@@ -211,7 +263,7 @@ public class BookingRequest
         string reason,
         int participantsCount,
         bool techEmployeeRequired,
-        string eventHostFullName,
+        string eventHost,
         IRoomEventCoordinator roomEventCoordinator,
         string eventName,
         IEnumerable<BookingTime> bookingSchedule) :
@@ -220,7 +272,7 @@ public class BookingRequest
             reason,
             participantsCount,
             techEmployeeRequired,
-            eventHostFullName,
+            new EventHost("123", eventHost),
             roomEventCoordinator,
             eventName,
             bookingSchedule)

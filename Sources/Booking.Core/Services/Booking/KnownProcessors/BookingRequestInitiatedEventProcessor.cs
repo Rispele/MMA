@@ -3,7 +3,6 @@ using Booking.Core.Services.Booking.KnownProcessors.Result;
 using Booking.Domain.Models.BookingProcesses.Events;
 using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Domain.Models.BookingRequests;
-using Booking.Domain.Models.BookingRequests.RoomEventCoordinator;
 using Booking.Domain.Propagated.BookingRequests;
 using Commons.Domain.Queries.Abstractions;
 using Commons.ExternalClients.Booking;
@@ -16,6 +15,7 @@ namespace Booking.Core.Services.Booking.KnownProcessors;
 public class BookingRequestInitiatedEventProcessor(
     IRoomService roomService,
     IBookingClient bookingClient,
+    bool skipTeacherPkey,
     ILogger<BookingRequestInitiatedEventProcessor> logger)
     : IBookingEventProcessor<BookingRequestInitiatedEventPayload>
 {
@@ -75,6 +75,7 @@ public class BookingRequestInitiatedEventProcessor(
                 bookingProcess.AddBookingEvent(new BookingEvent(bookingRequest.Id, payload));
             }
 
+            bookingRequest.SetRoomsBooked();
             bookingRequest.SendForApprovalInEdms();
 
             return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Success);
@@ -124,15 +125,18 @@ public class BookingRequestInitiatedEventProcessor(
 
                 if (response is { IsOk: false, ShouldRetry: false })
                 {
-                    logger.LogWarning(
-                        "Error occured declining booking with eventId: [{Id}] of event: [{EventId}], errors: [{Errors}]. Set rolled back anyway.",
+                    logger.LogError(
+                        "Error occured declining booking with eventId: [{Id}] of event: [{EventId}], errors: [{Errors}]. Set rolled back anyway. Need admin actions!",
                         scheduleEventId,
                         bookingEvent.Id,
                         response.Errors);
+                    bookingRequest.SetRoomsBookingCancellationErrorOccured();
                 }
 
                 bookingProcess.RollBackEvent(@event.Id);
             }
+
+            bookingRequest.SetRoomsBookingCancelled();
         }
         catch (Exception e)
         {
@@ -156,17 +160,20 @@ public class BookingRequestInitiatedEventProcessor(
             dateToBook.To,
             result.Errors);
 
-        if (!result.Deduplicated || result.ShouldRetry)
+        if (result.ShouldRetry)
         {
             return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Retry);
         }
 
-        logger.LogCritical(
-            "Event id is lost for [{RoomId}] booking with date: [{Date}] from [{TimeFrom}] to [{TimeTo}]. Need admin actions!",
-            dateToBook.RoomId,
-            dateToBook.Date,
-            dateToBook.From,
-            dateToBook.To);
+        if (result.Errors?.Any(t => t.Contains("Аудитория занята или не существует")) ?? false)
+        {
+            logger.LogCritical(
+                "Either event id is lost for [{RoomId}] room booking or room was already booked by someone else. Date: [{Date}] from [{TimeFrom}] to [{TimeTo}]. Need admin actions!",
+                dateToBook.RoomId,
+                dateToBook.Date,
+                dateToBook.From,
+                dateToBook.To);
+        }
 
         return new SynchronizeEventProcessorResult(bookingEvent, SynchronizeEventResultType.Rollback);
     }
@@ -178,6 +185,7 @@ public class BookingRequestInitiatedEventProcessor(
         CancellationToken cancellationToken)
     {
         var scheduleId = roomIdToScheduleId[dateToBook.RoomId]!.Value;
+
         var request = new BookRoomRequest(
             dateToBook.Date,
             scheduleId.ToString()!,
@@ -192,9 +200,7 @@ public class BookingRequestInitiatedEventProcessor(
                 RoomEventCoordinatorType.Other => "Прочее мероприятие",
                 _ => throw new ArgumentOutOfRangeException()
             },
-            bookingRequest.RoomEventCoordinator.EventCoordinatorType is RoomEventCoordinatorType.Scientific
-                ? (bookingRequest.RoomEventCoordinator as ScientificRoomEventCoordinator)!.CoordinatorId
-                : null);
+            skipTeacherPkey ? null : bookingRequest.EventHost.Id);
 
         var result = await bookingClient.BookRoom(request, cancellationToken);
         return result;

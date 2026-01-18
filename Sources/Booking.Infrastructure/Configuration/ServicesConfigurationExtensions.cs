@@ -14,14 +14,17 @@ using Booking.Domain.Models.BookingProcesses.Events.Payloads;
 using Booking.Infrastructure.EFCore;
 using Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
 using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
 using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Rooms.Core.Interfaces.Services.Rooms;
 
 namespace Booking.Infrastructure.Configuration;
 
 public static class ServicesConfigurationExtensions
 {
-    public static IServiceCollection ConfigureServicesForBooking(this IServiceCollection serviceCollection)
+    public static IServiceCollection ConfigureServicesForBooking(this IServiceCollection serviceCollection, bool isDevelopment)
     {
         return serviceCollection
             .AddSingleton(new RoomScheduleClientSettings("https://public-schedule-api.my1.urfu.ru/"))
@@ -33,10 +36,10 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IBookingRequestService, BookingRequestService>()
             .AddScoped<ILkUserService, LkUserService>()
             .AddScoped<IScheduleService, ScheduleService>()
-            .AddBookingEventSynchronizer();
+            .AddBookingEventSynchronizer(isDevelopment);
     }
 
-    private static IServiceCollection AddBookingEventSynchronizer(this IServiceCollection serviceCollection)
+    private static IServiceCollection AddBookingEventSynchronizer(this IServiceCollection serviceCollection, bool isDevelopment)
     {
         return serviceCollection
             .AddScoped<BookingEventProcessor>()
@@ -45,6 +48,11 @@ public static class ServicesConfigurationExtensions
             .AddScoped<IBookingProcessRollbackSynchronizer, BookingProcessRollbackSynchronizer>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestSentForApprovalInEdmsEventProcessor>()
             .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestResolvedInEdmsEventProcessor>()
-            .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestInitiatedEventProcessor>();
+            .AddScoped<IBookingEventProcessor<IBookingEventPayload>, BookingRequestInitiatedEventProcessor>(t =>
+                new BookingRequestInitiatedEventProcessor(
+                    t.GetRequiredService<IRoomService>(),
+                    t.GetRequiredService<IBookingClient>(),
+                    skipTeacherPkey: isDevelopment,
+                    t.GetRequiredService<ILogger<BookingRequestInitiatedEventProcessor>>()));
     }
 }

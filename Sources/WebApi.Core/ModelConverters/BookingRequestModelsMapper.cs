@@ -17,6 +17,11 @@ public static partial class BookingRequestModelsMapper
     public static partial BookingRequestModel MapBookingRequestToModel(BookingRequestDto bookingRequest);
 
     [MapperIgnoreSource(nameof(BookingRequestDto.Id))]
+    [MapperIgnoreSource(nameof(BookingRequestDto.CreatedAt))]
+    [MapperIgnoreSource(nameof(BookingRequestDto.Status))]
+    [MapperIgnoreSource(nameof(BookingRequestDto.EdmsResolutionComment))]
+    [MapperIgnoreSource(nameof(BookingRequestDto.ModeratorComment))]
+    [MapperIgnoreSource(nameof(BookingRequestDto.BookingScheduleStatus))]
     [MapProperty(nameof(BookingRequestDto.RoomEventCoordinator), nameof(PatchBookingRequestModel.RoomEventCoordinator), Use = nameof(MapRoomEventCoordinatorFromDto))]
     public static partial PatchBookingRequestModel MapBookingRequestToPatchModel(BookingRequestDto bookingRequest);
 

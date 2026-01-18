@@ -14,7 +14,7 @@ public static class MinioConfigurationExtensions
         builder.Services
             .AddMinio(configureClient => configureClient
                 // .WithHttpClient(new HttpClient { BaseAddress = new Uri($"https+http://{KnownResourceNames.Minio}") })
-                .WithEndpoint("localhost:9000")
+                .WithEndpoint("localhost:10000")
                 .WithSSL(false)
                 // .WithHttpClient(new HttpClient { BaseAddress = new Uri($"https://localhost:9000") })
                 .WithCredentials(accessKey, secretKey));

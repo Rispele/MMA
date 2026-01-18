@@ -57,7 +57,8 @@ public class BookingRequestModelsMapperTests
         mapped.Reason.Should().Be(dto.Reason);
         mapped.ParticipantsCount.Should().Be(dto.ParticipantsCount);
         mapped.TechEmployeeRequired.Should().Be(dto.TechEmployeeRequired);
-        mapped.EventHostFullName.Should().Be(dto.EventHostFullName);
+        mapped.EventHost.Name.Should().Be(dto.EventHost.Name);
+        mapped.EventHost.Id.Should().Be(dto.EventHost.Id);
         mapped.CreatedAt.Should().Be(dto.CreatedAt);
         mapped.EventName.Should().Be(dto.EventName);
         mapped.Status.Should().Be(dto.Status);
@@ -80,12 +81,9 @@ public class BookingRequestModelsMapperTests
         mapped.Reason.Should().Be(dto.Reason);
         mapped.ParticipantsCount.Should().Be(dto.ParticipantsCount);
         mapped.TechEmployeeRequired.Should().Be(dto.TechEmployeeRequired);
-        mapped.EventHostFullName.Should().Be(dto.EventHostFullName);
-        mapped.CreatedAt.Should().Be(dto.CreatedAt);
         mapped.EventName.Should().Be(dto.EventName);
-        mapped.Status.Should().Be(dto.Status);
-        mapped.ModeratorComment.Should().Be(dto.ModeratorComment);
-        mapped.BookingScheduleStatus.Should().Be(dto.BookingScheduleStatus);
+        mapped.EventHost.Name.Should().Be(dto.EventHost.Name);
+        mapped.EventHost.Id.Should().Be(dto.EventHost.Id);
 
         AssertCreators(mapped.Creator, dto.Creator);
         AssertCoordinators(mapped.RoomEventCoordinator, dto.RoomEventCoordinator);
@@ -103,7 +101,8 @@ public class BookingRequestModelsMapperTests
         mapped.Reason.Should().Be(patchModel.Reason);
         mapped.ParticipantsCount.Should().Be(patchModel.ParticipantsCount);
         mapped.TechEmployeeRequired.Should().Be(patchModel.TechEmployeeRequired);
-        mapped.EventHostFullName.Should().Be(patchModel.EventHostFullName);
+        mapped.EventHost.Name.Should().Be(patchModel.EventHost.Name);
+        mapped.EventHost.Id.Should().Be(patchModel.EventHost.Id);
         mapped.EventName.Should().Be(patchModel.EventName);
 
         AssertCreators(mapped.Creator, patchModel.Creator);
@@ -149,7 +148,8 @@ public class BookingRequestModelsMapperTests
         actual.Reason.Should().Be(expected.Reason);
         actual.ParticipantsCount.Should().Be(expected.ParticipantsCount);
         actual.TechEmployeeRequired.Should().Be(expected.TechEmployeeRequired);
-        actual.EventHostFullName.Should().Be(expected.EventHostFullName);
+        actual.EventHost.Name.Should().Be(expected.EventHost.Name);
+        actual.EventHost.Id.Should().Be(expected.EventHost.Id);
         actual.EventName.Should().Be(expected.EventName);
 
         AssertCreators(actual.Creator, expected.Creator);

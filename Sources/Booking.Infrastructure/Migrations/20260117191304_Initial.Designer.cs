@@ -7,6 +7,7 @@ using Booking.Domain.Propagated.BookingRequests;
 using Booking.Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -15,9 +16,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Booking.Infrastructure.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260117191304_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,9 +201,9 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("jsonb")
                         .HasColumnName("room_event_coordinator");
 
-                    b.Property<IEnumerable<int>>("RoomIds")
+                    b.PrimitiveCollection<int[]>("RoomIds")
                         .IsRequired()
-                        .HasColumnType("jsonb")
+                        .HasColumnType("integer[]")
                         .HasColumnName("room_ids");
 
                     b.Property<BookingStatus>("Status")

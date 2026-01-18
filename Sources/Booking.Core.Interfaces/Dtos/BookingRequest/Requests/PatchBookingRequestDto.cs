@@ -1,5 +1,4 @@
 ﻿using Booking.Core.Interfaces.Dtos.BookingRequest.RoomEventCoordinator;
-using Booking.Domain.Propagated.BookingRequests;
 
 namespace Booking.Core.Interfaces.Dtos.BookingRequest.Requests;
 
@@ -9,13 +8,8 @@ public record PatchBookingRequestDto
     public required string Reason { get; set; } = null!;
     public required int ParticipantsCount { get; set; }
     public required bool TechEmployeeRequired { get; set; }
-    public required string EventHostFullName { get; set; } = null!;
+    public required EventHostDto EventHost { get; init; }
     public required IRoomEventCoordinatorDto RoomEventCoordinator { get; set; }
-    public required DateTime CreatedAt { get; set; }
     public required string EventName { get; set; } = null!;
-    public required IEnumerable<int> RoomIds { get; set; } = null!;
     public required IEnumerable<BookingTimeDto> BookingSchedule { get; set; } = [];
-    public required BookingStatus Status { get; set; }
-    public required string? ModeratorComment { get; set; } = null!;
-    public required BookingScheduleStatus? BookingScheduleStatus { get; set; }
 }

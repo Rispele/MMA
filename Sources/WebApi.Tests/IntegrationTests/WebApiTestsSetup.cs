@@ -56,7 +56,7 @@ public class WebApiTestsSetup : ISetup
         return new TestingContainerFactory()
             .ConfigureServices(t => t
                 .ConfigureRoomsDbContextForTests(roomsDbContextConnectionString)
-                .ConfigureServicesForWebApi()
+                .ConfigureServicesForWebApi(true)
                 .AddLogging(builder => builder.AddConsole())
                 .AddScoped<RoomsSdk>())
             .BuildServiceProvider();

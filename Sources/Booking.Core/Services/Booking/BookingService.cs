@@ -36,11 +36,11 @@ public class BookingService(
         await unitOfWork.Commit(cancellationToken);
     }
 
-    public async Task SaveEdmsResolutionResult(int bookingRequestId, bool isApproved, CancellationToken cancellationToken)
+    public async Task SaveEdmsResolutionResult(int bookingRequestId, bool isApproved, string? errorMessage, CancellationToken cancellationToken)
     {
         await using var unitOfWork = await unitOfWorkFactory.Create(cancellationToken);
 
-        var @event = new BookingEvent(bookingRequestId, new BookingRequestResolvedInEdmsEventPayload(isApproved));
+        var @event = new BookingEvent(bookingRequestId, new BookingRequestResolvedInEdmsEventPayload(isApproved, errorMessage));
 
         unitOfWork.Add(@event);
 
@@ -58,5 +58,7 @@ public class BookingService(
         {
             await bookingClient.ConfirmBooking(eventId, cancellationToken);
         }
+
+        bookingRequest.SetRoomsBookingApproved();
     }
 }
