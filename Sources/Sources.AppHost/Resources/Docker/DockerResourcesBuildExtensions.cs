@@ -24,8 +24,8 @@ public static class DockerResourcesBuildExtensions
                 postgresUserName,
                 postgresPassword,
                 postgresPort)
-            .WithHttpEndpoint(port: postgresPort, targetPort: postgresPort, name: "PostgresPort")
-            .WithExternalHttpEndpoints()
+            // .WithHttpEndpoint(port: postgresPort, targetPort: postgresPort, name: "PostgresPort")
+            // .WithExternalHttpEndpoints()
             .AddDatabase(dbSpecification.Name);
         return postgresService1;
     }
