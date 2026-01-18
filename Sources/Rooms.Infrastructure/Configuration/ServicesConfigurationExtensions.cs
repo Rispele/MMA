@@ -1,7 +1,9 @@
 ﻿using Commons.Domain.Queries.Factories;
+using Commons.ExternalClients.Booking;
 using Commons.ExternalClients.InstituteDepartments;
 using Commons.ExternalClients.LkUsers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Rooms.Core;
 using Rooms.Core.Interfaces.Services.Equipments;
 using Rooms.Core.Interfaces.Services.OperatorDepartments;
@@ -24,6 +26,8 @@ public static class ServicesConfigurationExtensions
 {
     public static IServiceCollection ConfigureServicesForRooms(this IServiceCollection serviceCollection)
     {
+        serviceCollection.TryAddSingleton<IBookingClient, BookingClient>();
+        
         return serviceCollection
             .AddKeyedScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>(KnownScopes.Rooms)
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })

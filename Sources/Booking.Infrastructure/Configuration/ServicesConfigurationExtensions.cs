@@ -17,6 +17,7 @@ using Commons.Domain.Queries.Factories;
 using Commons.ExternalClients.Booking;
 using Commons.ExternalClients.RoomSchedule;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Rooms.Core.Interfaces.Services.Rooms;
 
@@ -26,6 +27,8 @@ public static class ServicesConfigurationExtensions
 {
     public static IServiceCollection ConfigureServicesForBooking(this IServiceCollection serviceCollection, bool isDevelopment)
     {
+        serviceCollection.TryAddSingleton<IBookingClient, BookingClient>();
+        
         return serviceCollection
             .AddSingleton(new RoomScheduleClientSettings("https://public-schedule-api.my1.urfu.ru/"))
             .AddKeyedScoped<IUnitOfWorkFactory, BookingDbContextUnitOfWorkFactory>(KnownScopes.Booking)

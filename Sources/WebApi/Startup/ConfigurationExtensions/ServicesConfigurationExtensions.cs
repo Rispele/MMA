@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Text.Json.Serialization;
 using Booking.Infrastructure.Configuration;
-using Commons.ExternalClients.Booking;
 using Rooms.Infrastructure.Configuration;
 using WebApi.Core.Services.Implementations;
 using WebApi.Core.Services.Interfaces;
@@ -41,7 +40,6 @@ public static class ServicesConfigurationExtensions
     {
         serviceCollection
             // Infrastructure
-            .AddSingleton<IBookingClient, BookingClient>()
             .ConfigureServicesForRooms()
             .ConfigureServicesForBooking(isDevelopment)
 

@@ -1,6 +1,5 @@
 using Booking.Infrastructure.Configuration;
 using Booking.Orchestrator;
-using Commons.ExternalClients.Booking;
 using Rooms.Infrastructure.Configuration;
 using Sources.ServiceDefaults;
 
@@ -14,7 +13,6 @@ builder
     .AddBookingDbContext();
 
 builder.Services
-    .AddSingleton<IBookingClient, BookingClient>()
     .ConfigureServicesForRooms()
     .ConfigureServicesForBooking(builder.Environment.IsDevelopment());
 

@@ -85,7 +85,7 @@ public class RoomServiceTests : ContainerTestBase
 
         var response = await roomsSdk.FilterRooms(builder: b => b.Filter(f => f.Seats(9)));
 
-        response.Rooms.Should().HaveCountGreaterThanOrEqualTo(1);
+            response.Rooms.Should().HaveCountGreaterThanOrEqualTo(1);
         response.Rooms.Should().ContainEquivalentOf(room1);
         response.Rooms.Should().NotContainEquivalentOf(room2);
         response.Rooms.Select(t => t.Parameters.Seats).Min().Should().BeGreaterThanOrEqualTo(9);

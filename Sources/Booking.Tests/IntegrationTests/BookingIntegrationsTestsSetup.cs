@@ -5,12 +5,15 @@ using Commons.Domain.Queries.Factories;
 using Commons.Tests.Helpers.SDK;
 using Commons.Tests.Integration.Infrastructure.Configuration;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework.Interfaces;
 using Rooms.Infrastructure.Configuration;
 using SkbKontur.NUnit.Middlewares;
 using Sources.AppHost.Resources;
+using Sources.AppHost.Resources.ClientSettings;
+using Sources.ServiceDefaults;
 
 namespace Booking.Tests.IntegrationTests;
 
@@ -56,9 +59,13 @@ public class BookingIntegrationsTestsSetup : ISetup
     {
         var connectionString = await testingApplicationFactory
             .GetConnectionString(KnownResources.MmrDb.Name) ?? throw new InvalidOperationException("Database connection string is not set");
-
+        var configuration = testingApplicationFactory.Application.Services.GetRequiredService<IConfiguration>();
+        var scheduleApiClientSettings = configuration.GetScheduleApiClientSettings();
+        
         return new TestingContainerFactory()
             .ConfigureServices(t => t
+                .AddHttpClient()
+                .AddScheduleApiClientSettingsForTests(scheduleApiClientSettings.Username, scheduleApiClientSettings.Password)
                 .AddScoped<IUnitOfWorkFactory, BookingDbContextUnitOfWorkFactory>()
                 .ConfigureServicesForRooms()
                 .ConfigureServicesForBooking(true)

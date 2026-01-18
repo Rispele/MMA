@@ -7,6 +7,19 @@ namespace Sources.ServiceDefaults;
 
 public static class ScheduleApiClientExtensions
 {
+    public static IServiceCollection AddScheduleApiClientSettingsForTests(
+        this IServiceCollection builder,
+        string username,
+        string password)
+    {
+        var settings = new BookingClientSettings(
+            "http://sked-tst.dit.urfu.ru:8100/",
+            username ?? throw new InvalidOperationException("Username is null"),
+            password ??  throw new InvalidOperationException("Password is null"));
+
+        return builder.AddSingleton(settings);
+    }
+    
     public static IHostApplicationBuilder AddScheduleApiClientSettings(this IHostApplicationBuilder builder)
     {
         var username = builder.Configuration.GetValue<string>("SCHEDULE_API_USERNAME");

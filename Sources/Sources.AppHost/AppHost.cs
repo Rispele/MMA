@@ -27,6 +27,8 @@ var configuration = new ConfigurationBuilder()
         reloadOnChange: true)
     .Build();
 
+builder.Configuration.AddConfiguration(configuration);
+
 var testingProfile = builder.Configuration["testing_profile"];
 
 var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
