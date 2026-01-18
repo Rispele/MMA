@@ -16,7 +16,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Booking.Infrastructure.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20260117191304_Initial")]
+    [Migration("20260118171619_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -200,11 +200,6 @@ namespace Booking.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("room_event_coordinator");
-
-                    b.PrimitiveCollection<int[]>("RoomIds")
-                        .IsRequired()
-                        .HasColumnType("integer[]")
-                        .HasColumnName("room_ids");
 
                     b.Property<BookingStatus>("Status")
                         .HasColumnType("booking_status")

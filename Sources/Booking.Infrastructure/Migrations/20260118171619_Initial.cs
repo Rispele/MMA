@@ -37,7 +37,6 @@ namespace Booking.Infrastructure.Migrations
                     room_event_coordinator = table.Column<string>(type: "jsonb", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamptz", nullable: false),
                     event_name = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    room_ids = table.Column<int[]>(type: "integer[]", nullable: false),
                     status = table.Column<BookingStatus>(type: "booking_status", nullable: false),
                     edms_resolution_comment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     moderator_comment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
