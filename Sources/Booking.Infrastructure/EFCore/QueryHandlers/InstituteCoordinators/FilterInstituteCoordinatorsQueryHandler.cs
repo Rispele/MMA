@@ -16,10 +16,11 @@ internal class FilterInstituteCoordinatorsQueryHandler : IPaginatedQueryHandler<
         IQueryable<InstituteCoordinator> instituteCoordinators = request.Context.InstituteCoordinators;
 
         instituteCoordinators = Filters(instituteCoordinators, request.Query.Filter);
+        var totalCount = instituteCoordinators.Count();
         instituteCoordinators = Sort(instituteCoordinators, request.Query.Filter);
         instituteCoordinators = Paginate(instituteCoordinators, request.Query);
 
-        return Task.FromResult((instituteCoordinators.AsAsyncEnumerable(), request.Context.InstituteCoordinators.Count()));
+        return Task.FromResult((instituteCoordinators.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<InstituteCoordinator> Filters(IQueryable<InstituteCoordinator> instituteCoordinators, InstituteCoordinatorFilterDto? filter)

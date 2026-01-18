@@ -16,10 +16,11 @@ internal class FilterBookingRequestsQueryHandler : IPaginatedQueryHandler<Bookin
         IQueryable<BookingRequest> bookingRequests = request.Context.BookingRequests;
 
         bookingRequests = Filters(bookingRequests, request.Query.Filter);
+        var totalCount = bookingRequests.Count();
         bookingRequests = Sort(bookingRequests, request.Query.Filter);
         bookingRequests = Paginate(bookingRequests, request.Query);
 
-        return Task.FromResult((bookingRequests.AsAsyncEnumerable(), request.Context.BookingRequests.Count()));
+        return Task.FromResult((bookingRequests.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<BookingRequest> Filters(IQueryable<BookingRequest> bookingRequests, BookingRequestsFilterDto? filter)

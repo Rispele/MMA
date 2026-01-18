@@ -18,10 +18,11 @@ internal class FilterOperatorDepartmentsQueryHandler : IPaginatedQueryHandler<Ro
         IQueryable<OperatorDepartment> operatorDepartments = request.Context.OperatorDepartments.Include(x => x.Rooms);
 
         operatorDepartments = Filters(operatorDepartments, request.Query.Filter);
+        var totalCount = operatorDepartments.Count();
         operatorDepartments = Sort(operatorDepartments, request.Query.Filter);
         operatorDepartments = Paginate(operatorDepartments, request.Query);
 
-        return Task.FromResult((operatorDepartments.AsAsyncEnumerable(), request.Context.OperatorDepartments.Count()));
+        return Task.FromResult((operatorDepartments.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<OperatorDepartment> Filters(IQueryable<OperatorDepartment> operatorDepartments, OperatorDepartmentsFilterDto? filter)

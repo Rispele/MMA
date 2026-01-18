@@ -20,10 +20,11 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
             .Include(room => room.OperatorDepartment);
 
         rooms = Filters(rooms, request.Query.Filter);
+        var totalCount = rooms.Count();
         rooms = Sort(rooms, request.Query.Filter);
         rooms = Paginate(rooms, request.Query);
 
-        return Task.FromResult((rooms.AsAsyncEnumerable(), request.Context.Rooms.Count()));
+        return Task.FromResult((rooms.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<Room> Filters(IQueryable<Room> rooms, RoomsFilterDto? filter)

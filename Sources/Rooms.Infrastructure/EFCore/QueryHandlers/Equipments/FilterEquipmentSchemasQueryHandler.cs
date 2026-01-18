@@ -18,12 +18,13 @@ internal class FilterEquipmentSchemasQueryHandler : IPaginatedQueryHandler<Rooms
         IQueryable<EquipmentSchema> equipmentSchemas = request.Context.EquipmentSchemas.Include(x => x.Type);
 
         equipmentSchemas = Filters(equipmentSchemas, request.Query.Filter);
+        var totalCount = equipmentSchemas.Count();
         equipmentSchemas = Sort(equipmentSchemas, request.Query.Filter);
         equipmentSchemas = Paginate(equipmentSchemas, request.Query);
 
         Console.WriteLine(equipmentSchemas.ToQueryString());
 
-        return Task.FromResult((equipmentSchemas.AsAsyncEnumerable(), request.Context.EquipmentSchemas.Count()));
+        return Task.FromResult((equipmentSchemas.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<EquipmentSchema> Filters(IQueryable<EquipmentSchema> equipmentSchemas, EquipmentSchemasFilterDto? filter)

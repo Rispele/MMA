@@ -18,10 +18,11 @@ internal class FilterEquipmentTypesQueryHandler : IPaginatedQueryHandler<RoomsDb
         IQueryable<EquipmentType> equipmentTypes = request.Context.EquipmentTypes;
 
         equipmentTypes = Filters(equipmentTypes, request.Query.Filter);
+        var totalCount = equipmentTypes.Count();
         equipmentTypes = Sort(equipmentTypes, request.Query.Filter);
         equipmentTypes = Paginate(equipmentTypes, request.Query);
 
-        return Task.FromResult((equipmentTypes.AsAsyncEnumerable(), request.Context.EquipmentTypes.Count()));
+        return Task.FromResult((equipmentTypes.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<EquipmentType> Filters(IQueryable<EquipmentType> equipmentTypes, EquipmentTypesFilterDto? filter)

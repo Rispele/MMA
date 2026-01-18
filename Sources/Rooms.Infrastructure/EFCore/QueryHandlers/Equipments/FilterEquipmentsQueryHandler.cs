@@ -20,10 +20,11 @@ internal class FilterEquipmentsQueryHandler : IPaginatedQueryHandler<RoomsDbCont
             .ThenInclude(x => x.Type);
 
         equipments = Filters(equipments, request.Query.Filter);
+        var totalCount = equipments.Count();
         equipments = Sort(equipments, request.Query.Filter);
         equipments = Paginate(equipments, request.Query);
 
-        return Task.FromResult((equipments.AsAsyncEnumerable(), request.Context.Equipments.Count()));
+        return Task.FromResult((equipments.AsAsyncEnumerable(), totalCount));
     }
 
     private IQueryable<Equipment> Filters(IQueryable<Equipment> equipments, EquipmentsFilterDto? filter)
