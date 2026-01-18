@@ -4,6 +4,6 @@ namespace WebApi.Core.Models.Requests.InstituteCoordinators;
 
 public record InstituteCoordinatorsFilterModel
 {
-    public FilterParameterModel<string>? Institute { get; init; }
-    public FilterParameterModel<string>? Responsible { get; init; }
+    public FilterParameterModel<Guid>? InstituteId { get; init; }
+    public FilterParameterModel<string>? Coordinator { get; init; }
 }

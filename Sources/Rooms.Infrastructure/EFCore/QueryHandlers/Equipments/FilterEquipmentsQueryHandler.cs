@@ -86,7 +86,7 @@ internal class FilterEquipmentsQueryHandler : IPaginatedQueryHandler<RoomsDbCont
                 .AsOptional()
                 .Apply(equipments,
                     apply: (queryable, parameter) =>
-                        queryable.Where(t => parameter.Values.Any(x => x == t.Status)));
+                        queryable.Where(t => t.Status != null && parameter.Values.Contains(t.Status.Value)));
         }
 
         return equipments;

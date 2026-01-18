@@ -41,6 +41,7 @@ public class BookingRequestEntityTypeConfiguration : IEntityTypeConfiguration<Bo
                 json => JsonSerializer.Deserialize<IRoomEventCoordinator>(json, JsonSerializerOptions)!);
         builder.Property(x => x.CreatedAt).HasColumnType("timestamptz");
         builder.Property(x => x.EventName).IsRequired().HasMaxLength(500);
+        builder.Property(x => x.RoomIds).HasField(BookingRequestFieldNames.RoomIds).HasColumnType("jsonb");
 
         builder.Property(x => x.BookingSchedule).IsRequired().HasColumnType("jsonb");
         builder.Property(x => x.Status).IsRequired();

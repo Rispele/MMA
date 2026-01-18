@@ -56,7 +56,7 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
                 .AsOptional()
                 .Apply(rooms,
                     apply: (queryable, parameter) =>
-                        queryable.Where(t => parameter.Values.Any(x => x == t.Parameters.Type)));
+                        queryable.Where(t => parameter.Values.Contains(t.Parameters.Type)));
         }
 
         if (filter.RoomLayout != null)
@@ -65,7 +65,7 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
                 .AsOptional()
                 .Apply(rooms,
                     apply: (queryable, parameter) =>
-                        queryable.Where(t => parameter.Values.Any(x => x == t.Parameters.Layout)));
+                        queryable.Where(t => parameter.Values.Contains(t.Parameters.Layout)));
         }
 
         if (filter.Seats != null)
@@ -89,7 +89,7 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
                 .AsOptional()
                 .Apply(rooms,
                     apply: (queryable, parameter) =>
-                        queryable.Where(t => parameter.Values.Any(x => x == t.Parameters.NetType)));
+                        queryable.Where(t => parameter.Values.Contains(t.Parameters.NetType)));
         }
 
         if (filter.Conditioning != null)
@@ -115,7 +115,7 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
                 .AsOptional()
                 .Apply(rooms,
                     apply: (queryable, parameter) =>
-                        queryable.Where(t => parameter.Values.Any(x => x == t.FixInfo.Status)));
+                        queryable.Where(t => parameter.Values.Contains(t.FixInfo.Status)));
         }
 
         if (filter.FixDeadline != null)

@@ -13,6 +13,7 @@ namespace Booking.Domain.Models.BookingRequests;
 public class BookingRequest
 {
     private readonly int? id;
+    private readonly List<int> roomIds = null!;
 
     [UsedImplicitly(Reason = "For EF Core reasons")]
     private BookingRequest()
@@ -52,7 +53,7 @@ public class BookingRequest
     public IRoomEventCoordinator RoomEventCoordinator { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public string EventName { get; private set; } = null!;
-    public IEnumerable<int> RoomIds { get; set; } = null!;
+    public IEnumerable<int> RoomIds => roomIds;
     public BookingStatus Status { get; private set; }
     public string? ModeratorComment { get; private set; }
     public BookingScheduleStatus? BookingScheduleStatus { get; private set; }
