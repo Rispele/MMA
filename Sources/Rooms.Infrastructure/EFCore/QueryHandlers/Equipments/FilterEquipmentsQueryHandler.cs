@@ -33,59 +33,61 @@ internal class FilterEquipmentsQueryHandler : IPaginatedQueryHandler<RoomsDbCont
             return equipments;
         }
 
-        equipments = filter.Rooms
-            .AsOptional()
-            .Apply(
-                equipments,
-                apply: (queryable, parameter) =>
-                {
-                    return queryable.Where(t => parameter.Values.Contains(t.RoomId));
-                });
+        if (filter.Rooms != null)
+        {
+            equipments = filter.Rooms
+                .AsOptional()
+                .Apply(
+                    equipments,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => parameter.Values.Contains(t.RoomId)));
+        }
 
-        equipments = filter.Types
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                {
-                    return queryable.Where(t => parameter.Values.Contains(t.Schema.Type.Id));
-                });
+        if (filter.Types != null)
+        {
+            equipments = filter.Types
+                .AsOptional()
+                .Apply(equipments,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => parameter.Values.Contains(t.Schema.Type.Id)));
+        }
 
-        equipments = filter.Schemas
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                {
-                    return queryable.Where(t => parameter.Values.Contains(t.Schema.Id));
-                });
+        if (filter.Schemas != null)
+        {
+            equipments = filter.Schemas
+                .AsOptional()
+                .Apply(equipments,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => parameter.Values.Contains(t.Schema.Id)));
+        }
 
-        equipments = filter.InventoryNumber
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) => queryable.Where(t =>
-                    t.InventoryNumber != null && t.InventoryNumber.Contains(parameter.Value)));
+        if (filter.InventoryNumber != null)
+        {
+            equipments = filter.InventoryNumber
+                .AsOptional()
+                .Apply(equipments,
+                    apply: (queryable, parameter) => queryable.Where(t =>
+                        t.InventoryNumber != null && t.InventoryNumber.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        equipments = filter.SerialNumber
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) =>
-                    queryable.Where(t => t.SerialNumber != null && t.SerialNumber.Contains(parameter.Value)));
+        if (filter.SerialNumber != null)
+        {
+            equipments = filter.SerialNumber
+                .AsOptional()
+                .Apply(equipments,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t =>
+                            t.SerialNumber != null && t.SerialNumber.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        // equipments = filter.NetworkEquipmentIp
-        //     .AsOptional()
-        //     .Apply(equipments,
-        //         apply: (queryable, parameter) => queryable.Where(t =>
-        //             t.NetworkEquipmentIp != null && t.NetworkEquipmentIp.Contains(parameter.Value)));
-        //
-        // equipments = filter.Comment
-        //     .AsOptional()
-        //     .Apply(equipments,
-        //         apply: (queryable, parameter) =>
-        //             queryable.Where(t => t.Comment != null && t.Comment.Contains(parameter.Value)));
-
-        equipments = filter.Statuses
-            .AsOptional()
-            .Apply(equipments,
-                apply: (queryable, parameter) => { return queryable.Where(t => parameter.Values.Any(x => x == t.Status)); });
+        if (filter.Statuses != null)
+        {
+            equipments = filter.Statuses
+                .AsOptional()
+                .Apply(equipments,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => parameter.Values.Any(x => x == t.Status)));
+        }
 
         return equipments;
     }
@@ -105,8 +107,6 @@ internal class FilterEquipmentsQueryHandler : IPaginatedQueryHandler<RoomsDbCont
                 BuildSort(filter.Schemas?.SortDirection, parameter: t => t.Schema.Name),
                 BuildSort(filter.InventoryNumber?.SortDirection, parameter: t => t.InventoryNumber),
                 BuildSort(filter.SerialNumber?.SortDirection, parameter: t => t.SerialNumber),
-                // BuildSort(filter.NetworkEquipmentIp?.SortDirection, parameter: t => t.NetworkEquipmentIp),
-                // BuildSort(filter.Comment?.SortDirection, parameter: t => t.Comment),
                 BuildSort(filter.Statuses?.SortDirection, parameter: t => t.Status)
             ];
 

@@ -31,10 +31,32 @@ internal class FilterOperatorDepartmentsQueryHandler : IPaginatedQueryHandler<Ro
             return operatorDepartments;
         }
 
-        operatorDepartments = filter.Name
-            .AsOptional()
-            .Apply(operatorDepartments,
-                apply: (queryable, parameter) => { return queryable.Where(t => t.Name != null! && t.Name.Contains(parameter.Value)); });
+        if (filter.Name != null)
+        {
+            operatorDepartments = filter.Name
+                .AsOptional()
+                .Apply(operatorDepartments,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => t.Name != null! && t.Name.ToLower().Contains(parameter.Value.ToLower())));
+        }
+
+        if (filter.RoomName != null)
+        {
+            operatorDepartments = filter.RoomName
+                .AsOptional()
+                .Apply(operatorDepartments,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => t.Rooms.Any(x => x.Name.ToLower().Contains(parameter.Value.ToLower()))));
+        }
+
+        if (filter.Operator != null)
+        {
+            operatorDepartments = filter.Operator
+                .AsOptional()
+                .Apply(operatorDepartments,
+                    apply: (queryable, parameter) =>
+                        queryable.Where(t => t.Operators.Values.Any(x => x.ToLower().Contains(parameter.Value.ToLower()))));
+        }
 
         return operatorDepartments;
     }

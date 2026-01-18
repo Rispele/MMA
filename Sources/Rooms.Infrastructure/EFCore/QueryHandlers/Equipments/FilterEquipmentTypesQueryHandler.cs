@@ -31,10 +31,14 @@ internal class FilterEquipmentTypesQueryHandler : IPaginatedQueryHandler<RoomsDb
             return equipmentTypes;
         }
 
-        equipmentTypes = filter.Name
-            .AsOptional()
-            .Apply(equipmentTypes,
-                apply: (queryable, parameter) => { return queryable.Where(t => t.Name != null! && t.Name.Contains(parameter.Value)); });
+        if (filter.Name != null)
+        {
+            equipmentTypes = filter.Name
+                .AsOptional()
+                .Apply(equipmentTypes,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => t.Name.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
         return equipmentTypes;
     }

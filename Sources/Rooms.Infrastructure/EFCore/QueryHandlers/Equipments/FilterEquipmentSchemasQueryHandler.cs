@@ -33,23 +33,32 @@ internal class FilterEquipmentSchemasQueryHandler : IPaginatedQueryHandler<Rooms
             return equipmentSchemas;
         }
 
-        equipmentSchemas = filter.Name
-            .AsOptional()
-            .Apply(equipmentSchemas,
-                apply: (queryable, parameter) => queryable.Where(t => t.Name.Contains(parameter.Value)));
+        if (filter.Name != null)
+        {
+            equipmentSchemas = filter.Name
+                .AsOptional()
+                .Apply(equipmentSchemas,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => t.Name.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        equipmentSchemas = filter.EquipmentTypeName
-            .AsOptional()
-            .Apply(equipmentSchemas,
-                apply: (queryable, parameter) => queryable.Where(t => t.Type.Name.Contains(parameter.Value)));
+        if (filter.EquipmentTypeName != null)
+        {
+            equipmentSchemas = filter.EquipmentTypeName
+                .AsOptional()
+                .Apply(equipmentSchemas,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => t.Type.Name.ToLower().Contains(parameter.Value.ToLower())));
+        }
 
-        equipmentSchemas = filter.EquipmentParameters
-            .AsOptional()
-            .Apply(equipmentSchemas,
-                apply: (queryable, parameter) =>
-                {
-                    return queryable.Where(schema => EquipmentsFilterFunctions.EquipmentTypeParameterFilter(schema.Type.Id, parameter.Value));
-                });
+        if (filter.EquipmentParameters != null)
+        {
+            equipmentSchemas = filter.EquipmentParameters
+                .AsOptional()
+                .Apply(equipmentSchemas,
+                    apply: (queryable, parameter) => queryable.Where(schema =>
+                        EquipmentsFilterFunctions.EquipmentTypeParameterFilter(schema.Type.Id, parameter.Value)));
+        }
 
         return equipmentSchemas;
     }
