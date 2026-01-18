@@ -198,11 +198,6 @@ namespace Booking.Infrastructure.Migrations
                         .HasColumnType("jsonb")
                         .HasColumnName("room_event_coordinator");
 
-                    b.Property<IEnumerable<int>>("RoomIds")
-                        .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("room_ids");
-
                     b.Property<BookingStatus>("Status")
                         .HasColumnType("booking_status")
                         .HasColumnName("status");
