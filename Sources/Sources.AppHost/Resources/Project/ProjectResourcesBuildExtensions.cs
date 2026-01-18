@@ -65,6 +65,8 @@ public static class ProjectResourcesBuildExtensions
         return distributedApplicationBuilder
             .AddProject<WebApi>(resourceSpecification.Name)
             .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
+            .WithHttpEndpoint(port: webApiPort, targetPort: webApiPort, name: "WebApiPort", isProxied: false)
+            .WithHttpEndpoint(port: 5049, targetPort: 5049, name: "WebApiExternalPort", isProxied: false)
             // .WithHttpEndpoint(port: webApiPort, targetPort: webApiPort, name: "WebApiPort", isProxied: false)
             // .WithHttpEndpoint(port: 5049, targetPort: 5049, name: "WebApiExternalPort")
             .WithExternalHttpEndpoints();
