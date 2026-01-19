@@ -32,6 +32,7 @@ builder.Configuration.AddConfiguration(configuration);
 var testingProfile = builder.Configuration["testing_profile"];
 
 var postgresResource = builder.AddPostgresResource(KnownResources.PostgresService, KnownResources.MmrDb);
+
 switch (testingProfile)
 {
     case "Testing.Migration":

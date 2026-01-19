@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-orchestrator
+  labels:
+    app: booking-orchestrator
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking-orchestrator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: booking-orchestrator
+    spec:
+      containers:
+      - name: booking-orchestrator
+        image: bookingorchestrator:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: booking-orchestrator-env
+        - secretRef:
+            name: booking-orchestrator-secrets
+      terminationGracePeriodSeconds: 180

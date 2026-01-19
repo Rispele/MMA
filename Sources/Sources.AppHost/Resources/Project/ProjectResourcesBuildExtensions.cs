@@ -66,7 +66,7 @@ public static class ProjectResourcesBuildExtensions
             .AddProject<WebApi>(resourceSpecification.Name)
             .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
             // .WithHttpEndpoint(port: webApiPort, name: "WebApiPort")
-            .WithHttpEndpoint(port: 5049, name: "WebApiExternalPort")
+            .WithHttpEndpoint(port: 5049, name: "web-api-port")
             // .WithHttpEndpoint(port:  webApiPort, targetPort: webApiPort, name: "WebApiPort", isProxied: false)
             // .WithHttpEndpoint(port: 5049, targetPort: 5049, name: "WebApiExternalPort")
             // .WithExternalHttpEndpoints()

@@ -1,0 +1,38 @@
+﻿apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-mmr
+spec:
+  serviceName: postgres-mmr
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-mmr
+  template:
+    metadata:
+      labels:
+        app: postgres-mmr
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17.6
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-mmr-env
+            - secretRef:
+                name: postgres-secrets
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
+        storageClassName: yc-network-hdd

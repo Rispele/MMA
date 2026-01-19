@@ -1,0 +1,20 @@
+﻿apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rooms-migration
+spec:
+  template:
+    spec:
+      containers:
+        - name: rooms-migration
+          image: cr.yandex/crppvgkl2ft86f0jdvnc/roomsmigration:1.0.0
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: rooms-migration-env
+            - secretRef:
+                name: postgres-mmr-connection-string
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 180
+  backoffLimit: 4
+  
