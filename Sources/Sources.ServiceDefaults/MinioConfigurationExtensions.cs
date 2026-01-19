@@ -10,13 +10,12 @@ public static class MinioConfigurationExtensions
     {
         var accessKey = builder.Configuration.GetValue<string>("MINIO_ACCESS_KEY");
         var secretKey = builder.Configuration.GetValue<string>("MINIO_SECRET_KEY");
+        var endpoint = builder.Configuration.GetValue<string>("services__minio__http__0") ?? "localhost:10000";
 
         builder.Services
             .AddMinio(configureClient => configureClient
-                // .WithHttpClient(new HttpClient { BaseAddress = new Uri($"https+http://{KnownResourceNames.Minio}") })
-                .WithEndpoint("localhost:10000")
+                .WithEndpoint(endpoint)
                 .WithSSL(false)
-                // .WithHttpClient(new HttpClient { BaseAddress = new Uri($"https://localhost:9000") })
                 .WithCredentials(accessKey, secretKey));
 
         return builder;

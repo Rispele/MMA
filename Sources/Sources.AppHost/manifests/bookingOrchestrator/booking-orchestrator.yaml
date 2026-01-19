@@ -20,11 +20,15 @@ spec:
     spec:
       containers:
       - name: booking-orchestrator
-        image: bookingorchestrator:latest
+        image: cr.yandex/crppvgkl2ft86f0jdvnc/bookingorchestrator:1.0.0
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
             name: booking-orchestrator-env
         - secretRef:
-            name: booking-orchestrator-secrets
+            name: minio-access-keys-secrets
+        - secretRef:
+            name: postgres-mmr-connection-string
+        - secretRef:
+            name: schedule-api-secrets
       terminationGracePeriodSeconds: 180

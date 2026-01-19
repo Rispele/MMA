@@ -1,0 +1,12 @@
+﻿apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minio-mmr-env
+data:
+  MINIO_ADDRESS: :9000
+  MINIO_CONSOLE_ADDRESS: :9001
+  MINIO_PROMETHEUS_AUTH_TYPE: public
+  MINIO_ROOT_USER: root
+  MINIO_ROOT_PASSWORD: root1234
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard:18889
+  OTEL_SERVICE_NAME: minio

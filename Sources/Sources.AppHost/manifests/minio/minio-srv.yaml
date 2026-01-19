@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-mmr
+spec:
+  clusterIP: None
+  selector:
+    app: minio-mmr
+  ports:
+  - name: http
+    port: 9000
+    targetPort: 9000
+  - name: admin
+    port: 9001
+    targetPort: 9001

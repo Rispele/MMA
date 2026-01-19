@@ -1,0 +1,45 @@
+﻿apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio-mmr
+spec:
+  serviceName: minio-mmr
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio-mmr
+  template:
+    metadata:
+      labels:
+        app: minio-mmr
+    spec:
+      containers:
+        - name: minio
+          image: docker.io/minio/minio:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - server
+            - /data
+          ports:
+            - name: http
+              containerPort: 9000
+            - name: admin
+              containerPort: 9001
+          envFrom:
+            - configMapRef:
+                name: minio-mmr-env
+            - secretRef:
+                name: minio-mmr-secrets
+          volumeMounts:
+            - name: minio-data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: minio-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
+        storageClassName: yc-network-hdd
