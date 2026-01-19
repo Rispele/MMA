@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi
+  labels:
+    app: webapi
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapi
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: webapi
+    spec:
+      containers:
+      - name: webapi
+        image: cr.yandex/crppvgkl2ft86f0jdvnc/webapi:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        - name: web-api-port
+          containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: webapi-env
+        - secretRef:
+            name: minio-access-keys-secrets
+        - secretRef:
+            name: postgres-mmr-connection-string
+        - secretRef:
+            name: schedule-api-secrets
+      terminationGracePeriodSeconds: 180
