@@ -13,6 +13,9 @@ internal class FindRoomsByIdQueryHandler : IQueryHandler<RoomsDbContext, FindRoo
 
         var response = request.Context.Rooms
             .Include(room => room.Equipments)
+            .ThenInclude(equipment => equipment.Schema)
+            .ThenInclude(schema => schema.Type)
+            .Include(room => room.OperatorDepartment)
             .Where(predicate: t => ids.Contains(t.Id))
             .AsAsyncEnumerable();
 

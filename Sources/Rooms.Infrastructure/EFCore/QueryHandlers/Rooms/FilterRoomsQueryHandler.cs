@@ -17,6 +17,8 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
     {
         IQueryable<Room> rooms = request.Context.Rooms
             .Include(room => room.Equipments)
+            .ThenInclude(equipment => equipment.Schema)
+            .ThenInclude(schema => schema.Type)
             .Include(room => room.OperatorDepartment);
 
         rooms = Filters(rooms, request.Query.Filter);
