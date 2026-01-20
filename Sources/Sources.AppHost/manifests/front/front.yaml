@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: front
-        image:  cr.yandex/crppvgkl2ft86f0jdvnc/front:1.0.4
+        image:  cr.yandex/crppvgkl2ft86f0jdvnc/front:1.0.5
         imagePullPolicy: IfNotPresent
         ports:
         - name: http

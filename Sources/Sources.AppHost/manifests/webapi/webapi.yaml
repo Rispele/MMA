@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: webapi
-        image: cr.yandex/crppvgkl2ft86f0jdvnc/webapi:1.0.2
+        image: cr.yandex/crppvgkl2ft86f0jdvnc/webapi:1.0.3
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
