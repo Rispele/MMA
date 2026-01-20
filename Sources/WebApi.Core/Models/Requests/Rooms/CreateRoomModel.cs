@@ -15,6 +15,14 @@ public record CreateRoomModel
     [Length(minimumLength: 1, maximumLength: 256, ErrorMessage = "Длина имени должна быть от 1 до 256 символов включительно")]
     public string? Description { get; init; }
 
+    [Required]
+    [Length(minimumLength: 1, maximumLength: 64, ErrorMessage = "Длина номера аудитории должна быть от 1 до 64 символов включительно")]
+    public string RoomNumber { get; init; } = null!;
+
+    [Required]
+    [Length(minimumLength: 1, maximumLength: 64, ErrorMessage = "Длина адреса аудитории должна быть от 1 до 64 символов включительно")]
+    public string Address { get; init; } = null!;
+
     public RoomType Type { get; init; }
     public RoomLayout Layout { get; init; }
 

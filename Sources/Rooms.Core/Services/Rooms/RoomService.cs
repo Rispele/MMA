@@ -71,6 +71,11 @@ internal class RoomService(
         var room = new Room(
             dto.Name,
             dto.Description,
+            new RoomScheduleAddress(
+                dto.RoomNumber,
+                dto.Address,
+                0
+            ),
             new RoomParameters
             {
                 Type = dto.Type,

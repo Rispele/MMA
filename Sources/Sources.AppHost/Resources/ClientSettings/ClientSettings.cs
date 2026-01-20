@@ -12,7 +12,7 @@ public static class ClientSettings
                    .Get<ScheduleApiClientSettings>()
                ?? throw new InvalidOperationException("Minio container configuration not found");
     }
-    
+
     public static ScheduleApiClientSettingsParameters AddScheduleApiClientSettingsParameters(
         this IDistributedApplicationBuilder distributedApplicationBuilder,
         IConfigurationRoot configurationRoot)

@@ -27,7 +27,7 @@ public static class ServicesConfigurationExtensions
     public static IServiceCollection ConfigureServicesForRooms(this IServiceCollection serviceCollection)
     {
         serviceCollection.TryAddSingleton<IBookingClient, BookingClient>();
-        
+
         return serviceCollection
             .AddKeyedScoped<IUnitOfWorkFactory, RoomsDbContextUnitOfWorkFactory>(KnownScopes.Rooms)
             .AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<FilterRoomsQueryHandler>(); })

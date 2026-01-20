@@ -13,6 +13,7 @@ using Commons.Domain.Queries.Factories;
 using Commons.ExternalClients.Booking;
 using Commons.ExternalClients.Booking.Models;
 using Rooms.Core.Interfaces.Dtos.Room;
+using Rooms.Core.Interfaces.Dtos.Room.Requests;
 using Rooms.Core.Interfaces.Services.Rooms;
 
 namespace Booking.Core.Services.BookingRequests;
@@ -106,7 +107,14 @@ public class BookingRequestService(
 
     public async Task<FreeRoomInfo[]?> GetAvailableForBookingRooms(GetFreeRoomsRequest dto, CancellationToken cancellationToken)
     {
-        return (await bookingClient.GetRoomsAvailableForBooking(dto, cancellationToken)).Result;
+        var rooms = await roomService.FilterRooms(new GetRoomsRequestDto
+        {
+            BatchNumber = 0, BatchSize = int.MaxValue, Filter = null
+        }, cancellationToken);
+        var availableRooms = (await bookingClient.GetRoomsAvailableForBooking(dto, cancellationToken)).Result;
+        return availableRooms?
+            .Where(x => rooms.Rooms.Any(r => r.ScheduleAddress?.RoomNumber == x.Title))
+            .ToArray();
     }
 
 
