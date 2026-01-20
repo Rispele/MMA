@@ -2,6 +2,8 @@
 using Booking.Domain.Models.BookingRequests;
 using Booking.Domain.Models.InstituteCoordinators;
 using Booking.Infrastructure.EFCore.EntityConfigurations;
+using Booking.Infrastructure.EFCore.QueryHandlers.BookingRequests;
+using Booking.Infrastructure.EFCore.QueryHandlers.InstituteCoordinators;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,9 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options) : DbCo
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasCoordinatorParameterFilterTranslation();
+        modelBuilder.HasRoomIdsParameterFilterTranslation();
+
         modelBuilder.ApplyConfiguration(new BookingEventEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new BookingRequestEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new InstituteCoordinatorEntityTypeConfiguration());

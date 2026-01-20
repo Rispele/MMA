@@ -39,14 +39,14 @@ internal class FilterInstituteCoordinatorsQueryHandler : IPaginatedQueryHandler<
                         .Where(t => t.InstituteId == parameter.Value));
         }
 
-        // if (filter.Coordinator != null)
-        // {
-        //     instituteCoordinators = filter.Coordinator
-        //         .AsOptional()
-        //         .Apply(instituteCoordinators,
-        //             apply: (queryable, parameter) => queryable
-        //                 .Where(t => t.Coordinators.Count > 0));
-        // }
+        if (filter.Coordinator != null)
+        {
+            instituteCoordinators = filter.Coordinator
+                .AsOptional()
+                .Apply(instituteCoordinators,
+                    apply: (queryable, parameter) => queryable.Where(t =>
+                        InstituteCoordinatorsFilterFunctions.CoordinatorParameterFilter(t.Id, parameter.Value)));
+        }
 
         return instituteCoordinators;
     }

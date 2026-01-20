@@ -36,7 +36,7 @@ internal class FilterBookingRequestsQueryHandler : IPaginatedQueryHandler<Bookin
                 .AsOptional()
                 .Apply(bookingRequests,
                     apply: (queryable, parameter) => queryable
-                        .Where(t => t.CreatedAt == parameter.Value));
+                        .Where(t => t.CreatedAt.Date == parameter.Value.ToUniversalTime().Date));
         }
 
         if (filter.EventName != null)
@@ -48,32 +48,32 @@ internal class FilterBookingRequestsQueryHandler : IPaginatedQueryHandler<Bookin
                         .Where(t => t.EventName.ToLower().Contains(parameter.Value.ToLower())));
         }
 
-        // if (filter.Status != null)
-        // {
-        //     bookingRequests = filter.Status
-        //         .AsOptional()
-        //         .Apply(bookingRequests,
-        //             apply: (queryable, parameter) => queryable
-        //                 .Where(t => parameter.Values.Any(x => x == t.Status)));
-        // }
+        if (filter.Status != null)
+        {
+            bookingRequests = filter.Status
+                .AsOptional()
+                .Apply(bookingRequests,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => parameter.Values.Contains(t.Status)));
+        }
 
-        // if (filter.BookingScheduleStatus != null)
-        // {
-        //     bookingRequests = filter.BookingScheduleStatus
-        //         .AsOptional()
-        //         .Apply(bookingRequests,
-        //             apply: (queryable, parameter) => queryable
-        //                 .Where(t => parameter.Values.Any(x => x == t.BookingScheduleStatus)));
-        // }
+        if (filter.BookingScheduleStatus != null)
+        {
+            bookingRequests = filter.BookingScheduleStatus
+                .AsOptional()
+                .Apply(bookingRequests,
+                    apply: (queryable, parameter) => queryable
+                        .Where(t => parameter.Values.Contains(t.BookingScheduleStatus)));
+        }
 
-        // if (filter.Rooms != null)
-        // {
-        //     bookingRequests = filter.Rooms
-        //         .AsOptional()
-        //         .Apply(bookingRequests,
-        //             apply: (queryable, parameter) => queryable
-        //                 .Where(t => t.RoomIds.Any(x => parameter.Values.Contains(x))));
-        // }
+        if (filter.Rooms != null)
+        {
+            bookingRequests = filter.Rooms
+                .AsOptional()
+                .Apply(bookingRequests,
+                    apply: (queryable, parameter) => queryable.Where(t =>
+                        BookingRequestsFilterFunctions.RoomIdsParameterFilter(t.Id, parameter.Values)));
+        }
 
         return bookingRequests;
     }

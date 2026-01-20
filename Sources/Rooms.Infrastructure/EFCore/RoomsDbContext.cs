@@ -7,6 +7,7 @@ using Rooms.Infrastructure.EFCore.EntityConfigurations.Equipment;
 using Rooms.Infrastructure.EFCore.EntityConfigurations.OperatorDepartments;
 using Rooms.Infrastructure.EFCore.EntityConfigurations.Rooms;
 using Rooms.Infrastructure.EFCore.QueryHandlers.Equipments;
+using Rooms.Infrastructure.EFCore.QueryHandlers.OperatorDepartments;
 
 namespace Rooms.Infrastructure.EFCore;
 
@@ -25,6 +26,8 @@ internal class RoomsDbContext(DbContextOptions<RoomsDbContext> options) : DbCont
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasEquipmentTypeParameterFilterTranslation();
+        modelBuilder.HasRoomNameParameterFilterTranslation();
+        modelBuilder.HasOperatorNameParameterFilterTranslation();
 
         modelBuilder.ApplyConfiguration(new EquipmentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new EquipmentSchemaEntityTypeConfiguration());
