@@ -200,7 +200,7 @@ public static class RoomMapperTestHelper
         {
             Name = RoomName,
             Description = RoomDescription,
-            ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber, RoomAddress, 0),
+            ScheduleAddress = new ScheduleAddressPatchDto(RoomNumber, RoomAddress),
             Type = RoomType,
             Layout = RoomLayout,
             NetType = RoomNetType,

@@ -71,11 +71,6 @@ internal class RoomService(
         var room = new Room(
             dto.Name,
             dto.Description,
-            new RoomScheduleAddress(
-                dto.RoomNumber,
-                dto.Address,
-                0
-            ),
             new RoomParameters
             {
                 Type = dto.Type,
@@ -99,6 +94,7 @@ internal class RoomService(
             },
             dto.AllowBooking);
 
+        await UpdateScheduleAddress(new ScheduleAddressPatchDto(dto.RoomNumber, dto.Address), room, cancellationToken);
         unitOfWork.Add(room);
 
         await unitOfWork.Commit(cancellationToken);
@@ -140,7 +136,7 @@ internal class RoomService(
 
         if (dto.ScheduleAddress is not null)
         {
-            await UpdateScheduleAddress(dto.ScheduleAddress, cancellationToken, roomToPatch);
+            await UpdateScheduleAddress(dto.ScheduleAddress, roomToPatch, cancellationToken);
         }
 
         await unitOfWork.Commit(cancellationToken);
@@ -148,7 +144,7 @@ internal class RoomService(
         return RoomDtoMapper.Map(roomToPatch);
     }
 
-    private async Task UpdateScheduleAddress(ScheduleAddressPatchDto dto, CancellationToken cancellationToken, Room roomToPatch)
+    private async Task UpdateScheduleAddress(ScheduleAddressPatchDto dto, Room roomToPatch, CancellationToken cancellationToken)
     {
         var roomInfos = await bookingClient.GetAllRooms(cancellationToken);
 
