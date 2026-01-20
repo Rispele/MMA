@@ -123,7 +123,8 @@ internal class FilterRoomsQueryHandler : IPaginatedQueryHandler<RoomsDbContext, 
         {
             rooms = filter.FixDeadline
                 .AsOptional()
-                .Apply(rooms, apply: (queryable, parameter) => queryable.Where(t => t.FixInfo.FixDeadline == parameter.Value));
+                .Apply(rooms, apply: (queryable, parameter) => queryable
+                    .Where(t => t.FixInfo.FixDeadline != null && t.FixInfo.FixDeadline.Value.Date == parameter.Value.ToUniversalTime().Date));
         }
 
         if (filter.Comment != null)
