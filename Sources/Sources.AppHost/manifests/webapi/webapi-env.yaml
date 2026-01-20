@@ -9,7 +9,7 @@ data:
 
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
   ASPNETCORE_ENVIRONMENT: "Development"
-  services__minio__http__0: "http://minio:9000"
+  services__minio__http__0: "minio-mmr-0.minio-mmr:9000"
   OTEL_EXPORTER_OTLP_ENDPOINT: "http://env-dashboard:18889"
   OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
   OTEL_SERVICE_NAME: "webapi"

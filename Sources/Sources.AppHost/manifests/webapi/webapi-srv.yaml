@@ -11,9 +11,3 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
-  - name: https
-    port: 8443
-    targetPort: 8443
-  - name: web-api-port
-    port: 5049
-    targetPort: 8000

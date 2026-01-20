@@ -21,7 +21,6 @@ public class Room
     public Room(
         string name,
         string? description,
-        RoomScheduleAddress scheduleAddress,
         RoomParameters parameters,
         RoomAttachments attachments,
         string? owner,
@@ -30,7 +29,6 @@ public class Room
     {
         Name = name;
         Description = description;
-        ScheduleAddress = scheduleAddress;
         Parameters = parameters;
         Attachments = attachments;
         Owner = owner;
@@ -85,12 +83,11 @@ public class Room
         int id,
         string name,
         string? description,
-        RoomScheduleAddress scheduleAddress,
         RoomParameters parameters,
         RoomAttachments attachments,
         string? owner,
         RoomFixInfo fixInfo,
-        bool allowBooking) : this(name, description, scheduleAddress, parameters, attachments, owner, fixInfo, allowBooking)
+        bool allowBooking) : this(name, description, parameters, attachments, owner, fixInfo, allowBooking)
     {
         this.id = id;
     }
