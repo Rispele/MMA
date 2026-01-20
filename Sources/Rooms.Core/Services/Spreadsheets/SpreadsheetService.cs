@@ -1,5 +1,6 @@
 ﻿using Commons;
 using Commons.Optional;
+using EnumsNET;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.Equipments;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentSchemas;
 using Rooms.Core.Interfaces.Dtos.Equipment.Requests.EquipmentTypes;
@@ -12,6 +13,7 @@ using Rooms.Core.Interfaces.Services.Spreadsheets;
 using Rooms.Core.Services.Spreadsheets.Abstractions;
 using Rooms.Core.Services.Spreadsheets.ExportModels;
 using Rooms.Core.Services.Spreadsheets.Specifications;
+using Rooms.Domain.Propagated.Equipments;
 
 namespace Rooms.Core.Services.Spreadsheets;
 
@@ -71,7 +73,7 @@ internal class SpreadsheetService(
                 Comment = equipment.Comment,
                 InventoryNumber = equipment.InventoryNumber,
                 SerialNumber = equipment.SerialNumber,
-                Status = equipment.Status.ToString()
+                Status = equipment.Status == null ? string.Empty : ((EquipmentStatus)equipment.Status).AsString(EnumFormat.Description)
             })
             .ToArray();
 

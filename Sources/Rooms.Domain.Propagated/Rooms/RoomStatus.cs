@@ -6,6 +6,7 @@ namespace Rooms.Domain.Propagated.Rooms;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomStatus
 {
+    [Description("Не выбрано")]
     Unspecified = 0,
 
     [Description("Готова")]

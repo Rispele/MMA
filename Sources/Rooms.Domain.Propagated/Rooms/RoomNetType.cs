@@ -6,6 +6,7 @@ namespace Rooms.Domain.Propagated.Rooms;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoomNetType
 {
+    [Description("Не выбрано")]
     Unspecified = 0,
 
     [Description("Отсутствует")]
