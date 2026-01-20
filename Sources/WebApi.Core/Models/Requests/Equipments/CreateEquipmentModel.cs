@@ -11,4 +11,5 @@ public record CreateEquipmentModel
     public string? NetworkEquipmentIp { get; init; }
     public string? Comment { get; init; }
     public EquipmentStatus? Status { get; init; }
+    public int Count { get; init; }
 }

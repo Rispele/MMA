@@ -51,7 +51,7 @@ public class EquipmentsController(IEquipmentService equipmentService) : Controll
     /// <param name="cancellationToken"></param>
     /// <returns>Созданная единица оборудования</returns>
     [HttpPost]
-    public async Task<ActionResult<EquipmentModel>> CreateEquipment(
+    public async Task<ActionResult<EquipmentModel[]>> CreateEquipment(
         [FromBody] CreateEquipmentModel model,
         CancellationToken cancellationToken)
     {

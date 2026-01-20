@@ -33,15 +33,15 @@ public class EquipmentService(
         return EquipmentModelsMapper.MapEquipmentToModel(equipment);
     }
 
-    public async Task<EquipmentModel> CreateEquipmentAsync(
+    public async Task<EquipmentModel[]> CreateEquipmentAsync(
         CreateEquipmentModel model,
         CancellationToken cancellationToken)
     {
         var innerRequest = EquipmentModelsMapper.MapCreateEquipmentFromModel(model);
 
-        var equipment = await equipmentService.CreateEquipment(innerRequest, cancellationToken);
+        var equipments = await equipmentService.CreateEquipment(innerRequest, cancellationToken);
 
-        return EquipmentModelsMapper.MapEquipmentToModel(equipment);
+        return equipments.Select(EquipmentModelsMapper.MapEquipmentToModel).ToArray();
     }
 
     public async Task<PatchEquipmentModel> GetEquipmentPatchModel(int equipmentId, CancellationToken cancellationToken)

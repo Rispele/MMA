@@ -38,11 +38,11 @@ public class FilterEquipmentQueryTests : ContainerTestBase
 
         await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment2.Room.Id, context.Equipment2.Schema.Id).Create());
         var expected1 =
-            await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment1.Room.Id, context.Equipment1.Schema.Id)
-                .Create());
+            (await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment1.Room.Id, context.Equipment1.Schema.Id)
+                .Create())).First();
         var expected3 =
-            await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment1.Room.Id, context.Equipment3.Schema.Id)
-                .Create());
+            (await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment1.Room.Id, context.Equipment3.Schema.Id)
+                .Create())).First();
 
         await Test(
             expected1.Id,
@@ -67,11 +67,11 @@ public class FilterEquipmentQueryTests : ContainerTestBase
 
         await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment2.Room.Id, context.Equipment2.Schema.Id).Create());
         var expected1 =
-            await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment1.Room.Id, context.Equipment1.Schema.Id)
-                .Create());
+            (await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment1.Room.Id, context.Equipment1.Schema.Id)
+                .Create())).First();
         var expected3 =
-            await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment3.Room.Id, context.Equipment1.Schema.Id)
-                .Create());
+            (await mmrSdk.Equipments.CreateEquipment(GenerateCreationRequest(fixture, context.Equipment3.Room.Id, context.Equipment1.Schema.Id)
+                .Create())).First();
 
         await Test(
             expected1.Id,
@@ -128,9 +128,9 @@ public class FilterEquipmentQueryTests : ContainerTestBase
             .Create();
 
 
-        var expected1 = await mmrSdk.Equipments.CreateEquipment(creationRequest1);
+        var expected1 = (await mmrSdk.Equipments.CreateEquipment(creationRequest1)).First();
         await mmrSdk.Equipments.CreateEquipment(creationRequest3);
-        var expected2 = await mmrSdk.Equipments.CreateEquipment(creationRequest2);
+        var expected2 = (await mmrSdk.Equipments.CreateEquipment(creationRequest2)).First();
 
         return (expected1, expected2);
     }

@@ -7,7 +7,7 @@ namespace Commons.Tests.Helpers.SDK.Equipments.Parts;
 
 public partial class EquipmentsSdk
 {
-    public async Task<EquipmentDto> CreateEquipment(int roomId, CancellationToken cancellationToken = default)
+    public async Task<EquipmentDto[]> CreateEquipment(int roomId, CancellationToken cancellationToken = default)
     {
         var fixture = new Fixture();
 
@@ -23,7 +23,7 @@ public partial class EquipmentsSdk
         return await CreateEquipment(createRequest, cancellationToken);
     }
 
-    public Task<EquipmentDto> CreateEquipment(
+    public Task<EquipmentDto[]> CreateEquipment(
         CreateEquipmentDto createRequest,
         CancellationToken cancellationToken = default)
     {

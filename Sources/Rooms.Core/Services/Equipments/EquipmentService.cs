@@ -38,27 +38,32 @@ internal class EquipmentService([RoomsScope] IUnitOfWorkFactory unitOfWorkFactor
         return new EquipmentsResponseDto(convertedEquipments, totalCount);
     }
 
-    public async Task<EquipmentDto> CreateEquipment(CreateEquipmentDto dto, CancellationToken cancellationToken)
+    public async Task<EquipmentDto[]> CreateEquipment(CreateEquipmentDto dto, CancellationToken cancellationToken)
     {
         await using var context = await unitOfWorkFactory.Create(cancellationToken);
 
         var room = await roomService.GetRoomById(dto.RoomId, cancellationToken);
         var equipmentSchema = await context.ApplyQuery(new FindEquipmentSchemaByIdQuery(dto.SchemaId), cancellationToken);
+        var resultEquipments = new List<Equipment>();
 
-        var equipment = new Equipment(
-            room.Id,
-            equipmentSchema,
-            dto.InventoryNumber,
-            dto.SerialNumber,
-            dto.NetworkEquipmentIp,
-            dto.Comment,
-            dto.Status);
+        for (var i = 0; i < Math.Max(dto.Count, 1); i++)
+        {
+            var equipment = new Equipment(
+                room.Id,
+                equipmentSchema,
+                dto.InventoryNumber,
+                dto.SerialNumber,
+                dto.NetworkEquipmentIp,
+                dto.Comment,
+                dto.Status);
 
-        context.Add(equipment);
+            context.Add(equipment);
+            resultEquipments.Add(equipment);
+        }
 
         await context.Commit(cancellationToken);
 
-        return EquipmentDtoMapper.MapEquipmentToDto(equipment);
+        return resultEquipments.Select(EquipmentDtoMapper.MapEquipmentToDto).ToArray();
     }
 
     public async Task<EquipmentDto> PatchEquipment(

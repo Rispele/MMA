@@ -8,6 +8,6 @@ public interface IEquipmentService
 {
     Task<EquipmentDto> GetEquipmentById(int equipmentId, CancellationToken cancellationToken);
     Task<EquipmentsResponseDto> FilterEquipments(GetEquipmentsDto dto, CancellationToken cancellationToken);
-    Task<EquipmentDto> CreateEquipment(CreateEquipmentDto dto, CancellationToken cancellationToken);
+    Task<EquipmentDto[]> CreateEquipment(CreateEquipmentDto dto, CancellationToken cancellationToken);
     Task<EquipmentDto> PatchEquipment(int equipmentId, PatchEquipmentDto dto, CancellationToken cancellationToken);
 }

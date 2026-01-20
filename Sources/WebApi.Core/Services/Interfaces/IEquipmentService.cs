@@ -10,7 +10,7 @@ public interface IEquipmentService
 {
     Task<EquipmentsResponseModel> GetEquipmentsAsync(GetRequest<EquipmentsFilterModel> model, CancellationToken cancellationToken);
     Task<EquipmentModel> GetEquipmentByIdAsync(int id, CancellationToken cancellationToken);
-    Task<EquipmentModel> CreateEquipmentAsync(CreateEquipmentModel model, CancellationToken cancellationToken);
+    Task<EquipmentModel[]> CreateEquipmentAsync(CreateEquipmentModel model, CancellationToken cancellationToken);
     Task<PatchEquipmentModel> GetEquipmentPatchModel(int equipmentId, CancellationToken cancellationToken);
 
     Task<EquipmentModel> PatchEquipmentAsync(

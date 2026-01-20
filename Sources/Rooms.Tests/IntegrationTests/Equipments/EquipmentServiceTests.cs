@@ -32,7 +32,7 @@ public class EquipmentServiceTests : ContainerTestBase
             .With(create => create.SchemaId, equipmentSchema.Id)
             .Create();
 
-        var created = await equipmentService.CreateEquipment(createRequest, CancellationToken.None);
+        var created = (await equipmentService.CreateEquipment(createRequest, CancellationToken.None)).First();
 
         created.RoomId.Should().Be(room.Id);
         created.Schema.Should().BeEquivalentTo(equipmentSchema);
@@ -49,7 +49,7 @@ public class EquipmentServiceTests : ContainerTestBase
         var fixture = new Fixture();
 
         var room = await mmrSdk.Rooms.CreateRoom(Guid.NewGuid().ToString());
-        var createdEquipment = await mmrSdk.Equipments.CreateEquipment(room.Id);
+        var createdEquipment = (await mmrSdk.Equipments.CreateEquipment(room.Id)).First();
 
         var patch = fixture
             .Build<PatchEquipmentDto>()
@@ -73,7 +73,7 @@ public class EquipmentServiceTests : ContainerTestBase
     public async Task GetEquipment_ShouldReturnCorrectly()
     {
         var room = await mmrSdk.Rooms.CreateRoom(Guid.NewGuid().ToString());
-        var expected = await mmrSdk.Equipments.CreateEquipment(room.Id);
+        var expected = (await mmrSdk.Equipments.CreateEquipment(room.Id)).First();
 
         var actual = await equipmentService.GetEquipmentById(expected.Id, CancellationToken.None);
 

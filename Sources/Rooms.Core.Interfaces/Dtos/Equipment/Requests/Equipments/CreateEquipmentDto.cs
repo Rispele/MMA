@@ -24,4 +24,6 @@ public record CreateEquipmentDto
     public string? Comment { get; set; }
 
     public EquipmentStatus? Status { get; set; }
+
+    public int Count { get; set; }
 }
