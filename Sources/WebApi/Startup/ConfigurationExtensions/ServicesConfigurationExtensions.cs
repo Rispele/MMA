@@ -17,7 +17,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection
             .AddControllers(options =>
             {
-                options.InputFormatters.Insert(index: 1, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
+                options.InputFormatters.Insert(index: 0, JsonPatchInputFormatterProvider.GetJsonPatchInputFormatter());
             })
             .AddJsonOptions(options =>
             {
