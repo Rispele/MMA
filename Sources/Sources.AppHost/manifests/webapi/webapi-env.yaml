@@ -13,3 +13,4 @@ data:
   OTEL_EXPORTER_OTLP_ENDPOINT: "http://env-dashboard:18889"
   OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
   OTEL_SERVICE_NAME: "webapi"
+  SCHEDULE_API_URL: "http://sked-tst.dit.urfu.ru:8100"

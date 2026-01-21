@@ -1,0 +1,14 @@
+ipcp-accept-local
+ipcp-accept-remote
+refuse-eap
+require-chap
+noccp
+noauth
+mtu 1400
+mru 1400
+usepeerdns
+defaultroute
+debug
+logfile /var/log/ppp.log
+name username
+password PWD

@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: l2tp-vpn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: l2tp-vpn
+  template:
+    metadata:
+      labels:
+        app: l2tp-vpn
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+          - 10.74.240.10
+          - 10.98.240.10
+          - 10.130.0.2
+        searches:
+          - ru-central1.internal
+          - auto.internal
+      hostNetwork: true
+      containers:
+        - name: vpn
+          image: container-registry.cloud.yandex.net/crppvgkl2ft86f0jdvnc/skedproxy:2.0.15  
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          volumeMounts:
+            - name: modules
+              mountPath: /lib/modules
+      volumes:
+        - name: modules
+          hostPath:
+            path: /lib/modules
