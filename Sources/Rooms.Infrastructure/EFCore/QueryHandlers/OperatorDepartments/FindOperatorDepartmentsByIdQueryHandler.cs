@@ -13,6 +13,8 @@ internal class FindOperatorDepartmentsByIdQueryHandler : ISingleQueryHandler<Roo
     {
         var id = request.Query.OperatorDepartmentId;
 
-        return request.Context.OperatorDepartments.FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
+        return request.Context.OperatorDepartments
+            .Include(x => x.Rooms)
+            .FirstOrDefaultAsync(predicate: t => t.Id == id, cancellationToken);
     }
 }
