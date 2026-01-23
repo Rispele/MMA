@@ -20,11 +20,11 @@ spec:
     spec:
       containers:
       - name: webapi
-        image: cr.yandex/crppvgkl2ft86f0jdvnc/webapi:1.0.5
+        image: cr.yandex/crppvgkl2ft86f0jdvnc/webapi:2.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
-          containerPort: 8080
+          containerPort: 8080 
         envFrom:
         - configMapRef:
             name: webapi-env

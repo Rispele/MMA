@@ -10,5 +10,5 @@ usepeerdns
 defaultroute
 debug
 logfile /var/log/ppp.log
-name username
-password PWD
+name THERE_MUST_BE_YOUR_URFU_ACCOUNT_USERNAME
+password THERE_MUST_BE_YOUR_URFU_ACCOUNT_PASSWORD

@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: booking-orchestrator
-        image: cr.yandex/crppvgkl2ft86f0jdvnc/bookingorchestrator:1.0.0
+        image: cr.yandex/crppvgkl2ft86f0jdvnc/bookingorchestrator:2.0.1
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:

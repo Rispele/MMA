@@ -25,16 +25,24 @@ spec:
       hostNetwork: true
       containers:
         - name: vpn
-          image: container-registry.cloud.yandex.net/crppvgkl2ft86f0jdvnc/skedproxy:2.0.15  
+          image: container-registry.cloud.yandex.net/crppvgkl2ft86f0jdvnc/skedproxy:2.0.17
           securityContext:
             privileged: true
             capabilities:
               add:
                 - NET_ADMIN
-                - SYS_MODULE
+                - SYS_MODULE  
           volumeMounts:
             - name: modules
               mountPath: /lib/modules
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pgrep pppd || exit 1
+            initialDelaySeconds: 10
+            periodSeconds: 30
       volumes:
         - name: modules
           hostPath:

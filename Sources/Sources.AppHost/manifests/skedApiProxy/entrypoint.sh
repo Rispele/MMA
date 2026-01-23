@@ -4,6 +4,9 @@ set -e
 echo "===> Checking kernel modules"
 lsmod | grep ppp || echo "⚠️  PPP modules not visible (expected in container)"
 
+echo "echo \"===> Updating ip routes: 10.74.0.0/16 dev ppp0\"" >> /etc/ppp/ip-up
+echo "ip route add 10.74.0.0/16 dev ppp0" >> /etc/ppp/ip-up
+
 echo "===> Starting IPsec"
 ipsec start
 sleep 2
